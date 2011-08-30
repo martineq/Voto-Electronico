@@ -1,0 +1,16 @@
+ 
+Traza: » tp » trabajo_practico_cero
+Tu estás aquí: material » tp » trabajo_practico_cero
+Organización de Datos
+
+Trabajo Práctico 0
+Descripción
+
+El objetivo del presente trabajo práctico consiste en implementar una estructura de datos que permita abstraer el uso de un archivo de bloques en disco con recuperación de bloques libres. La estructura debe implementarse de tal forma de permitir almacenar cualquier tipo de dato como registros en sus bloques, pudiendo generar la alta, baja y modificación de estos registros de longitud variable dentro de los bloques del archivo. Deberán implementarse los algoritmos necesarios para resolver las primitivas previamente nombradas (ABM) como se han descripto en las clases teóricas de OAA. De esta forma, será necesario, además, contar con archivos de metadata que permitan tanto indicar el espacio libre en cada bloque utilizado en el archivo (esto servirá para poder generar operaciones sobre los bloques de forma más eficiente), como indicar los bloques que han quedado liberados para poder ser reutilizados. El tamaño del bloque deberá ser configurable mediante un archivo de configuración en formato texto plano.
+Herramientas
+
+Para la implementación del trabajo práctico se utilizará, o bien el lenguaje C, o C++ (recomendado), y deberá ser desarrollado en un entorno linux (ubuntu recomendado). Se permitirá la utilización las bibliotecas de la STL en caso de utilizarse C++.
+Presentación
+
+El trabajo práctico deberá ser presentado a los docentes contando con un makefile que permita compilarlo y generar, además, un pequeño programa ejecutable que haga uso de la estructura implementada utilizando registros formados por un campo entero y otro string, y generando datos que permitan observar el uso de la estructura y la correcta implementación de los algoritmos que resuelven las primitivas de alta, baja y modificación. Para esto, deberá poder observarse la estructura del archivo (y sus metadatos) previo y posterior a cada operación realizada, por stdout.
+
