@@ -8,6 +8,7 @@ int main(int argc,char* argv[])
 
     cout<<"||TP 1||\n--------\n\nHola Mundo!!!\n";
 
+    cout<<"A\n";
 
     cout << "Daniel Shlufman padron 88040 - Saludos!" << endl;
 
