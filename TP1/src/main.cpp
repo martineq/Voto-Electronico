@@ -13,6 +13,7 @@ int main(int argc,char* argv[])
 
     cout << "Martín Eduardo Quiroz padron 86012 - Saludos!" << endl;
 
+
     for (i=0;i<argc;i++){
         cout<<"\nParámetro ["<<i<<"]: "<<argv[i];
     }
