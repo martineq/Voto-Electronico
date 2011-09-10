@@ -12,7 +12,7 @@ int main(int argc,char* argv[])
 
     cout << "Daniel Shlufman padron 88040 - Saludos!" << endl;
 
-    cout << "Martín Eduardo Quiroz padron 86012 - Saludos!" << endl;
+    cout << "Martín Eduardo Quiroz padron 86012 - Eclipse" << endl;
 
 
     for (i=0;i<argc;i++){
