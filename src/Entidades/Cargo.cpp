@@ -50,5 +50,5 @@ bool Cargo::eliminarCargo(string subCargo){
 
 
 Cargo::~Cargo() {
-	// TODO Auto-generated destructor stub
+	this->listaCargos.clear();
 }
