@@ -15,4 +15,9 @@ Eleccion::Eleccion() {
 Eleccion::~Eleccion() {
 	// TODO Auto-generated destructor stub
 }
-
+string Eleccion::getFecha() {;
+	return 0;
+}
+string Eleccion::getCargo() {;
+	return 0;
+}
