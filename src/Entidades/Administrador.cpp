@@ -8,26 +8,20 @@
 #include "Administrador.h"
 
 Administrador::Administrador() {
-	// TODO Auto-generated constructor stub
-
+	this->nombre="";
+	this->password="";
 }
 
-bool Administrador::agregarAdministrador(string nombre, string password){
-
-
+Administrador::Administrador(string nomb, string pass) {
+	this->nombre=nomb;
+	this->password=pass;
 }
 
-bool Administrador::eliminarAdministrador(string nombre, string password){
-
-
-}
-
-
-bool Administrador::acceder(string nombre,string password){
-
-
+bool Administrador::acceder(string nomb,string pass){
+	if ( this->nombre.compare(nomb) and this->password.compare(pass) ) return true;
+	else return false;
 }
 
 Administrador::~Administrador() {
-	// TODO Auto-generated destructor stub
+
 }
