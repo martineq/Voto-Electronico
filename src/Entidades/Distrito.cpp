@@ -5,34 +5,22 @@
  *      Author: martin
  */
 
-#include <string>
+#include "Distrito.h"
 
-using namespace std;
+Distrito::Distrito(){
+	this->distrito = "";
+};
 
-#ifndef DISTRITO_H_
-#define DISTRITO_H_
-
-class Distrito {
-
-private:
-	string 	distrito;
-
-public:
-	Distrito();
-	Distrito(string distrito){
+Distrito::Distrito(string distrito){
 		this->distrito = distrito;
 	}
 
-	string getDistrito(){
+string Distrito::getDistrito(){
 		return this->distrito;
 	}
 
-	void setDistrito(string distrito){
+void Distrito::setDistrito(string distrito){
 		this->distrito = distrito;
 	}
 
-	virtual ~Distrito();
-
-};
-
-#endif /* DISTRITO_H_ */
+Distrito::~Distrito(){};
