@@ -9,6 +9,8 @@
 #define SERIALIZABLE_H_
 
 #include <string>
+#include <sstream>
+#include <fstream>
 
 class Serializable {
 public:
