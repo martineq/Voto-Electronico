@@ -13,17 +13,17 @@
 #include <string>
 using namespace std;
 
-
 class Candidato {
-private:
-	string fecha;
-	string cargo;
-	string nombre;
-	int dni;
 
+private:
+	string fecha;		//Identificador
+	string cargo;		//Identificador
+	string nombre;		//Identificador
+	int dni;			//Identificador
 
 public:
 	Candidato();
+	Candidato( string fecha, string cargo, string nombre, int dni);
 	virtual ~Candidato();
 
 };
