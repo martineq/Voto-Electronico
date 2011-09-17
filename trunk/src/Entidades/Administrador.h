@@ -16,7 +16,7 @@ using namespace std;
 
 class Administrador {
 private:
-	string nombre;
+	string nombre;		// Identificador
 	string password;
 
 public:
