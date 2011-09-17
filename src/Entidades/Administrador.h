@@ -9,7 +9,6 @@
 #define ADMINISTRADOR_H_
 
 #include <string>
-#include <list>
 
 using namespace std;
 
