@@ -8,13 +8,16 @@
 #ifndef CARGO_H_
 #define CARGO_H_
 
-#include <string>
-#include <list>
 
+
+#include <iostream>
+#include <list>
+#include "Serializable.h"
+#include "Constantes.h"
 
 using namespace std;
 
-class Cargo {
+class Cargo : public Serializable {
 private:
 	string cargo;
 	list<string> listaCargos;
@@ -25,8 +28,13 @@ public:
 //	void modificarCargo(string nuevoCargo);
 	string getCargo();
 	bool agregarCargo(string subCargo);
+	list<string> devolverSubCargos();
 	bool eliminarCargo(string subCargo);
 	virtual ~Cargo();
+
+	string* serializar();
+	void deserializar(string * source);
+
 };
 
 #endif /* CARGO_H_ */
