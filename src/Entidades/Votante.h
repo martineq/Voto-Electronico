@@ -11,7 +11,7 @@ using namespace std;
 
 class Votante {
 private:
-	short int dni;
+	int dni;
 	string nombre;
 	string password;
 	string domicilio;
