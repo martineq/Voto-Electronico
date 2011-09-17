@@ -16,14 +16,12 @@ using namespace std;
 
 class Administrador {
 private:
-	list<string> listaNombre;
-	list<string> listapassword;
+	string nombre;
+	string password;
 
 public:
 	Administrador();
 	Administrador(string nombre, string password);
-	bool agregarAdministrador(string nombre, string password);
-	bool eliminarAdministrador(string nombre, string password);
 	bool acceder(string nombre,string password);
 	virtual ~Administrador();
 };
