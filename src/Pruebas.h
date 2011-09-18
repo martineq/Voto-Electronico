@@ -13,7 +13,8 @@
 class Pruebas {
 public:
 	Pruebas();
-	int pruebaSerializar();
+	int holaMundo();
+	int serializar();
 	virtual ~Pruebas();
 };
 
