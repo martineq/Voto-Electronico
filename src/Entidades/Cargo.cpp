@@ -100,8 +100,11 @@ void Cargo::deserializar(string * source){
 //		string subCargo;
 		subCargo = "";
 		sizeOfCargo = 0;
+		cout <<"Mirá el valor de 'i' antes: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
 		streamDatos.read((char*)&sizeOfCargo,TAM_INT);
+		cout <<"Mirá el valor de 'i' al medio: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
 		streamDatos.read((char*)&subCargo,sizeOfCargo);
+		cout <<"Mirá el valor de 'i' después: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
 		this->listaCargos.push_back(subCargo);
 		cout <<"DeSerializar Subcargo: "<<subCargo<<endl;
 		cout << "Size interno: "<<this->listaCargos.size()<<endl;
