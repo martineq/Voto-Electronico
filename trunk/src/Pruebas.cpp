@@ -11,7 +11,21 @@ Pruebas::Pruebas() {
 	// TODO Auto-generated constructor stub
 }
 
-int Pruebas::pruebaSerializar(){
+int Pruebas::holaMundo(){
+
+    cout<<"||TP 1||\n--------\n\nHola Mundo!!!\n";
+
+    cout << "Daniel Shlufman padron 88040 - Saludos!" << endl;
+    cout << "Martín Eduardo Quiroz padron 86012 - Eclipse" << endl;
+
+    // int i; for (i=0;i<argc;i++){ cout<<"\nParámetro ["<<i<<"]: "<<argv[i];  }
+
+    cout<<"\n\nBueno, chau...\n";
+    return 0;
+}
+
+
+int Pruebas::serializar(){
 
 	Cargo* cargo1 = new Cargo("Presidente   1");
 	Cargo* cargo2 = new Cargo();
