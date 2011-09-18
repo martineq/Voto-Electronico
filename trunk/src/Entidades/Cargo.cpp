@@ -70,15 +70,14 @@ string* Cargo::serializar(){
 	unsigned int cantCargos = this->listaCargos.size();
 	string subCargo;
 	streamDatos.write((char*)&sizeOfCargo,TAM_INT);
-	streamDatos.write((char*)&cargo,sizeOfCargo);
+	streamDatos.write((char*)cargo.c_str(),sizeOfCargo);
 	streamDatos.write((char*)&cantCargos,TAM_INT);
 	for (unsigned int i = 0; i < cantCargos;i++){
 		sizeOfCargo = it->size();
 		subCargo = (*it);
 		streamDatos.write((char*)&sizeOfCargo,TAM_INT);
-		streamDatos.write((char*)&subCargo,sizeOfCargo);
+		streamDatos.write((char*)subCargo.c_str(),sizeOfCargo);
 		it++;
-		cout <<"Serializar Subcargo: "<<subCargo<<endl;
 	}
 	string* datos = new string(streamDatos.str());
 	return datos;
@@ -87,27 +86,24 @@ string* Cargo::serializar(){
 
 void Cargo::deserializar(string * source){
 	istringstream streamDatos(*source);
+//	stringstream miString;
 	int sizeOfCargo;
 	unsigned int cantCargos;
-	string subCargo;
-
     streamDatos.read((char*)&sizeOfCargo,TAM_INT);
-    streamDatos.read((char*)&(this->cargo),sizeOfCargo);
+    char* cargoChar = new char[sizeOfCargo];
+    streamDatos.read((char*)cargoChar,sizeOfCargo);
+    string cargoString(cargoChar);
+    this->cargo = cargoString;
     streamDatos.read((char*)&cantCargos,TAM_INT);
-    cout << "CantCargos: "<<cantCargos<<endl;
-//	cout <<"Size of Lista deserializar antes hidratar: "<<this->listaCargos.size();
 	for (unsigned int i = 0; i < cantCargos;i++){
-//		string subCargo;
-		subCargo = "";
-		sizeOfCargo = 0;
-		cout <<"Mirá el valor de 'i' antes: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
 		streamDatos.read((char*)&sizeOfCargo,TAM_INT);
-		cout <<"Mirá el valor de 'i' al medio: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
-		streamDatos.read((char*)&subCargo,sizeOfCargo);
-		cout <<"Mirá el valor de 'i' después: "<<i<<" / Valor: 'sizeOfCargo': "<<sizeOfCargo<<endl;
+		stringstream * miString = new stringstream();
+		char* cargoTemp = new char[sizeOfCargo];
+		streamDatos.read(cargoTemp,sizeOfCargo);
+		miString->write(cargoTemp,sizeOfCargo);
+		string subCargo = miString->str();
 		this->listaCargos.push_back(subCargo);
-		cout <<"DeSerializar Subcargo: "<<subCargo<<endl;
-		cout << "Size interno: "<<this->listaCargos.size()<<endl;
+		delete cargoTemp;
+		delete miString;
 	}
-	cout <<"Size of Lista deserializar: "<<this->listaCargos.size()<<endl;
 }
