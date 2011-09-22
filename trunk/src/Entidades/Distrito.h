@@ -6,13 +6,15 @@
  */
 
 #include <string>
+#include "Serializable.h"
+#include "Constantes.h"
 
 using namespace std;
 
 #ifndef DISTRITO_H_
 #define DISTRITO_H_
 
-class Distrito {
+class Distrito : public Serializable {
 
 private:
 	string distrito;
@@ -24,6 +26,10 @@ public:
 	string getDistrito();
 
 	void setDistrito(string distrito);
+
+	string* serializar();
+
+	void deserializar(string* source);
 
 	~Distrito();
 
