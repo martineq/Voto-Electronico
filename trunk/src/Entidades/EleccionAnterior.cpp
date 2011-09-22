@@ -5,6 +5,10 @@ EleccionAnterior::EleccionAnterior(string fecha, string cargo) {
 	this->cargo=cargo;
 }
 
+EleccionAnterior::EleccionAnterior() {
+	;
+}
+
 EleccionAnterior::~EleccionAnterior() {
 
 }

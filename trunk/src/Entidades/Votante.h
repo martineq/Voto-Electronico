@@ -6,10 +6,12 @@
 #include "Eleccion.h"
 #include "EleccionAnterior.h"
 #include <iostream>
+#include "Serializable.h"
+#include "Constantes.h"
 
 using namespace std;
 
-class Votante {
+class Votante : public Serializable {
 private:
 	int dni;
 	string nombre;
@@ -17,20 +19,24 @@ private:
 	string domicilio;
 	string distrito;
 	list <EleccionAnterior*>* listaDeEleccionesAnteriores;
+	void verEleccionesAnteriores ();
 
 public:
-	Votante(short int dni, string nombre, string password, string domicilio, string distrito);
+	Votante(int dni, string nombre, string password, string domicilio, string distrito);
 	virtual ~Votante();
-	void setNombre (string nombre);
-	void setPassword (string password);
-	void setDomicilio (string domicilio);
-	void setDistrito (string distrito);
-	void agregarEleccion (Eleccion unaEleccion);
+	void setNombre (string);
+	void setPassword (string);
+	void setDomicilio (string);
+	void setDistrito (string);
+	void agregarEleccion (string,string);
+	void deserializar (string* source);
+	void verVotante ();
+	int getDNI ();
 	string getNombre ();
 	string getPassword ();
 	string getDomicilio ();
 	string getDistrito ();
-	void getEleccionesAnteriores ();
+	string* serializar();
 };
 
 #endif /* VOTANTE_H_ */
