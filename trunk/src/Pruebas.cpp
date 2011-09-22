@@ -8,24 +8,19 @@
 #include "Pruebas.h"
 
 Pruebas::Pruebas() {
-	// TODO Auto-generated constructor stub
+
 }
 
 int Pruebas::holaMundo(){
 
     cout<<"||TP 1||\n--------\n\nHola Mundo!!!\n";
-
-    cout << "Daniel Shlufman padron 88040 - Saludos!" << endl;
-    cout << "Martín Eduardo Quiroz padron 86012 - Eclipse" << endl;
-
     // int i; for (i=0;i<argc;i++){ cout<<"\nParámetro ["<<i<<"]: "<<argv[i];  }
-
     cout<<"\n\nBueno, chau...\n";
     return 0;
 }
 
 
-int Pruebas::serializar(){
+int Pruebas::serializarCargo(){
 
 	Cargo* cargo1 = new Cargo("Presidente   1");
 	Cargo* cargo2 = new Cargo();
@@ -56,13 +51,33 @@ int Pruebas::serializar(){
 		it2++;
 	}
 
-
+    cout<<"\nFin prueba: Serializar Cargo\n";
 
 	cout << "Fin" <<endl;
     return 0;
 
 }
 
+int Pruebas::cargaVotante(){
+
+	Votante* votante1 = new Votante (32299496,"Daniel Shlufman","32299496","San Juan 124","Recoleta");
+	votante1->agregarEleccion("271011","Presidente");
+	votante1->agregarEleccion("100297","Gobernador");
+	votante1->agregarEleccion("221199","Intendente");
+	votante1->agregarEleccion("160500","Diputado Nacional");
+	votante1->agregarEleccion("190603","Diputado Provincial");
+	votante1->agregarEleccion("040705","Senador");
+	votante1->agregarEleccion("040705","Jefe De Comuna");
+	string* datos = votante1->serializar();
+	votante1->deserializar(datos);
+	votante1->verVotante();
+	delete (votante1);
+
+	cout << "Sonrie la vida es bella" << endl;
+	return 0;
+
+}
+
 Pruebas::~Pruebas() {
-	// TODO Auto-generated destructor stub
+
 }

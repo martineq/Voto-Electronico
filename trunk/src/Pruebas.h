@@ -8,13 +8,14 @@
 #ifndef PRUEBAS_H_
 #define PRUEBAS_H_
 #include "./Entidades/Cargo.h"
-
+#include "./Entidades/Votante.h"
 
 class Pruebas {
 public:
 	Pruebas();
 	int holaMundo();
-	int serializar();
+	int serializarCargo();
+	int cargaVotante();
 	virtual ~Pruebas();
 };
 
