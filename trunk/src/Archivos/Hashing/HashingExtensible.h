@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include "../InterpreteDeRegistro.h"
 
 using namespace std;
 
@@ -18,18 +19,22 @@ class HashingExtensible {
 private:
 	FILE*		archivo;
 	vector<int>	tablaDeHash;
+	vector<int> tablaDeDispersion;
+	//BLOQUE	ultimoBloqueAccedido;
 
 	//Aplica la función de hash y devuelve la posicion en la tabla de Hash
 	int obtenerPosicion(int clave);
+
+	int obtenerDispersion(int bloque);
 
 public:
 	HashingExtensible();
 
 	HashingExtensible(FILE* Archivo);
 
-	int agregarRegistro(int clave,string elemento);
+	int agregarRegistro(InterpreteDeRegistro* interprete,string* bytes);
 
-	int modificarRegistro(int clave,string elemento);
+	int modificarRegistro(InterpreteDeRegistro* interprete,string* elemento);
 
 	int eliminarRegistro(int clave);
 
