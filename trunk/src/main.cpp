@@ -19,6 +19,7 @@ int main(int argc,char* argv[]) {
 	//prueba.serializarDeserializarCandidato();
 
 	//prueba.ManejadorDeArch(); // Esta prueba genera el archivo "PruebaManejador.bin" de 19 bytes
+	//prueba.SerializarCargoYGuardarArchivo(); // Para Cargo: Serializo -> Guardo en archivo -> Leo de archivo -> Hidrato
 
 	return 0;
 }

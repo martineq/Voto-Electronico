@@ -58,10 +58,78 @@ int Pruebas::ManejadorDeArch(){
 	cout << "Cierro el archivo..." << endl;
 	man->cerrar();
 
+	delete buf;
 	return 0;
 }
 
+int Pruebas::SerializarCargoYGuardarArchivo(){
+		using namespace std;
 
+		Cargo* cargo1 = new Cargo("Presidente   1");
+		Cargo* cargo2 = new Cargo();
+		list<string> listas1;
+		list<string> listas2;
+
+		cout<<"Muestro los datos a ingresar:"<<endl;
+		cout << "Cargo principal: " << cargo1->getCargo() <<endl;
+		cargo1->agregarCargo("Vicepresidente");
+		cargo1->agregarCargo("Senador");
+		listas1 = cargo1->devolverSubCargos();
+		list<string>::iterator it1 = listas1.begin();
+		while (it1 != listas1.end()){
+			cout << "SubCargo: "<< (*it1) <<endl;
+			it1++;
+		}
+		cout << endl;
+		cout << "Comienzo Serializado de Cargo" << endl;
+		string* source = cargo1->serializar();
+		cout << "Fin Serializado de Cargo" << endl;
+		cout << endl;
+		////////////////////////
+		//Guardo en archivo/////
+		////////////////////////
+		cout << "[Archivo] Guardo en archivo... " <<endl;
+		ManejadorDeArchivo* man = new ManejadorDeArchivo();
+		man->abrir("CargoSerializado.bin");
+		man->posicionarse(0);
+		cout << "[Archivo] Estoy en la posición: "<< man->obtenerPosicionDeLectura() <<endl;
+		cout << "[Archivo] escribo en archivo... " <<endl;
+		man->escribir(source->c_str(),source->size()) ;
+		cout << "[Archivo] Terminé de escribir. Estoy en la posición: " << man->obtenerPosicionDeLectura() <<endl;
+		man->guardarBuffer();
+		cout << "[Archivo] Guardado en archivo finalizado. " <<endl;
+		////////////////////////
+		//Leo desde archivo/////
+		////////////////////////
+		cout << "[Archivo] Leo desde archivo... " <<endl;
+		cout << "[Archivo] Voy al inicio "<<endl;
+		man->posicionarse(0);
+		cout << "[Archivo] Estoy en la posición: "<< man->obtenerPosicionDeLectura() <<endl;
+		cout << "[Archivo] Empiezo a leer..." << endl;
+		int tamanioBloque = man->obtenerTamArchivo();
+		char* buf= new char[tamanioBloque];
+		man->leer(buf,tamanioBloque);
+		cout << "[Archivo] Lectura desde archivo finalizada. " <<endl;
+		cout << "[Archivo] Cierro el archivo..." << endl;
+		man->cerrar();
+		////////////////////////
+		cout << "\nComienzo Hidratación de Cargo" << endl;
+		cargo2->deserializar(source);
+		cout << "Fin Hidratación de Cargo" << endl;
+		cout << endl;
+		cout<<"Muestro los resultados obtenidos:"<<endl;
+		cout << "Cargo Principal: " << cargo2->getCargo() <<endl;
+		listas2 = cargo2->devolverSubCargos();
+		list<string>::iterator it2 = listas2.begin();
+		while (it2 != listas2.end()){
+			cout << "SubCargo: " << (*it2) <<endl;
+			it2++;
+		}
+		delete cargo1;
+		delete cargo2;
+		return 0;
+
+}
 
 int Pruebas::serializarDeserializarCargo(){
 	Cargo* cargo1 = new Cargo("Presidente   1");
@@ -84,6 +152,8 @@ int Pruebas::serializarDeserializarCargo(){
 	string* source = cargo1->serializar();
 	cout << "Fin serializado de Cargo" << endl;
 	cout << endl;
+
+
 	cout << "Comienzo deserializado de Cargo" << endl;
 	cargo2->deserializar(source);
 	cout << "Fin deserializado de Cargo" << endl;
