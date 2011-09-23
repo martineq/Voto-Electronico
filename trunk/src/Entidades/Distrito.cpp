@@ -34,6 +34,7 @@ string* Distrito::serializar(){
 
 void Distrito::deserializar(string * source){
 	istringstream streamDatos(*source);
+	delete source;
 	stringstream * miString = new stringstream();
 	int sizeOfDistrito;
     streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
@@ -42,7 +43,7 @@ void Distrito::deserializar(string * source){
     miString->write(distritoChar,sizeOfDistrito);
     string distritoString = miString->str();
     this->distrito = distritoString;
-    delete distritoChar;
+    delete []distritoChar;
     delete miString;
 }
 

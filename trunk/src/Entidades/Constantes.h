@@ -20,6 +20,7 @@
 #define TAM_LONG sizeof(long)
 #define TAM_UNSINT sizeof(unsigned int)
 #define TAM_INT sizeof(int)
+#define TAM_SINT sizeof (short int)
 
 //Estados Nodo
 #define OK 0

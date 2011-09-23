@@ -3,9 +3,11 @@
 
 #include <string>
 #include <iostream>
+#include "Serializable.h"
+#include "Constantes.h"
 using namespace std;
 
-class Lista {
+class Lista : public Serializable{
 private:
 	string nombre;
 	string fecha;
@@ -15,9 +17,12 @@ public:
 	Lista(string nombre, string fecha, string cargo);
 	string getNombre ();
 	string getFecha ();
+	string getCargo ();
 	short int getCantidadDeVotos ();
 	void incrementarVotos ();
 	virtual ~Lista();
+	string* serializar();
+	void deserializar (string*);
 };
 
 #endif /* LISTA_H_ */

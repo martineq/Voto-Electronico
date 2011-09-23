@@ -6,7 +6,7 @@
  */
 
 #include "Eleccion.h"
-
+using namespace std;
 Eleccion::Eleccion() {
 	this->fecha = "";
 	this->cargoPrincipal = "";
@@ -74,4 +74,65 @@ list<Distrito>::iterator Eleccion::obtenerIterador(){
 
 Eleccion::~Eleccion() {
 	// TODO Auto-generated destructor stub
+}
+
+string* Eleccion::serializar() {
+	stringstream buffer;
+	int cantidadDeBytes;
+	cantidadDeBytes   = this->fecha.size();
+	buffer.write((char*)&cantidadDeBytes,TAM_INT);
+	buffer.write((char*)this->fecha.c_str(),cantidadDeBytes);
+	cantidadDeBytes   = this->cargoPrincipal.size();
+	buffer.write((char*)&cantidadDeBytes,TAM_INT);
+	buffer.write((char*)this->cargoPrincipal.c_str(),cantidadDeBytes);
+	int tamanioDeListaDeDistritos = this->distritos.size();
+	buffer.write((char*)&tamanioDeListaDeDistritos,TAM_INT);
+	list<Distrito>::iterator it = this->distritos.begin();
+	for (int i=0; i<tamanioDeListaDeDistritos; i++) {
+		cantidadDeBytes = ((*it).getDistrito()).size();
+		buffer.write((char*)&cantidadDeBytes,TAM_INT);
+		buffer.write((char*)((*it).getDistrito()).c_str(),cantidadDeBytes);
+		it++;
+	}
+	string* datos = new string(buffer.str());
+	return datos;
+}
+
+void Eleccion::deserializar(string* source) {
+	istringstream buffer (*source);
+	delete source;
+	int cantidadDeBytes;
+
+//	hidrato la fecha
+    buffer.read((char*)&cantidadDeBytes,TAM_INT);
+    char* fechaSerializada = new char[cantidadDeBytes];
+    buffer.read((char*)fechaSerializada,cantidadDeBytes);
+    string* pasoAString = new string (fechaSerializada);
+    this->fecha = *pasoAString;
+    delete []fechaSerializada;
+    delete pasoAString;
+
+//  hidrato el cargo principal
+    buffer.read((char*)&cantidadDeBytes,TAM_INT);
+    char* cargoPrincipalSerializado = new char[cantidadDeBytes];
+    buffer.read((char*)cargoPrincipalSerializado,cantidadDeBytes);
+    pasoAString = new string (cargoPrincipalSerializado);
+    this->cargoPrincipal = *pasoAString;
+    delete []cargoPrincipalSerializado;
+    delete pasoAString;
+
+//  hidrato la lista de distritos
+    int tamanioDeLaLista;
+    buffer.read((char*)&tamanioDeLaLista,TAM_INT);
+    for (int i=0; i<tamanioDeLaLista;i++){
+    	stringstream* bufferAuxiliar = new stringstream;
+    	buffer.read((char*)&cantidadDeBytes,TAM_INT);
+    	char* distritoSerializado = new char[cantidadDeBytes];
+    	buffer.read(distritoSerializado,cantidadDeBytes);
+    	bufferAuxiliar->write(distritoSerializado,cantidadDeBytes);
+    	Distrito unDistrito(bufferAuxiliar->str());
+    	this->distritos.push_back(unDistrito);
+    	delete bufferAuxiliar;
+    	delete []distritoSerializado;
+    }
 }

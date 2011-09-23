@@ -5,18 +5,20 @@
  *      Author: martin
  */
 
+#ifndef ELECCION_H_
+#define ELECCION_H_
 #include <list>
 #include <string>
+#include <iostream>
 #include "Distrito.h"
 #include "Serializable.h"
 #include "Cargo.h"
+#include <iostream>
+#include "Constantes.h"
 
-#ifndef ELECCION_H_
-#define ELECCION_H_
 
-class Eleccion
-//: public Serializable{
-{
+class Eleccion : public Serializable{
+
 private:
 	string			fecha;				// identificador
 	string			cargoPrincipal;		// identificador
@@ -45,9 +47,9 @@ public:
 
 	~Eleccion();
 
-	//std::string* serializar(){}
+	string* serializar();
 
-	//void deserializar(std::string* source) {}
+	void deserializar(string*);
 
 };
 
