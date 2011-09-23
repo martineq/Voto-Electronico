@@ -86,13 +86,14 @@ string* Cargo::serializar(){
 
 void Cargo::deserializar(string * source){
 	istringstream streamDatos(*source);
-//	stringstream miString;
+	delete source;
 	int sizeOfCargo;
 	unsigned int cantCargos;
     streamDatos.read((char*)&sizeOfCargo,TAM_INT);
     char* cargoChar = new char[sizeOfCargo];
     streamDatos.read((char*)cargoChar,sizeOfCargo);
     string cargoString(cargoChar);
+    delete [] cargoChar;
     this->cargo = cargoString;
     streamDatos.read((char*)&cantCargos,TAM_INT);
 	for (unsigned int i = 0; i < cantCargos;i++){
@@ -103,7 +104,7 @@ void Cargo::deserializar(string * source){
 		miString->write(cargoTemp,sizeOfCargo);
 		string subCargo = miString->str();
 		this->listaCargos.push_back(subCargo);
-		delete cargoTemp;
+		delete [] cargoTemp;
 		delete miString;
 	}
 }

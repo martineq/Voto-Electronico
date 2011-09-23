@@ -9,13 +9,25 @@
 #define PRUEBAS_H_
 #include "./Entidades/Cargo.h"
 #include "./Entidades/Votante.h"
+#include "./Entidades/Distrito.h"
+#include "./Entidades/Candidato.h"
+#include "./Entidades/Lista.h"
+#include "./Entidades/Eleccion.h"
+#include <list>
+#include <string>
+#include <iostream>
+using namespace std;
 
 class Pruebas {
 public:
 	Pruebas();
 	int holaMundo();
-	int serializarCargo();
-	int cargaVotante();
+	int serializarDeserializarCargo();
+	void serializarDeserializarVotante();
+	void serializarDeserializarDistrito();
+	void serializarDeserializarLista();
+	void serializarDeserializarCandidato();
+	void serializarDeserializarEleccion();
 	virtual ~Pruebas();
 };
 

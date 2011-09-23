@@ -12,7 +12,8 @@ Votante::Votante(int dni, string nombre, string password, string domicilio, stri
 Votante::~Votante() {
 	list<EleccionAnterior*>::iterator it = listaDeEleccionesAnteriores->begin();
 	while (it!=listaDeEleccionesAnteriores->end()) {
-		delete (*it);
+		delete *it;
+		it++;
 	}
 	delete (listaDeEleccionesAnteriores);
 }
@@ -65,6 +66,7 @@ void Votante::verEleccionesAnteriores (){
 
 void Votante::verVotante() {
 	cout << "Nombre: "    << this->nombre   << endl;
+	cout << "DNI: "       << this->dni      << endl;
 	cout << "Password: "  << this->password << endl;
 	cout << "Domicilio: " << this->domicilio<< endl;
 	cout << "Distrito: "  << this->distrito << endl;
@@ -72,10 +74,6 @@ void Votante::verVotante() {
 }
 
 string* Votante::serializar(){
-
-	cout << endl;
-	cout << "Comienzo de serializado" << endl;
-
 	stringstream buffer;
 	int cantidadDeBytes;
 	buffer.write((char*)&this->dni,TAM_INT);
@@ -104,13 +102,12 @@ string* Votante::serializar(){
 		it++;
 	}
 	string* datos = new string(buffer.str());
-	cout << "Fin de serializado" << endl;
-	cout << endl;
 	return datos;
 }
 
-void Votante::deserializar(string * source){
+void Votante::deserializar(string* source){
 	istringstream buffer (*source);
+	delete source;
 	int cantidadDeBytes;
 
 //	hidrato el dni
@@ -118,68 +115,65 @@ void Votante::deserializar(string * source){
 
 //  hidrato el nombre
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    char* nombre = new char[cantidadDeBytes];
-    buffer.read((char*)nombre,cantidadDeBytes);
-    string* pasoAString = new string (nombre);
+    char* nombreSerializado = new char[cantidadDeBytes];
+    buffer.read((char*)nombreSerializado,cantidadDeBytes);
+    string* pasoAString = new string (nombreSerializado);
     this->nombre = *pasoAString;
-    delete (nombre);
-    delete (pasoAString);
+    delete []nombreSerializado;
+    delete pasoAString;
 
 //  hidrato el password
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    char* password = new char[cantidadDeBytes];
-    buffer.read((char*)password,cantidadDeBytes);
-    pasoAString = new string (password);
+    char* passwordSerializado = new char[cantidadDeBytes];
+    buffer.read((char*)passwordSerializado,cantidadDeBytes);
+    pasoAString = new string (passwordSerializado);
     this->password = *pasoAString;
-    delete (password);
-    delete (pasoAString);
-
-//  hidrato el distrito
-    buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    char* distrito = new char[cantidadDeBytes];
-    buffer.read((char*)distrito,cantidadDeBytes);
-    pasoAString = new string (distrito);
-    this->distrito = *pasoAString;
-    delete (distrito);
-    delete (pasoAString);
+    delete [] passwordSerializado;
+    delete pasoAString;
 
 //  hidrato el domicilio
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    char* domicilio = new char[cantidadDeBytes];
-    buffer.read((char*)domicilio,cantidadDeBytes);
-    pasoAString = new string (domicilio);
+    char* domicilioSerializado = new char[cantidadDeBytes];
+    buffer.read((char*)domicilioSerializado,cantidadDeBytes);
+    pasoAString = new string (domicilioSerializado);
     this->domicilio = *pasoAString;
-    delete (domicilio);
-    delete (pasoAString);
+    delete []domicilioSerializado;
+    delete pasoAString;
+
+//  hidrato el distrito
+    buffer.read((char*)&cantidadDeBytes,TAM_INT);
+    char* distritoSerializado = new char[cantidadDeBytes];
+    buffer.read((char*)distritoSerializado,cantidadDeBytes);
+    pasoAString = new string (distritoSerializado);
+    this->distrito = *pasoAString;
+    delete []distritoSerializado;
+    delete pasoAString;
 
 //  hidrato la lista de elecciones anteriores
     int tamanioDeLaLista;
     buffer.read((char*)&tamanioDeLaLista,TAM_INT);
-	for (int i=0; i<tamanioDeLaLista;i++){
-		EleccionAnterior* unaEleccionAnterior = new EleccionAnterior();
-
+    for (int i=0; i<tamanioDeLaLista;i++){
 //		hidrato la fecha de una Eleccion Anterior
-		stringstream* bufferAuxiliar = new stringstream(NULL);
+		stringstream* bufferAuxiliar = new stringstream;
 		buffer.read((char*)&cantidadDeBytes,TAM_INT);
-		char* fechaEnBytes = new char[cantidadDeBytes];
-		buffer.read(fechaEnBytes,cantidadDeBytes);
-		bufferAuxiliar->write(fechaEnBytes,cantidadDeBytes);
+		char* fechaSerializada = new char[cantidadDeBytes];
+		buffer.read(fechaSerializada,cantidadDeBytes);
+		bufferAuxiliar->write(fechaSerializada,cantidadDeBytes);
 		string fecha = bufferAuxiliar->str();
-		unaEleccionAnterior->fecha=fecha;
-		delete (bufferAuxiliar);
-		delete (fechaEnBytes);
+		delete bufferAuxiliar;
+		delete []fechaSerializada;
 
 //		hidrato el cargo de la Eleccion Anterior
-		bufferAuxiliar = new stringstream(NULL);
+		bufferAuxiliar = new stringstream;
 		buffer.read((char*)&cantidadDeBytes,TAM_INT);
 		char* cargoEnBytes = new char[cantidadDeBytes];
 		buffer.read(cargoEnBytes,cantidadDeBytes);
 		bufferAuxiliar->write(cargoEnBytes,cantidadDeBytes);
 		string cargo = bufferAuxiliar->str();
-		unaEleccionAnterior->cargo=cargo;
-		delete (cargoEnBytes);
-		delete (bufferAuxiliar);
+		delete []cargoEnBytes;
+		delete bufferAuxiliar;
 
+		EleccionAnterior* unaEleccionAnterior = new EleccionAnterior(fecha,cargo);
 		this->listaDeEleccionesAnteriores->push_back(unaEleccionAnterior);
 //		el delete de unaEleccionAnterior esta en el destructor
 //		porque mi lista es lista de punteros a Eleccion Anterior
