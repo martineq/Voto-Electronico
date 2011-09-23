@@ -24,6 +24,7 @@ public:
 	Pruebas();
 	int holaMundo();
 	int ManejadorDeArch();
+	int SerializarCargoYGuardarArchivo();
 	int serializarDeserializarCargo();
 	void serializarDeserializarVotante();
 	void serializarDeserializarDistrito();
