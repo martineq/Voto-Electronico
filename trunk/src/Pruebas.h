@@ -22,6 +22,7 @@ class Pruebas {
 public:
 	Pruebas();
 	int holaMundo();
+	int ManejadorDeArch();
 	int serializarDeserializarCargo();
 	void serializarDeserializarVotante();
 	void serializarDeserializarDistrito();

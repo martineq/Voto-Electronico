@@ -19,6 +19,48 @@ int Pruebas::holaMundo(){
     return 0;
 }
 
+int Pruebas::ManejadorDeArch(){
+	using namespace std;
+
+	ManejadorDeArchivo* man = new ManejadorDeArchivo();
+	string num= "55";
+	string str= "Cincuenta y cinco";
+	string salida;
+	char* buf = new char[20];
+
+	man->abrir("PruebaManejador.bin");
+	cout << "Estoy en la posición: " << man->obtenerPosicionDeLectura() <<endl;
+	cout << "Trato de ir al final" << endl;
+	man->posicionarseEnFin();
+	if (man->fin()==true) cout << "Estoy en el final, ahora vuelvo al principio" << endl;
+	man->posicionarse(0);
+	cout << "Estoy en la posición: "<< man->obtenerPosicionDeLectura() <<endl;
+	cout << "Guardo un '55'... " <<endl;
+	man->escribir(num.c_str(),num.size()) ;
+	cout << "Guardo un 'Cincuenta y cinco'... " << endl;
+	man->escribir(str.c_str(),str.size());
+	cout << "actualizo buffer" <<endl;
+	man->guardarBuffer();
+	cout << "Terminé de guardar" << endl;
+
+	cout << "Estoy en la posición: "<< man->obtenerPosicionDeLectura() <<endl;
+	cout << "Voy al inicio "<<endl;
+	man->posicionarse(0);
+	cout << "Estoy en la posición: "<< man->obtenerPosicionDeLectura() <<endl;
+	cout << "Empiezo a leer..." << endl;
+	man->leer(buf,num.size());
+	salida=buf;
+	cout << "Leo un '55' -> "<< salida <<endl;
+	man->leer(buf,str.size());
+	salida=buf;
+	cout << "Leo un 'Cincuenta y cinco' -> "<< salida <<endl;
+
+	cout << "Cierro el archivo..." << endl;
+	man->cerrar();
+
+	return 0;
+}
+
 
 
 int Pruebas::serializarDeserializarCargo(){

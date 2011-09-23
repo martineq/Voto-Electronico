@@ -11,12 +11,14 @@ using namespace std;
 int main(int argc,char* argv[]) {
 	Pruebas prueba;
 
-	prueba.serializarDeserializarCargo();
-	prueba.serializarDeserializarVotante();
-	prueba.serializarDeserializarDistrito();
-	prueba.serializarDeserializarLista();
-	prueba.serializarDeserializarEleccion();
-	prueba.serializarDeserializarCandidato();
+	//prueba.serializarDeserializarCargo();
+	//prueba.serializarDeserializarVotante();
+	//prueba.serializarDeserializarDistrito();
+	//prueba.serializarDeserializarLista();
+	//prueba.serializarDeserializarEleccion();
+	//prueba.serializarDeserializarCandidato();
+
+	//prueba.ManejadorDeArch(); // Esta prueba genera el archivo "PruebaManejador.bin" de 19 bytes
 
 	return 0;
 }
