@@ -1,14 +1,14 @@
 #include "ManejadorDeArchivo.h"
 
-
+// Constructor
 ManejadorDeArchivo::ManejadorDeArchivo(){
 
 }
 
+// Destructor
 ManejadorDeArchivo::~ManejadorDeArchivo(){
 
 }
-
 
 // Borra el archivo del disco
 void ManejadorDeArchivo::borrar(){
@@ -33,7 +33,7 @@ string ManejadorDeArchivo::obtenerNombreArchivo(){
 	return this->nombre;
 }
 
-
+// Devuelve el tamaño del archivo
 pos_type ManejadorDeArchivo::obtenerTamArchivo(){
 	ios::pos_type currPos = this->archivo.tellg();
 	this->archivo.seekg(0,ios_base::end);
@@ -42,10 +42,12 @@ pos_type ManejadorDeArchivo::obtenerTamArchivo(){
 	return lastPos;
 }
 
+// Devuelve la posición del puntero de lectura, dentro del archivo
 pos_type ManejadorDeArchivo::obtenerPosicionDeLectura(){
 	return this->archivo.tellg();
 }
 
+// Devuelve true si llegué al fin de archivo
 bool ManejadorDeArchivo::fin(){
 	bool esEof = (this->archivo.peek() == char_traits<char>::eof());
 
@@ -55,18 +57,20 @@ bool ManejadorDeArchivo::fin(){
 	return esEof;
 }
 
-void ManejadorDeArchivo::sincroBuffer(){
+// Guarda los datos bufferizados del archivo en el disco (acá aparece la noción del buffer del sistema)
+void ManejadorDeArchivo::guardarBuffer(){
 	if (this->archivo.is_open()) {
 		this->archivo.flush();
 
 		if (this->archivo.bad())
-			cerr << "No se pudo grabar correctamente el registro en el disco " << endl;
+			cerr << "No se pudo grabar correctamente en el disco " << endl;
 	}
 	else {
 		cerr << "El archivo no está abierto" << endl;
 	}
 }
 
+// Posiciono el puntero de lectura en el final del archivo
 void ManejadorDeArchivo::posicionarseEnFin(){
 	if (this->archivo.is_open()) {
 		this->archivo.seekg(0, ios_base::end);
@@ -79,9 +83,10 @@ void ManejadorDeArchivo::posicionarseEnFin(){
 	}
 }
 
-void ManejadorDeArchivo::posicionarse(ios::pos_type posicion){
+// Posiciono el puntero de lectura en la posición <pos>
+void ManejadorDeArchivo::posicionarse(ios::pos_type pos){
 	if (this->archivo.is_open()) {
-		this->archivo.seekg(posicion, ios_base::beg);
+		this->archivo.seekg(pos, ios_base::beg);
 
 		if (this->archivo.fail())
 			cerr << "No se pudo posicionar correctamente el registro" << endl;
@@ -91,6 +96,7 @@ void ManejadorDeArchivo::posicionarse(ios::pos_type posicion){
 	}
 }
 
+// Escribo en el archivo el <registro>, de una longitud <cantBytes> (en la posición actual del archivo)
 void ManejadorDeArchivo::escribir(const char* registro, size_t cantBytes){
 	if (this->archivo.is_open()) {
 		this->archivo.write(registro, cantBytes);
@@ -102,6 +108,7 @@ void ManejadorDeArchivo::escribir(const char* registro, size_t cantBytes){
 	}
 }
 
+// Leo desde el archivo y guardo en <registro>, con una longitud <cantBytes> (en la posición actual del archivo)
 void ManejadorDeArchivo::leer(char* registro, size_t cantBytes){
 	if (this->archivo.is_open()) {
 		this->archivo.read(registro, cantBytes);
@@ -113,10 +120,12 @@ void ManejadorDeArchivo::leer(char* registro, size_t cantBytes){
 	}
 }
 
+// Cierro el archivo
 void ManejadorDeArchivo::cerrar(){
 	this->archivo.close();
 }
 
+// Abro el archivo de nombre <nombre>
 void ManejadorDeArchivo::abrir(string nombre){
 	this->archivo.open(nombre.c_str(), ios::in | ios::out | ios::binary);
 
