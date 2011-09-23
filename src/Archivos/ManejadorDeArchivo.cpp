@@ -34,7 +34,7 @@ string ManejadorDeArchivo::obtenerNombreArchivo(){
 }
 
 // Devuelve el tamaño del archivo
-pos_type ManejadorDeArchivo::obtenerTamArchivo(){
+ios::pos_type ManejadorDeArchivo::obtenerTamArchivo(){
 	ios::pos_type currPos = this->archivo.tellg();
 	this->archivo.seekg(0,ios_base::end);
 	ios::pos_type lastPos = this->archivo.tellg();
@@ -43,7 +43,7 @@ pos_type ManejadorDeArchivo::obtenerTamArchivo(){
 }
 
 // Devuelve la posición del puntero de lectura, dentro del archivo
-pos_type ManejadorDeArchivo::obtenerPosicionDeLectura(){
+ios::pos_type ManejadorDeArchivo::obtenerPosicionDeLectura(){
 	return this->archivo.tellg();
 }
 
