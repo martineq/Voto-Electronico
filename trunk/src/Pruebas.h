@@ -13,6 +13,7 @@
 #include "./Entidades/Candidato.h"
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
+#include "./Archivos/EnBloques/ManejadorDeArchivo.h"
 #include <list>
 #include <string>
 #include <iostream>
