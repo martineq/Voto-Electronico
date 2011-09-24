@@ -1,6 +1,3 @@
-#include <string>
-#include "./Hashing/Bucket.h"
-#include "../Entidades/Serializable.h"
 
 
 using namespace std;
@@ -8,20 +5,32 @@ using namespace std;
 #ifndef REGISTRO_H_
 #define REGISTRO_H_
 
+#include <string>
+#include "./Hashing/Bucket.h"
+#include "../Entidades/Serializable.h"
+#include "../Entidades/Entidad.h"
+#include "./Hashing/FuncionHashing.h"
+
+
+
 class Registro : public Serializable {
 private:
-	string* bytes;
+	Entidad* contenido;
+	FuncionHashing* funcion;
 
 public:
 	Registro();
+
 	// ID es el identificador del registro del archivo
 	// clave = hash(ID)
 	// devuelve la clave
-	virtual int obtenerClave(string* bytes) = 0;
+	virtual int obtenerClave() = 0;
 
-	string* getBytes();
+	virtual Entidad* getContenido() = 0;
 
-	void setBytes(string* bytes);
+	void setContenido(Entidad* entidad) {
+		this->contenido = entidad;
+	}
 
 	virtual ~Registro();
 };
