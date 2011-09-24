@@ -9,28 +9,31 @@
 #include <vector>
 #include <cmath>
 #include "../InterpreteDeRegistro.h"
+#include "../EnBloques/ArchivoBloques.h"
 
-using namespace std;
+using std::string;
 
 #ifndef HASHINGEXTENSIBLE_H_
 #define HASHINGEXTENSIBLE_H_
 
 class HashingExtensible {
 private:
-	FILE*		archivo;
-	vector<int>	tablaDeHash;
-	vector<int> tablaDeDispersion;
-	//BLOQUE	ultimoBloqueAccedido;
+	ArchivoBloques*		archivo;
+	vector<int>			tablaDeHash;
+	vector<int> 		tablaDeDispersion;
+	Bucket*				bucket;
 
 	//Aplica la función de hash y devuelve la posicion en la tabla de Hash
 	int obtenerPosicion(int clave);
 
 	int obtenerDispersion(int bloque);
 
+	int numeroPosicionesAreemplazar(int posicion);
+
 public:
 	HashingExtensible();
 
-	HashingExtensible(FILE* Archivo);
+	HashingExtensible(ArchivoBloques* nombreArchivo);
 
 	int agregarRegistro(InterpreteDeRegistro* interprete,string* bytes);
 
