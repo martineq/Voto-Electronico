@@ -4,21 +4,27 @@
 #include <string>
 #include <iostream>
 #include "../../Entidades/Serializable.h"
+#include "InterpreteDeRegistro.h"
 using namespace std;
 
 
 class Bucket : public Serializable{
+private:
+	int espacioLibre;
+	list<InterpreteDeRegistro> listaRegistros;
+	InterpreteDeRegistro* interprete;
+
 public:
 	Bucket();
 
-	Bucket(int tamanioDispersion);
+	Bucket(int tamanioDispersion, InterpreteDeRegistro* tipoInterprete);
 
 	string* obtenerRegistro(int clave);
 
 	//devuelve el resultado de la operación
-	int agregarRegistro(int size,int clave,string* bytes);
+	int agregarRegistro(string* bytes);
 
-	int modificarRegistro(int clave,string* bytes);
+	int modificarRegistro(string* bytes);
 
 	int eliminarRegistro(int clave);
 
@@ -26,11 +32,21 @@ public:
 
 	int getTamanioDeDispersion ();
 
-	void duplicarTamanioDeDispersion ();
+	void setTamanioDeDispersion (int tamanio);
 
-	std::string* serializar();
+	InterpreteDeRegistro* getInterprete();
 
-	void deserializar(std::string* source);
+	void* setInterprete(InterpreteDeRegistro* tipoInterprete);
+
+	string* ubicarPrimero();
+
+	bool siguiente();
+
+	string* getActual();
+
+	string* serializar();
+
+	void deserializar(string* source);
 
 	~Bucket();
 };
