@@ -5,14 +5,14 @@
  *      Author: lÑ#$dsa44
  */
 
-#include "InterpreteDeRegistro.h"
+#include "Registro.h"
 
-InterpreteDeRegistro::InterpreteDeRegistro() {
+Registro::Registro() {
 	// TODO Auto-generated constructor stub
 
 }
 
-InterpreteDeRegistro::~InterpreteDeRegistro() {
+Registro::~Registro() {
 	// TODO Auto-generated destructor stub
 }
 
