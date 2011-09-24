@@ -6,6 +6,7 @@
  */
 
 #include <string>
+#include "./Hashing/Bucket.h"
 
 using namespace std;
 
