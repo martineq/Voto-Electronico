@@ -5,7 +5,7 @@
 #include <iostream>
 #include <list>
 #include "../../Entidades/Serializable.h"
-#include "../InterpreteDeRegistro.h"
+#include "../Registro.h"
 
 
 using namespace std;
@@ -14,13 +14,13 @@ class Bucket : public Serializable {
 
 private:
 	int espacioLibre;
-	list<InterpreteDeRegistro*> listaRegistros;
-	InterpreteDeRegistro* interprete;
+	list<Registro*> listaRegistros;
+	Registro* interprete;
 
 public:
 	Bucket();
 
-	Bucket(int tamanioDispersion, InterpreteDeRegistro* tipoInterprete);
+	Bucket(int tamanioDispersion, Registro* tipoInterprete);
 
 	string* obtenerRegistro(int clave);
 
@@ -37,9 +37,9 @@ public:
 
 	void setTamanioDeDispersion (int tamanio);
 
-	InterpreteDeRegistro* getInterprete();
+	Registro* getInterprete();
 
-	void* setInterprete(InterpreteDeRegistro* tipoInterprete);
+	void setInterprete(Registro* tipoInterprete);
 
 	string* ubicarPrimero();
 

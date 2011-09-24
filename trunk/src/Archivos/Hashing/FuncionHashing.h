@@ -5,12 +5,14 @@
  *      Author: lÑ#$dsa44
  */
 
-#include <string>
-
-using std::string;
 
 #ifndef FUNCIONHASHING_H_
 #define FUNCIONHASHING_H_
+
+
+#include <string>
+
+using std::string;
 
 class FuncionHashing {
 public:

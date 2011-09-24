@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "../InterpreteDeRegistro.h"
+#include "../Registro.h"
 #include "../EnBloques/ArchivoBloques.h"
 #include "RegistroCandidato.h"
 #include "RegistroVotante.h"
@@ -38,9 +38,9 @@ public:
 
 	HashingExtensible(ArchivoBloques* nombreArchivo);
 
-	int agregarRegistro(InterpreteDeRegistro* interprete,string* bytes);
+	int agregarRegistro(Registro* interprete,string* bytes);
 
-	int modificarRegistro(InterpreteDeRegistro* interprete,string* elemento);
+	int modificarRegistro(Registro* interprete,string* elemento);
 
 	int eliminarRegistro(int clave);
 

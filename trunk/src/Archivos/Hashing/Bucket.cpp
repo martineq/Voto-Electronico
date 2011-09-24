@@ -14,7 +14,7 @@ Bucket::Bucket() {
 }
 
 
-Bucket::Bucket(int tamanioDispersion, InterpreteDeRegistro* tipoInterprete){
+Bucket::Bucket(int tamanioDispersion, Registro* tipoInterprete){
 
 }
 
@@ -47,11 +47,11 @@ void Bucket::setTamanioDeDispersion (int tamanio){
 
 }
 
-InterpreteDeRegistro* Bucket::getInterprete(){
+Registro* Bucket::getInterprete(){
 
 }
 
-void* Bucket::setInterprete(InterpreteDeRegistro* tipoInterprete){
+void Bucket::setInterprete(Registro* tipoInterprete){
 
 }
 

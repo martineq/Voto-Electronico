@@ -8,13 +8,21 @@
 #ifndef REGISTROCANDIDATO_H_
 #define REGISTROCANDIDATO_H_
 
-#include "../InterpreteDeRegistro.h"
+#include "../Registro.h"
+#include "../../Entidades/Candidato.h"
 
-class RegistroCandidato: public InterpreteDeRegistro {
+class RegistroCandidato: public Registro {
+private:
+	Candidato* candidato;
 public:
 	RegistroCandidato();
 
 	int obtenerClave(string* bytes);
+
+
+	string* serializar();
+	void deserializar(string * source);
+
 
 	virtual ~RegistroCandidato();
 };
