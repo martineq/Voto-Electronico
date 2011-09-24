@@ -17,6 +17,15 @@ int RegistroVotante::obtenerClave(string* bytes){
 	return 0;
 }
 
+string* RegistroVotante::serializar(){
+
+}
+
+void RegistroVotante::deserializar(string * source){
+
+}
+
+
 RegistroVotante::~RegistroVotante() {
 	// TODO Auto-generated destructor stub
 }

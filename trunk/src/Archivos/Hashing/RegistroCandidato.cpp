@@ -12,10 +12,17 @@ RegistroCandidato::RegistroCandidato() {
 
 }
 
-int RegistroCandidato::obtenerClave(string* bytes){
+int RegistroCandidato::obtenerClave(){
+	this->candidato->deserializar(bytes);
 
+	this->candidato->verCandidato();
 	return 0;
 }
+
+Candidato* RegistroCandidato::getContenido(){
+	return this->candidato;
+}
+
 
 string* RegistroCandidato::serializar(){
 

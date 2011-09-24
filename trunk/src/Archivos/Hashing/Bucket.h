@@ -8,6 +8,7 @@
 #include "../Registro.h"
 
 
+
 using namespace std;
 
 class Bucket : public Serializable {
@@ -15,14 +16,14 @@ class Bucket : public Serializable {
 private:
 	int espacioLibre;
 	list<Registro*> listaRegistros;
-	Registro* interprete;
+	Registro* registro;
 
 public:
 	Bucket();
 
 	Bucket(int tamanioDispersion, Registro* tipoInterprete);
 
-	string* obtenerRegistro(int clave);
+	Registro* obtenerRegistro(int clave);
 
 	//devuelve el resultado de la operación
 	int agregarRegistro(string* bytes);
