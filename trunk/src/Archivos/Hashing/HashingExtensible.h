@@ -8,11 +8,12 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "../Registro.h"
+#include "Registro.h"
 #include "../EnBloques/ArchivoBloques.h"
 #include "RegistroCandidato.h"
 #include "RegistroVotante.h"
 #include "HashingVotante.h"
+#include "Bucket.h"
 
 using std::string;
 

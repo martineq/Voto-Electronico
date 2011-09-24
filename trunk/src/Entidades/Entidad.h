@@ -12,8 +12,7 @@
 
 class Entidad: public Serializable {
 public:
-	Entidad();
-	virtual ~Entidad();
+
 };
 
 #endif /* ENTIDAD_H_ */

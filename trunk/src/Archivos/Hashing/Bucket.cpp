@@ -8,30 +8,28 @@
 #include "Bucket.h"
 
 
-Bucket::Bucket() {
-	// TODO Auto-generated constructor stub
+Bucket::Bucket(){
 
 }
 
-
-Bucket::Bucket(int tamanioDispersion, Registro* tipoInterprete){
-
-}
-
-string* Bucket::obtenerRegistro(int clave){
+Bucket::Bucket(int dispersion, Registro* registro){
 
 }
 
-//devuelve el resultado de la operación
-int Bucket::agregarRegistro(string* bytes){
-
-}
-
-int Bucket::modificarRegistro(string* bytes){
+//devuelve el resultado de la operacion
+bool Bucket::agregarRegistro(Registro* registro){
 
 }
 
 int Bucket::eliminarRegistro(int clave){
+
+}
+
+int Bucket::reemplazarRegistro(Registro* registro){
+
+}
+
+Registro* Bucket::getRegistro(int){
 
 }
 
@@ -43,15 +41,15 @@ int Bucket::getTamanioDeDispersion (){
 
 }
 
-void Bucket::setTamanioDeDispersion (int tamanio){
-
-}
-
 Registro* Bucket::getInterprete(){
 
 }
 
-void Bucket::setInterprete(Registro* tipoInterprete){
+void  Bucket::setTamanioDeDispersion (int clave){
+
+}
+
+void Bucket::setInterprete(Registro* registro){
 
 }
 
@@ -63,7 +61,7 @@ bool Bucket::siguiente(){
 
 }
 
-string* Bucket::getActual(){
+Registro* Bucket::getActual(){
 
 }
 
@@ -73,9 +71,5 @@ string* Bucket::serializar(){
 
 void Bucket::deserializar(string* source){
 
-}
-
-Bucket::~Bucket() {
-	// TODO Auto-generated destructor stub
 }
 

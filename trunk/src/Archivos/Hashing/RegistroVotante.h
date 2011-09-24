@@ -1,7 +1,7 @@
 #ifndef REGISTROVOTANTE_H_
 #define REGISTROVOTANTE_H_
 
-#include "../Registro.h"
+#include "Registro.h"
 #include "../../Entidades/Votante.h"
 
 using namespace std;
@@ -14,14 +14,14 @@ public:
 
 	int obtenerClave();
 
-    Candidato* getContenido();
+    Entidad* getContenido();
 
 
 	string* serializar();
 	void deserializar(string * source);
 
 
-	virtual ~RegistroCandidato();
+	virtual ~RegistroVotante();
 };
 
 #endif /* REGISTROVOTANTE_H_ */

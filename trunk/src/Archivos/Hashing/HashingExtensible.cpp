@@ -66,8 +66,8 @@ int HashingExtensible::agregarRegistro(Registro* interprete,string* bytes){
 	int dispersionBucketActualizado;
 
 	//Obtener clave es la función de hashing
-	int clave = interprete->obtenerClave(bytes);
-
+//	int clave = interprete->obtenerClave(bytes);
+	int clave = 0;
 	// Se aplica la "función modulo" para obtener la posicion de la tabla aplicando el logaritmo en base 2 del tamaño de la tabla.
 	posicion = this->obtenerPosicion(clave);
 
@@ -75,8 +75,8 @@ int HashingExtensible::agregarRegistro(Registro* interprete,string* bytes){
 	bucket = new Bucket();
 	//string* B = this->archivo->obtenerBloque(numeroDeBucket);
 	bucket->deserializar(B);
-	bucketCompleto = bucket->agregarRegistro(bytes);	//manejador de bloques
-
+//	bucketCompleto = bucket->agregarRegistro(bytes);	//manejador de bloques
+	bucketCompleto = 0;
 	if (!bucketCompleto){
 		//char* R = bucket->serializar();
 		this->archivo->guardarBloque(numeroDeBucket,R);

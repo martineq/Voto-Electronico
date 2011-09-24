@@ -6,15 +6,14 @@ using namespace std;
 #define REGISTRO_H_
 
 #include <string>
-#include "./Hashing/Bucket.h"
-#include "../Entidades/Serializable.h"
-#include "../Entidades/Entidad.h"
-#include "./Hashing/FuncionHashing.h"
+#include "../../Entidades/Serializable.h"
+#include "../../Entidades/Entidad.h"
+#include "FuncionHashing.h"
 
 
 
 class Registro : public Serializable {
-private:
+protected:
 	Entidad* contenido;
 	FuncionHashing* funcion;
 
