@@ -13,9 +13,19 @@ RegistroCandidato::RegistroCandidato() {
 }
 
 int RegistroCandidato::obtenerClave(string* bytes){
-	//TODO
+
 	return 0;
 }
+
+string* RegistroCandidato::serializar(){
+
+}
+
+void RegistroCandidato::deserializar(string * source){
+
+}
+
+
 
 RegistroCandidato::~RegistroCandidato() {
 	// TODO Auto-generated destructor stub

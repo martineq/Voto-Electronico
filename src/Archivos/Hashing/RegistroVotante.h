@@ -8,9 +8,9 @@
 #ifndef REGISTROVOTANTE_H_
 #define REGISTROVOTANTE_H_
 
-#include "../InterpreteDeRegistro.h"
+#include "../Registro.h"
 
-class RegistroVotante: public InterpreteDeRegistro {
+class RegistroVotante: public Registro {
 public:
 	RegistroVotante();
 

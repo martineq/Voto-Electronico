@@ -34,7 +34,7 @@ HashingExtensible::HashingExtensible(ArchivoBloques* archivoBloques) {
 	this->tablaDeDispersion.push_back( dispersion );
 
 	// Almaceno el bloque 0 en el archivo
-	InterpreteDeRegistro* interprete = new RegistroCandidato();
+	Registro* interprete = new RegistroCandidato();
 	bucket = new Bucket(dispersion, interprete);
 	//char* R = bucket->serializar();
 	this->archivo->guardarBloque(numeroDeBucket,R);
@@ -52,7 +52,7 @@ int HashingExtensible::obtenerPosicion(int clave){
 	return posicion;
 }
 
-int HashingExtensible::agregarRegistro(InterpreteDeRegistro* interprete,string* bytes){
+int HashingExtensible::agregarRegistro(Registro* interprete,string* bytes){
 	int numeroDeBucket;
 	char* R;
 	string* B;
@@ -117,7 +117,7 @@ int HashingExtensible::agregarRegistro(InterpreteDeRegistro* interprete,string* 
 		this->tablaDeDispersion.push_back(dispersionNuevoBucket);
 
 		// Se crea el nuevo Bucket.
-		InterpreteDeRegistro* interprete = new RegistroCandidato();
+		Registro* interprete = new RegistroCandidato();
 		Bucket* nuevoBucket = new Bucket(dispersionNuevoBucket, interprete);
 		//R = nuevoBucket->serializar();
 		this->archivo->guardarBloque(numeroDeBucket,R);
@@ -140,7 +140,7 @@ int HashingExtensible::agregarRegistro(InterpreteDeRegistro* interprete,string* 
 	return 0;
 }
 
-int HashingExtensible::modificarRegistro(InterpreteDeRegistro* interprete,string* elemento){
+int HashingExtensible::modificarRegistro(Registro* interprete,string* elemento){
 	//TODO
 	return 0;
 }
