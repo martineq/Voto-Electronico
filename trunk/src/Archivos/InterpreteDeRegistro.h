@@ -1,19 +1,14 @@
-/*
- * InterpreteDeRegistro.h
- *
- *  Created on: 22/09/2011
- *      Author: lÑ#$dsa44
- */
-
 #include <string>
 #include "./Hashing/Bucket.h"
+#include "../Entidades/Serializable.h"
+
 
 using namespace std;
 
 #ifndef INTERPRETEDEREGISTRO_H_
 #define INTERPRETEDEREGISTRO_H_
 
-class InterpreteDeRegistro {
+class InterpreteDeRegistro  {
 private:
 	string* bytes;
 
@@ -27,6 +22,7 @@ public:
 	string* getBytes();
 
 	void setBytes(string* bytes);
+
 
 	virtual ~InterpreteDeRegistro();
 };
