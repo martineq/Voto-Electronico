@@ -6,7 +6,7 @@
  */
 
 #include <string>
-#include "Serializable.h"
+#include "Entidad.h"
 #include "Constantes.h"
 
 using namespace std;
@@ -14,7 +14,7 @@ using namespace std;
 #ifndef DISTRITO_H_
 #define DISTRITO_H_
 
-class Distrito : public Serializable {
+class Distrito : public Entidad {
 
 private:
 	string distrito;

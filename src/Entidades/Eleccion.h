@@ -11,13 +11,13 @@
 #include <string>
 #include <iostream>
 #include "Distrito.h"
-#include "Serializable.h"
+#include "Entidad.h"
 #include "Cargo.h"
 #include <iostream>
 #include "Constantes.h"
 
 
-class Eleccion : public Serializable{
+class Eleccion : public Entidad {
 
 private:
 	string			fecha;				// identificador

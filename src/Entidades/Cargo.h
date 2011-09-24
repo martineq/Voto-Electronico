@@ -12,12 +12,12 @@
 
 #include <iostream>
 #include <list>
-#include "Serializable.h"
+#include "Entidad.h"
 #include "Constantes.h"
 
 using namespace std;
 
-class Cargo : public Serializable {
+class Cargo : public Entidad {
 private:
 	string cargo;
 	list<string> listaCargos;

@@ -10,14 +10,14 @@
 //Candidato ( ( (lista)ie, (votante)ie, (cargo)ie)i )
 //Candidato ( (fecha),(cargo),(nombre),(dni), (cargo) )
 #include "Constantes.h"
-#include "Serializable.h"
+#include "Entidad.h"
 #include <string>
 #include <list>
 #include <iostream>
 
 using namespace std;
 
-class Candidato:public Serializable{
+class Candidato:public Entidad{
 
 private:
 	string fecha;		//Identificador
@@ -29,9 +29,9 @@ public:
 	Candidato();
 	Candidato(string fecha, string cargo, string nombre, int dni);
 	void verCandidato ();
-	virtual ~Candidato();
 	string* serializar();
 	void deserializar(string*);
+	virtual ~Candidato();
 
 };
 

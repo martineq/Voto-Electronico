@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-class EleccionAnterior {
+class EleccionAnterior{
 private:
 	string fecha;
 	string cargo;
