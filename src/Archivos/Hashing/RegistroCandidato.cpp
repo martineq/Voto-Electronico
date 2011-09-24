@@ -13,14 +13,12 @@ RegistroCandidato::RegistroCandidato() {
 }
 
 int RegistroCandidato::obtenerClave(){
-	this->candidato->deserializar(bytes);
-
-	this->candidato->verCandidato();
+	this->contenido->serializar();
 	return 0;
 }
 
-Candidato* RegistroCandidato::getContenido(){
-	return this->candidato;
+Entidad* RegistroCandidato::getContenido(){
+	return this->contenido;
 }
 
 

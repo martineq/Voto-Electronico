@@ -12,9 +12,13 @@ RegistroVotante::RegistroVotante() {
 
 }
 
-int RegistroVotante::obtenerClave(string* bytes){
+int RegistroVotante::obtenerClave(){
 	//TODO
 	return 0;
+}
+
+Entidad* RegistroVotante::getContenido(){
+	return this->contenido;
 }
 
 string* RegistroVotante::serializar(){

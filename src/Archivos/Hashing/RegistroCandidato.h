@@ -1,7 +1,7 @@
 #ifndef REGISTROCANDIDATO_H_
 #define REGISTROCANDIDATO_H_
 
-#include "../Registro.h"
+#include "Registro.h"
 #include "../../Entidades/Candidato.h"
 
 using namespace std;
@@ -14,7 +14,7 @@ public:
 
 	int obtenerClave();
 
-    Candidato* getContenido();
+    Entidad* getContenido();
 
 
 	string* serializar();
