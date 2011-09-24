@@ -5,15 +5,15 @@
 
 using namespace std;
 
-#ifndef INTERPRETEDEREGISTRO_H_
-#define INTERPRETEDEREGISTRO_H_
+#ifndef REGISTRO_H_
+#define REGISTRO_H_
 
-class InterpreteDeRegistro  {
+class Registro : public Serializable {
 private:
 	string* bytes;
 
 public:
-	InterpreteDeRegistro();
+	Registro();
 	// ID es el identificador del registro del archivo
 	// clave = hash(ID)
 	// devuelve la clave
@@ -23,8 +23,7 @@ public:
 
 	void setBytes(string* bytes);
 
-
-	virtual ~InterpreteDeRegistro();
+	virtual ~Registro();
 };
 
-#endif /* INTERPRETEDEREGISTRO_H_ */
+#endif /* REGISTRO_H_ */
