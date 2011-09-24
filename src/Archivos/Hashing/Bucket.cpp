@@ -13,44 +13,66 @@ Bucket::Bucket() {
 
 }
 
-string *Bucket::obtenerRegistro(int clave)
-{
+
+Bucket::Bucket(int tamanioDispersion, InterpreteDeRegistro* tipoInterprete){
+
 }
 
-int Bucket::agregarRegistro(int size, int clave, string *bytes)
-{
+string* Bucket::obtenerRegistro(int clave){
+
 }
 
-int Bucket::modificarRegistro(int clave, string *bytes)
-{
+//devuelve el resultado de la operación
+int Bucket::agregarRegistro(string* bytes){
+
 }
 
-int Bucket::eliminarRegistro(int clave)
-{
+int Bucket::modificarRegistro(string* bytes){
+
 }
 
-Bucket::Bucket(int tamanioDispersion)
-{
+int Bucket::eliminarRegistro(int clave){
+
 }
 
-int Bucket::getEspacioLibre()
-{
+int Bucket::getEspacioLibre (){
+
 }
 
-int Bucket::getTamanioDeDispersion()
-{
+int Bucket::getTamanioDeDispersion (){
+
 }
 
-void Bucket::duplicarTamanioDeDispersion()
-{
+void Bucket::setTamanioDeDispersion (int tamanio){
+
 }
 
-std::string *Bucket::serializar()
-{
+InterpreteDeRegistro* Bucket::getInterprete(){
+
 }
 
-void Bucket::deserializar(std::string *source)
-{
+void* Bucket::setInterprete(InterpreteDeRegistro* tipoInterprete){
+
+}
+
+string* Bucket::ubicarPrimero(){
+
+}
+
+bool Bucket::siguiente(){
+
+}
+
+string* Bucket::getActual(){
+
+}
+
+string* Bucket::serializar(){
+
+}
+
+void Bucket::deserializar(string* source){
+
 }
 
 Bucket::~Bucket() {

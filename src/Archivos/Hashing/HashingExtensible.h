@@ -10,6 +10,9 @@
 #include <cmath>
 #include "../InterpreteDeRegistro.h"
 #include "../EnBloques/ArchivoBloques.h"
+#include "RegistroCandidato.h"
+#include "RegistroVotante.h"
+#include "HashingVotante.h"
 
 using std::string;
 
