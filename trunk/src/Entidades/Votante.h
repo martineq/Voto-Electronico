@@ -6,12 +6,12 @@
 #include "Eleccion.h"
 #include "EleccionAnterior.h"
 #include <iostream>
-#include "Serializable.h"
+#include "Entidad.h"
 #include "Constantes.h"
 
 using namespace std;
 
-class Votante : public Serializable {
+class Votante : public Entidad {
 private:
 	int dni;
 	string nombre;

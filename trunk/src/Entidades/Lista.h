@@ -3,11 +3,11 @@
 
 #include <string>
 #include <iostream>
-#include "Serializable.h"
+#include "Entidad.h"
 #include "Constantes.h"
 using namespace std;
 
-class Lista : public Serializable{
+class Lista : public Entidad {
 private:
 	string nombre;
 	string fecha;

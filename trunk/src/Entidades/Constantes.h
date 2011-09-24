@@ -24,8 +24,8 @@
 
 //Estados Nodo
 #define OK 0
-#define OVERFLOW 1
-#define UNDERFLOW 2
+//#define OVERFLOW 1
+//#define UNDERFLOW 2
 
 //Comparación de Elementos
 #define IGUAL 0
