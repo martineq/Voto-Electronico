@@ -3,15 +3,18 @@
 
 #include <string>
 #include <iostream>
+#include <list>
 #include "../../Entidades/Serializable.h"
-#include "InterpreteDeRegistro.h"
+#include "../InterpreteDeRegistro.h"
+
+
 using namespace std;
 
+class Bucket : public Serializable {
 
-class Bucket : public Serializable{
 private:
 	int espacioLibre;
-	list<InterpreteDeRegistro> listaRegistros;
+	list<InterpreteDeRegistro*> listaRegistros;
 	InterpreteDeRegistro* interprete;
 
 public:

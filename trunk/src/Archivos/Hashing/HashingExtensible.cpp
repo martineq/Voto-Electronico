@@ -34,7 +34,8 @@ HashingExtensible::HashingExtensible(ArchivoBloques* archivoBloques) {
 	this->tablaDeDispersion.push_back( dispersion );
 
 	// Almaceno el bloque 0 en el archivo
-	bucket = new Bucket(dispersion);
+	InterpreteDeRegistro* interprete = new RegistroCandidato();
+	bucket = new Bucket(dispersion, interprete);
 	//char* R = bucket->serializar();
 	this->archivo->guardarBloque(numeroDeBucket,R);
 
@@ -74,7 +75,7 @@ int HashingExtensible::agregarRegistro(InterpreteDeRegistro* interprete,string* 
 	bucket = new Bucket();
 	//string* B = this->archivo->obtenerBloque(numeroDeBucket);
 	bucket->deserializar(B);
-	bucketCompleto = bucket->agregarRegistro(bytes->length(),clave,bytes);	//manejador de bloques
+	bucketCompleto = bucket->agregarRegistro(bytes);	//manejador de bloques
 
 	if (!bucketCompleto){
 		//char* R = bucket->serializar();
@@ -116,12 +117,13 @@ int HashingExtensible::agregarRegistro(InterpreteDeRegistro* interprete,string* 
 		this->tablaDeDispersion.push_back(dispersionNuevoBucket);
 
 		// Se crea el nuevo Bucket.
-		Bucket* nuevoBucket = new Bucket(dispersionNuevoBucket);
+		InterpreteDeRegistro* interprete = new RegistroCandidato();
+		Bucket* nuevoBucket = new Bucket(dispersionNuevoBucket, interprete);
 		//R = nuevoBucket->serializar();
 		this->archivo->guardarBloque(numeroDeBucket,R);
 
 		// Se crea un nuevo Bucket para redispersar los elementos.
-		Bucket* bucketActualizado = new Bucket(dispersionBucketActualizado);
+		Bucket* bucketActualizado = new Bucket(dispersionBucketActualizado, interprete);
 		//R = bucketActualizado->serializar();
 		this->archivo->guardarBloque(numeroDeBucket,R);
 
