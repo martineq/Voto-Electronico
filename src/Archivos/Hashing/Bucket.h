@@ -2,41 +2,33 @@
 #define BUCKET_H_
 
 #include <list>
+#include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"
 #include "Registro.h"
-
-
 using namespace std;
 
 class Bucket : public Serializable {
 
 private:
 	int espacioLibre;
-	int tamanioDispersion;
-	list<Registro*> listaRegistros;
-	Registro* registro;
-
+	int tamanioDeDispersion;
+	list<Registro*> listaDeRegistros;
 
 public:
-	Bucket();
-	Bucket(int dispersion, Registro* registro);
-//devuelve el resultado de la operacion
-	bool agregarRegistro(Registro* registro);
-	int eliminarRegistro(int clave);
-	int reemplazarRegistro(Registro* registro);
+	Bucket(int);
+	//devuelve el resultado de la operacion
+	bool agregarRegistro(Registro*);
+	bool eliminarRegistro(int);
+	bool reemplazarRegistro(Registro*);
 	Registro* getRegistro(int);
 	int getEspacioLibre ();
 	int getTamanioDeDispersion ();
-	Registro* getInterprete();
-	void  setTamanioDeDispersion (int clave);
-	void setInterprete(Registro* interprete);
-	string* ubicarPrimero();
-	bool siguiente();
-	Registro* getActual();
+	int getCantidadDeRegistros ();
+	void  setTamanioDeDispersion (int);
+	list<Registro*>::iterator ubicarPrimero();
 	string* serializar();
-	void deserializar(string* source);
-
-~Bucket();
+	void deserializar(string*);
+	~Bucket();
 };
 
 #endif /* BUCKET_H_ */
