@@ -1,29 +1,28 @@
-/*
- * InterpreteDeRegistro.cpp
- *
- *  Created on: 22/09/2011
- *      Author: lÑ#$dsa44
- */
-
 #include "Registro.h"
 
-Registro::Registro() {
-	// TODO Auto-generated constructor stub
-
+int Registro::getTamanioRegistro(){
+	return this->contenido->getTamanio();
 }
 
-int getTamanio(){
-	//TODO
-#warning "Es necesario terminar de implementar este método para el correcto funcionamiento, lo emplea el bucket."
-	int tamanio = 0;
-	return tamanio;
-}
-
-int Registro::getTamanio()
+std::string *Registro::serializar()
 {
+	return this->contenido->serializar();
 }
 
-Registro::~Registro() {
-	// TODO Auto-generated destructor stub
+Entidad *Registro::getContenido()
+{
+	return this->contenido;
 }
 
+int Registro::obtenerClave(){
+	if ( this->contenido == NULL )
+		throw "Contenido inexistente";
+
+	return this->clave;
+}
+
+Registro::~Registro()
+{
+	delete(this->contenido);
+	this->contenido = NULL;
+}
