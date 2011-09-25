@@ -13,10 +13,6 @@ int HashingExtensible::numeroPosicionesAreemplazar(int numeroDeBucket){
 	return repeticionesBloque/2;
 }
 
-HashingExtensible::HashingExtensible(){
-	;
-}
-
 HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
 	this->archivo = archivoBloques;
 }
@@ -84,16 +80,20 @@ void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int 
 	bucketActualizado = new Bucket(dispersionBucketActualizado);
 	this->archivo->guardarBucket(numeroDeBucket,bucketActualizado);
 
-	// Se redispersan registros en bloque actual
-	// string* registro = obtenerRegistro();
-	// while (!bloqueVacio(BLOQUE)) {
-	//		clave_aux = obtenerClave(registro);
-	//		this->agregarRegistro(registro.lenght(),clave_aux,registro);
-	//}
+	int cantidadDeRegistros = bucket->getCantidadDeRegistros();
+	list<Registro*>::iterator iterador = bucket->ubicarPrimero();
+	for(int i = 0;i< cantidadDeRegistros;i++){
+		this->agregarRegistro(*iterador);
+		iterador++;
+	}
 
 }
 
-int HashingExtensible::agregarRegistro(Registro* registro){
+bool reducirTablaDeHash(){
+
+}
+
+void HashingExtensible::agregarRegistro(Registro* registro){
 
 	int numeroDeBucket;
 	Bucket* bucket;
@@ -108,11 +108,10 @@ int HashingExtensible::agregarRegistro(Registro* registro){
 
 	numeroDeBucket = this->tablaDeHash.at(posicionEnTablaDeHash);
 
-	bucket = this->obtenerBucket(numeroDeBucket);
+	bucket = this->archivo->obtenerBucket(numeroDeBucket);
 	bucketCompleto = bucket->agregarRegistro(registro);	//manejador de bloques
 
 	if (!bucketCompleto){
-		//char* R = bucket->serializar();
 		this->archivo->guardarBucket(numeroDeBucket,bucket);
 
 	}else{
@@ -121,19 +120,65 @@ int HashingExtensible::agregarRegistro(Registro* registro){
 		// Reintento agregar el registro que generó la redispersion
 		this->agregarRegistro(registro);
 	}
-	return 0;
 }
 
-int HashingExtensible::modificarRegistro(Registro* registro){
+void HashingExtensible::modificarRegistro(Registro* registro){
+	bool exito = 0;
 
+	int clave = registro->obtenerClave();
+	int posicionEnTablaDeHash = obtenerPosicion(clave);
+	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
+	Bucket* bucket = archivo->obtenerBucket(numeroDeBucket);
 
-	return 0;
+	if (bucket != NULL){
+		exito = bucket->reemplazarRegistro(registro);
+		if (!exito){
+			if ( bucket->getRegistro(numeroDeBucket) !=NULL ){
+				// En este caso no hubo exito al almacenar el registro y
+				// estaba disponible dentro del bucket.
+				redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
+				agregarRegistro(registro);
+			}
+		}
+	}
 }
 
 int HashingExtensible::eliminarRegistro(int clave){
-	//TODO
-	return 0;
+	int exito = 1;
+
+	int posicionEnTablaDeHash = obtenerPosicion(clave);
+	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
+
+	Bucket* bucket = archivo->obtenerBucket(numeroDeBucket);
+
+	Registro* registro = bucket->getRegistro(clave);
+	if ( registro !=NULL ){
+		exito = bucket->eliminarRegistro(clave);
+		if ( bucket->getCantidadDeRegistros() == 0 ){
+			int dispersionBucket;
+			if ((dispersionBucket = bucket->getTamanioDeDispersion()) == this->tablaDeHash.size()){
+				this->archivo->liberarBucket(numeroDeBucket);
+				tablaDeHash[posicionEnTablaDeHash] = tablaDeHash[posicionEnTablaDeHash & 1];
+
+				// Evaluar nuevo valor de dispersión del bucket.
+
+				// Verificar si los bloques se encuentran duplicados.
+				if (reducirTablaDeHash()==0){
+
+					// Se reduce el tamaño de la tabla de hash.
+
+				}
+			}else{
+
+				// Dispersión diferente al tamaño de la tabla.
+			}
+		}
+	}else{
+		exito = 0;
+	}
+
+	return exito;
 }
 
 HashingExtensible::~HashingExtensible() {
