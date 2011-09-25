@@ -16,7 +16,6 @@ public:
 
     Entidad* getContenido();
 
-
 	string* serializar();
 	void deserializar(string * source);
 

@@ -3,6 +3,7 @@
 
 #include "Registro.h"
 #include "../../Entidades/Votante.h"
+#include "HashingVotante.h"
 
 using namespace std;
 

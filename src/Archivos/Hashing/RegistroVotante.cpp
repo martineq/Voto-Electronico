@@ -8,7 +8,8 @@
 #include "RegistroVotante.h"
 
 RegistroVotante::RegistroVotante() {
-	// TODO Auto-generated constructor stub
+	this->contenido = new Votante();
+	this->funcion = new HashingVotante();
 
 }
 
