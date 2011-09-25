@@ -31,7 +31,7 @@ public:
 	/*
 	 * Obtiene el tamanio del registro luego de ser serializado.
 	 */
-	int getTamanioRegistro();
+	int getTamanio();
 
 	/*
 	 * Devuelve una clave obtenida tras aplicar una función de Hash al ID de la Entidad
@@ -50,3 +50,5 @@ public:
 
 	virtual ~Registro();
 };
+
+#endif /* REGISTRO_H_ */

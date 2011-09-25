@@ -2,7 +2,7 @@
 #define REGISTRODISTRITO_H_
 
 #include "../Registro.h"
-#include "../../Entidades/Distrito.h"
+#include "../../../Entidades/Distrito.h"
 
 class RegistroDistrito: public Registro {
 
@@ -34,9 +34,7 @@ public:
 	 */
 	void setContenido(Entidad* entidad);
 
-	/*
-	 * Hidrata el objeto, devolviendo una instancia de tipo RegistroDistrito.
-	 */
+
 	static Registro* hidratar(std::string* source);
 
 	~RegistroDistrito();

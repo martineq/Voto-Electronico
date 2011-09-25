@@ -1,6 +1,6 @@
 #include "Registro.h"
 
-int Registro::getTamanioRegistro(){
+int Registro::getTamanio(){
 	return this->contenido->getTamanio();
 }
 

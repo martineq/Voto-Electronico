@@ -1,9 +1,8 @@
 #ifndef REGISTROVOTANTE_H_
 #define REGISTROVOTANTE_H_
 
-#include "Registro.h"
-#include "../../Entidades/Votante.h"
-#include "HashingVotante.h"
+#include "../Registro.h"
+#include "../../../Entidades/Votante.h"
 
 using namespace std;
 

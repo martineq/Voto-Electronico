@@ -14,9 +14,6 @@ void Pruebas::pruebaHashingExtensible(){
 	Distrito* distrito2 = new Distrito("12");
 	RegistroDistrito* registro2 = new RegistroDistrito(distrito2);
 
-	string* source;
-	RegistroDistrito* reg = RegistroDistrito::hidratar(source);
-
 	Distrito* distrito3 = new Distrito("3");
 	RegistroDistrito* registro3 = new RegistroDistrito(distrito3);
 
