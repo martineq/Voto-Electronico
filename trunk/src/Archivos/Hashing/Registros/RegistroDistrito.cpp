@@ -13,7 +13,7 @@ RegistroDistrito::RegistroDistrito(Entidad *entidad)
 }
 
 int RegistroDistrito::determinarClave(){
-	Distrito* distrito = (Distrito)this->contenido;
+	Distrito* distrito = (Distrito*)this->contenido;
 
 	#warning "Esta solución es sólo para poder realizar pruebas, no es la definitiva."
 
@@ -39,19 +39,17 @@ void RegistroDistrito::setContenido(Entidad* entidad){
 	this->contenido = entidad;
 }
 
-static Registro *RegistroDistrito::hidratar(std::string *source)
-{
-	Distrito *distrito = new Distrito();
-	distrito->deserializar(source);
-	this->contenido = distrito;
-
-	return this;
-}
-
-
-
 RegistroDistrito::~RegistroDistrito()
 {
 	delete(this->contenido);
 }
 
+/*
+ * Hidrata el objeto, devolviendo una instancia de tipo RegistroDistrito.
+ */
+Registro* RegistroDistrito::hidratar(std::string *source){
+	Distrito *distrito = new Distrito();
+	distrito->deserializar(source);
+
+	return (Registro*)distrito;
+}
