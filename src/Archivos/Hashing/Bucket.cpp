@@ -60,7 +60,7 @@ bool Bucket::reemplazarRegistro(Registro* unRegistro){
 	else {
 		int clave=unRegistro->obtenerClave();
 		Registro* registroAReemplazar = this->getRegistro(clave);
-		if ((registroAReemplazar->getTamanio()+this->espacioLibre)>unRegistro->getTamanio){
+		if ((registroAReemplazar->getTamanio()+this->espacioLibre) > unRegistro->getTamanio()){
 			this->eliminarRegistro(clave);
 			this->agregarRegistro(unRegistro);
 			return true;
@@ -88,7 +88,7 @@ string* Bucket::serializar(){
 	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
 		cantidadDeBytes = ((*it)->getTamanio());
 		buffer.write((char*)&cantidadDeBytes,TAM_INT);
-		buffer.write((char*)*((*it)->serializar()),TAM_INT);
+		buffer.write(((*it)->serializar())->c_str(),TAM_INT);
 	}
 	string* datos = new string(buffer.str());
 	return datos;
@@ -113,8 +113,8 @@ void Bucket::deserializar(string* source){
 		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
 		string registroADeserializar = bufferAuxiliar->str();
 		Registro* unRegistro;
-		unRegistro->deSerializar(&registroADeserializar);
-		this->listaDeRegistros.agregarRegistro(unRegistro);
+		unRegistro->deserializar(&registroADeserializar);
+		this->listaDeRegistros.push_back(unRegistro);
 		delete bufferAuxiliar;
 		delete []registroSerializado;
 	}

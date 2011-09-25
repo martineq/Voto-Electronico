@@ -10,6 +10,57 @@
 Pruebas::Pruebas() {
 
 }
+void Pruebas::pruebaHashingExtensible(){
+
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets();
+	HashingExtensible* he = new HashingExtensible(archivo);
+
+	Distrito* distrito = new Distrito("1");
+	RegistroDePrueba* registro = new RegistroDePrueba(distrito);
+
+	Distrito* distrito2 = new Distrito("12");
+	RegistroDePrueba* registro2 = new RegistroDePrueba(distrito2);
+
+	Distrito* distrito3 = new Distrito("3");
+	RegistroDePrueba* registro3 = new RegistroDePrueba(distrito3);
+
+	he->agregarRegistro(registro);
+	he->agregarRegistro(registro2);
+	he->agregarRegistro(registro3);
+
+
+	delete(archivo);
+	delete(he);
+	delete(distrito);
+	delete(registro);
+	delete(distrito2);
+	delete(registro2);
+	delete(distrito3);
+	delete(registro3);
+
+}
+
+void Pruebas::pruebaRegistro(){
+	Distrito* distrito = new Distrito("Buenos Aires");
+	RegistroDePrueba* registro = new RegistroDePrueba(distrito);
+	Bucket* bucket = new Bucket(0);
+
+	bucket->agregarRegistro(registro);
+	//delete(registro);
+	//delete(distrito);
+
+	cout << "cantidad de registros: " << bucket->getCantidadDeRegistros() << endl;
+	list<Registro*>::iterator it = bucket->ubicarPrimero();
+
+	Registro* reg = *it;
+	distrito = (Distrito*)reg->getContenido();
+	cout << "Distrito: " << distrito->getDistrito() << endl;
+
+	delete(distrito);
+	delete(reg);
+	delete(bucket);
+
+}
 
 int Pruebas::holaMundo(){
 

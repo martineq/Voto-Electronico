@@ -9,9 +9,10 @@
 #include <vector>
 #include <cmath>
 
-#include "Registro.h"
-#include "ArchivoDeBuckets.h"
+#include "../../ClasesDePrueba/ArchivoDeBuckets.h"
 #include "Bucket.h"
+#include "Registro.h"
+
 
 //#include "RegistroCandidato.h"
 //#include "RegistroVotante.h"
@@ -27,6 +28,7 @@ private:
 	ArchivoDeBuckets*	archivo;
 	vector<int>			tablaDeHash;
 	vector<int> 		tablaDeDispersion;
+	list<int>			listaDeBucketsLibres;
 	Bucket*				bucket;
 
 	//Aplica la función de hash y devuelve la posicion en la tabla de Hash

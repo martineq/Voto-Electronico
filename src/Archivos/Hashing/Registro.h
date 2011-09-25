@@ -27,6 +27,8 @@ public:
 
 	virtual Entidad* getContenido() = 0;
 
+	int getTamanio();
+
 	void setContenido(Entidad* entidad) {
 		this->contenido = entidad;
 	}
