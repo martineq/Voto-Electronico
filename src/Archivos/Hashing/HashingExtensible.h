@@ -38,16 +38,16 @@ private:
 
 	void redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash);
 
-	Bucket obtenerBucket(int numeroDeBucket);
+	bool reducirTablaDeHash();
 
 public:
 	HashingExtensible();
 
 	HashingExtensible(ArchivoDeBuckets* nombreArchivo);
 
-	int agregarRegistro(Registro* registro);
+	void agregarRegistro(Registro* registro);
 
-	int modificarRegistro(Registro* registro);
+	void modificarRegistro(Registro* registro);
 
 	int eliminarRegistro(int clave);
 
