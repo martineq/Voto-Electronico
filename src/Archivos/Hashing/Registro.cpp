@@ -1,5 +1,14 @@
 #include "Registro.h"
 
+/*
+ * El método realiza el cálculo de la clave modificando el atributo de la clase
+ * debe ser invocado luego de modificar el contenido.
+ */
+void Registro::determinarClave(){
+	this->clave = this->contenido->getClave();
+}
+
+
 int Registro::getTamanio(){
 	return this->contenido->getTamanio();
 }

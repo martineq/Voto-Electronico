@@ -6,12 +6,6 @@
 
 class RegistroDistrito: public Registro {
 
-private:
-	/*
-	 * Realiza el cálculo para obtener la clave a partir del ID del distrito.
-	 */
-	void determinarClave();
-
 public:
 
 	/*

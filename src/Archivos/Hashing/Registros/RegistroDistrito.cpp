@@ -12,15 +12,6 @@ RegistroDistrito::RegistroDistrito(Entidad *entidad)
 	this->contenido = entidad;
 }
 
-void RegistroDistrito::determinarClave(){
-	Distrito* distrito = (Distrito*)this->contenido;
-
-	#warning "Esta solución es sólo para poder realizar pruebas, no es la definitiva."
-
-	this->clave = distrito->getDistrito().size();
-
-}
-
 void RegistroDistrito::deserializar(std::string *source)
 {
 	if ( this->contenido != NULL )
