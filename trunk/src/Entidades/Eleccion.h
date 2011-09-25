@@ -31,6 +31,8 @@ public:
 
 	int getTamanio();
 
+	int getClave();
+
 	string getFecha();
 
 	void setFecha(string fecha);

@@ -31,6 +31,7 @@ public:
 	list<string> devolverSubCargos();
 	bool eliminarCargo(string subCargo);
 	int getTamanio();
+	int getClave();
 	virtual ~Cargo();
 
 	string* serializar();

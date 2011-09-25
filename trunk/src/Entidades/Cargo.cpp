@@ -66,6 +66,10 @@ int Cargo::getTamanio(){
 	return (tamanioCargo + tamanioLista);
 }
 
+int Cargo::getClave(){
+	return 0;
+}
+
 
 Cargo::~Cargo() {
 	this->listaCargos.clear();

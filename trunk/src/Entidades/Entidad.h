@@ -14,6 +14,7 @@
 class Entidad: public Serializable {
 public:
 	virtual int getTamanio() = 0;
+	virtual int getClave() = 0;
 };
 
 #endif /* ENTIDAD_H_ */

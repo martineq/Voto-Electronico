@@ -31,6 +31,8 @@ public:
 
 	int getTamanio();
 
+	int getClave();
+
 	void deserializar(string* source);
 
 	~Distrito();
