@@ -56,6 +56,16 @@ bool Cargo::eliminarCargo(string subCargo){
 	return existeCargo;
 }
 
+int Cargo::getTamanio(){
+	int tamanioCargo = TAM_INT + this->cargo.size();
+	int tamanioLista = TAM_INT * this->listaCargos.size();
+	list<string>::iterator it = this->listaCargos.begin();
+	while (it != this->listaCargos.end()){
+		tamanioLista += it->size();
+	}
+	return (tamanioCargo + tamanioLista);
+}
+
 
 Cargo::~Cargo() {
 	this->listaCargos.clear();

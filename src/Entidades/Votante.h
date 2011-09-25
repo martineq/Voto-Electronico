@@ -7,7 +7,6 @@
 #include "EleccionAnterior.h"
 #include <iostream>
 #include "Entidad.h"
-#include "Constantes.h"
 
 using namespace std;
 
@@ -22,6 +21,7 @@ private:
 	void verEleccionesAnteriores ();
 
 public:
+	Votante();
 	Votante(int dni, string nombre, string password, string domicilio, string distrito);
 	virtual ~Votante();
 	void setNombre (string);
@@ -29,6 +29,7 @@ public:
 	void setDomicilio (string);
 	void setDistrito (string);
 	void agregarEleccion (string,string);
+	int  getTamanio();
 	void deserializar (string* source);
 	void verVotante ();
 	int getDNI ();

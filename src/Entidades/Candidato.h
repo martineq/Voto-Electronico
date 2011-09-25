@@ -9,7 +9,7 @@
 #define CANDIDATO_H_
 //Candidato ( ( (lista)ie, (votante)ie, (cargo)ie)i )
 //Candidato ( (fecha),(cargo),(nombre),(dni), (cargo) )
-#include "Constantes.h"
+
 #include "Entidad.h"
 #include <string>
 #include <list>
@@ -29,6 +29,7 @@ public:
 	Candidato();
 	Candidato(string fecha, string cargo, string nombre, int dni);
 	void verCandidato ();
+	int getTamanio();
 	string* serializar();
 	void deserializar(string*);
 	virtual ~Candidato();

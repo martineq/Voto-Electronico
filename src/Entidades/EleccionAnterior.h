@@ -3,6 +3,8 @@
 
 #include <iterator>
 #include <string>
+#include "Constantes.h"
+
 using namespace std;
 
 class EleccionAnterior{
@@ -12,6 +14,7 @@ private:
 public:
 	EleccionAnterior(string fecha, string cargo);
 	EleccionAnterior();
+	int getTamanio();
 	string getFecha ();
 	string getCargo ();
 	virtual ~EleccionAnterior();

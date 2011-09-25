@@ -13,7 +13,7 @@
 #include <iostream>
 #include <list>
 #include "Entidad.h"
-#include "Constantes.h"
+
 
 using namespace std;
 
@@ -30,6 +30,7 @@ public:
 	bool agregarCargo(string subCargo);
 	list<string> devolverSubCargos();
 	bool eliminarCargo(string subCargo);
+	int getTamanio();
 	virtual ~Cargo();
 
 	string* serializar();

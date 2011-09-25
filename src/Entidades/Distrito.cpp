@@ -48,5 +48,8 @@ void Distrito::deserializar(string * source){
 }
 
 
+int Distrito::getTamanio(){
+	return (TAM_INT + this->getDistrito().size());
+}
 
 Distrito::~Distrito(){};
