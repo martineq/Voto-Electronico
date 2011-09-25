@@ -14,7 +14,7 @@ protected:
 	/*
 	 * Realiza el cálculo para obtener la clave a partir del ID de la Entidad.
 	 */
-	virtual int determinarClave() = 0;
+	virtual void determinarClave() = 0;
 
 public:
 
