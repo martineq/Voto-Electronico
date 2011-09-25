@@ -26,6 +26,10 @@ int Lista::getTamanio(){
 	return (tamanioNombre + tamanioFecha + tamanioCargo + tamanioCantVotos);
 }
 
+int Lista::getClave(){
+	return 0;
+}
+
 string Lista::getCargo () {
 	return cargo;
 }

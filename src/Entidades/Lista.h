@@ -18,6 +18,7 @@ public:
 	string getFecha ();
 	string getCargo ();
 	int getTamanio();
+	int getClave();
 	short int getCantidadDeVotos ();
 	void incrementarVotos ();
 	virtual ~Lista();

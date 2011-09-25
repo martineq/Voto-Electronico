@@ -52,4 +52,8 @@ int Distrito::getTamanio(){
 	return (TAM_INT + this->getDistrito().size());
 }
 
+int Distrito::getClave(){
+	return 0;
+}
+
 Distrito::~Distrito(){};

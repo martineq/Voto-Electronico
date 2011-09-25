@@ -30,6 +30,7 @@ public:
 	Candidato(string fecha, string cargo, string nombre, int dni);
 	void verCandidato ();
 	int getTamanio();
+	int getClave();
 	string* serializar();
 	void deserializar(string*);
 	virtual ~Candidato();

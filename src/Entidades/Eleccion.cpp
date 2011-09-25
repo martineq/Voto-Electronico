@@ -30,6 +30,10 @@ int Eleccion::getTamanio(){
 
 }
 
+int Eleccion::getClave(){
+	return 0;
+}
+
 string Eleccion::getFecha(){
 	return this->fecha;
 }

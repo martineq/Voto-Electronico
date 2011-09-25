@@ -93,3 +93,7 @@ int Candidato::getTamanio(){
 	int tamanioNombre = TAM_INT + this->nombre.size();
 	return (tamanioCargo + tamanioDni + tamanioFecha + tamanioNombre);
 }
+
+int Candidato::getClave(){
+	return 0;
+}
