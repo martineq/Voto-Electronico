@@ -13,7 +13,7 @@
 #include "./Entidades/Candidato.h"
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
-#include "./ClasesDePrueba/RegistroDePrueba.h"
+#include "./Archivos/Hashing/Registros/RegistroDistrito.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/Hashing/hashingExtensible.h"
 #include <list>
