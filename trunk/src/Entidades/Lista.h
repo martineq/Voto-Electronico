@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 #include "Entidad.h"
-#include "Constantes.h"
 using namespace std;
 
 class Lista : public Entidad {
@@ -18,6 +17,7 @@ public:
 	string getNombre ();
 	string getFecha ();
 	string getCargo ();
+	int getTamanio();
 	short int getCantidadDeVotos ();
 	void incrementarVotos ();
 	virtual ~Lista();

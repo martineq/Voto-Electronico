@@ -17,6 +17,15 @@ string Lista::getNombre () {
 string Lista::getFecha () {
 	return fecha;
 }
+
+int Lista::getTamanio(){
+	int tamanioNombre = TAM_INT + this->nombre.size();
+	int tamanioFecha = this->fecha.size(); //por default 8
+	int tamanioCargo = TAM_INT + this->cargo.size();
+	int tamanioCantVotos = sizeof(short int);
+	return (tamanioNombre + tamanioFecha + tamanioCargo + tamanioCantVotos);
+}
+
 string Lista::getCargo () {
 	return cargo;
 }

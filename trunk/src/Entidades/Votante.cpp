@@ -1,5 +1,10 @@
 #include "Votante.h"
 
+
+Votante::Votante(){
+	this->dni = 0;
+	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
+}
 Votante::Votante(int dni, string nombre, string password, string domicilio, string distrito) {
 	this->dni=dni;
 	this->nombre=nombre;
@@ -34,6 +39,24 @@ void Votante::agregarEleccion (string fecha, string cargo) {
 	EleccionAnterior* unaEleccionAnterior = new EleccionAnterior (fecha,cargo);
 	listaDeEleccionesAnteriores->push_back(unaEleccionAnterior);
 }
+
+int  Votante::getTamanio(){
+	int tamanioDni = TAM_INT;
+	int tamanioNombre = TAM_INT + this->nombre.size();
+	int tamanioPassword = TAM_INT + this->password.size();
+	int tamanioDomicilio = TAM_INT + this->domicilio.size();
+	int tamanioDistrito = TAM_INT + this->distrito.size();
+	int tamanioEleccionesAnteriores = TAM_INT; //tamaño de ver cantidad de elementos
+	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
+	while (it != this->listaDeEleccionesAnteriores->end()){
+		tamanioEleccionesAnteriores += (*it)->getTamanio();
+	}
+
+	return (tamanioDni + tamanioNombre + tamanioNombre + tamanioPassword + tamanioDomicilio +
+			tamanioDistrito + tamanioEleccionesAnteriores);
+
+}
+
 int Votante::getDNI () {
 	return this->dni;
 }

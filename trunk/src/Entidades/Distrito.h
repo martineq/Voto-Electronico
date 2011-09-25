@@ -7,7 +7,7 @@
 
 #include <string>
 #include "Entidad.h"
-#include "Constantes.h"
+
 
 using namespace std;
 
@@ -28,6 +28,8 @@ public:
 	void setDistrito(string distrito);
 
 	string* serializar();
+
+	int getTamanio();
 
 	void deserializar(string* source);
 

@@ -85,3 +85,11 @@ void Candidato::verCandidato() {
 	cout << "DNI: "    << this->dni    << endl;
 	cout << "Fecha de eleccion: " << this->fecha << endl;
 }
+
+int Candidato::getTamanio(){
+	int tamanioCargo = TAM_INT + this->cargo.size();
+	int tamanioDni = TAM_INT;
+	int tamanioFecha = this->fecha.size(); //por definición siempre va a ser 8
+	int tamanioNombre = TAM_INT + this->nombre.size();
+	return (tamanioCargo + tamanioDni + tamanioFecha + tamanioNombre);
+}

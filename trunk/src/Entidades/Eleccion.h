@@ -14,7 +14,7 @@
 #include "Entidad.h"
 #include "Cargo.h"
 #include <iostream>
-#include "Constantes.h"
+
 
 
 class Eleccion : public Entidad {
@@ -28,6 +28,8 @@ public:
 	Eleccion();
 
 	Eleccion(string fecha,string cargoPrincipal);
+
+	int getTamanio();
 
 	string getFecha();
 

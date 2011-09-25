@@ -18,6 +18,18 @@ Eleccion::Eleccion(string fecha,string cargoPrincipal){
 	this->cargoPrincipal= cargoPrincipal;
 }
 
+int Eleccion::getTamanio(){
+	int tamanioFecha = this->fecha.size(); //por default es 8
+	int tamanioCargoPrincipal = TAM_INT + this->cargoPrincipal.size();
+	int tamanioListaDistritos = TAM_INT; // este tam_int es la cantidad de distritos
+	list<Distrito>::iterator it = this->distritos.begin();
+	while (it != this->distritos.end()){
+		tamanioListaDistritos = it->getTamanio();
+	}
+	return (tamanioFecha + tamanioCargoPrincipal + tamanioListaDistritos);
+
+}
+
 string Eleccion::getFecha(){
 	return this->fecha;
 }
