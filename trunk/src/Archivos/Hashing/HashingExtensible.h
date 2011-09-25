@@ -8,12 +8,14 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+
 #include "Registro.h"
-#include "../EnBloques/ArchivoBloques.h"
-#include "RegistroCandidato.h"
-#include "RegistroVotante.h"
-#include "HashingVotante.h"
+#include "ArchivoDeBuckets.h"
 #include "Bucket.h"
+
+//#include "RegistroCandidato.h"
+//#include "RegistroVotante.h"
+//#include "HashingVotante.h"
 
 using std::string;
 
@@ -22,7 +24,7 @@ using std::string;
 
 class HashingExtensible {
 private:
-	ArchivoBloques*		archivo;
+	ArchivoDeBuckets*	archivo;
 	vector<int>			tablaDeHash;
 	vector<int> 		tablaDeDispersion;
 	Bucket*				bucket;
@@ -34,14 +36,18 @@ private:
 
 	int numeroPosicionesAreemplazar(int posicion);
 
+	void redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash);
+
+	Bucket obtenerBucket(int numeroDeBucket);
+
 public:
 	HashingExtensible();
 
-	HashingExtensible(ArchivoBloques* nombreArchivo);
+	HashingExtensible(ArchivoDeBuckets* nombreArchivo);
 
-	int agregarRegistro(Registro* interprete,string* bytes);
+	int agregarRegistro(Registro* registro);
 
-	int modificarRegistro(Registro* interprete,string* elemento);
+	int modificarRegistro(Registro* registro);
 
 	int eliminarRegistro(int clave);
 

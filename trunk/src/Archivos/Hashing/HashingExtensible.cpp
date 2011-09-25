@@ -1,10 +1,3 @@
-/*
- * HashingExtensible.cpp
- *
- *  Created on: 21/09/2011
- *      Author: daniel
- */
-
 #include "HashingExtensible.h"
 
 int HashingExtensible::obtenerDispersion(int bloque){
@@ -20,25 +13,12 @@ int HashingExtensible::numeroPosicionesAreemplazar(int numeroDeBucket){
 	return repeticionesBloque/2;
 }
 
-HashingExtensible::HashingExtensible(){;}
+HashingExtensible::HashingExtensible(){
+	;
+}
 
-HashingExtensible::HashingExtensible(ArchivoBloques* archivoBloques) {
-	char* R;
+HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
 	this->archivo = archivoBloques;
-
-	// Al crear el hashing creo el bloque 0 en forma lógica
-	// el mismo tiene dispersion 1;
-	int numeroDeBucket = 0;
-	this->tablaDeHash.push_back( numeroDeBucket );
-	int dispersion = this->tablaDeHash.size();
-	this->tablaDeDispersion.push_back( dispersion );
-
-	// Almaceno el bloque 0 en el archivo
-	Registro* interprete = new RegistroCandidato();
-	bucket = new Bucket(dispersion, interprete);
-	//char* R = bucket->serializar();
-	this->archivo->guardarBloque(numeroDeBucket,R);
-
 }
 
 int HashingExtensible::obtenerPosicion(int clave){
@@ -52,96 +32,102 @@ int HashingExtensible::obtenerPosicion(int clave){
 	return posicion;
 }
 
-int HashingExtensible::agregarRegistro(Registro* interprete,string* bytes){
-	int numeroDeBucket;
-	char* R;
-	string* B;
-	int bucketCompleto;
-	int posicion;
-	Bucket* bucket;
-	Bucket* bucketActualizado;
+void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash){
 	vector<int>::iterator it;
+	Bucket* nuevoBucket;
+	Bucket* bucketActualizado;
 
+	int nuevoNumeroDeBucket;
 	int dispersionNuevoBucket;
 	int dispersionBucketActualizado;
 
-	//Obtener clave es la función de hashing
-//	int clave = interprete->obtenerClave(bytes);
-	int clave = 0;
-	// Se aplica la "función modulo" para obtener la posicion de la tabla aplicando el logaritmo en base 2 del tamaño de la tabla.
-	posicion = this->obtenerPosicion(clave);
+	// Se agrega un nuevo numeroDeBucket en la posicion actual
+	nuevoNumeroDeBucket = this->tablaDeDispersion.size();
 
-	numeroDeBucket = this->tablaDeHash.at(posicion);
-	bucket = new Bucket();
-	//string* B = this->archivo->obtenerBloque(numeroDeBucket);
-	bucket->deserializar(B);
-//	bucketCompleto = bucket->agregarRegistro(bytes);	//manejador de bloques
-	bucketCompleto = 0;
-	if (!bucketCompleto){
-		//char* R = bucket->serializar();
-		this->archivo->guardarBloque(numeroDeBucket,R);
+	// Determina cuantas posiciones en la tabla de Hash serán reemplazadas
+	int posicionesAreemplazar = numeroPosicionesAreemplazar(numeroDeBucket);
+
+	if ( posicionesAreemplazar == 0 ){
+
+		// Se duplica la tabla
+		it 	= this->tablaDeHash.end();
+		this->tablaDeHash.insert(it,this->tablaDeHash.begin(),it);
+		this->tablaDeHash[posicionEnTablaDeHash] = nuevoNumeroDeBucket;
+
+		// Se calculan los nuevos tamaños de dispersion, del bucket a redispersar y del nuevo bucket.
+		dispersionBucketActualizado = 2 * tablaDeDispersion[numeroDeBucket];
+		dispersionNuevoBucket 		 = tablaDeDispersion[nuevoNumeroDeBucket];
 
 	}else{
-		// Se agrega un nuevo numeroDeBucket en la posicion actual
-		int nuevoNumeroDeBucket = this->tablaDeDispersion.size();
+		// Se calculan los nuevos tamaños de dispersion, del bucket a redispersar y del nuevo bucket.
+		dispersionBucketActualizado = 2 * tablaDeDispersion[numeroDeBucket];
+		dispersionNuevoBucket 		 = dispersionBucketActualizado;
 
-		// Determina cuantas posiciones en la tabla de Hash serán reemplazadas
-		int posicionesAreemplazar = numeroPosicionesAreemplazar(numeroDeBucket);
-
-		if ( posicionesAreemplazar == 0 ){
-			// Se duplica la tabla
-			it 	= this->tablaDeHash.end();
-			this->tablaDeHash.insert(it,this->tablaDeHash.begin(),it);
-			this->tablaDeHash[posicion] = nuevoNumeroDeBucket;
-
-			// Se calculan los nuevos tamaños de dispersion, del bucket a redispersar y del nuevo bucket.
-			dispersionBucketActualizado = 2 * tablaDeDispersion[numeroDeBucket];
-			dispersionNuevoBucket 		 = tablaDeDispersion[nuevoNumeroDeBucket];
-
-		}else{
-			// Se calculan los nuevos tamaños de dispersion, del bucket a redispersar y del nuevo bucket.
-			dispersionBucketActualizado = 2 * tablaDeDispersion[numeroDeBucket];
-			dispersionNuevoBucket 		 = dispersionBucketActualizado;
-
-			// Actualiza la tabla de hash incoorporando el valor del nuevo bloque.
-			while (posicionesAreemplazar > 0){
-				posicionesAreemplazar--;
-				this->tablaDeHash[posicion+posicionesAreemplazar*dispersionNuevoBucket] = nuevoNumeroDeBucket;
-			}
+		// Actualiza la tabla de hash incoorporando el valor del nuevo bloque.
+		while (posicionesAreemplazar > 0){
+			posicionesAreemplazar--;
+			this->tablaDeHash[posicionEnTablaDeHash+posicionesAreemplazar*dispersionNuevoBucket] = nuevoNumeroDeBucket;
 		}
+	}
 
-		// Se actualiza la dispersion del bucket a redispersar.
-		this->tablaDeDispersion[numeroDeBucket] = dispersionBucketActualizado;
+	// Se actualiza la dispersion del bucket a redispersar.
+	this->tablaDeDispersion[numeroDeBucket] = dispersionBucketActualizado;
 
-		// Se agrega la dispersión del nuevo bloque
-		this->tablaDeDispersion.push_back(dispersionNuevoBucket);
+	// Se agrega la dispersión del nuevo bloque
+	this->tablaDeDispersion.push_back(dispersionNuevoBucket);
 
-		// Se crea el nuevo Bucket.
-		Registro* interprete = new RegistroCandidato();
-		Bucket* nuevoBucket = new Bucket(dispersionNuevoBucket, interprete);
-		//R = nuevoBucket->serializar();
-		this->archivo->guardarBloque(numeroDeBucket,R);
+	// Se crea el nuevo Bucket.
+	nuevoBucket = new Bucket(dispersionNuevoBucket);
+	this->archivo->guardarBucket(numeroDeBucket,nuevoBucket);
 
-		// Se crea un nuevo Bucket para redispersar los elementos.
-		Bucket* bucketActualizado = new Bucket(dispersionBucketActualizado, interprete);
-		//R = bucketActualizado->serializar();
-		this->archivo->guardarBloque(numeroDeBucket,R);
+	// Se crea un nuevo Bucket para redispersar los elementos.
+	bucketActualizado = new Bucket(dispersionBucketActualizado);
+	this->archivo->guardarBucket(numeroDeBucket,bucketActualizado);
 
-		// Se redispersan registros en bloque actual
-		// string* registro = obtenerRegistro();
-		// while (!bloqueVacio(BLOQUE)) {
-		//		clave_aux = obtenerClave(registro);
-		//		this->agregarRegistro(registro.lenght(),clave_aux,registro);
-		//}
+	// Se redispersan registros en bloque actual
+	// string* registro = obtenerRegistro();
+	// while (!bloqueVacio(BLOQUE)) {
+	//		clave_aux = obtenerClave(registro);
+	//		this->agregarRegistro(registro.lenght(),clave_aux,registro);
+	//}
+
+}
+
+int HashingExtensible::agregarRegistro(Registro* registro){
+
+	int numeroDeBucket;
+	Bucket* bucket;
+	bool bucketCompleto;
+	int posicionEnTablaDeHash;
+
+	//Obtener clave es la función de hashing
+	int clave = registro->obtenerClave();
+
+	// Se aplica la "función modulo" para obtener la posicion de la tabla aplicando el logaritmo en base 2 del tamaño de la tabla.
+	posicionEnTablaDeHash = this->obtenerPosicion(clave);
+
+	numeroDeBucket = this->tablaDeHash.at(posicionEnTablaDeHash);
+
+	bucket = this->obtenerBucket(numeroDeBucket);
+	bucketCompleto = bucket->agregarRegistro(registro);	//manejador de bloques
+
+	if (!bucketCompleto){
+		//char* R = bucket->serializar();
+		this->archivo->guardarBucket(numeroDeBucket,bucket);
+
+	}else{
+		redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
 
 		// Reintento agregar el registro que generó la redispersion
-			this->agregarRegistro(interprete,bytes);
+		this->agregarRegistro(registro);
 	}
 	return 0;
 }
 
-int HashingExtensible::modificarRegistro(Registro* interprete,string* elemento){
-	//TODO
+int HashingExtensible::modificarRegistro(Registro* registro){
+
+
+
 	return 0;
 }
 
