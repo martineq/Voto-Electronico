@@ -1,10 +1,3 @@
-/*
- * Pruebas.cpp
- *
- *  Created on: 17/09/2011
- *      Author: mart
- */
-
 #include "Pruebas.h"
 
 Pruebas::Pruebas() {
@@ -16,13 +9,16 @@ void Pruebas::pruebaHashingExtensible(){
 	HashingExtensible* he = new HashingExtensible(archivo);
 
 	Distrito* distrito = new Distrito("1");
-	RegistroDePrueba* registro = new RegistroDePrueba(distrito);
+	RegistroDistrito* registro = new RegistroDistrito(distrito);
 
 	Distrito* distrito2 = new Distrito("12");
-	RegistroDePrueba* registro2 = new RegistroDePrueba(distrito2);
+	RegistroDistrito* registro2 = new RegistroDistrito(distrito2);
+
+	string* source;
+	RegistroDistrito* reg = RegistroDistrito::hidratar(source);
 
 	Distrito* distrito3 = new Distrito("3");
-	RegistroDePrueba* registro3 = new RegistroDePrueba(distrito3);
+	RegistroDistrito* registro3 = new RegistroDistrito(distrito3);
 
 	he->agregarRegistro(registro);
 	he->agregarRegistro(registro2);
@@ -42,7 +38,7 @@ void Pruebas::pruebaHashingExtensible(){
 
 void Pruebas::pruebaRegistro(){
 	Distrito* distrito = new Distrito("Buenos Aires");
-	RegistroDePrueba* registro = new RegistroDePrueba(distrito);
+	RegistroDistrito* registro = new RegistroDistrito(distrito);
 	Bucket* bucket = new Bucket(0);
 
 	bucket->agregarRegistro(registro);
