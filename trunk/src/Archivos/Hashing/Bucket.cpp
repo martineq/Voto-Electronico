@@ -32,7 +32,7 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 		if ((int)sizeof(unRegistro)>this->espacioLibre) return false;
 		else {
 			this->listaDeRegistros.push_back(unRegistro);
-			this->espacioLibre-=sizeof(unRegistro);
+			this->espacioLibre-=unRegistro->getTamanio();
 			return true;
 		}
 }
@@ -46,7 +46,7 @@ bool Bucket::eliminarRegistro(int clave){
 			while (it!=listaDeRegistros.end()) {
 				int claveDeRegistroActual = (*it)->obtenerClave();
 				if (claveDeRegistroActual==clave) {
-					this->espacioLibre+=sizeof(*it);
+					this->espacioLibre+=(*it)->getTamanio();
 					this->listaDeRegistros.erase (it);
 					return true;
 				}
@@ -59,9 +59,12 @@ bool Bucket::reemplazarRegistro(Registro* unRegistro){
 	if (this->listaDeRegistros.empty()) return false;
 	else {
 		int clave=unRegistro->obtenerClave();
-		if (this->eliminarRegistro(clave))
-			if (this->agregarRegistro(unRegistro)) return true;
-			else return false;
+		Registro* registroAReemplazar = this->getRegistro(clave);
+		if ((registroAReemplazar->getTamanio()+this->espacioLibre)>unRegistro->getTamanio){
+			this->eliminarRegistro(clave);
+			this->agregarRegistro(unRegistro);
+			return true;
+		}
 		else return false;
 	}
 }
@@ -75,6 +78,45 @@ list<Registro*>::iterator Bucket::ubicarPrimero(){
 	return it;
 }
 
-string* Bucket::serializar(){string* hola; return hola;}
-void Bucket::deserializar(string* source){}
+string* Bucket::serializar(){
+	stringstream buffer;
+	int cantidadDeBytes;
+	buffer.write((char*)&this->espacioLibre,TAM_INT);
+	buffer.write((char*)&this->tamanioDeDispersion,TAM_INT);
+	int tamanioDeLaListaDeRegistros= this->listaDeRegistros.size();
+	buffer.write((char*)&tamanioDeLaListaDeRegistros,TAM_INT);
+	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
+		cantidadDeBytes = ((*it)->getTamanio());
+		buffer.write((char*)&cantidadDeBytes,TAM_INT);
+		buffer.write((char*)*((*it)->serializar()),TAM_INT);
+	}
+	string* datos = new string(buffer.str());
+	return datos;
+}
+void Bucket::deserializar(string* source){
+	istringstream buffer (*source);
+	delete source;
+	int cantidadDeBytes;
+
+	//	hidrato el espacio libre
+	buffer.read((char*)&this->espacioLibre,TAM_INT);
+	//	hidrato el tamanio de dispersion
+	buffer.read((char*)&this->tamanioDeDispersion,TAM_INT);
+	int tamanioDeLaLista;
+	buffer.read((char*)&tamanioDeLaLista,TAM_INT);
+	for (int i=0; i<tamanioDeLaLista;i++){
+		//hidrato el registro*
+		stringstream* bufferAuxiliar = new stringstream;
+		buffer.read((char*)&cantidadDeBytes,TAM_INT);
+		char* registroSerializado = new char[cantidadDeBytes];
+		buffer.read(registroSerializado,cantidadDeBytes);
+		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
+		string registroADeserializar = bufferAuxiliar->str();
+		Registro* unRegistro;
+		unRegistro->deSerializar(&registroADeserializar);
+		this->listaDeRegistros.agregarRegistro(unRegistro);
+		delete bufferAuxiliar;
+		delete []registroSerializado;
+	}
+}
 Bucket::~Bucket() {}
