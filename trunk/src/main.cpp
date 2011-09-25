@@ -11,7 +11,9 @@ using namespace std;
 int main(int argc,char* argv[]) {
 	Pruebas prueba;
 
-	prueba.holaMundo();
+	prueba.pruebaHashingExtensible();
+	//prueba.pruebaRegistro();
+	//prueba.holaMundo();
 	//prueba.serializarDeserializarCargo();
 	//prueba.serializarDeserializarVotante();
 	//prueba.serializarDeserializarDistrito();

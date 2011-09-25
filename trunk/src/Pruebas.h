@@ -13,6 +13,9 @@
 #include "./Entidades/Candidato.h"
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
+#include "./ClasesDePrueba/RegistroDePrueba.h"
+#include "./Archivos/Hashing/Bucket.h"
+#include "./Archivos/Hashing/hashingExtensible.h"
 #include <list>
 #include <string>
 #include <iostream>
@@ -21,6 +24,8 @@ using namespace std;
 class Pruebas {
 public:
 	Pruebas();
+	void pruebaHashingExtensible();
+	void pruebaRegistro();
 	int holaMundo();
 	int serializarDeserializarCargo();
 	void serializarDeserializarVotante();

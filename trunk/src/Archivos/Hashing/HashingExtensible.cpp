@@ -74,11 +74,11 @@ void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int 
 
 	// Se crea el nuevo Bucket.
 	nuevoBucket = new Bucket(dispersionNuevoBucket);
-	this->archivo->guardarBucket(numeroDeBucket,nuevoBucket);
+	this->archivo->guardarBucket(nuevoBucket);
 
 	// Se crea un nuevo Bucket para redispersar los elementos.
 	bucketActualizado = new Bucket(dispersionBucketActualizado);
-	this->archivo->guardarBucket(numeroDeBucket,bucketActualizado);
+	this->archivo->guardarBucket(bucketActualizado);
 
 	int cantidadDeRegistros = bucket->getCantidadDeRegistros();
 	list<Registro*>::iterator iterador = bucket->ubicarPrimero();
@@ -112,7 +112,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 	bucketCompleto = bucket->agregarRegistro(registro);	//manejador de bloques
 
 	if (!bucketCompleto){
-		this->archivo->guardarBucket(numeroDeBucket,bucket);
+		this->archivo->guardarBucket(bucket);
 
 	}else{
 		redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
@@ -164,11 +164,11 @@ int HashingExtensible::eliminarRegistro(int clave){
 				// Evaluar nuevo valor de dispersión del bucket.
 
 				// Verificar si los bloques se encuentran duplicados.
-				if (reducirTablaDeHash()==0){
+				//if (reducirTablaDeHash()==0){
 
 					// Se reduce el tamaño de la tabla de hash.
 
-				}
+				//}
 			}else{
 
 				// Dispersión diferente al tamaño de la tabla.
