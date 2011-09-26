@@ -29,6 +29,11 @@ public:
 	virtual void setContenido(Entidad* entidad) = 0;
 
 	/*
+	 * Instancia una de si mismo.
+	 */
+	virtual Registro* duplicar() = 0;
+
+	/*
 	 * Obtiene el tamanio del registro luego de ser serializado.
 	 */
 	int getTamanio();

@@ -1,15 +1,4 @@
-/*
- * Distrito.h
- *
- *  Created on: 17/09/2011
- *      Author: martin
- */
-
-#include <string>
 #include "Entidad.h"
-
-
-using namespace std;
 
 #ifndef DISTRITO_H_
 #define DISTRITO_H_
@@ -17,23 +6,35 @@ using namespace std;
 class Distrito : public Entidad {
 
 private:
-	string distrito;
+	std::string distrito;
 
 public:
+
 	Distrito();
-	Distrito(string distrito);
 
-	string getDistrito();
+	Distrito(std::string distrito);
 
-	void setDistrito(string distrito);
+	std::string getDistrito();
 
-	string* serializar();
+	void setDistrito(std::string distrito);
+
+	std::string* serializar();
 
 	int getTamanio();
 
 	int getClave();
 
-	void deserializar(string* source);
+	void deserializar(std::string* source);
+
+	/*
+	 * Realiza una copia del objeto de tipo Distrito.
+	 */
+	Entidad* duplicar();
+
+	/*
+	 * Instancia un Distrito a partir de un objeto serializado.
+	 */
+	static Entidad* hidratar(std::string* source);
 
 	~Distrito();
 

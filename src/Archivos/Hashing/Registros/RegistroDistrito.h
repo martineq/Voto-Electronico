@@ -28,11 +28,19 @@ public:
 	 */
 	void setContenido(Entidad* entidad);
 
+	/*
+	 * Instancia un objeto del tipo RegistroDistrito a partir
+	 * de otra instancia.
+	 */
+	Registro* duplicar();
 
+	/*
+	 * Instancia un objeto del tipo RegistroDistrito a partir
+	 * de un objeto serializado
+	 */
 	static Registro* hidratar(std::string* source);
 
 	~RegistroDistrito();
-
 };
 
 #endif /* REGISTRODISTRITO_H_ */

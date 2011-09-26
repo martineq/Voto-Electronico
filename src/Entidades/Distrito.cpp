@@ -1,23 +1,23 @@
-/*
- * Distrito.cpp
- *
- *  Created on: 17/09/2011
- *      Author: martin
- */
-
 #include "Distrito.h"
+
+using std::string;
+using std::stringstream;
+using std::istringstream;
 
 Distrito::Distrito(){
 	this->distrito = "";
 };
 
+
 Distrito::Distrito(string distrito){
 		this->distrito = distrito;
 	}
 
+
 string Distrito::getDistrito(){
 		return this->distrito;
 	}
+
 
 void Distrito::setDistrito(string distrito){
 		this->distrito = distrito;
@@ -37,7 +37,7 @@ void Distrito::deserializar(string * source){
 	delete source;
 	stringstream * miString = new stringstream();
 	int sizeOfDistrito;
-    streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
+	streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
     char* distritoChar = new char[sizeOfDistrito];
     streamDatos.read((char*)distritoChar,sizeOfDistrito);
     miString->write(distritoChar,sizeOfDistrito);
@@ -53,7 +53,21 @@ int Distrito::getTamanio(){
 }
 
 int Distrito::getClave(){
-	return 0;
+
+	#warning "Hay que modificar la obtención de la clave";
+
+	return this->distrito.size();
 }
 
 Distrito::~Distrito(){};
+
+Entidad* Distrito::duplicar(){
+	return new Distrito(this->distrito);
+}
+
+Entidad* Distrito::hidratar(string* source){
+	Distrito* d = new Distrito();
+	d->deserializar(source);
+	return d;
+}
+
