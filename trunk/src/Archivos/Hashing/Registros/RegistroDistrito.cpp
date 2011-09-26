@@ -7,7 +7,10 @@ RegistroDistrito::RegistroDistrito()
 
 RegistroDistrito::RegistroDistrito(Entidad *entidad)
 {
-	this->contenido = entidad->duplicar();
+
+	#warning	"No se duplica la entidad";
+	//this->contenido = entidad->duplicar();
+	this->contenido = entidad;
 	this->determinarClave();
 }
 
@@ -29,8 +32,9 @@ void RegistroDistrito::setContenido(Entidad* entidad){
 	if ( this->contenido != NULL )
 		delete(this->contenido);
 
-	this->contenido = entidad->duplicar();
-
+	#warning	"No se duplica la entidad";
+	//this->contenido = entidad->duplicar();
+	this->contenido = entidad;
 	// Realizo el cálculo de la nueva clave.
 	this->determinarClave();
 }
