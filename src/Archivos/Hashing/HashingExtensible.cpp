@@ -1,25 +1,18 @@
 #include "HashingExtensible.h"
 
-int HashingExtensible::obtenerDispersion(int numeroDeBucket){
-	Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
-
-	#warning "ver manejo de errores";
-	if (bucket == NULL)
-		throw "Bucket inexistente";
-
-	return bucket->getTamanioDeDispersion();
+HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
+	this->archivo = archivoBloques;
+	this->ultimoBucketLeido = NULL;
+	#warning "Al realizar la creación debería leerse las tablas almacenadas."
+	//TODO
 }
 
 int HashingExtensible::numeroPosicionesAreemplazar(int numeroDeBucket){
 
-	int dispersion = this->obtenerDispersion(numeroDeBucket);
-	int repeticionesBloque = dispersion / this->tablaDeHash.size();
+	int dispersion = this->tablaDeDispersion.at(numeroDeBucket);
+	int repeticionesBloque =  this->tablaDeHash.size() / dispersion;
 	return repeticionesBloque/2;
 
-}
-
-HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
-	this->archivo = archivoBloques;
 }
 
 int HashingExtensible::obtenerPosicion(int clave){
@@ -27,11 +20,23 @@ int HashingExtensible::obtenerPosicion(int clave){
 
 	if (!this->tablaDeHash.empty()){
 		int n = log(this->tablaDeHash.size())/log(2);
-		posicion = clave & n;
+		posicion = clave % n;
 	}
 
 	return posicion;
 }
+
+Bucket* HashingExtensible::obtenerBucket(int numeroDeBucket){
+	Bucket* bucket;
+
+	if ( numeroUltimoBucketLeido == numeroDeBucket ){
+		bucket = ultimoBucketLeido;
+	}else{
+		bucket = archivo->obtenerBucket(numeroDeBucket);
+	}
+	return bucket;
+}
+
 
 void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash){
 	vector<int>::iterator it;
@@ -94,8 +99,90 @@ void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int 
 
 }
 
-bool reducirTablaDeHash(){
+bool HashingExtensible::reducirTablaDeHash(){
 
+	int n = tablaDeHash.size();
+	n /= 2;
+
+	int i = 0;
+	int j = n;
+	bool distintos = false;
+
+	vector<int>::iterator inicio;
+
+	// Busca si las dos mitades de la tabla son iguales.
+	while (distintos == false && i<n){
+		if ( tablaDeHash[i]==tablaDeHash[j] ){
+			i++;
+			j++;
+			inicio++;
+		}else{
+			distintos = true;
+		}
+	}
+
+	// Reduce la tabla a la mitad si son iguales.
+	if ( distintos == false ){
+		tablaDeHash.erase(inicio,tablaDeHash.end());
+	}
+
+	return distintos;
+}
+
+
+void HashingExtensible::liberarBucket(int posicionEnTablaDeHash){
+
+	int numeroDeBucket = tablaDeHash.at(posicionEnTablaDeHash);
+
+	// Si el bucket quedó vacío, entonces evalúo si el posterior tiene igual dispersión.
+	// A la lista la trato como si fuese circular.
+	int dispersionDelBucket = tablaDeDispersion.at(numeroDeBucket);
+
+	// Calculo las posiciones del bucket Anterior y posterior.
+	int posicionBucketAnterior = ( posicionEnTablaDeHash - dispersionDelBucket / 2 ) % tablaDeHash.size();
+	int posicionBucketPosterior= ( posicionEnTablaDeHash + dispersionDelBucket / 2 ) % tablaDeHash.size();
+
+	// Calculo la dispersión del bucketPosterior.
+	int numeroDelBucketPosterior  = tablaDeHash[posicionBucketPosterior];
+	int dispersionBucketPosterior = tablaDeDispersion.at(numeroDelBucketPosterior);
+
+	bool reemplazarBucket = false;
+
+	if (dispersionDelBucket == dispersionBucketPosterior){
+
+		// Misma dispersión, reemplazo el bucket.
+		reemplazarBucket = 1;
+	}else{
+
+		// Dispersión diferente, comparo el elemento anterior y siguiente para
+		// ver si son el mismo bloque. De ser así, se lo reemplaza.
+		if ( tablaDeHash[posicionBucketAnterior]==tablaDeHash[posicionBucketPosterior] ){
+
+			reemplazarBucket = 1;
+		}
+
+	}
+
+	if ( reemplazarBucket == 1 ){
+
+		// Obtengo el bucket posterior/anterior.
+		Bucket* bucketPosterior = this->obtenerBucket(numeroDelBucketPosterior);
+
+		// Libero el bucket y lo ubico en la lista de libres.
+		this->tablaDeDispersion.at(numeroDeBucket) = BUCKET_LIBRE;
+		this->listaDeBucketsLibres.push_back(numeroDeBucket);
+		this->archivo->liberarBucket(numeroDeBucket);
+
+		//Reemplazo el bucket a eliminar por el posterior/anterior.
+		tablaDeHash[posicionEnTablaDeHash] = tablaDeHash[posicionBucketPosterior];
+		tablaDeDispersion[numeroDelBucketPosterior] *= 2;
+		bucketPosterior->setTamanioDeDispersion(tablaDeDispersion[numeroDelBucketPosterior]);
+		archivo->modificarBucket(numeroDelBucketPosterior,bucketPosterior);
+
+		// Verificar si los bloques se encuentran duplicados.
+		reducirTablaDeHash();
+
+	}
 }
 
 void HashingExtensible::agregarRegistro(Registro* registro){
@@ -114,7 +201,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 	if ( !this->tablaDeHash.empty()) {
 		// Busco el numero de bucket si la tabla no está vacía.
 		numeroDeBucket = this->tablaDeHash.at(posicionEnTablaDeHash);
-		bucket = this->archivo->obtenerBucket(numeroDeBucket);
+		bucket = this->obtenerBucket(numeroDeBucket);
 
 	}else {
 		// Si la tabla está vacía entonces tengo que crear un nuevo bucket
@@ -125,7 +212,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 		this->tablaDeDispersion.push_back(this->tablaDeHash.size());
 
 		// Obtengo el nuevo bucket y le modifico el tamaño de dispersión.
-		Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
+		Bucket* bucket = this->obtenerBucket(numeroDeBucket);
 		bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
 	}
 
@@ -149,7 +236,7 @@ void HashingExtensible::modificarRegistro(Registro* registro){
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
 	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
-	Bucket* bucket = archivo->obtenerBucket(numeroDeBucket);
+	Bucket* bucket = this->obtenerBucket(numeroDeBucket);
 
 	if (bucket != NULL){
 		exito = bucket->reemplazarRegistro(registro);
@@ -167,32 +254,24 @@ void HashingExtensible::modificarRegistro(Registro* registro){
 int HashingExtensible::eliminarRegistro(int clave){
 	int exito = 1;
 
+	// Obtengo el Bucket a partir de la clave.
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
 	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
-	Bucket* bucket = archivo->obtenerBucket(numeroDeBucket);
+	Bucket* bucket = this->obtenerBucket(numeroDeBucket);
 
+	// Obtengo el registro.
 	Registro* registro = bucket->getRegistro(clave);
+
 	if ( registro !=NULL ){
+
+		// Eliminamos el registro
 		exito = bucket->eliminarRegistro(clave);
+
+		// Si el bucket quedó vacío, evaluo si lo puedo liberar.
 		if ( bucket->getCantidadDeRegistros() == 0 ){
-			int dispersionBucket;
-			if ((dispersionBucket = bucket->getTamanioDeDispersion()) == this->tablaDeHash.size()){
-				this->archivo->liberarBucket(numeroDeBucket);
-				tablaDeHash[posicionEnTablaDeHash] = tablaDeHash[posicionEnTablaDeHash & 1];
 
-				// Evaluar nuevo valor de dispersión del bucket.
-
-				// Verificar si los bloques se encuentran duplicados.
-				//if (reducirTablaDeHash()==0){
-
-					// Se reduce el tamaño de la tabla de hash.
-
-				//}
-			}else{
-
-				// Dispersión diferente al tamaño de la tabla.
-			}
+			this->liberarBucket(posicionEnTablaDeHash);
 		}
 	}else{
 		exito = 0;
