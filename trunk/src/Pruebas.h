@@ -15,7 +15,7 @@
 #include "./Entidades/Eleccion.h"
 #include "./Archivos/Hashing/Registros/RegistroDistrito.h"
 #include "./Archivos/Hashing/Bucket.h"
-#include "./Archivos/Hashing/hashingExtensible.h"
+#include "./Archivos/Hashing/HashingExtensible.h"
 #include <list>
 #include <string>
 #include <iostream>
