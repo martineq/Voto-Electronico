@@ -29,7 +29,7 @@ Registro* Bucket::getRegistro(int clave){
 bool Bucket::agregarRegistro(Registro* unRegistro){
 	if (this->getRegistro(unRegistro->obtenerClave())!=NULL) return false;
 	else
-		if ((int)sizeof(unRegistro)>this->espacioLibre) return false;
+		if (unRegistro->getTamanio()>this->espacioLibre) return false;
 		else {
 			this->listaDeRegistros.push_back(unRegistro);
 			this->espacioLibre-=unRegistro->getTamanio();
@@ -59,13 +59,16 @@ bool Bucket::reemplazarRegistro(Registro* unRegistro){
 	if (this->listaDeRegistros.empty()) return false;
 	else {
 		int clave=unRegistro->obtenerClave();
-		Registro* registroAReemplazar = this->getRegistro(clave);
-		if ((registroAReemplazar->getTamanio()+this->espacioLibre) > unRegistro->getTamanio()){
-			this->eliminarRegistro(clave);
-			this->agregarRegistro(unRegistro);
-			return true;
+		if (this->getRegistro(clave)==NULL) return false;
+		else {
+			Registro* registroAReemplazar = this->getRegistro(clave);
+			if ((registroAReemplazar->getTamanio()+this->espacioLibre) > unRegistro->getTamanio()){
+				this->eliminarRegistro(clave);
+				this->agregarRegistro(unRegistro);
+				return true;
+			}
+			else return false;
 		}
-		else return false;
 	}
 }
 
