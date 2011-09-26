@@ -7,9 +7,8 @@ RegistroDistrito::RegistroDistrito()
 
 RegistroDistrito::RegistroDistrito(Entidad *entidad)
 {
-	#warning "Falta copiar la entidad en el distrito."
-
-	this->contenido = entidad;
+	this->contenido = entidad->duplicar();
+	this->determinarClave();
 }
 
 void RegistroDistrito::deserializar(std::string *source)
@@ -25,21 +24,27 @@ void RegistroDistrito::deserializar(std::string *source)
 	this->determinarClave();
 }
 
+
 void RegistroDistrito::setContenido(Entidad* entidad){
 	if ( this->contenido != NULL )
 		delete(this->contenido);
 
-	#warning "Falta copiar la entidad en el distrito."
-
-	this->contenido = entidad;
+	this->contenido = entidad->duplicar();
 
 	// Realizo el cálculo de la nueva clave.
 	this->determinarClave();
 }
 
-RegistroDistrito::~RegistroDistrito()
-{
+
+RegistroDistrito::~RegistroDistrito(){
 	delete(this->contenido);
+}
+
+Registro* RegistroDistrito::duplicar(){
+
+	Registro* nuevoRegistro = new RegistroDistrito();
+	nuevoRegistro->setContenido(this->contenido);
+	return nuevoRegistro;
 }
 
 /*

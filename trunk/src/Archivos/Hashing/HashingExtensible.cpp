@@ -1,16 +1,21 @@
 #include "HashingExtensible.h"
 
-int HashingExtensible::obtenerDispersion(int bloque){
-	//TODO
-	//BLOQUE = leerBloque(this->archivo,bloque);
-	return 0;
+int HashingExtensible::obtenerDispersion(int numeroDeBucket){
+	Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
 
+	#warning "ver manejo de errores";
+	if (bucket == NULL)
+		throw "Bucket inexistente";
+
+	return bucket->getTamanioDeDispersion();
 }
 
 int HashingExtensible::numeroPosicionesAreemplazar(int numeroDeBucket){
+
 	int dispersion = this->obtenerDispersion(numeroDeBucket);
 	int repeticionesBloque = dispersion / this->tablaDeHash.size();
 	return repeticionesBloque/2;
+
 }
 
 HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
@@ -18,12 +23,12 @@ HashingExtensible::HashingExtensible(ArchivoDeBuckets* archivoBloques) {
 }
 
 int HashingExtensible::obtenerPosicion(int clave){
-	//TODO
-	// Falta emplear una función para transformar la clave en un hash
-	int hash = clave;
+	int posicion = 0;
 
-	int n = log(this->tablaDeHash.size())/log(2);
-	int posicion = hash & n;
+	if (!this->tablaDeHash.empty()){
+		int n = log(this->tablaDeHash.size())/log(2);
+		posicion = clave & n;
+	}
 
 	return posicion;
 }
@@ -100,16 +105,31 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 	bool bucketCompleto;
 	int posicionEnTablaDeHash;
 
-	//Obtener clave es la función de hashing
+	//Obtener clave devuelve el resultado de aplicar la función de hashing sobre el registro.
 	int clave = registro->obtenerClave();
 
 	// Se aplica la "función modulo" para obtener la posicion de la tabla aplicando el logaritmo en base 2 del tamaño de la tabla.
 	posicionEnTablaDeHash = this->obtenerPosicion(clave);
 
-	numeroDeBucket = this->tablaDeHash.at(posicionEnTablaDeHash);
+	if ( !this->tablaDeHash.empty()) {
+		// Busco el numero de bucket si la tabla no está vacía.
+		numeroDeBucket = this->tablaDeHash.at(posicionEnTablaDeHash);
+		bucket = this->archivo->obtenerBucket(numeroDeBucket);
 
-	bucket = this->archivo->obtenerBucket(numeroDeBucket);
-	bucketCompleto = bucket->agregarRegistro(registro);	//manejador de bloques
+	}else {
+		// Si la tabla está vacía entonces tengo que crear un nuevo bucket
+		numeroDeBucket = this->archivo->crearNuevoBucket();
+
+		// Agrego el nuevo bucket en la lógica del hashing y le asigno su dispersión.
+		this->tablaDeHash.push_back(numeroDeBucket);
+		this->tablaDeDispersion.push_back(this->tablaDeHash.size());
+
+		// Obtengo el nuevo bucket y le modifico el tamaño de dispersión.
+		Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
+		bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
+	}
+
+	bucketCompleto = bucket->agregarRegistro(registro);
 
 	if (!bucketCompleto){
 		this->archivo->guardarBucket(bucket);

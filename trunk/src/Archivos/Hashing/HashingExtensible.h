@@ -1,11 +1,3 @@
-/*
- * HashingExtensible.h
- *
- *  Created on: 21/09/2011
- *      Author: martin
- */
-
-#include <iostream>
 #include <vector>
 #include <cmath>
 
@@ -13,18 +5,13 @@
 #include "Bucket.h"
 #include "Registro.h"
 
-
-//#include "RegistroCandidato.h"
-//#include "RegistroVotante.h"
-//#include "HashingVotante.h"
-
-using std::string;
-
 #ifndef HASHINGEXTENSIBLE_H_
 #define HASHINGEXTENSIBLE_H_
 
 class HashingExtensible {
+
 private:
+
 	ArchivoDeBuckets*	archivo;
 	vector<int>			tablaDeHash;
 	vector<int> 		tablaDeDispersion;
