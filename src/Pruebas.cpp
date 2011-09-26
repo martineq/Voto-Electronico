@@ -36,42 +36,60 @@ void Pruebas::pruebaHashingExtensible(){
 void Pruebas::pruebaRegistro(){
 	Distrito* distrito = new Distrito("Buenos Aires");
 	RegistroDistrito* registro = new RegistroDistrito(distrito);
-	delete(distrito);
+	//delete(distrito);
 
 	Bucket* bucket = new Bucket(0);
 
 	bucket->agregarRegistro(registro);
 
-	distrito = new Distrito("Puerto Esperanza");
-	registro = new RegistroDistrito(distrito);
-	delete(distrito);
-	bucket->agregarRegistro(registro);
-	delete(registro);
+	Distrito* distrito2 = new Distrito("Puerto Esperanza");
+	RegistroDistrito* registro2 = new RegistroDistrito(distrito2);
+	//delete(distrito);
+	bucket->agregarRegistro(registro2);
+	//delete(registro);
 
-	distrito = new Distrito("Bahia Blanca");
-	registro = new RegistroDistrito(distrito);
-	delete(distrito);
-	bucket->agregarRegistro(registro);
-	delete(registro);
+	Distrito* distrito3 = new Distrito("Bahia Blancaaaaaaaaaaaaaaa");
+	RegistroDistrito* registro3 = new RegistroDistrito(distrito3);
+	//delete(distrito);
+	bucket->agregarRegistro(registro3);
+	//delete(registro);
 
-	distrito = new Distrito("Miami");
-	registro = new RegistroDistrito(distrito);
-	delete(distrito);
-	bucket->agregarRegistro(registro);
-	delete(registro);
+	Distrito* distrito4 = new Distrito("Miami");
+	RegistroDistrito* registro4 = new RegistroDistrito(distrito4);
+	//delete(distrito);
+	bucket->agregarRegistro(registro4);
+	//delete(registro);
 
 	cout << "cantidad de registros: " << bucket->getCantidadDeRegistros() << endl;
 	list<Registro*>::iterator it = bucket->ubicarPrimero();
 
 	int n = bucket->getCantidadDeRegistros();
-	for(int i = 0; i < n;i++ ){
+	for(int i = 0; i <n;i++ ){
 		Registro* reg = *it;
-		distrito = (Distrito*)reg->getContenido();
-		cout << "Distrito: " << distrito->getDistrito() << endl;
+		Distrito* dis = (Distrito*)reg->getContenido();
+		cout << "Distrito: " << dis->getDistrito() << endl;
 		it++;
 	}
 
+	it = bucket->ubicarPrimero();
+
+	int clave = (*it)->obtenerClave();
+	bucket->eliminarRegistro(clave);
+
+	n = bucket->getCantidadDeRegistros();
+	for(int i = 0; i <n;i++ ){
+		Registro* reg = *it;
+		Distrito* dis = (Distrito*)reg->getContenido();
+		cout << "Distrito: " << dis->getDistrito() << endl;
+		it++;
+	}
+
+
 	delete(bucket);
+	delete(registro);
+	delete(registro2);
+	delete(registro3);
+	delete(registro4);
 }
 
 int Pruebas::holaMundo(){
