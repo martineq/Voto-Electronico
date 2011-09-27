@@ -19,8 +19,7 @@ int HashingExtensible::obtenerPosicion(int clave){
 	int posicion = 0;
 
 	if (!this->tablaDeHash.empty()){
-		int n = log(this->tablaDeHash.size())/log(2);
-		posicion = clave % n;
+		posicion = clave % tablaDeHash.size();
 	}
 
 	return posicion;
@@ -33,10 +32,11 @@ Bucket* HashingExtensible::obtenerBucket(int numeroDeBucket){
 		bucket = ultimoBucketLeido;
 	}else{
 		bucket = archivo->obtenerBucket(numeroDeBucket);
+		ultimoBucketLeido = bucket;
+		numeroUltimoBucketLeido = numeroDeBucket;
 	}
 	return bucket;
 }
-
 
 void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash){
 	vector<int>::iterator it;
@@ -219,7 +219,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 	bucketCompleto = bucket->agregarRegistro(registro);
 
 	if (!bucketCompleto){
-		this->archivo->guardarBucket(bucket);
+		this->archivo->modificarBucket(numeroDeBucket,bucket);
 
 	}else{
 		redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);

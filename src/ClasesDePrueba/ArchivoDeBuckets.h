@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#include "../Archivos/EnBloques/ArchivoBloques.h"
 #include "../Archivos/Hashing/Bucket.h"
 
 class ArchivoDeBuckets {
