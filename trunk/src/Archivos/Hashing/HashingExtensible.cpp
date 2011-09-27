@@ -212,7 +212,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 		this->tablaDeDispersion.push_back(this->tablaDeHash.size());
 
 		// Obtengo el nuevo bucket y le modifico el tamaño de dispersión.
-		Bucket* bucket = this->obtenerBucket(numeroDeBucket);
+		bucket = this->obtenerBucket(numeroDeBucket);
 		bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
 	}
 
