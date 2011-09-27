@@ -189,7 +189,7 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 
 	int numeroDeBucket;
 	Bucket* bucket;
-	bool bucketCompleto;
+	bool registroAgregado;
 	int posicionEnTablaDeHash;
 
 	//Obtener clave devuelve el resultado de aplicar la función de hashing sobre el registro.
@@ -216,9 +216,9 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 		bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
 	}
 
-	bucketCompleto = bucket->agregarRegistro(registro);
+	registroAgregado = bucket->agregarRegistro(registro);
 
-	if (!bucketCompleto){
+	if (registroAgregado){
 		this->archivo->modificarBucket(numeroDeBucket,bucket);
 
 	}else{
