@@ -9,19 +9,30 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-	Pruebas prueba;
+	Pruebas* prueba = new Pruebas();
 
-	prueba.pruebaRegistro();
-	//prueba.pruebaHashingExtensible();
-	//prueba.holaMundo();
-	//prueba.serializarDeserializarCargo();
-	//prueba.serializarDeserializarVotante();
-	//prueba.serializarDeserializarDistrito();
-	//prueba.serializarDeserializarLista();
-	//prueba.serializarDeserializarEleccion();
-	//prueba.serializarDeserializarCandidato();
+//	Pruebas de Bucket!
+//	prueba->pruebaAgregarRegistrosAlBucket();
+//	prueba->pruebaEliminarRegistrosDelBucket();
+	prueba->pruebaReemplazarRegistroEnBucket();
+//	prueba->serializarBucket();
+//	prueba->deserializarBucket();
 
+//	Pruebas de Hashing!
+//	prueba->pruebaAgregarRegistrosHashingExtensible();
 
+//  Pruebas de serializar y deserializar entidades!
+//	prueba->serializarDeserializarCargo();
+//	prueba->serializarDeserializarVotante();
+//	prueba->serializarDeserializarDistrito();
+//	prueba->serializarDeserializarLista();
+//	prueba->serializarDeserializarEleccion();
+//	prueba->serializarDeserializarCandidato();
+
+//  Prueba que funciona el eclipse!
+//	prueba->holaMundo();
+
+	delete prueba;
 	return 0;
 }
 

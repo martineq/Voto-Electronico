@@ -1,10 +1,12 @@
 #ifndef BUCKET_H_
 #define BUCKET_H_
 
+#define LONGITUD_BLOQUE_PRUEBA 70
 #include <list>
 #include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"
 #include "Registro.h"
+#include <iostream>
 using namespace std;
 
 class Bucket : public Serializable {

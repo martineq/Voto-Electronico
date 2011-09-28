@@ -9,7 +9,8 @@
 
 Bucket::Bucket(int tamanioDispersion){
 	this->tamanioDeDispersion=tamanioDispersion;
-	this->espacioLibre=LONGITUD_BLOQUE;
+	this->espacioLibre=LONGITUD_BLOQUE_PRUEBA;
+//	this->espacioLibre=LONGITUD_BLOQUE;
 }
 
 Registro* Bucket::getRegistro(int clave){
@@ -29,7 +30,7 @@ Registro* Bucket::getRegistro(int clave){
 bool Bucket::agregarRegistro(Registro* unRegistro){
 	if (this->getRegistro(unRegistro->obtenerClave())!=NULL) return false;
 	else
-		if (unRegistro->getTamanio()>this->espacioLibre) return false;
+		if (unRegistro->getTamanio()>this->espacioLibre) return  false;
 		else {
 			this->listaDeRegistros.push_back(unRegistro);
 			this->espacioLibre-=unRegistro->getTamanio();
@@ -38,7 +39,10 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 }
 
 bool Bucket::eliminarRegistro(int clave){
-	if (this->listaDeRegistros.empty()) return false;
+	if (this->listaDeRegistros.empty()) {
+		cout << "ERROR: EL BUCKET ESTA VACIO" << endl;
+		return false;
+	}
 	else {
 		if (this->getRegistro(clave)==NULL) return false;
 		else {
@@ -50,6 +54,7 @@ bool Bucket::eliminarRegistro(int clave){
 					this->listaDeRegistros.erase (it);
 					return true;
 				}
+				else it++;
 			}
 		}
 	}

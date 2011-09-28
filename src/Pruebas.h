@@ -22,17 +22,37 @@
 using namespace std;
 
 class Pruebas {
+private:
+	Distrito* distrito1;
+	Distrito* distrito2;
+	Distrito* distrito3;
+	Distrito* distrito4;
+	Registro* registro1;
+	Registro* registro2;
+	Registro* registro3;
+	Registro* registro4;
+	Bucket* bucket;
+	void iniciarRegistrosDistrito();
+	void verContenidoBucket();
 public:
 	Pruebas();
-	void pruebaHashingExtensible();
-	void pruebaRegistro();
-	int holaMundo();
+//	pruebas para el hashing
+	void pruebaAgregarRegistrosHashingExtensible();
+//	pruebas para serializar y deserializar
+	void pruebaAgregarRegistrosAlBucket();
+	void pruebaEliminarRegistrosDelBucket();
+	void pruebaReemplazarRegistroEnBucket();
+	void serializarBucket();
+	void deserializarBucket();
+//	pruebas para serializar y deserializar entidades
 	int serializarDeserializarCargo();
 	void serializarDeserializarVotante();
 	void serializarDeserializarDistrito();
 	void serializarDeserializarLista();
 	void serializarDeserializarCandidato();
 	void serializarDeserializarEleccion();
+//	pruebas para ver si anda el compilador
+	int holaMundo();
 	virtual ~Pruebas();
 };
 
