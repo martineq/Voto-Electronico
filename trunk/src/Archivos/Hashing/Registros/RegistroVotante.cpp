@@ -1,7 +1,8 @@
 #include "RegistroVotante.h"
 
-RegistroVotante::RegistroVotante() {
-	this->contenido = new Votante();
+RegistroVotante::RegistroVotante(Entidad *entidad) {
+	this->contenido = entidad;
+	this->determinarClave();
 }
 
 int RegistroVotante::obtenerClave(){

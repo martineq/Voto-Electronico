@@ -10,7 +10,7 @@ class RegistroVotante : public Registro {
 
 public:
 
-	RegistroVotante();
+	RegistroVotante(Entidad*);
 
 	int obtenerClave();
 

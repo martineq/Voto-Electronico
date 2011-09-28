@@ -49,12 +49,6 @@ private:
 	int obtenerPosicion(int clave);
 
 	/*
-	 * Lógica que decide si emplear el último bucket leído o acceder a disco
-	 * para buscar uno nuevo.
-	 */
-	Bucket* obtenerBucket(int numeroDeBucket);
-
-	/*
 	 * Devuelve cuantas posiciones de la tabla de hash serán reemplazadas basándose
 	 * en la dispersión del bloque que se encuentra en <posicion> de la tabla.
 	 */
@@ -100,9 +94,17 @@ public:
 	 */
 	int eliminarRegistro(int clave);
 
+
+	/*
+	 * Lógica que decide si emplear el último bucket leído o acceder a disco
+	 * para buscar uno nuevo.
+	 */
+	Bucket* obtenerBucket(int numeroDeBucket);
+
 	/*
 	 * Elimina la instancia de memoria.
 	 */
+
 	virtual ~HashingExtensible();
 };
 
