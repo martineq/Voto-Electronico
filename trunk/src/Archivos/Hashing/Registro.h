@@ -20,9 +20,9 @@ protected:
 public:
 
 	/*
-	 * Instancia un registro a partir de un registroSerializado.
+	 * Instancia un registro.
 	 */
-	Registro(string registroSerializado);
+	Registro();
 
 	/*
 	 * Crea un registro asignándole la entidad pasada por parámetro.

@@ -1,21 +1,19 @@
 #include "Registro.h"
 
-Registro::Registro(string registroSerializado){
-	this->deserializar(&registroSerializado);
-	this->determinarClave();
+Registro::Registro()
+{
+	this->clave = 0;
+	this->contenido = NULL;
 }
 
 Registro::Registro(Entidad *entidad)
 {
-
-	#warning	"No se duplica la entidad";
-	//this->contenido = entidad->duplicar();
-	this->contenido = entidad;
+	this->contenido = entidad->duplicar();
 	this->determinarClave();
 }
 
-Registro::Registro(NombreDeEntidad nombreDeEntidad){
-
+Registro::Registro(NombreDeEntidad nombreDeEntidad)
+{
 	FabricaDeEntidades* fabrica = new FabricaDeEntidades();
 	this->contenido = fabrica->crearEntidad(nombreDeEntidad);
 	delete (fabrica);
@@ -25,18 +23,19 @@ Registro::Registro(NombreDeEntidad nombreDeEntidad){
  * El método realiza el cálculo de la clave modificando el atributo de la clase
  * debe ser invocado luego de modificar el contenido.
  */
-void Registro::determinarClave(){
+void Registro::determinarClave()
+{
 	this->clave = this->contenido->getClave();
 }
 
 
-int Registro::getTamanio(){
+int Registro::getTamanio()
+{
 	return this->contenido->getTamanio();
 }
 
-std::string *Registro::serializar(){
-
-	#warning	"Faltaría agregar la serializacion del tipo de datos";
+std::string *Registro::serializar()
+{
 	stringstream buffer;
 
 	int entidad = this->getContenido()->getNombreDeEntidad();
@@ -54,7 +53,7 @@ std::string *Registro::serializar(){
 
 Entidad *Registro::getContenido()
 {
-	return this->contenido;
+	return this->contenido->duplicar();
 }
 
 int Registro::obtenerClave(){
@@ -86,10 +85,6 @@ void Registro::deserializar(std::string *source)
 
 	nuevoContenido->deserializar(&entidadSerializada);
 
-	Distrito* d = (Distrito*)nuevoContenido;
-
-	cout << d->getDistrito() << endl;
-
 	this->setContenido(nuevoContenido);
 
 }
@@ -99,8 +94,7 @@ void Registro::setContenido(Entidad *entidad)
 	if ( this->contenido != NULL )
 		delete this->contenido;
 
-	#warning "acá debería duplicarse";
-	this->contenido = entidad;
+	this->contenido = entidad->duplicar();
 }
 
 Registro *Registro::duplicar()

@@ -207,6 +207,10 @@ void Votante::deserializar(string* source){
 	}
 }
 
+Entidad *Votante::duplicar()
+{
+}
+
 NombreDeEntidad Votante::getNombreDeEntidad(){
 	return tVotante;
 }

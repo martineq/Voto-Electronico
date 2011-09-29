@@ -88,6 +88,10 @@ list<Distrito>::iterator Eleccion::obtenerIterador(){
 }
 
 
+Entidad *Eleccion::duplicar()
+{
+}
+
 Eleccion::~Eleccion() {
 	// TODO Auto-generated destructor stub
 }

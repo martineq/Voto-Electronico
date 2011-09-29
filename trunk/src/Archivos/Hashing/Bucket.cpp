@@ -58,6 +58,7 @@ bool Bucket::eliminarRegistro(int clave){
 			}
 		}
 	}
+	return 0;
 }
 
 bool Bucket::reemplazarRegistro(Registro* unRegistro){
@@ -150,8 +151,8 @@ void Bucket::deserializar(string* source){
 		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
 		cout << "Carga del registro serializado en el buffer auxiliar" << endl;
 		string* registroADeserializar = new string(bufferAuxiliar->str());
-//		CHAMUYOOOOOOOOOOOO
-		Registro* unRegistro = new Registro(*registroADeserializar);
+
+		Registro* unRegistro = new Registro();
 		cout << "Deserializando registro" << endl;
 		unRegistro->deserializar(registroADeserializar);
 		cout << "Registro deserializado" << endl;

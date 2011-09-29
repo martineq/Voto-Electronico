@@ -39,7 +39,6 @@ public:
 //	pruebas para el hashing
 	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar
-	void serializarDeserializarRegistro();
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();
 	void pruebaReemplazarRegistroEnBucket();
