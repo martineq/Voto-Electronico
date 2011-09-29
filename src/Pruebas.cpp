@@ -9,15 +9,28 @@ Pruebas::~Pruebas() {
 	delete (bucket);
 }
 
+void Pruebas::serializarDeserializarRegistro(){
+	Distrito* d = new Distrito("Buenos Aires");
+	Registro* r = new Registro(d->getNombreDeEntidad());
+	r->setContenido(d);
+	string registroSerializado = *(r->serializar());
+	//delete (r);
+
+	Registro* r2 = new Registro(registroSerializado);
+	Distrito* d2 = (Distrito*)r2->getContenido();
+	std::cout << d2->getDistrito() << std::endl;
+	delete(r2);
+}
+
 void Pruebas::iniciarRegistrosDistrito(){
 	this->distrito1 = new Distrito("Puerto Esperanza");
 	this->distrito2 = new Distrito("Buenos Aires");
 	this->distrito3 = new Distrito("Montecarlo");
 	this->distrito4 = new Distrito("Eldorado");
-	this->registro1 = new RegistroDistrito(distrito1);
-	this->registro2 = new RegistroDistrito(distrito2);
-	this->registro3 = new RegistroDistrito(distrito3);
-	this->registro4 = new RegistroDistrito(distrito4);
+	this->registro1 = new Registro(distrito1);
+	this->registro2 = new Registro(distrito2);
+	this->registro3 = new Registro(distrito3);
+	this->registro4 = new Registro(distrito4);
 	this->bucket = new Bucket(0);
 	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	this->bucket->agregarRegistro(registro1);
@@ -74,7 +87,7 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 	cout << "Iniciando prueba agregar un registro sin espacio libre" << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	Distrito* distrito5 = new Distrito("Obera");
-	Registro* registro5 = new RegistroDistrito(distrito5);
+	Registro* registro5 = new Registro(distrito5);
 	cout << "Intentando carga de registro" << endl;
 	if (!this->bucket->agregarRegistro(registro5)) {
 		cout << "No se pudo cargar el registro" << endl;
@@ -115,7 +128,7 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 	cout << "Se hizo espacio para el nuevo registro Obera" << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	Distrito* distrito6 = new Distrito("Obera");
-	Registro* registro6 = new RegistroDistrito(distrito6);
+	Registro* registro6 = new Registro(distrito6);
 	cout << "Se intenta la carga del registro duplicado" << endl;
 	if (!this->bucket->agregarRegistro(registro6)) {
 		cout << "El registro no fue cargado" << endl;
@@ -174,7 +187,7 @@ void Pruebas::pruebaEliminarRegistrosDelBucket(){
 	cout << "Intento de eliminar Resistencia" << endl;
 	it = this->bucket->ubicarPrimero();
 	Distrito* distrito5 = new Distrito ("Resistencia");
-	Registro* registro5 = new RegistroDistrito (distrito5);
+	Registro* registro5 = new Registro (distrito5);
 	clave = registro5->obtenerClave();
 	if (!this->bucket->eliminarRegistro(clave)) {
 		cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
@@ -216,8 +229,8 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << "Observe y disfrute" << endl;
 	Votante* votante1 = new Votante (1,"Daniel","","","");//40bytes
 	Votante* votante2 = new Votante (2,"A","","","");//30bytes
-	this->registro1 = new RegistroVotante (votante1);
-	this->registro2 = new RegistroVotante (votante2);
+	this->registro1 = new Registro (votante1);
+	this->registro2 = new Registro (votante2);
 	bucket = new Bucket (0);
 	this->bucket->agregarRegistro(registro1);
 	this->bucket->agregarRegistro(registro2);
@@ -227,7 +240,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	cout << "Inicio de reemplazo" << endl;
 	Votante* votante3 = new Votante (1,"Martin","","","");//40bytes
-	this->registro3 = new RegistroVotante (votante3);
+	this->registro3 = new Registro (votante3);
 	if (this->bucket->reemplazarRegistro(registro3)){
 		cout << "Fin de reemplazo" << endl;
 		cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
@@ -239,7 +252,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << "Se intentara reemplazar un registro que no entre en el bucket" << endl;
 	cout << "Se intentara reemplazar el registro A con el registro Gonzalo" << endl;
 	Votante* votante4 = new Votante (2,"Gonzalo","","","");//42bytes
-	this->registro4 = new RegistroVotante (votante4);
+	this->registro4 = new Registro (votante4);
 	cout << "Tamanio de registro A= " << this->registro2->getTamanio() << endl;
 	cout << "Tamanio de registro Gonzalo= " << this->registro4->getTamanio() << endl;
 	cout << "Inicio de reemplazo" << endl;
@@ -268,7 +281,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << endl;
 	cout << "Se intentara reemplazar un registro con clave inexistente" << endl;
 	Votante* votante5 = new Votante (3,"Celeste","","","");
-	Registro* registro5 = new RegistroVotante (votante5);
+	Registro* registro5 = new Registro (votante5);
 	this->bucket->agregarRegistro(registro2);
 	this->verContenidoBucketVotante();
 	cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;

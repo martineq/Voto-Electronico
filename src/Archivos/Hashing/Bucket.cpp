@@ -151,7 +151,7 @@ void Bucket::deserializar(string* source){
 		cout << "Carga del registro serializado en el buffer auxiliar" << endl;
 		string* registroADeserializar = new string(bufferAuxiliar->str());
 //		CHAMUYOOOOOOOOOOOO
-		RegistroDistrito* unRegistro = new RegistroDistrito();
+		Registro* unRegistro = new Registro(*registroADeserializar);
 		cout << "Deserializando registro" << endl;
 		unRegistro->deserializar(registroADeserializar);
 		cout << "Registro deserializado" << endl;

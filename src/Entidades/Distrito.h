@@ -27,6 +27,11 @@ public:
 	void deserializar(std::string* source);
 
 	/*
+	 * Devuelve el nombre que identifica al objeto.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
+
+	/*
 	 * Realiza una copia del objeto de tipo Distrito.
 	 */
 	Entidad* duplicar();

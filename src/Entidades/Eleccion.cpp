@@ -152,3 +152,8 @@ void Eleccion::deserializar(string* source) {
     	delete []distritoSerializado;
     }
 }
+
+NombreDeEntidad Eleccion::getNombreDeEntidad(){
+	return tEleccion;
+}
+

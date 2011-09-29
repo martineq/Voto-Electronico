@@ -39,6 +39,11 @@ public:
 	string getDomicilio ();
 	string getDistrito ();
 	string* serializar();
+
+	/*
+	 * Devuelve el tipo de la entidad instanciada.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
 };
 
 #endif /* VOTANTE_H_ */

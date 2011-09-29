@@ -55,6 +55,11 @@ public:
 
 	void deserializar(string*);
 
+	/*
+	 * Devuelve el tipo de la entidad instanciada.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
+
 };
 
 #endif /* ELECCION_H_ */
