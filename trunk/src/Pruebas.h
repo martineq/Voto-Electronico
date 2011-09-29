@@ -13,9 +13,6 @@
 #include "./Entidades/Candidato.h"
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
-#include "./Archivos/Hashing/Registros/RegistroDistrito.h"
-#include "./Archivos/Hashing/Registros/RegistroVotante.h"
-#include "./Archivos/Hashing/Registros/RegistroCandidato.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/Hashing/HashingExtensible.h"
 #include <list>
@@ -42,6 +39,7 @@ public:
 //	pruebas para el hashing
 	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar
+	void serializarDeserializarRegistro();
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();
 	void pruebaReemplazarRegistroEnBucket();

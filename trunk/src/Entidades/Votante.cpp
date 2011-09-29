@@ -206,3 +206,7 @@ void Votante::deserializar(string* source){
 //		porque mi lista es lista de punteros a Eleccion Anterior
 	}
 }
+
+NombreDeEntidad Votante::getNombreDeEntidad(){
+	return tVotante;
+}

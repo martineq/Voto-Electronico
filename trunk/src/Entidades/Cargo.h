@@ -37,6 +37,11 @@ public:
 	string* serializar();
 	void deserializar(string * source);
 
+	/*
+	 * Devuelve el tipo de la entidad instanciada.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
+
 };
 
 #endif /* CARGO_H_ */

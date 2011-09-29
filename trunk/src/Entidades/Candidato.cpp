@@ -97,3 +97,7 @@ int Candidato::getTamanio(){
 int Candidato::getClave(){
 	return 0;
 }
+
+NombreDeEntidad Candidato::getNombreDeEntidad(){
+	return tCandidato;
+}

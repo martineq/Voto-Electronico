@@ -5,7 +5,6 @@
 #include <list>
 #include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"
-#include "./Registros/RegistroDistrito.h"
 #include "Registro.h"
 #include <iostream>
 using namespace std;

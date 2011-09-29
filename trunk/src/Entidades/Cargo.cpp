@@ -122,3 +122,7 @@ void Cargo::deserializar(string * source){
 		delete miString;
 	}
 }
+
+NombreDeEntidad Cargo::getNombreDeEntidad(){
+	return tCargo;
+}

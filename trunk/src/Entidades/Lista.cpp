@@ -1,5 +1,12 @@
 #include "Lista.h"
 
+Lista::Lista() {
+	this->nombre="";
+	this->fecha="";
+	this->cargo="";
+	this->cantidadDeVotos=0;
+}
+
 Lista::Lista(string nombre, string fecha, string cargo) {
 	this->nombre=nombre;
 	this->fecha=fecha;
@@ -92,3 +99,8 @@ void Lista::deserializar(string* source) {
 //	hidrato cantidad De Votos
 	buffer.read((char*)&this->cantidadDeVotos,TAM_SINT);
 }
+
+NombreDeEntidad Lista::getNombreDeEntidad(){
+	return tLista;
+}
+

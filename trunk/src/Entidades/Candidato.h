@@ -35,6 +35,11 @@ public:
 	void deserializar(string*);
 	virtual ~Candidato();
 
+	/*
+	 * Devuelve el tipo de la entidad instanciada.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
+
 };
 
 #endif /* CANDIDATO_H_ */

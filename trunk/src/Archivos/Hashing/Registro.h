@@ -3,6 +3,7 @@
 #define REGISTRO_H_
 
 #include "../../Entidades/Entidad.h"
+#include "FabricaDeEntidades.h"
 
 class Registro : public Serializable {
 
@@ -19,19 +20,34 @@ protected:
 public:
 
 	/*
+	 * Instancia un registro a partir de un registroSerializado.
+	 */
+	Registro(string registroSerializado);
+
+	/*
+	 * Crea un registro asignándole la entidad pasada por parámetro.
+	 */
+	Registro(Entidad* nombreDeEntidad);
+
+	/*
+	 * Crea un registro con una instancia de una entidad particular.
+	 */
+	Registro(NombreDeEntidad nombreDeEntidad);
+
+	/*
 	 * Deserializa una tira de bytes sobre el actual objeto.
 	 */
-	virtual void deserializar(std::string* source) = 0;
+	void deserializar(std::string* source);
 
 	/*
 	 * Agrega o sobreescribe el contenido del registro
 	 */
-	virtual void setContenido(Entidad* entidad) = 0;
+	void setContenido(Entidad* entidad);
 
 	/*
 	 * Instancia una de si mismo.
 	 */
-	virtual Registro* duplicar() = 0;
+	Registro* duplicar();
 
 	/*
 	 * Obtiene el tamanio del registro luego de ser serializado.
@@ -53,7 +69,7 @@ public:
 	 */
 	Entidad* getContenido();
 
-	virtual ~Registro();
+	~Registro();
 };
 
 #endif /* REGISTRO_H_ */

@@ -13,6 +13,7 @@ private:
 	string cargo;
 	short int cantidadDeVotos;
 public:
+	Lista();
 	Lista(string nombre, string fecha, string cargo);
 	string getNombre ();
 	string getFecha ();
@@ -24,6 +25,11 @@ public:
 	virtual ~Lista();
 	string* serializar();
 	void deserializar (string*);
+
+	/*
+	 * Devuelve el tipo de la entidad instanciada.
+	 */
+	NombreDeEntidad getNombreDeEntidad();
 };
 
 #endif /* LISTA_H_ */

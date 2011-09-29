@@ -9,13 +9,17 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
+
 	Pruebas* prueba = new Pruebas();
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
-	prueba->serializarDeserializarBucket();
+//	prueba->serializarDeserializarBucket();
+
+//  Pruebas de Registro!
+	prueba->serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	prueba->pruebaAgregarRegistrosHashingExtensible();
