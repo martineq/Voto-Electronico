@@ -100,6 +100,10 @@ void Lista::deserializar(string* source) {
 	buffer.read((char*)&this->cantidadDeVotos,TAM_SINT);
 }
 
+Entidad *Lista::duplicar()
+{
+}
+
 NombreDeEntidad Lista::getNombreDeEntidad(){
 	return tLista;
 }

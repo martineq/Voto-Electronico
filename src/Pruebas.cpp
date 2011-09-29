@@ -9,19 +9,6 @@ Pruebas::~Pruebas() {
 	delete (bucket);
 }
 
-void Pruebas::serializarDeserializarRegistro(){
-	Distrito* d = new Distrito("Buenos Aires");
-	Registro* r = new Registro(d->getNombreDeEntidad());
-	r->setContenido(d);
-	string registroSerializado = *(r->serializar());
-	//delete (r);
-
-	Registro* r2 = new Registro(registroSerializado);
-	Distrito* d2 = (Distrito*)r2->getContenido();
-	std::cout << d2->getDistrito() << std::endl;
-	delete(r2);
-}
-
 void Pruebas::iniciarRegistrosDistrito(){
 	this->distrito1 = new Distrito("Puerto Esperanza");
 	this->distrito2 = new Distrito("Buenos Aires");

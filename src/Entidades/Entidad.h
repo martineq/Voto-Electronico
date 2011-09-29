@@ -26,6 +26,11 @@ public:
 	virtual int getClave() = 0;
 
 	/*
+	 * Instancia un nuevo objeto, copia de actual.
+	 */
+	virtual Entidad* duplicar() = 0;
+
+	/*
 	 * Devuelve el tipo de la entidad instanciada.
 	 */
 	virtual NombreDeEntidad getNombreDeEntidad() = 0;

@@ -35,6 +35,12 @@ public:
 	void deserializar(string*);
 	virtual ~Candidato();
 
+
+	/*
+	 * Instancia un nuevo objeto, copia de actual.
+	 */
+	Entidad* duplicar();
+
 	/*
 	 * Devuelve el tipo de la entidad instanciada.
 	 */

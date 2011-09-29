@@ -98,6 +98,10 @@ int Candidato::getClave(){
 	return 0;
 }
 
+Entidad *Candidato::duplicar()
+{
+}
+
 NombreDeEntidad Candidato::getNombreDeEntidad(){
 	return tCandidato;
 }

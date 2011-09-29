@@ -123,6 +123,10 @@ void Cargo::deserializar(string * source){
 	}
 }
 
+Entidad *Cargo::duplicar()
+{
+}
+
 NombreDeEntidad Cargo::getNombreDeEntidad(){
 	return tCargo;
 }

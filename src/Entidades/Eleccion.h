@@ -49,17 +49,22 @@ public:
 
 	list<Distrito> getLista();
 
-	~Eleccion();
-
 	string* serializar();
 
 	void deserializar(string*);
+
+
+	/*
+	 * Instancia un nuevo objeto, copia de actual.
+	 */
+	Entidad* duplicar();
 
 	/*
 	 * Devuelve el tipo de la entidad instanciada.
 	 */
 	NombreDeEntidad getNombreDeEntidad();
 
+	~Eleccion();
 };
 
 #endif /* ELECCION_H_ */

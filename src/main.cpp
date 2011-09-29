@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include "Pruebas.h"
+#include "./ClasesDePrueba/Test.h"
 using namespace std;
 
 	/*
@@ -10,7 +11,10 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-	Pruebas* prueba = new Pruebas();
+	Test test;
+	test.serializarDeserializarRegistro();
+
+//	Pruebas* prueba = new Pruebas();
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
@@ -19,7 +23,7 @@ int main(int argc,char* argv[]) {
 //	prueba->serializarDeserializarBucket();
 
 //  Pruebas de Registro!
-	prueba->serializarDeserializarRegistro();
+//	prueba->serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	prueba->pruebaAgregarRegistrosHashingExtensible();
@@ -35,7 +39,9 @@ int main(int argc,char* argv[]) {
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-	delete prueba;
+//	delete (prueba);
+
+	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }
 
