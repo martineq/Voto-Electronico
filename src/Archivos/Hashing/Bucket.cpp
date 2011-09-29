@@ -58,7 +58,6 @@ bool Bucket::eliminarRegistro(int clave){
 			}
 		}
 	}
-	return 0;
 }
 
 bool Bucket::reemplazarRegistro(Registro* unRegistro){
