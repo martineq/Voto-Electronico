@@ -14,20 +14,6 @@ RegistroDistrito::RegistroDistrito(Entidad *entidad)
 	this->determinarClave();
 }
 
-void RegistroDistrito::deserializar(std::string *source)
-{
-	if ( this->contenido != NULL )
-		delete(this->contenido);
-
-	Distrito* distrito = new Distrito();
-	distrito->deserializar(source);
-	this->contenido = distrito;
-
-	// Realizo el cálculo de la nueva clave.
-	this->determinarClave();
-}
-
-
 void RegistroDistrito::setContenido(Entidad* entidad){
 	if ( this->contenido != NULL )
 		delete(this->contenido);
@@ -49,6 +35,19 @@ Registro* RegistroDistrito::duplicar(){
 	Registro* nuevoRegistro = new RegistroDistrito();
 	nuevoRegistro->setContenido(this->contenido);
 	return nuevoRegistro;
+}
+
+void RegistroDistrito::deserializar(std::string *source)
+{
+	if ( this->contenido != NULL )
+		delete(this->contenido);
+
+	Distrito* distrito = new Distrito();
+	distrito->deserializar(source);
+	this->contenido = distrito;
+
+	// Realizo el cálculo de la nueva clave.
+	this->determinarClave();
 }
 
 /*

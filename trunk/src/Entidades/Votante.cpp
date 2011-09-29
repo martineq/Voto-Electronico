@@ -58,7 +58,7 @@ int  Votante::getTamanio(){
 }
 
 int Votante::getClave(){
-	return 0;
+	return this->dni;
 }
 
 int Votante::getDNI () {

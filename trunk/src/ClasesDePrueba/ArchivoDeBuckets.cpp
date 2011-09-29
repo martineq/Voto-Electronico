@@ -7,7 +7,7 @@ ArchivoDeBuckets::ArchivoDeBuckets(){
 Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket)
 {
 	if (this->archivo.size() > numeroDeBucket)
-		this->archivo[numeroDeBucket];
+		return this->archivo[numeroDeBucket];
 	else
 		throw "Bucket inexistente";
 }

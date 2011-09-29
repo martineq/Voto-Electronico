@@ -14,6 +14,8 @@
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
 #include "./Archivos/Hashing/Registros/RegistroDistrito.h"
+#include "./Archivos/Hashing/Registros/RegistroVotante.h"
+#include "./Archivos/Hashing/Registros/RegistroCandidato.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/Hashing/HashingExtensible.h"
 #include <list>
@@ -33,7 +35,8 @@ private:
 	Registro* registro4;
 	Bucket* bucket;
 	void iniciarRegistrosDistrito();
-	void verContenidoBucket();
+	void verContenidoBucketDistrito();
+	void verContenidoBucketVotante();
 public:
 	Pruebas();
 //	pruebas para el hashing
@@ -42,8 +45,7 @@ public:
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();
 	void pruebaReemplazarRegistroEnBucket();
-	void serializarBucket();
-	void deserializarBucket();
+	void serializarDeserializarBucket();
 //	pruebas para serializar y deserializar entidades
 	int serializarDeserializarCargo();
 	void serializarDeserializarVotante();
