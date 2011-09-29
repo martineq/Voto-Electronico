@@ -14,9 +14,8 @@ int main(int argc,char* argv[]) {
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
-	prueba->pruebaReemplazarRegistroEnBucket();
-//	prueba->serializarBucket();
-//	prueba->deserializarBucket();
+//	prueba->pruebaReemplazarRegistroEnBucket();
+	prueba->serializarDeserializarBucket();
 
 //	Pruebas de Hashing!
 //	prueba->pruebaAgregarRegistrosHashingExtensible();

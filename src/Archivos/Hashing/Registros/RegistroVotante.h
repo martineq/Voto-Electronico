@@ -10,16 +10,20 @@ class RegistroVotante : public Registro {
 
 public:
 
+	RegistroVotante();
+
 	RegistroVotante(Entidad*);
 
-	int obtenerClave();
+	void setContenido(Entidad*);
 
     Entidad* getContenido();
 
 
-	string* serializar();
 	void deserializar(string * source);
 
+	Registro* hidratar(std::string*);
+
+	Registro* duplicar();
 
 	virtual ~RegistroVotante();
 };
