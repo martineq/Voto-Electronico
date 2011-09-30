@@ -87,7 +87,6 @@ void ManejadorDeArchivo::posicionarseEnFin(){
 void ManejadorDeArchivo::posicionarse(ios::pos_type pos){
 	if (this->archivo.is_open()) {
 		this->archivo.seekg(pos, ios_base::beg);
-
 		if (this->archivo.fail())
 			cerr << "No se pudo posicionar correctamente el registro" << endl;
 	}
@@ -112,7 +111,6 @@ void ManejadorDeArchivo::escribir(const char* registro, size_t cantBytes){
 void ManejadorDeArchivo::leer(char* registro, size_t cantBytes){
 	if (this->archivo.is_open()) {
 		this->archivo.read(registro, cantBytes);
-
 		if (this->archivo.fail())
 			cerr << "No se pudo leer correctamente el registro";
 	} else {
