@@ -511,12 +511,13 @@ void Pruebas::serializarDeserializarEleccion(){
 
 void Pruebas::pruebaArchivoBloq_16Bytes(){
 
+
 	string nombre ("ArchivoBloques_16B.bin");
 	string dat1 ("0123456789ABCDEF");
 	string dat2 ("Datos Locos");
 	string dat3 ("Soy Elvis ElRey");
-	int tamanioDeBloque = 16;	// Éste es el tamaño mínimo
-	char* buf;//= new char[tamanioDeBloque];	// Mi bloque, instanciado en memoria
+	int tamanioDeBloque = 16;
+	char* buf = new char[tamanioDeBloque];	// Mi bloque, instanciado en memoria, como si fuera un nodo, bucket, etc.-
 	int nrr1,nrr2,nrr3,nrr4;
 	nrr1=nrr2=nrr3=nrr4=99;
 
@@ -525,46 +526,43 @@ void Pruebas::pruebaArchivoBloq_16Bytes(){
 	cout << "Inicialé los NRR's con ceros: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
 
 
-	buf = arch->crearNuevoBloque(&nrr1);
+	arch->crearNuevoBloque(&nrr1);
 	cout << "Los NRR's son: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
-	buf = arch->crearNuevoBloque(&nrr2);
+	arch->crearNuevoBloque(&nrr2);
 	cout << "Los NRR's son: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
-	buf = arch->crearNuevoBloque(&nrr3);
+	arch->crearNuevoBloque(&nrr3);
 	cout << "Los NRR's son: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
 
 
 	cout << "Pido el bloque del nrr: "<< nrr1 <<endl;
-	buf = arch->obtenerBloque(nrr1);
+	arch->obtenerBloque(nrr1,buf);
 	buf = (char*)dat1.c_str();
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr1 <<endl;
 	arch->guardarBloque(nrr1,buf);
 
 
 	cout << "Pido el bloque del nrr: "<< nrr2 <<endl;
-	buf = arch->obtenerBloque(nrr2);
+	arch->obtenerBloque(nrr2,buf);
 	buf = (char*)dat2.c_str();
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr2 <<endl;
 	arch->guardarBloque(nrr2,buf);
 
 
 	cout << "Pido el bloque del nrr: "<< nrr3 <<endl;
-	buf = arch->obtenerBloque(nrr3);
+	arch->obtenerBloque(nrr3,buf);
 	buf = (char*)dat3.c_str();
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr3 <<endl;
 	arch->guardarBloque(nrr3,buf);
 
 
-	cout << "Apunto el buffer a cero"<<endl;
-	buf = 0;
-
 	cout << "Pido el bloque del nrr: "<< nrr1 <<endl;
-	buf = arch->obtenerBloque(nrr1);
+	arch->obtenerBloque(nrr1,buf);
 	cout << "El bloque tiene: "<< buf <<endl;
 	cout << "Pido el bloque del nrr: "<< nrr2 <<endl;
-	buf = arch->obtenerBloque(nrr2);
+	arch->obtenerBloque(nrr2,buf);
 	cout << "El bloque tiene: "<< buf <<endl;
 	cout << "Pido el bloque del nrr: "<< nrr3 <<endl;
-	buf = arch->obtenerBloque(nrr3);
+	arch->obtenerBloque(nrr3,buf);
 	cout << "El bloque tiene: "<< buf <<endl;
 
 	cout << "Borro el bloque del nrr: "<< nrr1 <<endl;
@@ -573,22 +571,22 @@ void Pruebas::pruebaArchivoBloq_16Bytes(){
 	arch->borrarBloque(nrr1);
 
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr4 es: "<< nrr4 <<endl;
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr5 es: "<< nrr4 <<endl;
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr6 es: "<< nrr4 <<endl;
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr7 es: "<< nrr4 <<endl;
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr8 es: "<< nrr4 <<endl;
 	cout << "Pido un bloque nuevo... "<<endl;
-	buf = arch->crearNuevoBloque(&nrr4);
+	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr9 es: "<< nrr4 <<endl;
 
 	arch->infoInts();
