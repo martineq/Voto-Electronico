@@ -196,6 +196,17 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 	}
 }
 
+void ArchivoBloques::obtenerBloque(int nrr, char *datos){
+	this->archivo->posicionarse(nrr);
+	this->archivo->leer(datos,this->blocksize);
+}
+
+void ArchivoBloques::crearNuevoBloque(int* pos){
+	(*pos) = this->newblock();
+}
+
+/*
+
 char *ArchivoBloques::obtenerBloque(int nrr){
 	this->archivo->posicionarse(nrr);
 	char* buf= new char[this->blocksize];
@@ -211,6 +222,10 @@ char *ArchivoBloques::crearNuevoBloque(int* pos){
 	(*pos) = nrr;
 	return buf;
 }
+ *
+ *
+ * */
+
 
 void ArchivoBloques::borrarBloque(int nrr){
 	this->delblock(nrr);

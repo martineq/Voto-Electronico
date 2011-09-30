@@ -67,10 +67,10 @@ public:
 
 	ArchivoBloques();
 	ArchivoBloques(char *path, int blocksize);
-	// Devuelve un bloque (de datos)
-	char *obtenerBloque(int nrr);
-	// Creo un nuevo bloque y devuelvo su puntero, además de su posición relativa en archivo
-	char *crearNuevoBloque(int* nrr);
+	// Devuelve un bloque (de datos), según la posición <nrr> dada
+	void obtenerBloque(int nrr, char *datos);
+	// Creo un nuevo bloque y devuelvo su posición relativa en archivo
+	void crearNuevoBloque(int* nrr);
 	// Borro un bloque, identificado por su posición en el archivo
 	void borrarBloque(int nrr);
 	// Guarda un bloque de datos, en la posición <numeroBloque>
