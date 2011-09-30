@@ -7,49 +7,39 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <unistd.h>
 #include <string.h>
 #include "ManejadorDeArchivo.h"
 
 #ifndef ARCHIVOBLOQUES_H_
 #define ARCHIVOBLOQUES_H_
 
-// Acá defino los 2 tipos de cabeceras, el tipo 'R' no hace falta definirlo
-// porque siempre se encuentran registrados detro de los bloques de metadata y
-// el tipo 'H' tampoco hace falta porque es único y siempre se encuentra al inicio.
-#define	HEAD_D 1
-#define	HEAD_M 2
+#define TAM_CAMPOS_CTRL sizeof(int)  //Tamaño de campos de control para el funcionamiento (Debe ser potencia de 2)
+#define MIN_CAMPOS_CTRL 4  //Cantidad mínima de campos de control para el funcionamiento (Debe ser potencia de 2)
+#define POSREL_CURRMD_HEAD (0*TAM_CAMPOS_CTRL)		// Posición relativa del campo de ctrl currMD dentro del Bq HEAD
+#define POSREL_MAXBLOQNUM_HEAD (1*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl maxblocknum dentro del Bq HEAD
+#define POSREL_BLOQANT_MD (0*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl BqAnterior dentro del Bq METADATA
+#define POSREL_CURR_MD (1*TAM_CAMPOS_CTRL)		// Posición relativa del campo de ctrl currPos dentro del Bq METADATA
+#define POSREL_1ER_BQLIBRE_MD (2*TAM_CAMPOS_CTRL)// Posición relativa del 1er bloue libre dentro del Bq METADATA
+
 
 class ArchivoBloques {
 
 private:
 
-	//Nueva variable
-	ManejadorDeArchivo* archivo;
-
+	ManejadorDeArchivo* archivo; // Maneja lo respectivo al acceso a disco.-
 	int* mem;        //this is the memory in which the file is mapped
 	int maxblocknum;  //this is the number of blocks in my file, it counts everything, deleted blocks, metadata blocks, head
 	int blocksize;    //this is the block size of the file (in bytes), incluye todos los campos de control
 	int currmetadata; //this points to the current metadata block in use
 	int currpos;      //this points to the current position in the metadata block
-	int fd; 		  //this is the file descriptor pointing to my file
-	char *path;  	  //this is the path to the file
-
-	// Están todas las funciones que había en C excepto <openblockfile()> y <getblock()>
-	// que ahora son <ArchivoBloques()> (el constructor de la clase) y <obtenerBloque()> respectivamente
 
 	//getblocksize() returns the block size of the file, this should be a public function
 	int getblocksize();
 	//getblock() returns a nrr to the block, or 0 if there is an error
-	int getblock(int nrr,int head);
+	int getblock(int nrr);
 	//newblock() returns a new blockhandle which can either be obtained by growing the
 	//file or by reusing an old but deleted block
-	int newblock(int head);
+	int newblock();
 	//delblock() marks a block as deleted, by adding it to the current metadata file
 	//in the current position + 1 or in the first block of a new metadata file if position*4 + 1
 	//is larger than blocksize (blocksize is in chars and an int ocupies 4 chars)
@@ -74,12 +64,7 @@ private:
 	void guardarTipoInt(int pos,int* dest);
 
 public:
-	// <<Acá dejo los las funciones que se van a ver desde afuera>>
-	// Si hace falta alguna otra después la vamos agregando
 
-	// <<El constructor es el 'openblockfile()'>> que decía:
-	//openblockfile() creates a new blockfile or opens an old one and populares a new filehandle
-	//struct which should be freed after we're done with it, blocksize will be ignored if the file exists
 	ArchivoBloques();
 	ArchivoBloques(char *path, int blocksize);
 	// Devuelve un bloque (de datos)
@@ -87,9 +72,14 @@ public:
 	// Creo un nuevo bloque y devuelvo su puntero, además de su posición relativa en archivo
 	char *crearNuevoBloque(int* nrr);
 	// Borro un bloque, identificado por su posición en el archivo
-	void liberarBloque(int nrr);
+	void borrarBloque(int nrr);
 	// Guarda un bloque de datos, en la posición <numeroBloque>
 	void guardarBloque(int nrr, char* datos);
+	void cerrarArchivo();
+
+	//Muestra TODO_ el contenido del archivo en intervalos de Ints (en paquetes de a 4 Bytes)
+	// Una vez usada, bórrese! =D
+	void infoInts();
 
 	virtual ~ArchivoBloques();
 

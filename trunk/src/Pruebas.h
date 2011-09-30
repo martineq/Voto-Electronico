@@ -15,6 +15,7 @@
 #include "./Entidades/Eleccion.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/Hashing/HashingExtensible.h"
+#include "./Archivos/EnBloques/ArchivoBloques.h"
 #include <list>
 #include <string>
 #include <iostream>
@@ -36,6 +37,8 @@ private:
 	void verContenidoBucketVotante();
 public:
 	Pruebas();
+//	pruebas para el Archivo en Bloques
+	void pruebaArchivoBloq_16Bytes();
 //	pruebas para el hashing
 	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar
