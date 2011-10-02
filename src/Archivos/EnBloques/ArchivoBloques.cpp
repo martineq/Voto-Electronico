@@ -34,7 +34,7 @@ void ArchivoBloques::guardarTipoInt(int pos, int *dest){
 // Si el bloque no es de ese tipo devuelve cero
 int ArchivoBloques::getblock(int nrr){
 	if( (nrr<=(int)(TAM_CAMPOS_CTRL)) || (nrr > ( (this->maxblocknum-1) * this->blocksize ) + 1 ) ){
-		cout << "Se accedió a un bloque fuera de rango" << endl;
+		cerr << "Se accedió a un bloque fuera de rango" << endl;
 		return 0;	// Si estoy fuera del rango devuelvo 0
 	}
     return nrr;
@@ -55,8 +55,6 @@ int ArchivoBloques::newblock(){
 int ArchivoBloques::delblock(int nrrBorrado){
 	 // Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
 	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-TAM_CAMPOS_CTRL ){
-		if ( (this->currpos) >= (this->blocksize)-TAM_CAMPOS_CTRL )
-		cout << "Nuevo bloque MetaData, por estar lleno" <<endl;
 		int metadataAnterior = this->currmetadata;					// Me guardo el bloque de metadata anterior
 		int nrrNuevo = growfile();									// Pido un NUEVO bloque de metadata
 		this->currmetadata = nrrNuevo;
@@ -143,14 +141,14 @@ void ArchivoBloques::truncatefile(){
     munmap((void*)this->mem, statbuf.st_size);
     if (fstat (this->fd,&statbuf) < 0){
         perror("cannot stat file");
-        std::cout << "cannot stat file\n";
+        std::cerr << "cannot stat file\n";
     }
 
     lseek(this->fd,(statbuf.st_size) - (this->blocksize) ,SEEK_END);
     write(this->fd,"",sizeof(char));
     if ( (void*)(mem = (int*)mmap (0,statbuf.st_size - this->blocksize, PROT_READ | PROT_WRITE, MAP_SHARED, this->fd, 0)) == (caddr_t) -1){
        perror("mmap error for output\n");
-       std::cout << "mmap error for output\n";
+       std::cerr << "mmap error for output\n";
     }
     this->mem=mem;
     this->maxblocknum-=1;
@@ -175,17 +173,13 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 		archivo->abrir(path);
 
 		if (archivo->obtenerTamArchivo() <= 0){		// Si el archivo está vacio inicialo loa atributos en cero
-			cout<<"Archivo Nuevo"<<endl;
-
 			string bloque (blocksize, '\0');			// Creo un bloque con ceros
 			this->archivo->escribir(bloque.c_str(),blocksize) ;
-
 			this->blocksize = blocksize;
 			this->currpos = 0;
 			this->maxblocknum = 1;				// Lo pongo en 1 porque agrego el bloque cabecera
 			this->serializehead();
 		}else{
-			cout<<"Archivo existente"<<endl;
 			this->blocksize = blocksize;
 			this->deserializehead();
 			if (this->currmetadata > 0) this->currpos = this->obtenerCurrPos();
@@ -204,28 +198,6 @@ void ArchivoBloques::obtenerBloque(int nrr, char *datos){
 void ArchivoBloques::crearNuevoBloque(int* pos){
 	(*pos) = this->newblock();
 }
-
-/*
-
-char *ArchivoBloques::obtenerBloque(int nrr){
-	this->archivo->posicionarse(nrr);
-	char* buf= new char[this->blocksize];
-	this->archivo->leer(buf,this->blocksize);
-	return buf;
-}
-
-char *ArchivoBloques::crearNuevoBloque(int* pos){
-	int nrr = this->newblock();
-	this->archivo->posicionarse(nrr);
-	char* buf= new char[this->blocksize];
-	this->archivo->leer(buf,this->blocksize);
-	(*pos) = nrr;
-	return buf;
-}
- *
- *
- * */
-
 
 void ArchivoBloques::borrarBloque(int nrr){
 	this->delblock(nrr);
