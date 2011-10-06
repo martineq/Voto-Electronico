@@ -102,6 +102,12 @@ void Lista::deserializar(string* source) {
 
 Entidad *Lista::duplicar()
 {
+	Lista* copia = new Lista();
+	copia->cantidadDeVotos = this->cantidadDeVotos;
+	copia->cargo = this->cargo;
+	copia->fecha = this->fecha;
+	copia->nombre = this->nombre;
+	return copia;
 }
 
 NombreDeEntidad Lista::getNombreDeEntidad(){

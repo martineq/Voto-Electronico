@@ -100,6 +100,12 @@ int Candidato::getClave(){
 
 Entidad *Candidato::duplicar()
 {
+	Candidato * copia = new Candidato();
+	copia->cargo = this->cargo;
+	copia->dni = this->dni;
+	copia->fecha = this->fecha;
+	copia->nombre = this->nombre;
+	return  copia;
 }
 
 NombreDeEntidad Candidato::getNombreDeEntidad(){

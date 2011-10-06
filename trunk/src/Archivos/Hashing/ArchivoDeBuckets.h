@@ -3,17 +3,22 @@
 
 #include <vector>
 
-#include "../Archivos/Hashing/Bucket.h"
+#include "../EnBloques/ArchivoBloques.h"
+#include "Bucket.h"
 
 class ArchivoDeBuckets {
 private:
-	vector<Bucket*>	archivo;
-	vector<int>		bucketsLibres;
+	ArchivoBloques*		archivo;
+	int					tamanioBucket;
+	int					ultimoNumeroDeBucketAlmacenado;
+	vector<int>			bucketsLibres;
 
 public:
-	ArchivoDeBuckets();
 
-	//ArchivoDeBuckets(string* path, int tamanioBucket);
+	/*
+	 * Crea un archivo de buckets.
+	 */
+	ArchivoDeBuckets(char* path, int tamanioBucket);
 
 	/*
 	 * Devuelve el numero de bucket solicitado.

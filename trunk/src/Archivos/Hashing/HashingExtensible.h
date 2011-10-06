@@ -1,7 +1,7 @@
 #include <vector>
 #include <cmath>
 
-#include "../../ClasesDePrueba/ArchivoDeBuckets.h"
+#include "ArchivoDeBuckets.h"
 #include "Bucket.h"
 #include "Registro.h"
 

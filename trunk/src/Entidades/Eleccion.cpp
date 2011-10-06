@@ -90,6 +90,15 @@ list<Distrito>::iterator Eleccion::obtenerIterador(){
 
 Entidad *Eleccion::duplicar()
 {
+	Eleccion* copia = new Eleccion();
+	copia->cargoPrincipal = this->cargoPrincipal;
+	copia->fecha = this->fecha;
+	list<Distrito>::iterator it = this->distritos.begin();
+	while (it != this->distritos.end()){
+		copia->agregarDistrito(*it);
+	}
+	return copia;
+
 }
 
 Eleccion::~Eleccion() {

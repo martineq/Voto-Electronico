@@ -1,4 +1,7 @@
 #include "../Archivos/Hashing/Registro.h"
+#include "../Archivos/Hashing/ArchivoDeBuckets.h"
+#include "../Archivos/Hashing/HashingExtensible.h"
+#include "../Archivos/Hashing/Bucket.h"
 #include "../Entidades/Distrito.h"
 
 #ifndef TEST_H_
@@ -10,7 +13,7 @@ public:
 
 	//	pruebas para serializar y deserializar
 	void serializarDeserializarRegistro();
-
+	void pruebaAgregarRegistrosHashingExtensible();
 	virtual ~Test();
 };
 
