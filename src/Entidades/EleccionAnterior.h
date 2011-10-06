@@ -17,6 +17,7 @@ public:
 	int getTamanio();
 	string getFecha ();
 	string getCargo ();
+	EleccionAnterior* duplicar();
 	virtual ~EleccionAnterior();
 };
 

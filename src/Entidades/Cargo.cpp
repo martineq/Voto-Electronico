@@ -125,6 +125,13 @@ void Cargo::deserializar(string * source){
 
 Entidad *Cargo::duplicar()
 {
+	Cargo * copia = new Cargo();
+	copia->cargo = this->cargo;
+	list<string>::iterator it = this->listaCargos.begin();
+	while (it != this->listaCargos.end()){
+		copia->agregarCargo(*it);
+	}
+	return copia;
 }
 
 NombreDeEntidad Cargo::getNombreDeEntidad(){

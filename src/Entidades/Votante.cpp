@@ -209,6 +209,17 @@ void Votante::deserializar(string* source){
 
 Entidad *Votante::duplicar()
 {
+	Votante* copia = new Votante();
+	copia->distrito = this->distrito;
+	copia->dni = this->dni;
+	copia->domicilio = this->domicilio;
+	copia->nombre = this->nombre;
+	copia->password = this->password;
+	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
+	while (it != this->listaDeEleccionesAnteriores->end()){
+		copia->agregarEleccion((*it)->getFecha(),(*it)->getCargo());
+	}
+	return copia;
 }
 
 NombreDeEntidad Votante::getNombreDeEntidad(){

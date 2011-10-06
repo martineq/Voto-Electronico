@@ -26,3 +26,10 @@ string EleccionAnterior::getFecha () {
 string EleccionAnterior::getCargo () {
 	return this->cargo;
 }
+
+EleccionAnterior* EleccionAnterior::duplicar(){
+	EleccionAnterior* copia = new EleccionAnterior();
+	copia->cargo = this->cargo;
+	copia->fecha = this->fecha;
+	return copia;
+}
