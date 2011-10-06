@@ -63,29 +63,35 @@ int Registro::obtenerClave(){
 	return this->clave;
 }
 
-void Registro::deserializar(std::string *source)
-{
+void Registro::deserializar(std::string *source){
 	int size = sizeof(int);
 	int posicion = 0;
 
+	cout << "Bienvenido al deserializar de Registro" << endl;
 	stringstream bufferNombreDeEntidad(source->substr(posicion,posicion+size-1));
+	cout << "Obtuvimos el nombre de la entidad serializado" << endl;
 	NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)bufferNombreDeEntidad.get();
-
+	cout << "La entidad es: " << nombreDeEntidad << endl;
 	posicion += size;
 
 	stringstream bufferTamanioEntidad(source->substr(posicion,posicion+size-1));
+	cout << "Obtuvimos el tamanio de la entidad serializado" << endl;
 	int tamanioEntidad = bufferTamanioEntidad.get();
+	cout << "El tamanio de la entidad es: " << tamanioEntidad << endl;
 
 	posicion += size;
 
 	string entidadSerializada = source->substr(posicion,posicion+tamanioEntidad-1);
+	cout << "Obtuvimos la entidad serializada y la vamos a deserializar" << endl;
 
 	FabricaDeEntidades fabrica;
 	Entidad* nuevoContenido = fabrica.crearEntidad(nombreDeEntidad);
-
+	cout << "Instanciamos su entidad" << endl;
+	cout << "Deserializando" << endl;
 	nuevoContenido->deserializar(&entidadSerializada);
-
+	cout << "Deserializamos con exito" << endl;
 	this->setContenido(nuevoContenido);
+	cout << "Cargamos la entidad al registro" << endl;
 
 }
 

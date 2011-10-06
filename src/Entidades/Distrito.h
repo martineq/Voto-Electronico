@@ -1,4 +1,6 @@
 #include "Entidad.h"
+#include <iostream>
+using namespace std;
 
 #ifndef DISTRITO_H_
 #define DISTRITO_H_

@@ -36,8 +36,9 @@ string* Distrito::serializar(){
 }
 
 void Distrito::deserializar(string * source){
+	cout << "Estamos deserializando un distrito" << endl;
 	istringstream streamDatos(*source);
-	delete source;
+
 	stringstream * miString = new stringstream();
 	int sizeOfDistrito;
 	streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
@@ -46,8 +47,11 @@ void Distrito::deserializar(string * source){
     miString->write(distritoChar,sizeOfDistrito);
     string distritoString = miString->str();
     this->distrito = distritoString;
+    cout << "Ya cargamos el nombre del distrito" << endl;
     delete []distritoChar;
     delete miString;
+    cout << "Terminamos de deserializar un distrito" << endl;
+//    delete source; hay que hacer el delete este corregir
 }
 
 
