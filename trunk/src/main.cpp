@@ -1,6 +1,6 @@
 #include <iostream>
 #include <list>
-//#include "Pruebas.h"
+#include "Pruebas.h"
 #include "./ClasesDePrueba/Test.h"
 using namespace std;
 
@@ -11,20 +11,21 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-	Test test;
-	test.serializarDeserializarRegistro();
+//	Test test;
+//	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	test.pruebaAgregarRegistrosHashingExtensible();
 
 
-//	Pruebas* prueba = new Pruebas();
+	Pruebas* prueba = new Pruebas();
+
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
-//	prueba->serializarDeserializarBucket();
+	prueba->serializarDeserializarBucket();
 
 //  Pruebas de Registro!
 //	prueba->serializarDeserializarRegistro();

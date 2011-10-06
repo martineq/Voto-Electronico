@@ -32,7 +32,8 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 	else
 		if (unRegistro->getTamanio()>this->espacioLibre) return  false;
 		else {
-			this->listaDeRegistros.push_back(unRegistro->duplicar());
+			this->listaDeRegistros.push_back(unRegistro);
+//			this->listaDeRegistros.push_back(unRegistro->duplicar());
 			this->espacioLibre-=unRegistro->getTamanio();
 			return true;
 		}

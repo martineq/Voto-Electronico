@@ -330,7 +330,7 @@ void Pruebas::serializarDeserializarBucket(){
 	stringstream stream4(bucketSerializado->substr(12,15));
 	int tamanioDeRegistro = stream4.get();
 	if (tamanioDeRegistro==20) cout << "Serializado del tamanio De Registro1 OK" << endl;
-	else cout << "Serializado del tamanio De Registro1 ERROR" << endl;
+	else cout << "Serializado del tamanio De Registro ERROR" << endl;
 
 	cout << "Fin serializado de bucket" << endl;
 	cout << "Inicio deserializado de bucket" << endl;
@@ -352,7 +352,7 @@ void Pruebas::serializarDeserializarBucket(){
 
 void Pruebas::pruebaAgregarRegistrosHashingExtensible(){
 	this->iniciarRegistrosDistrito();
-	ArchivoDeBuckets* archivo = new ArchivoDeBuckets();
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets("ARCHIVO.BIN",16);
 	HashingExtensible* he = new HashingExtensible(archivo);
 	he->agregarRegistro(this->registro1);
 	he->agregarRegistro(this->registro2);
