@@ -76,12 +76,17 @@ int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 
 //	bucketSerializado = (char*)bucket->serializar()->c_str();
 	strcpy(bucketSerializado,bucket->serializar()->c_str());
+	cout << "bucketSerializado: " << *(bucket->serializar()) << endl;
+
 		// se busca en la lista de libres, si está vacio
 		// se agrega al final
 	if ( this->bucketsLibres.empty() ){
 		this->ultimoNumeroDeBucketAlmacenado++;
 		numeroDeBucket = this->ultimoNumeroDeBucketAlmacenado;
+//		archivo->crearNuevoBloque(&numeroDeBucket);
 		archivo->guardarBloque(numeroDeBucket,bucketSerializado);
+
+
 		cout << "Se guardo el bucket: " << bucketSerializado << endl;
 
 	}else{
