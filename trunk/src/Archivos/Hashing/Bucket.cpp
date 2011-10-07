@@ -32,8 +32,9 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 	else
 		if (unRegistro->getTamanio()>this->espacioLibre) return  false;
 		else {
-			this->listaDeRegistros.push_back(unRegistro);
-//			this->listaDeRegistros.push_back(unRegistro->duplicar());
+//			this->listaDeRegistros.push_back(unRegistro);
+			Registro* registro = unRegistro->duplicar();
+			this->listaDeRegistros.push_back(registro);
 			this->espacioLibre-=unRegistro->getTamanio();
 			return true;
 		}
@@ -88,39 +89,41 @@ list<Registro*>::iterator Bucket::ubicarPrimero(){
 }
 
 string* Bucket::serializar(){
-	cout << "HOLA!" << endl;
-	cout << "Usted esta en el serializar de bucket" << endl;
-	cout << "Esto es lo que ocurre paso a paso" << endl;
+	cout << endl << "Usted esta en el serializar de bucket" << endl;
+
 	stringstream buffer;
 	int cantidadDeBytes;
+
+	cout << "Comienza la carga de elementos en buffer." << endl;
+
 	buffer.write((char*)&this->espacioLibre,TAM_INT);
-	cout << "Carga del espacio libre en buffer" << endl;
-	cout << "Espacio libre: " << this->espacioLibre << endl;
+	cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
+
 	buffer.write((char*)&this->tamanioDeDispersion,TAM_INT);
-	cout << "Carga del tamanio de dispersion en buffer" << endl;
-	cout << "Tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+	cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+
 	int cantidadDeRegistros= this->listaDeRegistros.size();
 	buffer.write((char*)&cantidadDeRegistros,TAM_INT);
-	cout << "Carga de la cantidad de registros en buffer" << endl;
-	cout << "Cantidad de registros: " << cantidadDeRegistros << endl;
-	cout << "Carga de registros en bufffer" << endl;
+	cout << "Se cargo la cantidad de registros: " << cantidadDeRegistros << endl;
+
 	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
+
 		cantidadDeBytes = ((*it)->getTamanio());
 		buffer.write((char*)&cantidadDeBytes,TAM_INT);
-		cout << "Carga del tamanio del registro en buffer" << endl;
-		cout << "Tamanio del registro: " << cantidadDeBytes << endl;
+		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
+
 		buffer.write(((*it)->serializar())->c_str(),cantidadDeBytes);
-		cout << "Carga del registro en buffer" << endl;
+		cout << "Se cargo el registro en buffer: " << *((*it)->serializar()) << endl;
+
 	}
-	cout << "Fin del serializado del bucket" << endl;
-	cout << "Chauuu!!!" << endl;
+	cout << "Fin del serializado del bucket" << endl << endl;
 	string* datos = new string(buffer.str());
 	return datos;
 }
 void Bucket::deserializar(string* source){
-	cout << "HOLA!" << endl;
-	cout << "Usted esta en el deserializar de bucket" << endl;
-	cout << "Esto es lo que ocurre paso a paso" << endl;
+
+	cout << endl << "Usted esta en el deserializar de bucket" << endl;
+
 	istringstream buffer (*source);
 	cout << "Carga del buffer" << endl;
 	delete source;
@@ -128,29 +131,31 @@ void Bucket::deserializar(string* source){
 
 	//	hidrato el espacio libre
 	buffer.read((char*)&this->espacioLibre,TAM_INT);
-	cout << "Carga del espacio libre del bucket" << endl;
-	cout << "Espacio libre: " << this->espacioLibre << endl;
+	cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
+
 	//	hidrato el tamanio de dispersion
 	buffer.read((char*)&this->tamanioDeDispersion,TAM_INT);
-	cout << "Carga del tamanio de dispersion" << endl;
-	cout << "Tamanio De Dispersion: " << this->tamanioDeDispersion << endl;
+	cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+
 	//	hidrato la lista de registros
 	int tamanioDeLaLista;
 	buffer.read((char*)&tamanioDeLaLista,TAM_INT);
-	cout << "Carga de la cantidad de registros" << endl;
-	cout << "Cantidad de registros: " << tamanioDeLaLista << endl;
+	cout << "Se cargo la cantidad de registros: " << tamanioDeLaLista << endl;
+
 	cout << "Carga de registros" << endl;
 	for (int i=0; i<tamanioDeLaLista;i++){
 		//hidrato el registro*
 		stringstream* bufferAuxiliar = new stringstream;
 		buffer.read((char*)&cantidadDeBytes,TAM_INT);
-		cout << "Carga del tamanio del registro en el buffer auxiliar" << endl;
-		cout << "Tamanio del registro actual: " << cantidadDeBytes << endl;
+		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
+
 		char* registroSerializado = new char[cantidadDeBytes];
 		buffer.read(registroSerializado,cantidadDeBytes);
 		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
-		cout << "Carga del registro serializado en el buffer auxiliar" << endl;
+
 		string* registroADeserializar = new string(bufferAuxiliar->str());
+		cout << "Se cargo el registro en buffer: " << *registroSerializado << endl;
+		cout << "Se cargo el registro en buffer: " << *registroADeserializar << endl;
 
 		Registro* unRegistro = new Registro();
 		cout << "Deserializando registro" << endl;

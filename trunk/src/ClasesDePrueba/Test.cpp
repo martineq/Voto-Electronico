@@ -21,15 +21,16 @@ void Test::serializarDeserializarRegistro()
 	delete(d);
 
 	string* registroSerializado = r->serializar();
-	delete (r);
+	delete r;
 
 	Registro *prueba = new Registro();
 	prueba->deserializar(registroSerializado);
+	delete registroSerializado;
 
 	Distrito* d2 = (Distrito*)prueba->getContenido();
-	std::cout << d2->getDistrito() << std::endl;
-
 	delete(prueba);
+
+	std::cout << d2->getDistrito() << std::endl;
 	delete(d2);
 }
 
@@ -62,6 +63,39 @@ void Test::pruebaAgregarRegistrosHashingExtensible(){
 
 	delete(archivo);
 	delete(he);
+}
+
+void Test::testBucket(){
+	Bucket* bucket = new Bucket(0);
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Bahia Blancaaaaa","ushuaia"};
+
+	for (int i=0; i < 4 ;i++){
+		Distrito* distrito = new Distrito(distritos[i]);
+		Registro* registro = new Registro(distrito);
+		delete(distrito);
+
+		bucket->agregarRegistro(registro);
+		delete(registro);
+	}
+
+	string* bucketSerializado = bucket->serializar();
+	delete bucket;
+
+	Bucket* bucketNuevo = new Bucket(0);
+	bucketNuevo->deserializar(bucketSerializado);
+
+	int cantRegistros = bucket->getCantidadDeRegistros();
+
+	list<Registro*>::iterator it = bucket->ubicarPrimero();
+	for(int i =0; i <cantRegistros;i++){
+		Registro* registro = *it;
+		Distrito* d = (Distrito*)registro->getContenido();
+		cout << d->getDistrito() << endl;
+		delete d;
+		it++;
+	}
+
+	delete bucketNuevo;
 }
 
 Test::~Test() {

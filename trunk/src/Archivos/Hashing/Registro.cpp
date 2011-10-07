@@ -31,7 +31,13 @@ void Registro::determinarClave()
 
 int Registro::getTamanio()
 {
-	return this->contenido->getTamanio();
+	int size = 0;
+
+	size += 4;									// tamanio del tipo de entidad
+	size += 4;									// tamanio de la entidad
+	size += this->contenido->getTamanio();		// tamanio de la entidad serializada
+
+	return size;
 }
 
 std::string *Registro::serializar()
@@ -45,7 +51,7 @@ std::string *Registro::serializar()
 	buffer.write((char*)&tamanioEntidad,TAM_INT);
 
 	string entidadSerializada = *(this->getContenido()->serializar());
-	buffer.write((char*)entidadSerializada.c_str(),tamanioEntidad);
+	buffer.write(entidadSerializada.c_str(),tamanioEntidad);
 
 	string* s = new string(buffer.str());
 	return s;
@@ -67,7 +73,7 @@ void Registro::deserializar(std::string *source){
 	int size = sizeof(int);
 	int posicion = 0;
 
-	cout << "Bienvenido al deserializar de Registro" << endl;
+	cout << endl << "Bienvenido al deserializar de Registro" << endl;
 	stringstream bufferNombreDeEntidad(source->substr(posicion,posicion+size-1));
 	cout << "Obtuvimos el nombre de la entidad serializado" << endl;
 	NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)bufferNombreDeEntidad.get();
@@ -91,7 +97,7 @@ void Registro::deserializar(std::string *source){
 	nuevoContenido->deserializar(&entidadSerializada);
 	cout << "Deserializamos con exito" << endl;
 	this->setContenido(nuevoContenido);
-	cout << "Cargamos la entidad al registro" << endl;
+	cout << "Cargamos la entidad al registro" << endl << endl;
 
 }
 
@@ -107,7 +113,7 @@ Registro *Registro::duplicar()
 {
 	NombreDeEntidad nombre = this->getContenido()->getNombreDeEntidad();
 	Registro* registro = new Registro(nombre);
-	registro->setContenido(registro->getContenido());
+	registro->setContenido(this->getContenido());
 	return registro;
 }
 

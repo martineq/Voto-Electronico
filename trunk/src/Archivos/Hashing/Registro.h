@@ -4,6 +4,7 @@
 
 #include "../../Entidades/Entidad.h"
 #include "FabricaDeEntidades.h"
+#include <cstring>
 
 class Registro : public Serializable {
 
