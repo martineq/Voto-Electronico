@@ -11,21 +11,21 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-//	Test test;
+	Test test;
 //	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	test.pruebaAgregarRegistrosHashingExtensible();
+	test.testBucket();
 
-
-	Pruebas* prueba = new Pruebas();
+//	Pruebas* prueba = new Pruebas();
 
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
-	prueba->serializarDeserializarBucket();
+//	prueba->serializarDeserializarBucket();
 
 //  Pruebas de Registro!
 //	prueba->serializarDeserializarRegistro();

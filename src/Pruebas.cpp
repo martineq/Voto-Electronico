@@ -10,20 +10,19 @@ Pruebas::~Pruebas() {
 }
 
 void Pruebas::iniciarRegistrosDistrito(){
-	this->distrito1 = new Distrito("Puerto Esperanza");
-	this->distrito2 = new Distrito("Buenos Aires");
-	this->distrito3 = new Distrito("Montecarlo");
-	this->distrito4 = new Distrito("Eldorado");
-	this->registro1 = new Registro(distrito1);
-	this->registro2 = new Registro(distrito2);
-	this->registro3 = new Registro(distrito3);
-	this->registro4 = new Registro(distrito4);
-	this->bucket = new Bucket(0);
-	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
-	this->bucket->agregarRegistro(registro1);
-	this->bucket->agregarRegistro(registro2);
-	this->bucket->agregarRegistro(registro3);
-	this->bucket->agregarRegistro(registro4);
+
+	Bucket* bucket = new Bucket(0);
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Bahia Blancaaaaa","ushuaia"};
+
+	for (int i=0; i < 4 ;i++){
+		Distrito* distrito = new Distrito(distritos[i]);
+		Registro* registro = new Registro(distrito);
+		delete(distrito);
+
+		bucket->agregarRegistro(registro);
+		delete(registro);
+	}
+
 }
 
 void Pruebas::verContenidoBucketDistrito(){
@@ -514,7 +513,7 @@ void Pruebas::pruebaArchivoBloq_16Bytes(){
 	string dat1 ("0123456789ABCDEF");
 	string dat2 ("Datos Locos");
 	string dat3 ("Soy Elvis El Rey");
-	int tamanioDeBloque = 16;
+	int tamanioDeBloque = 50;
 	char* buf = new char[tamanioDeBloque];	// Mi bloque, instanciado en memoria, como si fuera un nodo, bucket, etc.-
 	int nrr1,nrr2,nrr3,nrr4;
 	nrr1=nrr2=nrr3=nrr4=99;

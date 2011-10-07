@@ -73,8 +73,9 @@ int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 {
 	int numeroDeBucket;
 	char* bucketSerializado = new char[this->tamanioBucket];
-	bucketSerializado = (char*)bucket->serializar()->c_str();
 
+//	bucketSerializado = (char*)bucket->serializar()->c_str();
+	strcpy(bucketSerializado,bucket->serializar()->c_str());
 		// se busca en la lista de libres, si está vacio
 		// se agrega al final
 	if ( this->bucketsLibres.empty() ){

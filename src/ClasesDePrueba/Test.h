@@ -14,6 +14,7 @@ public:
 	//	pruebas para serializar y deserializar
 	void serializarDeserializarRegistro();
 	void pruebaAgregarRegistrosHashingExtensible();
+	void testBucket();
 	virtual ~Test();
 };
 
