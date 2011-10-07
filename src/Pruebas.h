@@ -38,7 +38,7 @@ private:
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
-	void pruebaArchivoBloq_16Bytes();
+	void pruebaArchivoBloques();
 //	pruebas para el hashing
 	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar

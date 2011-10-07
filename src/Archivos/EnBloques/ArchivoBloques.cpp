@@ -174,7 +174,9 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 
 		if (archivo->obtenerTamArchivo() <= 0){		// Si el archivo está vacio inicialo loa atributos en cero
 			string bloque (blocksize, '\0');			// Creo un bloque con ceros
-			this->archivo->escribir(bloque.c_str(),blocksize) ;
+			char* buf = new char[blocksize];
+			strcpy(buf,bloque.c_str());
+			this->archivo->escribir(buf,blocksize);
 			this->blocksize = blocksize;
 			this->currpos = 0;
 			this->maxblocknum = 1;				// Lo pongo en 1 porque agrego el bloque cabecera

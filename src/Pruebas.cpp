@@ -508,21 +508,19 @@ void Pruebas::serializarDeserializarEleccion(){
 	delete unaEleccion;
 }
 
-void Pruebas::pruebaArchivoBloq_16Bytes(){
-	string nombre ("ArchivoBloques_16B.bin");
+void Pruebas::pruebaArchivoBloques(){
+	string nombre ("ArchivoBloques.bin");
 	string dat1 ("0123456789ABCDEF");
 	string dat2 ("Datos Locos");
 	string dat3 ("Soy Elvis El Rey");
-	int tamanioDeBloque = 50;
+
+	int tamanioDeBloque = 64;
 	char* buf = new char[tamanioDeBloque];	// Mi bloque, instanciado en memoria, como si fuera un nodo, bucket, etc.-
 	int nrr1,nrr2,nrr3,nrr4;
 	nrr1=nrr2=nrr3=nrr4=99;
-
 	ArchivoBloques *arch = new ArchivoBloques((char*)nombre.c_str(),tamanioDeBloque);
 
-	cout << "Inicialé los NRR's con ceros: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
-
-
+	cout << "Guardo el dato: "<< buf <<endl;
 	arch->crearNuevoBloque(&nrr1);
 	cout << "Los NRR's son: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
 	arch->crearNuevoBloque(&nrr2);
@@ -532,19 +530,17 @@ void Pruebas::pruebaArchivoBloq_16Bytes(){
 
 	cout << "Pido el bloque del nrr: "<< nrr1 <<endl;
 	arch->obtenerBloque(nrr1,buf);
-	buf = (char*)dat1.c_str();
+	strcpy(buf,dat1.c_str());
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr1 <<endl;
 	arch->guardarBloque(nrr1,buf);
-
 	cout << "Pido el bloque del nrr: "<< nrr2 <<endl;
 	arch->obtenerBloque(nrr2,buf);
-	buf = (char*)dat2.c_str();
+	strcpy(buf,dat2.c_str());
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr2 <<endl;
 	arch->guardarBloque(nrr2,buf);
-
 	cout << "Pido el bloque del nrr: "<< nrr3 <<endl;
 	arch->obtenerBloque(nrr3,buf);
-	buf = (char*)dat3.c_str();
+	strcpy(buf,dat3.c_str());
 	cout << "Guardo el dato: '"<< buf <<"' en el nrr: "<< nrr3 <<endl;
 	arch->guardarBloque(nrr3,buf);
 
@@ -583,9 +579,11 @@ void Pruebas::pruebaArchivoBloq_16Bytes(){
 	cout << "El bloque del nrr9 es: "<< nrr4 <<endl;
 
 	arch->infoInts();
+
 	arch->cerrarArchivo();
 	cout << "\n------------\nSe acabó =D"<< endl;
 }
+
 
 int Pruebas::holaMundo(){
 

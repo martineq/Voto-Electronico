@@ -39,7 +39,7 @@ int main(int argc,char* argv[]) {
 //	prueba->serializarDeserializarCandidato();
 
 //	Pruebas para el Archivo en Bloques:
-//	prueba->pruebaArchivoBloq_16Bytes();
+//	prueba->pruebaArchivoBloques();
 
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
