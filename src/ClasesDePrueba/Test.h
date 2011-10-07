@@ -15,6 +15,7 @@ public:
 	void serializarDeserializarRegistro();
 	void pruebaAgregarRegistrosHashingExtensible();
 	void testBucket();
+	void testArchivoDeBuckets();
 	virtual ~Test();
 };
 

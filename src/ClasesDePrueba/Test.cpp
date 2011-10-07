@@ -45,6 +45,7 @@ void Test::pruebaAgregarRegistrosHashingExtensible(){
 		Distrito* distrito = new Distrito(distritos[i]);
 		Registro* registro = new Registro(distrito);
 
+		cout << "Se agrega un registro al hashing" << endl;
 		he->agregarRegistro(registro);
 		delete(distrito);
 		delete(registro);
@@ -96,6 +97,40 @@ void Test::testBucket(){
 	}
 
 	delete bucketNuevo;
+}
+
+void Test::testArchivoDeBuckets(){
+	Bucket* bucket = new Bucket(0);
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Bahia Blancaaaaa","ushuaia"};
+
+	for (int i=0; i < 4 ;i++){
+		Distrito* distrito = new Distrito(distritos[i]);
+		Registro* registro = new Registro(distrito);
+		delete(distrito);
+
+		bucket->agregarRegistro(registro);
+		delete(registro);
+	}
+
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets("Archivo.bin",100);
+	int numeroDeBucket = archivo->guardarBucket(bucket);
+	delete bucket;
+
+	Bucket* bucketNuevo = archivo->obtenerBucket(numeroDeBucket);
+
+	int cantRegistros = bucketNuevo->getCantidadDeRegistros();
+
+		list<Registro*>::iterator it = bucketNuevo->ubicarPrimero();
+		for(int i =0; i <cantRegistros;i++){
+			Registro* registro = *it;
+			Distrito* d = (Distrito*)registro->getContenido();
+			cout << d->getDistrito() << endl;
+			delete d;
+			it++;
+		}
+
+		delete bucketNuevo;
+		delete archivo;
 }
 
 Test::~Test() {

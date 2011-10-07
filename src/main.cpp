@@ -12,11 +12,12 @@ using namespace std;
 int main(int argc,char* argv[]) {
 
 	Test test;
+	test.testArchivoDeBuckets();
 //	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	test.pruebaAgregarRegistrosHashingExtensible();
-	test.testBucket();
+//	test.testBucket();
 
 //	Pruebas* prueba = new Pruebas();
 
