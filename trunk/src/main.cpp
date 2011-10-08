@@ -2,6 +2,7 @@
 #include <list>
 #include "Pruebas.h"
 #include "./ClasesDePrueba/Test.h"
+#include "./ClasesDePrueba/TestArchivoDeBuckets.h"
 
 using namespace std;
 
@@ -11,10 +12,13 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-	Test test;
+	TestArchivoDeBuckets testArchivoDeBuckets;
+	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
+
+//	Test test;
 //	test.testStringstream();
 //	test.testConvertir();
-	test.testArchivoDeBuckets();
+//	test.testArchivoDeBuckets();
 //	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
