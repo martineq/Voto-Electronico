@@ -13,6 +13,17 @@ private:
 	int					ultimoNumeroDeBucketAlmacenado;
 	vector<int>			bucketsLibres;
 
+	/*
+	 * Devuelve un puntero a un string* con memoria reservada.
+	 */
+	std::string* charToString(char* cadena);
+
+	/*
+	 * Devuelve un puntero a un char* con memoria reservada.
+	 */
+
+	char* stringToChar(std::string* cadena);
+
 public:
 
 	/*

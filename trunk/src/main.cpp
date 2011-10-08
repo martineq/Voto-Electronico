@@ -2,6 +2,7 @@
 #include <list>
 #include "Pruebas.h"
 #include "./ClasesDePrueba/Test.h"
+
 using namespace std;
 
 	/*
@@ -10,16 +11,17 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-
-//	Test test;
-//	test.testArchivoDeBuckets();
+	Test test;
+//	test.testStringstream();
+//	test.testConvertir();
+	test.testArchivoDeBuckets();
 //	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	test.pruebaAgregarRegistrosHashingExtensible();
 //	test.testBucket();
 
-	Pruebas* prueba = new Pruebas();
+//	Pruebas* prueba = new Pruebas();
 
 
 //	Pruebas de Bucket!
@@ -42,7 +44,7 @@ int main(int argc,char* argv[]) {
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-	delete (prueba);
+//	delete (prueba);
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

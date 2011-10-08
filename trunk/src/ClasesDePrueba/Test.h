@@ -12,6 +12,8 @@ public:
 	Test();
 
 	//	pruebas para serializar y deserializar
+	void testStringstream();
+	void testConvertir();
 	void serializarDeserializarRegistro();
 	void pruebaAgregarRegistrosHashingExtensible();
 	void testBucket();
