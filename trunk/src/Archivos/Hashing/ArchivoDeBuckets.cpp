@@ -25,7 +25,7 @@ char* ArchivoDeBuckets::stringToChar(std::string* cadena){
 	cout << "Conversion desde un char a un string" << endl;
 
 	char* nuevaCadena = new char[this->tamanioBucket];
-	memcpy(nuevaCadena,cadena->c_str(),cadena->size());
+	memcpy(nuevaCadena,cadena->c_str(),this->tamanioBucket);
 
 	return nuevaCadena;
 }
@@ -129,7 +129,7 @@ int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 	char* bucketSerializado = stringToChar(aux_bucketSerializado);
 
 	// se busca en la lista de libres, si está vacio, se agrega al final.
-	if ( this->bucketsLibres.empty() ){
+//	if ( this->bucketsLibres.empty() ){
 
 		this->ultimoNumeroDeBucketAlmacenado++;
 //		numeroDeBucket = this->ultimoNumeroDeBucketAlmacenado;
@@ -138,21 +138,21 @@ int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 		numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;	// transformo el valor a el espacio de bloques.
 
 		cout << "Se guardo el bucket: " << *aux_bucketSerializado << endl;
-	}else{
-		// si la lista tiene elementos, se obtiene el primer bucket disponible
-		int cantidadDeBucketsLibres = this->bucketsLibres.size();
-		numeroDeBucket = this->bucketsLibres.at(cantidadDeBucketsLibres);
-		this->bucketsLibres.erase(this->bucketsLibres.end());
+//	}else{
+//		// si la lista tiene elementos, se obtiene el primer bucket disponible
+//		int cantidadDeBucketsLibres = this->bucketsLibres.size();
+//		numeroDeBucket = this->bucketsLibres.at(cantidadDeBucketsLibres);
+//		this->bucketsLibres.erase(this->bucketsLibres.end());
+//
+//		// transformo el valor a el espacio de bloques.
+//		numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
+//		archivo->guardarBloque(numeroDeBucket,bucketSerializado);
+//		// transformo el valor a el espacio de bloques.
+//		numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;
+//	}
 
-		// transformo el valor a el espacio de bloques.
-		numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
-		archivo->guardarBloque(numeroDeBucket,bucketSerializado);
-		// transformo el valor a el espacio de bloques.
-		numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;
-	}
-
-	delete(aux_bucketSerializado);
-	delete(bucketSerializado);
+	delete aux_bucketSerializado;
+	delete bucketSerializado;
 	return numeroDeBucket;
 
 }
