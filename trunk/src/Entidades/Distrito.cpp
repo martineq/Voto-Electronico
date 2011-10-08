@@ -11,7 +11,7 @@ Distrito::Distrito(){
 
 Distrito::Distrito(string distrito){
 		this->distrito = distrito;
-	}
+}
 
 NombreDeEntidad Distrito::getNombreDeEntidad(){
 	return tDistrito;

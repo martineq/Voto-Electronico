@@ -1,7 +1,7 @@
 #ifndef BUCKET_H_
 #define BUCKET_H_
 
-#define LONGITUD_BLOQUE_PRUEBA 70
+#define LONGITUD_BLOQUE_PRUEBA 100
 #include <list>
 #include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"
@@ -16,6 +16,7 @@ private:
 	int tamanioDeDispersion;
 	list<Registro*> listaDeRegistros;
 
+	void imprimirMetadata();
 public:
 	Bucket(int);
 	//devuelve el resultado de la operacion

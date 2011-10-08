@@ -13,6 +13,11 @@ Bucket::Bucket(int tamanioDispersion){
 //	this->espacioLibre=LONGITUD_BLOQUE;
 }
 
+void Bucket::imprimirMetadata(){
+	cout << "Espacio Libre: " <<this->espacioLibre <<endl;
+	cout << "Tamanio de Dispersión: "<<this->tamanioDeDispersion <<endl<<endl;
+}
+
 Registro* Bucket::getRegistro(int clave){
 	if (this->listaDeRegistros.empty()) return NULL;
 	else {
@@ -32,10 +37,9 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 	else
 		if (unRegistro->getTamanio()>this->espacioLibre) return  false;
 		else {
-//			this->listaDeRegistros.push_back(unRegistro);
 			Registro* registro = unRegistro->duplicar();
 			this->listaDeRegistros.push_back(registro);
-			this->espacioLibre-=unRegistro->getTamanio();
+			this->espacioLibre-= unRegistro->getTamanio();
 			return true;
 		}
 }
@@ -118,12 +122,12 @@ string* Bucket::serializar(){
 	}
 	cout << "Fin del serializado del bucket" << endl << endl;
 	string* datos = new string(buffer.str());
+	this->imprimirMetadata();
 	return datos;
 }
 void Bucket::deserializar(string* source){
 
 	cout << endl << "Usted esta en el deserializar de bucket" << endl;
-
 	istringstream buffer (*source);
 	cout << "Carga del buffer" << endl;
 	delete source;
@@ -144,19 +148,15 @@ void Bucket::deserializar(string* source){
 
 	cout << "Carga de registros" << endl;
 	for (int i=0; i<tamanioDeLaLista;i++){
-		//hidrato el registro*
-		stringstream* bufferAuxiliar = new stringstream;
+		//hidrato el registro
+		stringstream* bufferAuxiliar = new stringstream();
 		buffer.read((char*)&cantidadDeBytes,TAM_INT);
 		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
 
 		char* registroSerializado = new char[cantidadDeBytes];
 		buffer.read(registroSerializado,cantidadDeBytes);
 		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
-
 		string* registroADeserializar = new string(bufferAuxiliar->str());
-		cout << "Se cargo el registro en buffer: " << *registroSerializado << endl;
-		cout << "Se cargo el registro en buffer: " << *registroADeserializar << endl;
-
 		Registro* unRegistro = new Registro();
 		cout << "Deserializando registro" << endl;
 		unRegistro->deserializar(registroADeserializar);
@@ -167,6 +167,7 @@ void Bucket::deserializar(string* source){
 		delete bufferAuxiliar;
 		delete []registroSerializado;
 	}
+	this->imprimirMetadata();
 	cout << "Chauuu!" << endl;
 }
 Bucket::~Bucket() {}

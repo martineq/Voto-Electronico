@@ -9,10 +9,27 @@ Pruebas::~Pruebas() {
 	delete (bucket);
 }
 
+void Pruebas::iniciarRegistrosDePrueba(){
+	this->distrito1 = new Distrito("Puerto Esperanza");
+	this->distrito2 = new Distrito("Buenos Aires");
+	this->distrito3 = new Distrito("Montecarlo");
+	this->distrito4 = new Distrito("Eldorado");
+	this->registro1 = new Registro(distrito1);
+	this->registro2 = new Registro(distrito2);
+	this->registro3 = new Registro(distrito3);
+	this->registro4 = new Registro(distrito4);
+	this->bucket = new Bucket(0);
+	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
+	this->bucket->agregarRegistro(registro1);
+	this->bucket->agregarRegistro(registro2);
+	this->bucket->agregarRegistro(registro3);
+	this->bucket->agregarRegistro(registro4);
+}
+
 void Pruebas::iniciarRegistrosDistrito(){
 
 	Bucket* bucket = new Bucket(0);
-	string distritos[] = {"Buenos Aires","Puerto Esperanza","Bahia Blancaaaaa","ushuaia"};
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado"};
 
 	for (int i=0; i < 4 ;i++){
 		Distrito* distrito = new Distrito(distritos[i]);
@@ -63,7 +80,7 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 	cout << "Bienvenido a las pruebas de agregar registros a un bucket" << endl;
 	cout << "Observe y disfrute" << endl;
 	cout << "Iniciando prueba carga de cero" << endl;
-	this->iniciarRegistrosDistrito();
+	this->iniciarRegistrosDePrueba();
 	cout << "Carga finalizada" << endl;
 	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
@@ -102,8 +119,9 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 	}
 	else cout << "ERROR" << endl;
 	this->verContenidoBucketDistrito();
+	cout << endl;
 	cout << "Iniciando prueba carga de registro con clave ya existente" << endl;
-	cout << "Se intenta agregar el registro Obera ya existente" << endl;
+	cout << "Se intenta agregar el registro Eldorado ya existente" << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	it = this->bucket->ubicarPrimero();
 	clave = (*it)->obtenerClave();
@@ -111,9 +129,9 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 	it = this->bucket->ubicarPrimero();
 	clave = (*it)->obtenerClave();
 	this->bucket->eliminarRegistro(clave);
-	cout << "Se hizo espacio para el nuevo registro Obera" << endl;
+	cout << "Se hizo espacio para el nuevo registro Eldorado" << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
-	Distrito* distrito6 = new Distrito("Obera");
+	Distrito* distrito6 = new Distrito("Eldorado");
 	Registro* registro6 = new Registro(distrito6);
 	cout << "Se intenta la carga del registro duplicado" << endl;
 	if (!this->bucket->agregarRegistro(registro6)) {
@@ -123,6 +141,7 @@ void Pruebas::pruebaAgregarRegistrosAlBucket(){
 		cout << "Prueba OK" << endl;
 	}
 	else cout << "ERROR" << endl;
+	this->verContenidoBucketDistrito();
 	cout << endl;
 	cout << "Estas fueron todas las pruebas de agregar registros al bucket" << endl;
 	cout << "Gracias! Hasta luego" << endl;
@@ -151,7 +170,7 @@ void Pruebas::pruebaEliminarRegistrosDelBucket(){
 	else cout << "ERROR" << endl;
 	delete unBucket;
 	cout << "Prueba eliminar el primer registro" << endl;
-	this->iniciarRegistrosDistrito();
+	this->iniciarRegistrosDePrueba();
 	cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	this->verContenidoBucketDistrito();
@@ -213,8 +232,8 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << endl;
 	cout << "Bienvenido a las pruebas de actualizacion de registros en un bucket" << endl;
 	cout << "Observe y disfrute" << endl;
-	Votante* votante1 = new Votante (1,"Daniel","","","");//40bytes
-	Votante* votante2 = new Votante (2,"A","","","");//30bytes
+	Votante* votante1 = new Votante (1,"Daniel","","","");
+	Votante* votante2 = new Votante (2,"A","","","");
 	this->registro1 = new Registro (votante1);
 	this->registro2 = new Registro (votante2);
 	bucket = new Bucket (0);
@@ -225,7 +244,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
 	cout << "Espacio libre: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	cout << "Inicio de reemplazo" << endl;
-	Votante* votante3 = new Votante (1,"Martin","","","");//40bytes
+	Votante* votante3 = new Votante (1,"Martin","","","");
 	this->registro3 = new Registro (votante3);
 	if (this->bucket->reemplazarRegistro(registro3)){
 		cout << "Fin de reemplazo" << endl;
@@ -237,7 +256,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	else cout << "ERROR" << endl;
 	cout << "Se intentara reemplazar un registro que no entre en el bucket" << endl;
 	cout << "Se intentara reemplazar el registro A con el registro Gonzalo" << endl;
-	Votante* votante4 = new Votante (2,"Gonzalo","","","");//42bytes
+	Votante* votante4 = new Votante (2,"Gonzalo","","","");
 	this->registro4 = new Registro (votante4);
 	cout << "Tamanio de registro A= " << this->registro2->getTamanio() << endl;
 	cout << "Tamanio de registro Gonzalo= " << this->registro4->getTamanio() << endl;
@@ -303,17 +322,21 @@ void Pruebas::serializarDeserializarBucket(){
 	cout << "Bienvenido a las pruebas de serializacion y deserializacion de un bucket" << endl;
 	cout << "Observe y disfrute" << endl;
 	cout << "Iniciando la carga del bucket" << endl;
-	this->iniciarRegistrosDistrito();
+	this->iniciarRegistrosDePrueba();
+//	cout << "HOLAAAAAAAAAAAAA: " << this->registro1->getTamanio() << endl;
 	cout << "Carga finalizada" << endl;
 	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	cout << "cantidad de registros en Bucket: " << this->bucket->getCantidadDeRegistros() << endl;
 	this->verContenidoBucketDistrito();
 	cout << "Inicio serializado de bucket" << endl;
 	string* bucketSerializado = this->bucket->serializar();
+
+//	===================================================================================
 //	Pruebo si serializo bien
+//	===================================================================================
 	stringstream stream1(bucketSerializado->substr(0,3));
 	int espacioLibre = stream1.get();
-	if (espacioLibre==8) cout << "Serializado del espacio libre OK" << endl;
+	if (espacioLibre==6) cout << "Serializado del espacio libre OK" << endl;
 	else cout << "Serializado del espacio libre ERROR" << endl;
 
 	stringstream stream2(bucketSerializado->substr(4,7));
@@ -328,11 +351,13 @@ void Pruebas::serializarDeserializarBucket(){
 
 	stringstream stream4(bucketSerializado->substr(12,15));
 	int tamanioDeRegistro = stream4.get();
-	if (tamanioDeRegistro==20) cout << "Serializado del tamanio De Registro1 OK" << endl;
+	if (tamanioDeRegistro==28) cout << "Serializado del tamanio De Registro1 OK" << endl;
 	else cout << "Serializado del tamanio De Registro ERROR" << endl;
 
 	cout << "Fin serializado de bucket" << endl;
 	cout << "Inicio deserializado de bucket" << endl;
+	delete (this->bucket);
+	this->bucket = new Bucket(0);
 	this->bucket->deserializar(bucketSerializado);
 	cout << "Fin deserializado de bucket" << endl;
 	cout << "Si la serializacion fue correcta y la deserializacion tambien entonces usted debera ver los registros cargados inicialmente" << endl;
