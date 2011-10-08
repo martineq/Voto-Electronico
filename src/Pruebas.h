@@ -32,6 +32,7 @@ private:
 	Registro* registro3;
 	Registro* registro4;
 	Bucket* bucket;
+	void iniciarRegistrosDePrueba();
 	void iniciarRegistrosDistrito();
 	void verContenidoBucketDistrito();
 	void verContenidoBucketVotante();

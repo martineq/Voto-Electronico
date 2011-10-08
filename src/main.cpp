@@ -11,15 +11,15 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-	Test test;
-	test.testArchivoDeBuckets();
+//	Test test;
+//	test.testArchivoDeBuckets();
 //	test.serializarDeserializarRegistro();
 
 //	Pruebas de Hashing!
 //	test.pruebaAgregarRegistrosHashingExtensible();
 //	test.testBucket();
 
-//	Pruebas* prueba = new Pruebas();
+	Pruebas* prueba = new Pruebas();
 
 
 //	Pruebas de Bucket!
@@ -27,9 +27,6 @@ int main(int argc,char* argv[]) {
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
 //	prueba->serializarDeserializarBucket();
-
-//  Pruebas de Registro!
-//	prueba->serializarDeserializarRegistro();
 
 //  Pruebas de serializar y deserializar entidades!
 //	prueba->serializarDeserializarCargo();
@@ -45,7 +42,7 @@ int main(int argc,char* argv[]) {
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-//	delete (prueba);
+	delete (prueba);
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

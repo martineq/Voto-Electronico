@@ -57,8 +57,7 @@ std::string *Registro::serializar()
 	return s;
 }
 
-Entidad *Registro::getContenido()
-{
+Entidad *Registro::getContenido(){
 	return this->contenido->duplicar();
 }
 
@@ -109,11 +108,11 @@ void Registro::setContenido(Entidad *entidad)
 	this->contenido = entidad->duplicar();
 }
 
-Registro *Registro::duplicar()
-{
+Registro *Registro::duplicar(){
 	NombreDeEntidad nombre = this->getContenido()->getNombreDeEntidad();
 	Registro* registro = new Registro(nombre);
 	registro->setContenido(this->getContenido());
+	registro->clave= this->obtenerClave();
 	return registro;
 }
 
