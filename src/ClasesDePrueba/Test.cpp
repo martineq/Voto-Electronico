@@ -7,12 +7,112 @@
 
 #include "Test.h"
 #include <string>
+#include <cstring>
 #include <cstdio>
 
 Test::Test() {
 	// TODO Auto-generated constructor stub
 
 }
+
+
+std::string* charToString(char* cadena,int tamanio){
+	std::string* nuevoString = new std::string(cadena);
+	return nuevoString;
+}
+
+char* stringToChar(std::string* cadena){
+
+	int numero = cadena->size();
+	char* nuevaCadena = new char[numero+1];
+
+	for(int i = 0; i < numero ; i++){
+		nuevaCadena[i]=cadena->at(i);
+	}
+	nuevaCadena[numero] = '\0';
+
+	return nuevaCadena;
+}
+
+void Test::testStringstream(){
+
+	int espacioLibre = 15;
+	int tamanioDeDispersion = 400;
+	string cadena = "Buenos Aires";
+
+	stringstream buffer;
+
+	cout << buffer << endl;
+
+	buffer.write((char*)&espacioLibre,TAM_INT);
+	cout << "tamanio de int " << TAM_INT << endl;
+	cout << "Se cargo el espacio libre: " << (char)espacioLibre << endl;
+
+	buffer.write((char*)&tamanioDeDispersion,TAM_INT);
+	cout << "Se cargo el tamanio de dispersion: " << (char)tamanioDeDispersion << endl;
+
+	buffer.write(cadena.c_str(),cadena.size());
+	cout << "Se cargo el registro en buffer: " << cadena << endl;
+
+	string* datos2 = new string( buffer.str() );
+
+	cout << *datos2 << " string serializado " << endl;
+	char* cad = new char[datos2->size()];
+	memcpy(cad,datos2->c_str(),datos2->size());
+
+
+	stringstream stream;
+	stream.write(cad,datos2->size());
+
+	string s = stream.str();
+	cout << s << " inversa "<< endl;
+	cout << s.size() << endl;
+
+
+	int a;
+	stream.read((char*)&a,4);
+	cout << a << endl;
+
+
+	int b;
+	stream.read((char*)&b,4);
+	cout << b << endl;
+
+	string s2 = (stream.str()).substr(8,19);
+	cout << s2 << endl;
+
+	delete(datos2);
+
+	cout << "FIN" << endl;
+
+}
+
+
+void Test::testConvertir(){
+	string* cadena = new string("Buenos Aires");
+
+	char* nuevaCadena = stringToChar(cadena);
+
+	cout << nuevaCadena << endl;
+
+	char* iterador = nuevaCadena;
+	int size = 0;
+	while (*iterador != '\0'){
+		cout << *iterador;
+		iterador++;
+		size++;
+	}
+
+	delete cadena;
+
+	string* nuevoString = charToString(nuevaCadena,size);
+
+	cout << endl << "nuevoString: " << *nuevoString << endl;
+
+	delete nuevaCadena;
+	delete nuevoString;
+}
+
 
 void Test::serializarDeserializarRegistro()
 {
@@ -112,6 +212,7 @@ void Test::testArchivoDeBuckets(){
 		delete(registro);
 	}
 
+	std::remove("Archivo.bin");
 	ArchivoDeBuckets* archivo = new ArchivoDeBuckets("Archivo.bin",100);
 	int numeroDeBucket = archivo->guardarBucket(bucket);
 	delete bucket;
