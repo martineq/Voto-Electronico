@@ -178,6 +178,7 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 			strcpy(buf,bloque.c_str());
 			this->archivo->escribir(buf,blocksize);
 			this->blocksize = blocksize;
+			this->currmetadata = 0;
 			this->currpos = 0;
 			this->maxblocknum = 1;				// Lo pongo en 1 porque agrego el bloque cabecera
 			this->serializehead();
