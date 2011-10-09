@@ -20,8 +20,16 @@ public:
 
 	void setDistrito(std::string distrito);
 
+	/*
+	 * Devuelve el objeto serializado, si no tiene contenido, devuelve un string
+	 * de dimension 0.
+	 */
 	std::string* serializar();
 
+	/*
+	 * Devuelve la dimension del objeto serializado, si no tiene distrito asignado,
+	 * devuelve 0.
+	 */
 	int getTamanio();
 
 	int getClave();

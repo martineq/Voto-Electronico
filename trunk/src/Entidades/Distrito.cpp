@@ -28,42 +28,46 @@ void Distrito::setDistrito(string distrito){
 
 string* Distrito::serializar(){
 	stringstream streamDatos;
-	int sizeOfDistrito = this->distrito.size();
-	streamDatos.write((char*)&sizeOfDistrito,TAM_INT);
-	streamDatos.write((char*)distrito.c_str(),sizeOfDistrito);
-	string* datos = new string(streamDatos.str());
-	return datos;
+
+	if ( distrito.size() != 0 ){
+		int sizeOfDistrito = this->distrito.size();
+		streamDatos.write((char*)&sizeOfDistrito,TAM_INT);
+		streamDatos.write((char*)distrito.c_str(),sizeOfDistrito);
+	}
+	return new string(streamDatos.str());
 }
 
 void Distrito::deserializar(string * source){
-	cout << endl;
-	cout << "Estamos deserializando un distrito" << endl;
-	istringstream streamDatos(*source);
 
-	stringstream * miString = new stringstream();
-	int sizeOfDistrito;
-	streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
-    char* distritoChar = new char[sizeOfDistrito];
-    streamDatos.read((char*)distritoChar,sizeOfDistrito);
-    miString->write(distritoChar,sizeOfDistrito);
-    string distritoString = miString->str();
-    this->distrito = distritoString;
-    cout << "Ya cargamos el nombre del distrito: " << this->distrito << endl;
-    delete []distritoChar;
-    delete miString;
-    cout << "Terminamos de deserializar un distrito" << endl;
-    cout << endl;
-//    delete source; hay que hacer el delete este corregir
+	if (source->size() != 0){
+		istringstream streamDatos(*source);
+		stringstream * miString = new stringstream();
+		int sizeOfDistrito;
+		streamDatos.read((char*)&sizeOfDistrito,TAM_INT);
+		char* distritoChar = new char[sizeOfDistrito];
+		streamDatos.read((char*)distritoChar,sizeOfDistrito);
+		miString->write(distritoChar,sizeOfDistrito);
+		string distritoString = miString->str();
+		this->distrito = distritoString;
+
+		delete []distritoChar;
+		delete miString;
+	}
+
 }
 
 
 int Distrito::getTamanio(){
-	return (TAM_INT + this->getDistrito().size());
+	int tamanio = 0;
+	if ( this->distrito.size() != 0){
+		tamanio = TAM_INT + this->getDistrito().size();
+	}
+	return tamanio;
 }
 
 int Distrito::getClave(){
 
-	#warning "Hay que modificar la obtención de la clave";
+	#warning "Hay que modificar la obtencion de la clave";
 
 	return this->distrito.size();
 }
