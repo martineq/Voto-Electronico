@@ -455,6 +455,7 @@ void Pruebas::serializarDeserializarVotante(){
 	cout << endl;
 	cout << "Comienzo de deserializado de Votante" << endl;
 	votante1->deserializar(datos);
+	delete datos;
 	cout << "Fin de deserializado de Votante" << endl;
 	cout << endl;
 	votante1->verVotante();
@@ -470,6 +471,7 @@ void Pruebas::serializarDeserializarDistrito(){
 	cout << endl;
 	cout << "Comienzo de deserializado de Distrito" << endl;
 	unDistrito->deserializar(datos);
+	delete datos;
 	cout << "Fin de deserializado de Distrito" << endl;
 	cout << "Distrito: " << unDistrito->getDistrito() << endl;
 	delete unDistrito;
@@ -478,7 +480,7 @@ void Pruebas::serializarDeserializarDistrito(){
 
 void Pruebas::serializarDeserializarLista() {
 //	Probar incrementar el voto.
-	Lista* unaLista = new Lista ("Lista 7","040795","Jefe De Comuna");
+	Lista* unaLista = new Lista ("Lista 7","04071995","Jefe De Comuna");
 	cout << endl;
 	cout << "Comienzo de serializado de Lista" << endl;
 	string* datos = unaLista->serializar();
@@ -486,6 +488,7 @@ void Pruebas::serializarDeserializarLista() {
 	cout << endl;
 	cout << "Comienzo de deserializado de Lista" << endl;
 	unaLista->deserializar(datos);
+	delete datos;
 	cout << "Fin de deserializado de Lista" << endl;
 	cout << endl;
 	cout << "Lista: " << unaLista->getNombre() << endl;
@@ -519,6 +522,7 @@ void Pruebas::serializarDeserializarEleccion(){
 	cout << endl;
 	cout << "Comienzo de deserializado de Eleccion" << endl;
 	unaEleccion->deserializar(datos);
+	delete datos;
 	cout << "Fin de deserializado de Eleccion" << endl;
 	cout << endl;
 	cout << "Fecha de eleccion: " << unaEleccion->getFecha() << endl;
@@ -526,10 +530,13 @@ void Pruebas::serializarDeserializarEleccion(){
 	cout << "Distritos: " << endl;
 	cout << "----------"  << endl;
 	list <Distrito> listaDeDistritos = unaEleccion->getLista();
-	list <Distrito>::iterator it = listaDeDistritos.begin();
-	while (it!=listaDeDistritos.end()) {
-		cout << (*it).getDistrito() << endl;
-		it++;
+	if (listaDeDistritos.size()==0) cout << "lista de distritos vacia" << endl;
+	else {
+		list <Distrito>::iterator it = listaDeDistritos.begin();
+		while (it!=listaDeDistritos.end()) {
+			cout << (*it).getDistrito() << endl;
+			it++;
+		}
 	}
 	delete unaEleccion;
 }
