@@ -27,6 +27,8 @@ void Registro::determinarClave()
 {
 	if ( this->contenido != NULL )
 		this->clave = this->contenido->getClave();
+	else
+		this->clave = -1;
 }
 
 
@@ -109,6 +111,7 @@ void Registro::setContenido(Entidad *entidad)
 		delete this->contenido;
 
 	this->contenido = entidad->duplicar();
+	this->determinarClave();
 }
 
 Registro *Registro::duplicar(){
