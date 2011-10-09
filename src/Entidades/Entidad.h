@@ -34,6 +34,8 @@ public:
 	 * Devuelve el tipo de la entidad instanciada.
 	 */
 	virtual NombreDeEntidad getNombreDeEntidad() = 0;
+
+	virtual ~Entidad () = 0;
 };
 
 #endif /* ENTIDAD_H_ */

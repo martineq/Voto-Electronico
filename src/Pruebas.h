@@ -10,7 +10,7 @@
 #include "./Entidades/Cargo.h"
 #include "./Entidades/Votante.h"
 #include "./Entidades/Distrito.h"
-#include "./Entidades/Candidato.h"
+//#include "./Entidades/Candidato.h"
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
 #include "./Archivos/Hashing/Bucket.h"

@@ -112,8 +112,8 @@ void Registro::setContenido(Entidad *entidad)
 }
 
 Registro *Registro::duplicar(){
-	NombreDeEntidad nombreDeLaEntidad = this->contenido->getNombreDeEntidad();
-	Registro* registro = new Registro(nombreDeLaEntidad);
+	NombreDeEntidad nombre = this->contenido->getNombreDeEntidad();
+	Registro* registro = new Registro(nombre);
 	registro->setContenido(this->contenido);
 	registro->determinarClave();
 	return registro;
@@ -121,6 +121,7 @@ Registro *Registro::duplicar(){
 
 Registro::~Registro()
 {
+	cout << "destruyo Registro" << endl;
 	delete(this->contenido);
 	this->contenido = NULL;
 }

@@ -64,7 +64,7 @@ public:
 	 */
 	NombreDeEntidad getNombreDeEntidad();
 
-	~Eleccion();
+	virtual ~Eleccion();
 };
 
 #endif /* ELECCION_H_ */

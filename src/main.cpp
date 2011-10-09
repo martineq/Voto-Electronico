@@ -12,8 +12,8 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-	TestArchivoDeBuckets testArchivoDeBuckets;
-	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
+//	TestArchivoDeBuckets testArchivoDeBuckets;
+//	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
 
 //	Test test;
 //	test.testStringstream();
@@ -25,11 +25,11 @@ int main(int argc,char* argv[]) {
 //	test.pruebaAgregarRegistrosHashingExtensible();
 //	test.testBucket();
 
-//	Pruebas* prueba = new Pruebas();
+	Pruebas* prueba = new Pruebas();
 
 
 //	Pruebas de Bucket!
-//	prueba->pruebaAgregarRegistrosAlBucket();
+	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
 //	prueba->serializarDeserializarBucket();
@@ -48,7 +48,7 @@ int main(int argc,char* argv[]) {
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-//	delete (prueba);
+	delete (prueba);
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

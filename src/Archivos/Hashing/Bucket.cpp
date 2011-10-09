@@ -9,7 +9,7 @@
 
 Bucket::Bucket(int tamanioDispersion){
 	this->tamanioDeDispersion=tamanioDispersion;
-	this->espacioLibre=LONGITUD_BLOQUE_PRUEBA;
+	this->espacioLibre=LONGITUD_BLOQUE_PRUEBA-12;
 //	this->espacioLibre=LONGITUD_BLOQUE;
 }
 
@@ -35,11 +35,11 @@ Registro* Bucket::getRegistro(int clave){
 bool Bucket::agregarRegistro(Registro* unRegistro){
 	if (this->getRegistro(unRegistro->obtenerClave())!=NULL) return false;
 	else
-		if (unRegistro->getTamanio()>this->espacioLibre) return  false;
+		if ((unRegistro->getTamanio()+4)>this->espacioLibre) return  false;
 		else {
 			Registro* registro = unRegistro->duplicar();
 			this->listaDeRegistros.push_back(registro);
-			this->espacioLibre-= unRegistro->getTamanio();
+			this->espacioLibre-= (unRegistro->getTamanio()+4);
 			return true;
 		}
 }
@@ -56,7 +56,8 @@ bool Bucket::eliminarRegistro(int clave){
 			while (it!=listaDeRegistros.end()) {
 				int claveDeRegistroActual = (*it)->obtenerClave();
 				if (claveDeRegistroActual==clave) {
-					this->espacioLibre+=(*it)->getTamanio();
+					this->espacioLibre+=((*it)->getTamanio()+4);
+					delete *it;
 					this->listaDeRegistros.erase (it);
 					return true;
 				}
@@ -170,4 +171,8 @@ void Bucket::deserializar(string* source){
 	this->imprimirMetadata();
 	cout << "Chauuu!" << endl;
 }
-Bucket::~Bucket() {}
+Bucket::~Bucket() {
+	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
+		delete *it;
+	}
+}
