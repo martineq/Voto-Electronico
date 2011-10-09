@@ -618,6 +618,61 @@ void Pruebas::pruebaArchivoBloques(){
 }
 
 
+void Pruebas::SerializarGuardarEnBloqueHidratar(){
+
+	int dato1 = 99999;
+	int dato2 = 88888;
+	string dato3 = "Cadenita de texto";
+	string nombre ("BloqueSerializado.bin");
+	stringstream buffer,stream;
+	int leido1,leido2;
+	string leido3;
+
+	cout << "Datos A Serializar: "<<dato1<<" (int), " << dato2<<" (int), "<<dato3<<" (string)"<< endl;
+
+//	Escribo en el StringStream
+	buffer.write((char*)&dato1,sizeof(int));
+	buffer.write((char*)&dato2,sizeof(int));
+	buffer.write(dato3.c_str(),dato3.size());
+
+//	Preparo el char* para guardarlo en un bloque
+	string datos2( buffer.str() );
+	char* cad = new char[datos2.size()];
+	memcpy(cad,datos2.c_str(),datos2.size());
+	cout << "Datos Serializados."<<endl;
+
+//  Archivo en bloques: Guardo los datos.
+	ArchivoBloques *arch = new ArchivoBloques((char*)nombre.c_str(),datos2.size());
+	int nrr1;
+	arch->crearNuevoBloque(&nrr1);
+	arch->guardarBloque(nrr1,cad);
+	delete[] cad;
+	cout << "Datos guardados en disco."<<endl;
+
+//  Archivo en bloques: Leo los datos.
+	char* buf = new char[datos2.size()];
+	arch->obtenerBloque(nrr1,buf);
+	delete arch;
+	cout << "Datos leidos disco."<<endl;
+
+//	Escribo toda la cadena recuperada en un StringStream
+	stream.write(buf,datos2.size());
+	delete[] buf;
+	string s = stream.str();
+	cout <<"Datos Hidratados. Tamaño total hidratado: " <<s.size() << endl;
+
+//	Leo de a uno las datos
+	stream.read((char*)&leido1,sizeof(int));
+	stream.read((char*)&leido2,sizeof(int));
+	leido3 = (stream.str()).substr(8,19);
+
+	cout << "Datos Hidratado: "<< leido1 << " (int), " << leido2 << " (int), " << leido3<<" (string)" << endl;
+	cout << "\n------------\nSe acabó =D"<< endl;
+}
+
+
+
+
 int Pruebas::holaMundo(){
 
     cout<<"||TP 1||\n--------\n\nHola Mundo!!!\n";

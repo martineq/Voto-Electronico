@@ -40,6 +40,7 @@ public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
 	void pruebaArchivoBloques();
+	void SerializarGuardarEnBloqueHidratar();
 //	pruebas para el hashing
 	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar

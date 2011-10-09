@@ -176,17 +176,24 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 			string bloque (blocksize, '\0');			// Creo un bloque con ceros
 			char* buf = new char[blocksize];
 			strcpy(buf,bloque.c_str());
-			this->archivo->escribir(buf,blocksize);
+			this->archivo->escribir(buf,blocksize) ;
 			this->blocksize = blocksize;
 			this->currmetadata = 0;
 			this->currpos = 0;
 			this->maxblocknum = 1;				// Lo pongo en 1 porque agrego el bloque cabecera
+			guardarTipoInt(POSREL_BLOCKSIZE_HEAD,&(this->blocksize)); // Guardo en cabecera el blocksize
 			this->serializehead();
 		}else{
-			this->blocksize = blocksize;
-			this->deserializehead();
-			if (this->currmetadata > 0) this->currpos = this->obtenerCurrPos();
-			else this->currpos = 0;
+			leerTipoInt(POSREL_BLOCKSIZE_HEAD,&(this->blocksize)); // Guardo de cabecera el blocksize
+			if ( this->blocksize == blocksize ){
+				this->deserializehead();
+				this->blocksize = blocksize;
+				if (this->currmetadata > 0) this->currpos = this->obtenerCurrPos();
+				else this->currpos = 0;
+			}else{
+				cerr << "El archivo existente tiene un tamaño de bloque distinto al definido. Archivo NO iniciado"<<endl;
+				archivo->cerrar();
+			}
 		}
 	}else{
 		cerr << "El bloque definido debe ser por lo menos de "<< ((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) << " bytes. Archivo NO creado.-" << endl;

@@ -17,6 +17,7 @@
 #define MIN_CAMPOS_CTRL 4  //Cantidad mínima de campos de control para el funcionamiento (Debe ser potencia de 2)
 #define POSREL_CURRMD_HEAD (0*TAM_CAMPOS_CTRL)		// Posición relativa del campo de ctrl currMD dentro del Bq HEAD
 #define POSREL_MAXBLOQNUM_HEAD (1*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl maxblocknum dentro del Bq HEAD
+#define POSREL_BLOCKSIZE_HEAD (2*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl Blocksize dentro del Bq HEAD
 #define POSREL_BLOQANT_MD (0*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl BqAnterior dentro del Bq METADATA
 #define POSREL_CURR_MD (1*TAM_CAMPOS_CTRL)		// Posición relativa del campo de ctrl currPos dentro del Bq METADATA
 #define POSREL_1ER_BQLIBRE_MD (2*TAM_CAMPOS_CTRL)// Posición relativa del 1er bloue libre dentro del Bq METADATA
