@@ -109,7 +109,7 @@ string* Eleccion::serializar() {
 	stringstream buffer;
 	int cantidadDeBytes;
 	cantidadDeBytes   = this->fecha.size();
-	buffer.write((char*)&cantidadDeBytes,TAM_INT);
+//	buffer.write((char*)&cantidadDeBytes,TAM_INT);
 	buffer.write((char*)this->fecha.c_str(),cantidadDeBytes);
 	cantidadDeBytes   = this->cargoPrincipal.size();
 	buffer.write((char*)&cantidadDeBytes,TAM_INT);
@@ -129,26 +129,35 @@ string* Eleccion::serializar() {
 
 void Eleccion::deserializar(string* source) {
 	istringstream buffer (*source);
+	stringstream* miString;
 	delete source;
 	int cantidadDeBytes;
 
 //	hidrato la fecha
-    buffer.read((char*)&cantidadDeBytes,TAM_INT);
+//    buffer.read((char*)&cantidadDeBytes,TAM_INT);
+	cantidadDeBytes = TAM_FECHA;
     char* fechaSerializada = new char[cantidadDeBytes];
     buffer.read((char*)fechaSerializada,cantidadDeBytes);
-    string* pasoAString = new string (fechaSerializada);
+
+	miString = new stringstream();
+	miString->write(fechaSerializada,TAM_FECHA);
+    string* pasoAString = new string (miString->str());
     this->fecha = *pasoAString;
     delete []fechaSerializada;
     delete pasoAString;
+    delete miString;
 
 //  hidrato el cargo principal
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* cargoPrincipalSerializado = new char[cantidadDeBytes];
     buffer.read((char*)cargoPrincipalSerializado,cantidadDeBytes);
-    pasoAString = new string (cargoPrincipalSerializado);
+	miString = new stringstream();
+	miString->write(cargoPrincipalSerializado,cantidadDeBytes);
+    pasoAString = new string (miString->str());
     this->cargoPrincipal = *pasoAString;
     delete []cargoPrincipalSerializado;
     delete pasoAString;
+    delete miString;
 
 //  hidrato la lista de distritos
     int tamanioDeLaLista;

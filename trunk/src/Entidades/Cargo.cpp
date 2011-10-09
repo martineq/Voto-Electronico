@@ -100,19 +100,23 @@ string* Cargo::serializar(){
 
 void Cargo::deserializar(string * source){
 	istringstream streamDatos(*source);
+	stringstream * miString;
 	delete source;
 	int sizeOfCargo;
 	unsigned int cantCargos;
     streamDatos.read((char*)&sizeOfCargo,TAM_INT);
     char* cargoChar = new char[sizeOfCargo];
     streamDatos.read((char*)cargoChar,sizeOfCargo);
-    string cargoString(cargoChar);
+    miString = new stringstream();
+    miString->write(cargoChar,sizeOfCargo);
+    string cargoString = miString->str();
+    delete miString;
     delete [] cargoChar;
     this->cargo = cargoString;
     streamDatos.read((char*)&cantCargos,TAM_INT);
 	for (unsigned int i = 0; i < cantCargos;i++){
 		streamDatos.read((char*)&sizeOfCargo,TAM_INT);
-		stringstream * miString = new stringstream();
+		miString = new stringstream();
 		char* cargoTemp = new char[sizeOfCargo];
 		streamDatos.read(cargoTemp,sizeOfCargo);
 		miString->write(cargoTemp,sizeOfCargo);

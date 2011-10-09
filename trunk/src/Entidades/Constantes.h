@@ -16,6 +16,7 @@
 
 //Longitudes
 #define LONGITUD_BLOQUE 1024
+#define TAM_FECHA 8
 #define TAM_BOOL sizeof(bool)
 #define TAM_LONG sizeof(long)
 #define TAM_UNSINT sizeof(unsigned int)
