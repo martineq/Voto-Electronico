@@ -53,8 +53,6 @@ string* Lista::serializar() {
 	cantidadDeBytes   = this->nombre.size();
 	buffer.write((char*)&cantidadDeBytes,TAM_INT);
 	buffer.write((char*)this->nombre.c_str(),cantidadDeBytes);
-	cantidadDeBytes   = this->fecha.size();
-//	buffer.write((char*)&cantidadDeBytes,TAM_INT);
 	buffer.write((char*)this->fecha.c_str(),cantidadDeBytes);
 	cantidadDeBytes   = this->cargo.size();
 	buffer.write((char*)&cantidadDeBytes,TAM_INT);
@@ -65,49 +63,33 @@ string* Lista::serializar() {
 }
 
 void Lista::deserializar(string* source) {
-	istringstream buffer (*source);
-	stringstream * miString;
-	delete source;
-	int cantidadDeBytes;
+	int posicion=0;
 
 //	hidrato la nombre
-	buffer.read((char*)&cantidadDeBytes,TAM_INT);
-	char* nombreSerializado = new char[cantidadDeBytes];
-	buffer.read((char*)nombreSerializado,cantidadDeBytes);
-	miString = new stringstream();
-	miString->write(nombreSerializado,cantidadDeBytes);
-	string* pasoAString = new string (miString->str());
-	this->nombre = *pasoAString;
-	delete []nombreSerializado;
-	delete pasoAString;
-	delete miString;
+	stringstream tamanioDeNombre(source->substr(posicion,posicion+TAM_INT-1));
+	int tamanio = tamanioDeNombre.get();
+	posicion += TAM_INT;
+	stringstream nombre(source->substr(posicion,posicion+tamanio-1));
+	this->nombre = nombre.get();
+	posicion += tamanio;
 
 //	hidrato la fecha
-//	buffer.read((char*)&cantidadDeBytes,TAM_INT);
-	cantidadDeBytes = TAM_FECHA;
-	char* fechaSerializada = new char[cantidadDeBytes];
-	buffer.read((char*)fechaSerializada,cantidadDeBytes);
-	miString = new stringstream();
-	miString->write(fechaSerializada,cantidadDeBytes);
-	pasoAString = new string (miString->str());
-	this->fecha = *pasoAString;
-	delete []fechaSerializada;
-	delete pasoAString;
-	delete miString;
+	stringstream fecha(source->substr(posicion,posicion+TAM_FECHA-1));
+	this->fecha = fecha.get();
+	posicion += TAM_FECHA;
 
 //	hidrato el cargo
-	buffer.read((char*)&cantidadDeBytes,TAM_INT);
-	char* cargoSerializado = new char[cantidadDeBytes];
-	buffer.read((char*)cargoSerializado,cantidadDeBytes);
-	miString = new stringstream();
-	miString->write(cargoSerializado,cantidadDeBytes);
-	pasoAString = new string (miString->str());
-	this->cargo = *pasoAString;
-	delete []cargoSerializado;
-	delete pasoAString;
-	delete miString;
+	stringstream tamanioDeCargo(source->substr(posicion,posicion+TAM_INT-1));
+	tamanio = tamanioDeCargo.get();
+	posicion += TAM_INT;
+	stringstream cargo(source->substr(posicion,posicion+tamanio-1));
+	this->cargo = cargo.get();
+	posicion += tamanio;
+
 //	hidrato cantidad De Votos
-	buffer.read((char*)&this->cantidadDeVotos,TAM_SINT);
+	stringstream votos(source->substr(posicion,posicion+TAM_INT-1));
+	this->cantidadDeVotos = votos.get();
+	posicion += TAM_INT;
 }
 
 Entidad *Lista::duplicar()

@@ -135,7 +135,6 @@ string* Votante::serializar(){
 void Votante::deserializar(string* source){
 	istringstream buffer (*source);
 	stringstream * miString;
-	delete source;
 	int cantidadDeBytes;
 
 //	hidrato el dni

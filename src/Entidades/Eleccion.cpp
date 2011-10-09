@@ -108,9 +108,7 @@ Eleccion::~Eleccion() {
 string* Eleccion::serializar() {
 	stringstream buffer;
 	int cantidadDeBytes;
-	cantidadDeBytes   = this->fecha.size();
-//	buffer.write((char*)&cantidadDeBytes,TAM_INT);
-	buffer.write((char*)this->fecha.c_str(),cantidadDeBytes);
+	buffer.write((char*)this->fecha.c_str(),TAM_FECHA);
 	cantidadDeBytes   = this->cargoPrincipal.size();
 	buffer.write((char*)&cantidadDeBytes,TAM_INT);
 	buffer.write((char*)this->cargoPrincipal.c_str(),cantidadDeBytes);
@@ -128,50 +126,43 @@ string* Eleccion::serializar() {
 }
 
 void Eleccion::deserializar(string* source) {
-	istringstream buffer (*source);
-	stringstream* miString;
-	delete source;
-	int cantidadDeBytes;
+	int posicion=0;
 
 //	hidrato la fecha
-//    buffer.read((char*)&cantidadDeBytes,TAM_INT);
-	cantidadDeBytes = TAM_FECHA;
-    char* fechaSerializada = new char[cantidadDeBytes];
-    buffer.read((char*)fechaSerializada,cantidadDeBytes);
-
-	miString = new stringstream();
-	miString->write(fechaSerializada,TAM_FECHA);
-    string* pasoAString = new string (miString->str());
-    this->fecha = *pasoAString;
-    delete []fechaSerializada;
-    delete pasoAString;
-    delete miString;
+	stringstream fecha(source->substr(posicion,posicion+TAM_FECHA-1));
+	this->fecha = fecha.get();
+	posicion += TAM_FECHA;
 
 //  hidrato el cargo principal
-    buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    char* cargoPrincipalSerializado = new char[cantidadDeBytes];
-    buffer.read((char*)cargoPrincipalSerializado,cantidadDeBytes);
-	miString = new stringstream();
-	miString->write(cargoPrincipalSerializado,cantidadDeBytes);
-    pasoAString = new string (miString->str());
-    this->cargoPrincipal = *pasoAString;
-    delete []cargoPrincipalSerializado;
-    delete pasoAString;
-    delete miString;
+	stringstream tamanioDeCargoPrincipal(source->substr(posicion,posicion+TAM_INT-1));
+	int tamanio = tamanioDeCargoPrincipal.get();
+	posicion += TAM_INT;
+	stringstream nombre(source->substr(posicion,posicion+tamanio-1));
+	this->cargoPrincipal = nombre.get();
+	posicion += tamanio;
 
-//  hidrato la lista de distritos
-    int tamanioDeLaLista;
-    buffer.read((char*)&tamanioDeLaLista,TAM_INT);
-    for (int i=0; i<tamanioDeLaLista;i++){
-    	stringstream* bufferAuxiliar = new stringstream;
-    	buffer.read((char*)&cantidadDeBytes,TAM_INT);
-    	char* distritoSerializado = new char[cantidadDeBytes];
-    	buffer.read(distritoSerializado,cantidadDeBytes);
-    	bufferAuxiliar->write(distritoSerializado,cantidadDeBytes);
-    	Distrito unDistrito(bufferAuxiliar->str());
-    	this->distritos.push_back(unDistrito);
-    	delete bufferAuxiliar;
-    	delete []distritoSerializado;
+ //  hidrato la lista de distritos
+	stringstream tamanioLista(source->substr(posicion,posicion+TAM_INT-1));
+	tamanio = tamanioLista.get();
+	posicion += TAM_INT;
+    for (int i=0; i<tamanio;i++){
+    	stringstream tamanioDelDistrito (source->substr(posicion,posicion+TAM_INT-1));
+    	tamanio = tamanioDelDistrito.get();
+    	posicion += TAM_INT;
+    	stringstream unDistrito (source->substr(posicion,posicion+tamanio-1));
+    	Distrito distrito (unDistrito.str());
+    	this->distritos.push_back(distrito);
+    	posicion += tamanio;
+
+//    	stringstream* bufferAuxiliar = new stringstream;
+//    	buffer.read((char*)&cantidadDeBytes,TAM_INT);
+//    	char* distritoSerializado = new char[cantidadDeBytes];
+//    	buffer.read(distritoSerializado,cantidadDeBytes);
+//    	bufferAuxiliar->write(distritoSerializado,cantidadDeBytes);
+//    	Distrito unDistrito(bufferAuxiliar->str());
+//    	this->distritos.push_back(unDistrito);
+//    	delete bufferAuxiliar;
+//    	delete []distritoSerializado;
     }
 }
 
