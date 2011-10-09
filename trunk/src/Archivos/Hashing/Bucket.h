@@ -1,7 +1,7 @@
 #ifndef BUCKET_H_
 #define BUCKET_H_
 
-#define LONGITUD_BLOQUE_PRUEBA 100
+#define LONGITUD_BLOQUE_PRUEBA 128
 #include <list>
 #include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"

@@ -51,7 +51,7 @@ public:
 	 */
 	static Entidad* hidratar(std::string* source);
 
-	~Distrito();
+	virtual ~Distrito();
 
 };
 

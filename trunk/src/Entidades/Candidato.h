@@ -17,7 +17,7 @@
 
 using namespace std;
 
-class Candidato:public Entidad{
+class Candidato : public Entidad{
 
 private:
 	string fecha;		//Identificador
