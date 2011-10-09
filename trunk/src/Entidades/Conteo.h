@@ -6,10 +6,13 @@
  */
 #include <string.h>
 
+
 #ifndef CONTEO_H_
 #define CONTEO_H_
 
 #include "Entidad.h"
+
+using namespace std;
 
 class Conteo: public Entidad {
 private:

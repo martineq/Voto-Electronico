@@ -33,7 +33,7 @@ int Conteo::getTamanio(){
 }
 
 int Conteo::getClave(){
-
+	return 0;
 }
 
 string Conteo::getFechaEleccion(){
@@ -63,14 +63,92 @@ void Conteo::decrementarVotos(){
  * Instancia un nuevo objeto, copia de actual.
  */
 Entidad* Conteo::duplicar(){
-
+	Conteo * conteoCopia = new Conteo();
+	conteoCopia->cantidadVotos = this->cantidadVotos;
+	conteoCopia->cargoEleccion = this->cargoEleccion;
+	conteoCopia->distrito 	   = this->distrito;
+	conteoCopia->fechaEleccion = this->fechaEleccion;
+	conteoCopia->nombreLista   = this->nombreLista;
+	return conteoCopia;
 }
 
 string* Conteo::serializar(){
+	stringstream streamDatos;
+	int cantidadDeBytes;
+	//Serializo cantidad de votos
+	streamDatos.write((char*)&cantidadVotos,TAM_UNSINT);
+
+	//Serializado cargo elección
+	cantidadDeBytes = this->cargoEleccion.size();
+	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
+	streamDatos.write((char*)cargoEleccion.c_str(),cantidadDeBytes);
+
+	//serializado distrito
+	cantidadDeBytes = this->distrito.size();
+	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
+	streamDatos.write((char*)distrito.c_str(),cantidadDeBytes);
+
+	//serializado fechaEleccion
+	cantidadDeBytes = this->fechaEleccion.size();
+	streamDatos.write((char*)fechaEleccion.c_str(),cantidadDeBytes);
+
+	//serializado nombreLista
+	cantidadDeBytes = this->nombreLista.size();
+	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
+	streamDatos.write((char*)nombreLista.c_str(),cantidadDeBytes);
+
+
+	string* datos = new string(streamDatos.str());
+	return datos;
 
 }
 
-void Conteo::deserializar(string*){
+void Conteo::deserializar(string* source){
+	istringstream streamDatos(*source);
+	stringstream * miString = new stringstream();
+	int cantidadDeBytes;
+
+	//deserializo cantidad de votos
+	streamDatos.read((char*)&cantidadVotos,TAM_UNSINT);
+
+	//Deserializado cargo elección
+	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
+    char* cargoChar = new char[cantidadDeBytes];
+    streamDatos.read((char*)cargoChar,cantidadDeBytes);
+    miString->write(cargoChar,cantidadDeBytes);
+    string cargoString = miString->str();
+    this->cargoEleccion = cargoString;
+    delete []cargoChar;
+    delete miString;
+
+    //Deserializado distrito
+	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
+    char* distritoChar = new char[cantidadDeBytes];
+    streamDatos.read((char*)distritoChar,cantidadDeBytes);
+    miString->write(distritoChar,cantidadDeBytes);
+    string distritoString = miString->str();
+    this->distrito = distritoString;
+    delete []distritoChar;
+    delete miString;
+
+    //Deserializado fecha elección
+    cantidadDeBytes = TAM_FECHA;
+    char* fechaChar = new char[cantidadDeBytes];
+    miString->write(fechaChar,cantidadDeBytes);
+    string fechaString = miString->str();
+    this->fechaEleccion = fechaString;
+    delete []fechaChar;
+    delete miString;
+
+    //Deserializado nombre lista
+	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
+    char* listaChar = new char[cantidadDeBytes];
+    streamDatos.read((char*)listaChar,cantidadDeBytes);
+    miString->write(listaChar,cantidadDeBytes);
+    string listaString = miString->str();
+    this->nombreLista = listaString;
+    delete []listaChar;
+    delete miString;
 
 }
 
