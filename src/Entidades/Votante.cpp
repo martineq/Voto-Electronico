@@ -134,6 +134,7 @@ string* Votante::serializar(){
 
 void Votante::deserializar(string* source){
 	istringstream buffer (*source);
+	stringstream * miString;
 	delete source;
 	int cantidadDeBytes;
 
@@ -144,37 +145,49 @@ void Votante::deserializar(string* source){
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* nombreSerializado = new char[cantidadDeBytes];
     buffer.read((char*)nombreSerializado,cantidadDeBytes);
-    string* pasoAString = new string (nombreSerializado);
+    miString = new stringstream();
+    miString->write(nombreSerializado,cantidadDeBytes);
+    string* pasoAString = new string(miString->str());
     this->nombre = *pasoAString;
     delete []nombreSerializado;
     delete pasoAString;
+    delete miString;
 
 //  hidrato el password
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* passwordSerializado = new char[cantidadDeBytes];
     buffer.read((char*)passwordSerializado,cantidadDeBytes);
-    pasoAString = new string (passwordSerializado);
+    miString = new stringstream();
+    miString->write(passwordSerializado,cantidadDeBytes);
+    pasoAString = new string (miString->str());
     this->password = *pasoAString;
     delete [] passwordSerializado;
     delete pasoAString;
+    delete miString;
 
 //  hidrato el domicilio
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* domicilioSerializado = new char[cantidadDeBytes];
     buffer.read((char*)domicilioSerializado,cantidadDeBytes);
-    pasoAString = new string (domicilioSerializado);
+    miString = new stringstream();
+    miString->write(domicilioSerializado,cantidadDeBytes);
+    pasoAString = new string (miString->str());
     this->domicilio = *pasoAString;
     delete []domicilioSerializado;
     delete pasoAString;
+    delete miString;
 
-//  hidrato el distrito
+//  hidrato el distritoYayiiiY
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* distritoSerializado = new char[cantidadDeBytes];
     buffer.read((char*)distritoSerializado,cantidadDeBytes);
-    pasoAString = new string (distritoSerializado);
+    miString = new stringstream();
+    miString->write(distritoSerializado,cantidadDeBytes);
+    pasoAString = new string (miString->str());
     this->distrito = *pasoAString;
     delete []distritoSerializado;
     delete pasoAString;
+    delete miString;
 
 //  hidrato la lista de elecciones anteriores
     int tamanioDeLaLista;
