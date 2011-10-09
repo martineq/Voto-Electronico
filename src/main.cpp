@@ -29,10 +29,10 @@ int main(int argc,char* argv[]) {
 
 
 //	Pruebas de Bucket!
-	prueba->pruebaAgregarRegistrosAlBucket();
+//	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
-//	prueba->serializarDeserializarBucket();
+	prueba->serializarDeserializarBucket();
 
 //  Pruebas de serializar y deserializar entidades!
 //	prueba->serializarDeserializarCargo();

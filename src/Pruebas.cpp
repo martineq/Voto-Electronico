@@ -333,7 +333,6 @@ void Pruebas::serializarDeserializarBucket(){
 //	Pruebo si serializo bien
 //	===================================================================================
 
-
 	stringstream stream1(bucketSerializado->substr(0,3));
 	int espacioLibre = stream1.get();
 	if (espacioLibre==6) cout << "Serializado del espacio libre OK" << endl;
@@ -356,18 +355,20 @@ void Pruebas::serializarDeserializarBucket(){
 
 	cout << "Fin serializado de bucket" << endl;
 	cout << "Inicio deserializado de bucket" << endl;
+
 	delete (this->bucket);
 	this->bucket = new Bucket(0);
 	this->bucket->deserializar(bucketSerializado);
+	delete bucketSerializado;
 	cout << "Fin deserializado de bucket" << endl;
 	cout << "Si la serializacion fue correcta y la deserializacion tambien entonces usted debera ver los registros cargados inicialmente" << endl;
 	this->verContenidoBucketDistrito();
 	cout << "Estas fueron todas las pruebas de serializacion y deserializacion de un bucket" << endl;
 	cout << "Gracias! Hasta luego" << endl;
-	delete this->distrito1;
-	delete this->distrito2;
-	delete this->distrito3;
-	delete this->distrito4;
+//	delete this->distrito1;
+//	delete this->distrito2;
+//	delete this->distrito3;
+//	delete this->distrito4;
 	delete this->registro1;
 	delete this->registro2;
 	delete this->registro3;

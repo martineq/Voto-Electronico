@@ -13,11 +13,6 @@ Bucket::Bucket(int tamanioDispersion){
 //	this->espacioLibre=LONGITUD_BLOQUE;
 }
 
-void Bucket::imprimirMetadata(){
-	cout << "Espacio Libre: " <<this->espacioLibre <<endl;
-	cout << "Tamanio de Dispersión: "<<this->tamanioDeDispersion <<endl<<endl;
-}
-
 Registro* Bucket::getRegistro(int clave){
 	if (this->listaDeRegistros.empty()) return NULL;
 	else {
@@ -117,59 +112,59 @@ string* Bucket::serializar(){
 		buffer.write((char*)&cantidadDeBytes,TAM_INT);
 		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
 
-		buffer.write(((*it)->serializar())->c_str(),cantidadDeBytes);
-		cout << "Se cargo el registro en buffer: " << *((*it)->serializar()) << endl;
+		string* registroSerializado = (*it)->serializar();
+		buffer.write(registroSerializado->c_str(),cantidadDeBytes);
+		delete registroSerializado;
 
 	}
 	cout << "Fin del serializado del bucket" << endl << endl;
 	string* datos = new string(buffer.str());
-	this->imprimirMetadata();
 	return datos;
 }
-void Bucket::deserializar(string* source){
-
+void Bucket::deserializar(string* bufferSerializado){
 	cout << endl << "Usted esta en el deserializar de bucket" << endl;
-	istringstream buffer (*source);
-	cout << "Carga del buffer" << endl;
-	delete source;
-	int cantidadDeBytes;
+	if (bufferSerializado->size()==0) cout << "No se pudo hidratar el Bucket pues la fuente es nula" << endl;
+	else {
+		int posicion=0;
 
-	//	hidrato el espacio libre
-	buffer.read((char*)&this->espacioLibre,TAM_INT);
-	cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
+		//	hidrato el espacio libre
+		stringstream espacioLibre (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
+		posicion+=TAM_INT;
+		this->espacioLibre = espacioLibre.get();
+		cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
 
-	//	hidrato el tamanio de dispersion
-	buffer.read((char*)&this->tamanioDeDispersion,TAM_INT);
-	cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+		//	hidrato el tamanio de dispersion
+		stringstream tamanioDeDispersion (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
+		posicion+=TAM_INT;
+		this->tamanioDeDispersion = tamanioDeDispersion.get();
+		cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
 
-	//	hidrato la lista de registros
-	int tamanioDeLaLista;
-	buffer.read((char*)&tamanioDeLaLista,TAM_INT);
-	cout << "Se cargo la cantidad de registros: " << tamanioDeLaLista << endl;
+		//	hidrato la lista de registros
+		stringstream cantidadDeRegistros (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
+		posicion+=TAM_INT;
+		int tamanioDeLaLista = cantidadDeRegistros.get();
+		cout << "Se cargo la cantidad de registros: " << tamanioDeLaLista << endl;
 
-	cout << "Carga de registros" << endl;
-	for (int i=0; i<tamanioDeLaLista;i++){
-		//hidrato el registro
-		stringstream* bufferAuxiliar = new stringstream();
-		buffer.read((char*)&cantidadDeBytes,TAM_INT);
-		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
-
-		char* registroSerializado = new char[cantidadDeBytes];
-		buffer.read(registroSerializado,cantidadDeBytes);
-		bufferAuxiliar->write(registroSerializado,cantidadDeBytes);
-		string* registroADeserializar = new string(bufferAuxiliar->str());
-		Registro* unRegistro = new Registro();
-		cout << "Deserializando registro" << endl;
-		unRegistro->deserializar(registroADeserializar);
-		cout << "Registro deserializado" << endl;
-		this->listaDeRegistros.push_back(unRegistro);
-		cout << "Registro cargado" << endl;
-		//delete unRegistro;
-		delete bufferAuxiliar;
-		delete []registroSerializado;
+		cout << "Carga de registros" << endl;
+		for (int i=0; i<tamanioDeLaLista;i++){
+			//hidrato el registro
+			stringstream tamanioDeRegistroHidratado (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
+			posicion+=TAM_INT;
+			int tamanioDeRegistro = tamanioDeRegistroHidratado.get();
+			cout << "Se cargo el tamanio de un registro: " << tamanioDeRegistro << endl;
+			stringstream registroAHidratar (bufferSerializado->substr(posicion,posicion+tamanioDeRegistro-1));
+			posicion+=tamanioDeRegistro;
+			Registro* unRegistro = new Registro();
+			cout << "Deserializando registro" << endl;
+			string* source = new string (registroAHidratar.str());
+			unRegistro->deserializar(source);
+			delete source;
+			cout << "Registro deserializado" << endl;
+			this->listaDeRegistros.push_back(unRegistro);
+			cout << "Registro cargado" << endl;
+		}
+		cout << "Chauuu!" << endl;
 	}
-	this->imprimirMetadata();
-	cout << "Chauuu!" << endl;
 }
 Bucket::~Bucket() {
 	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){

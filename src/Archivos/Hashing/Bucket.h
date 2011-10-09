@@ -15,8 +15,6 @@ private:
 	int espacioLibre;
 	int tamanioDeDispersion;
 	list<Registro*> listaDeRegistros;
-
-	void imprimirMetadata();
 public:
 	Bucket(int);
 	//devuelve el resultado de la operacion
