@@ -41,7 +41,8 @@ public:
 	void deserializar(std::string* source);
 
 	/*
-	 * Agrega o sobreescribe el contenido del registro
+	 * Agrega o sobreescribe el contenido del registro,
+	 * crea una copia interna de la entidad para establecer el contenido.
 	 */
 	void setContenido(Entidad* entidad);
 
@@ -57,16 +58,19 @@ public:
 
 	/*
 	 * Devuelve una clave obtenida tras aplicar una función de Hash al ID de la Entidad
+	 * Si el registro no tiene contenido, y por lo tanto la clave no existe devuelve -1.
 	 */
 	int obtenerClave();
 
 	/*
-	 * Devuelve el objeto serializado como un string
+	 * Devuelve el objeto serializado como un string.
+	 * Si el registro no tiene contenido, devuelve un string de longitud 0.
 	 */
 	std::string* serializar();
 
 	/*
 	 * Devuelve el contenido del registro, NULL si no lo tiene.
+	 * Este resulta ser una copia del verdadero contenido.
 	 */
 	Entidad* getContenido();
 

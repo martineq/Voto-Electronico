@@ -2,7 +2,7 @@
 
 Registro::Registro()
 {
-	this->clave = 0;
+	this->clave = -1;
 	this->contenido = NULL;
 }
 
@@ -25,7 +25,8 @@ Registro::Registro(NombreDeEntidad nombreDeEntidad)
  */
 void Registro::determinarClave()
 {
-	this->clave = this->contenido->getClave();
+	if ( this->contenido != NULL )
+		this->clave = this->contenido->getClave();
 }
 
 
@@ -33,71 +34,73 @@ int Registro::getTamanio()
 {
 	int size = 0;
 
-	size += 4;									// tamanio del tipo de entidad
-	size += 4;									// tamanio de la entidad
-	size += this->contenido->getTamanio();		// tamanio de la entidad serializada
+	if ( this->contenido != NULL ){
 
+		size += 4;									// tamanio del tipo de entidad
+		size += 4;									// tamanio de la entidad
+		size += this->contenido->getTamanio();		// tamanio de la entidad serializada
+
+	}
 	return size;
+}
+
+Entidad *Registro::getContenido(){
+	Entidad* entidad = NULL;
+	if (this->contenido != NULL)
+		entidad = this->contenido->duplicar();
+	return entidad;
+}
+
+int Registro::obtenerClave(){
+	return this->clave;
 }
 
 std::string *Registro::serializar()
 {
 	stringstream buffer;
 
-	int entidad = this->getContenido()->getNombreDeEntidad();
-	buffer.write((char*)&entidad,TAM_INT);
+	if (this->contenido != NULL){
 
-	int tamanioEntidad = this->getContenido()->getTamanio();
-	buffer.write((char*)&tamanioEntidad,TAM_INT);
+		int entidad = this->contenido->getNombreDeEntidad();
+		buffer.write((char*)&entidad,TAM_INT);
 
-	string entidadSerializada = *(this->getContenido()->serializar());
-	buffer.write(entidadSerializada.c_str(),tamanioEntidad);
+		int tamanioEntidad = this->contenido->getTamanio();
+		buffer.write((char*)&tamanioEntidad,TAM_INT);
 
-	string* s = new string(buffer.str());
-	return s;
-}
+		string* contenidoSerializado = this->contenido->serializar();
+		buffer.write(contenidoSerializado->c_str(),tamanioEntidad);
+		delete contenidoSerializado;
+	}
 
-Entidad *Registro::getContenido(){
-	return this->contenido->duplicar();
-}
-
-int Registro::obtenerClave(){
-	if ( this->contenido == NULL )
-		throw "Contenido inexistente";
-
-	return this->clave;
+	return new string(buffer.str());
 }
 
 void Registro::deserializar(std::string *source){
 	int size = sizeof(int);
 	int posicion = 0;
 
-	cout << endl << "Bienvenido al deserializar de Registro" << endl;
-	stringstream bufferNombreDeEntidad(source->substr(posicion,posicion+size-1));
-	cout << "Obtuvimos el nombre de la entidad serializado" << endl;
-	NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)bufferNombreDeEntidad.get();
-	cout << "La entidad es: " << nombreDeEntidad << endl;
-	posicion += size;
+	if ( source->size() > 0 ){
 
-	stringstream bufferTamanioEntidad(source->substr(posicion,posicion+size-1));
-	cout << "Obtuvimos el tamanio de la entidad serializado" << endl;
-	int tamanioEntidad = bufferTamanioEntidad.get();
-	cout << "El tamanio de la entidad es: " << tamanioEntidad << endl;
+		stringstream bufferNombreDeEntidad(source->substr(posicion,posicion+size-1));
+		NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)bufferNombreDeEntidad.get();
+		posicion += size;
 
-	posicion += size;
+		stringstream bufferTamanioEntidad(source->substr(posicion,posicion+size-1));
+		int tamanioEntidad = bufferTamanioEntidad.get();
+		posicion += size;
 
-	string entidadSerializada = source->substr(posicion,posicion+tamanioEntidad-1);
-	cout << "Obtuvimos la entidad serializada y la vamos a deserializar" << endl;
+		string entidadSerializada = source->substr(posicion,posicion+tamanioEntidad-1);
 
-	FabricaDeEntidades fabrica;
-	Entidad* nuevoContenido = fabrica.crearEntidad(nombreDeEntidad);
-	cout << "Instanciamos su entidad" << endl;
-	cout << "Deserializando" << endl;
-	nuevoContenido->deserializar(&entidadSerializada);
-	cout << "Deserializamos con exito" << endl;
-	this->setContenido(nuevoContenido);
-	cout << "Cargamos la entidad al registro" << endl << endl;
+		FabricaDeEntidades fabrica;
+		Entidad* nuevoContenido = fabrica.crearEntidad(nombreDeEntidad);
+		nuevoContenido->deserializar(&entidadSerializada);
+		cout << "Deserializamos con exito" << endl;
+		this->setContenido(nuevoContenido);
+		delete nuevoContenido;
 
+	}else{
+		cout << "No se pudo deserealizar el registro pues el tamaño de la fuente es nula." << endl;
+	}
 }
 
 void Registro::setContenido(Entidad *entidad)
@@ -109,10 +112,10 @@ void Registro::setContenido(Entidad *entidad)
 }
 
 Registro *Registro::duplicar(){
-	NombreDeEntidad nombre = this->getContenido()->getNombreDeEntidad();
-	Registro* registro = new Registro(nombre);
-	registro->setContenido(this->getContenido());
-	registro->clave= this->obtenerClave();
+	NombreDeEntidad nombreDeLaEntidad = this->contenido->getNombreDeEntidad();
+	Registro* registro = new Registro(nombreDeLaEntidad);
+	registro->setContenido(this->contenido);
+	registro->determinarClave();
 	return registro;
 }
 
