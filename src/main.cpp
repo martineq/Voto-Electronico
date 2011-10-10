@@ -1,8 +1,10 @@
 #include <iostream>
 #include <list>
 #include "Pruebas.h"
-#include "./ClasesDePrueba/Test.h"
-#include "./ClasesDePrueba/TestArchivoDeBuckets.h"
+#include "../tests/Test.h"
+#include "../tests/TestArchivoBloques.h"
+#include "../tests/TestArchivoDeBuckets.h"
+#include "../tests/TestHashingExtensible.h"
 
 using namespace std;
 
@@ -12,21 +14,8 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-//	TestArchivoDeBuckets testArchivoDeBuckets;
-//	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
-
-//	Test test;
-//	test.testStringstream();
-//	test.testConvertir();
-//	test.testArchivoDeBuckets();
-//	test.serializarDeserializarRegistro();
-
-//	Pruebas de Hashing!
-//	test.pruebaAgregarRegistrosHashingExtensible();
-//	test.testBucket();
 
 	Pruebas* prueba = new Pruebas();
-
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
@@ -49,6 +38,25 @@ int main(int argc,char* argv[]) {
 //	prueba->holaMundo();
 
 	delete (prueba);
+
+//	Test test;
+//	test.testStringstream();
+//	test.testConvertir();
+//	test.testArchivoDeBuckets();
+//	test.serializarDeserializarRegistro();
+//	test.testBucket();
+
+//	Pruebas Archivo de Bloques
+//	TestArchivoBloques ab;
+//	ab.testObtenerBloque();
+
+//	Pruebas Archivo de Buckets
+//	TestArchivoDeBuckets testArchivoDeBuckets;
+//	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
+
+//	Pruebas de Hashing!
+//	TestHashingExtensible the;
+//	the.testAgregarRegistros();
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

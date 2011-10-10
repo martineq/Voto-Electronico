@@ -22,28 +22,12 @@ void Pruebas::iniciarRegistrosDePrueba(){
 	delete this->distrito2;
 	delete this->distrito3;
 	delete this->distrito4;
-	this->bucket = new Bucket(0);
+	this->bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	cout << "El espacio libre es: " << this->bucket->getEspacioLibre() << " Bytes" << endl;
 	this->bucket->agregarRegistro(registro1);
 	this->bucket->agregarRegistro(registro2);
 	this->bucket->agregarRegistro(registro3);
 	this->bucket->agregarRegistro(registro4);
-}
-
-void Pruebas::iniciarRegistrosDistrito(){
-
-	Bucket* bucket = new Bucket(0);
-	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado"};
-
-	for (int i=0; i < 4 ;i++){
-		Distrito* distrito = new Distrito(distritos[i]);
-		Registro* registro = new Registro(distrito);
-		delete(distrito);
-
-		bucket->agregarRegistro(registro);
-		delete(registro);
-	}
-
 }
 
 void Pruebas::verContenidoBucketDistrito(){
@@ -167,7 +151,7 @@ void Pruebas::pruebaEliminarRegistrosDelBucket(){
 	cout << "Observe y disfrute" << endl;
 	cout << "Prueba eliminar un registro con bucket vacio" << endl;
 	cout << "Intentando eliminar un registro" << endl;
-	Bucket* unBucket = new Bucket (0);
+	Bucket* unBucket = new Bucket (LONGITUD_BLOQUE_PRUEBA,0);
 	if (!unBucket->eliminarRegistro(8)) cout << "Prueba OK" << endl;
 	else cout << "ERROR" << endl;
 	delete unBucket;
@@ -234,7 +218,7 @@ void Pruebas::pruebaReemplazarRegistroEnBucket() {
 	Votante* votante2 = new Votante (2,"A","","","");
 	this->registro1 = new Registro (votante1);
 	this->registro2 = new Registro (votante2);
-	bucket = new Bucket (0);
+	bucket = new Bucket (LONGITUD_BLOQUE_PRUEBA,0);
 	this->bucket->agregarRegistro(registro1);
 	this->bucket->agregarRegistro(registro2);
 	this->verContenidoBucketVotante();
@@ -357,7 +341,7 @@ void Pruebas::serializarDeserializarBucket(){
 	cout << "Inicio deserializado de bucket" << endl;
 
 	delete (this->bucket);
-	this->bucket = new Bucket(0);
+	this->bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	this->bucket->deserializar(bucketSerializado);
 	delete bucketSerializado;
 	cout << "Fin deserializado de bucket" << endl;
@@ -373,29 +357,6 @@ void Pruebas::serializarDeserializarBucket(){
 	delete this->registro2;
 	delete this->registro3;
 	delete this->registro4;
-}
-
-void Pruebas::pruebaAgregarRegistrosHashingExtensible(){
-	this->iniciarRegistrosDistrito();
-	ArchivoDeBuckets* archivo = new ArchivoDeBuckets("ARCHIVO.BIN",16);
-	HashingExtensible* he = new HashingExtensible(archivo);
-	he->agregarRegistro(this->registro1);
-	he->agregarRegistro(this->registro2);
-	he->agregarRegistro(this->registro3);
-	he->agregarRegistro(this->registro4);
-	this->bucket = he->obtenerBucket(0);
-	cout << "cantidad de registrosen Bucket: " << bucket->getCantidadDeRegistros() << endl;
-	list<Registro*>::iterator it = this->bucket->ubicarPrimero();
-	int n = this->bucket->getCantidadDeRegistros();
-	for(int i = 0; i <n;i++ ){
-		Registro* unRegistro = *it;
-		Distrito* unDistrito = (Distrito*)unRegistro->getContenido();
-		cout << "Distrito: " << unDistrito->getDistrito() << endl;
-		it++;
-	}
-
-	delete(archivo);
-	delete(he);
 }
 
 int Pruebas::serializarDeserializarCargo(){
