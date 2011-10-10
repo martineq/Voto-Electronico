@@ -18,8 +18,12 @@ Administrador::Administrador(string nomb, string pass) {
 }
 
 bool Administrador::acceder(string nomb,string pass){
-	if ( this->nombre.compare(nomb) and this->password.compare(pass) ) return true;
+	if ((this->nombre==nomb) && (this->password==pass)) return true;
 	else return false;
+}
+
+bool Administrador::alta (Bucket* bucket,Registro* unRegistro){
+	return bucket->agregarRegistro(unRegistro);
 }
 
 Administrador::~Administrador() {

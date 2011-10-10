@@ -9,6 +9,7 @@
 #define ADMINISTRADOR_H_
 
 #include <string>
+#include "../Archivos/Hashing/Bucket.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 	Administrador();
 	Administrador(string nombre, string password);
 	bool acceder(string nombre,string password);
+	bool alta (Bucket*,Registro*);
 	virtual ~Administrador();
 };
 
