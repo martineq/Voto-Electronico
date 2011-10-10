@@ -15,6 +15,7 @@ private:
 	int espacioLibre;
 	int tamanioDeDispersion;
 	list<Registro*> listaDeRegistros;
+	Registro* consultarRegistro(int);
 public:
 	Bucket(int);
 	//devuelve el resultado de la operacion
