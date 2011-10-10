@@ -31,12 +31,12 @@ void TestHashingExtensible::testAgregarRegistros(){
 	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDeArchivo,dimensionBucket);
 	HashingExtensible* he = new HashingExtensible(archivo);
 
-	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado"};
-	for( int i=0;i < 4; i++ ){
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Roma"};
+	for( int i=0;i < 8 ; i++ ){
 		Distrito* distrito = new Distrito(distritos[i]);
 		Registro* registro = new Registro(distrito);
 
-		cout << endl << "Se intenta agregar "<< distrito->getDistrito() <<" al hashing" << endl;
+		cout << endl << "** Se intenta agregar "<< distrito->getDistrito() <<" al hashing" << endl;
 		he->agregarRegistro(registro);
 
 		delete distrito;

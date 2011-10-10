@@ -56,6 +56,10 @@ private:
 	 */
 	bool reducirTablaDeHash();
 
+	/*
+	 * 	Se duplica un bucket.
+	 */
+	Bucket* duplicarBucket(Bucket* bucket);
 public:
 
 	/*
