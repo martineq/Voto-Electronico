@@ -14,7 +14,6 @@
 #include "./Entidades/Lista.h"
 #include "./Entidades/Eleccion.h"
 #include "./Archivos/Hashing/Bucket.h"
-#include "./Archivos/Hashing/HashingExtensible.h"
 #include "./Archivos/EnBloques/ArchivoBloques.h"
 #include <list>
 #include <string>
@@ -41,8 +40,6 @@ public:
 //	pruebas para el Archivo en Bloques
 	void pruebaArchivoBloques();
 	void SerializarGuardarEnBloqueHidratar();
-//	pruebas para el hashing
-	void pruebaAgregarRegistrosHashingExtensible();
 //	pruebas para serializar y deserializar
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();
