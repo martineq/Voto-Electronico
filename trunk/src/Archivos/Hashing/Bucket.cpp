@@ -7,9 +7,9 @@
 
 #include "Bucket.h"
 
-Bucket::Bucket(int tamanioDispersion){
+Bucket::Bucket(int tamanioDispersion,int tamanioDeBucket){
 	this->tamanioDeDispersion=tamanioDispersion;
-	this->espacioLibre=LONGITUD_BLOQUE_PRUEBA-12;
+	this->espacioLibre=tamanioDeBucket-12;
 //	this->espacioLibre=LONGITUD_BLOQUE;
 }
 

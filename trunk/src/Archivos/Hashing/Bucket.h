@@ -17,7 +17,7 @@ private:
 	list<Registro*> listaDeRegistros;
 	Registro* consultarRegistro(int);
 public:
-	Bucket(int);
+	Bucket(int,int);
 	//devuelve el resultado de la operacion
 	bool agregarRegistro(Registro*);
 	bool eliminarRegistro(int);
