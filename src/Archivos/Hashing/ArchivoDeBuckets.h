@@ -1,16 +1,25 @@
 #ifndef ARCHIVODEBUCKETS_H_
 #define ARCHIVODEBUCKETS_H_
 
-#include <vector>
-
 #include "../EnBloques/ArchivoBloques.h"
+#include "Resultados.h"
 #include "Bucket.h"
+
+#define	STATUS_SIZE		4
 
 class ArchivoDeBuckets {
 private:
 	ArchivoBloques*		archivo;
+	Bucket*				ultimoBucket;
+	int					numeroUltimoBucket;
 	int					dimensionBucket;
-	int					ultimoNumeroDeBucketAlmacenado;
+	int					bucketsAlmacenados;
+
+
+	/*
+	 * Modifica el bucket interno por uno nuevo.
+	 */
+	void modificarBucketInterno(Bucket* bucket,int numeroDeBucket);
 
 	/*
 	 * Devuelve un puntero a un string* con memoria reservada.
@@ -36,8 +45,7 @@ private:
 	/*
 	 * Guardar el Bucket en bloque.
 	 */
-	int guardarBukcetEnBloque(int numeroDeBloque,Bucket* bucket);
-
+	void guardarBukcetEnBloque(int numeroDeBloque,Bucket* bucket);
 
 public:
 
@@ -59,17 +67,17 @@ public:
 	/*
 	 * Modifica el bucket almacenado.
 	 */
-	int modificarBucket(int numeroDeBucket,Bucket* bucket);
+	Resultados modificarBucket(int numeroDeBucket,Bucket* bucket);
 
 	/*
 	 * Elimina el bucket del archivo.
 	 */
-	int liberarBucket(int numeroBucket);
+	Resultados liberarBucket(int numeroBucket);
 
 	/*
 	 *	Determina si el bucket que se desea obtener tiene contenido valido.
 	 */
-	int bucketDisponible(int numeroDeBucket);
+	Resultados bucketDisponible(int numeroDeBucket);
 
 	/*
 	 * Devuelve el tamaño del bucket.
@@ -79,7 +87,7 @@ public:
 	/*
 	 * Elimina el archivo de buckets del disco.
 	 */
-	void eliminarArchivoDeBuckets();
+	Resultados eliminarArchivoDeBuckets();
 
 	/*
 	 *	Cierra el archivo de buckets.
