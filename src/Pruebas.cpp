@@ -508,13 +508,12 @@ void Pruebas::pruebaArchivoBloques(){
 	string dat2 ("Datos Locos");
 	string dat3 ("Soy Elvis El Rey");
 
-	int tamanioDeBloque = 64;
+	int tamanioDeBloque = 52;
 	char* buf = new char[tamanioDeBloque];	// Mi bloque, instanciado en memoria, como si fuera un nodo, bucket, etc.-
 	int nrr1,nrr2,nrr3,nrr4;
 	nrr1=nrr2=nrr3=nrr4=99;
 	ArchivoBloques *arch = new ArchivoBloques((char*)nombre.c_str(),tamanioDeBloque);
 
-	cout << "Guardo el dato: "<< buf <<endl;
 	arch->crearNuevoBloque(&nrr1);
 	cout << "Los NRR's son: "<< nrr1<<", "<<nrr2<<", " << nrr3 <<endl;
 	arch->crearNuevoBloque(&nrr2);
@@ -573,8 +572,8 @@ void Pruebas::pruebaArchivoBloques(){
 	cout << "El bloque del nrr9 es: "<< nrr4 <<endl;
 
 	arch->infoInts();
-
-	arch->cerrarArchivo();
+	delete[] buf;
+	delete arch;
 	cout << "\n------------\nSe acabó =D"<< endl;
 }
 

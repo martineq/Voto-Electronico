@@ -129,6 +129,9 @@ void ArchivoDeBuckets::eliminarArchivoDeBuckets()
 }
 
 ArchivoDeBuckets::~ArchivoDeBuckets() {
+	// De mart a MartinH: "this->archivo->cerrarArchivo();" ya no es necesaria.
+	// Tendrías que reemplazarla con: "delete (this->archivo);".
+	// Luego el destructor hace el "cerrarArchivo()" automáticamente.
 	this->archivo->cerrarArchivo();
 	cout << "se cerro el archivo";
 }

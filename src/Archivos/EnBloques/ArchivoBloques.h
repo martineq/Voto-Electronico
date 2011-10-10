@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "ManejadorDeArchivo.h"
 
 #ifndef ARCHIVOBLOQUES_H_
@@ -28,7 +29,6 @@ class ArchivoBloques {
 private:
 
 	ManejadorDeArchivo* archivo; // Maneja lo respectivo al acceso a disco.-
-	int* mem;        //this is the memory in which the file is mapped
 	int maxblocknum;  //this is the number of blocks in my file, it counts everything, deleted blocks, metadata blocks, head
 	int blocksize;    //this is the block size of the file (in bytes), incluye todos los campos de control
 	int currmetadata; //this points to the current metadata block in use
@@ -76,7 +76,6 @@ public:
 	void borrarBloque(int nrr);
 	// Guarda un bloque de datos, en la posición <numeroBloque>
 	void guardarBloque(int nrr, char* datos);
-	void cerrarArchivo();
 
 	//Muestra TODO_ el contenido del archivo en intervalos de Ints (en paquetes de a 4 Bytes)
 	// Una vez usada, bórrese! =D

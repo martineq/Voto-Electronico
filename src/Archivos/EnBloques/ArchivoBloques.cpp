@@ -168,7 +168,7 @@ ArchivoBloques::ArchivoBloques(){
 
 ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 
-	if ( (blocksize) >= (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) ){
+	if ( (blocksize) >= (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) && ((blocksize%(TAM_CAMPOS_CTRL))==0) ){
 		this->archivo = new ManejadorDeArchivo();
 		archivo->abrir(path);
 
@@ -183,6 +183,7 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 			this->maxblocknum = 1;				// Lo pongo en 1 porque agrego el bloque cabecera
 			guardarTipoInt(POSREL_BLOCKSIZE_HEAD,&(this->blocksize)); // Guardo en cabecera el blocksize
 			this->serializehead();
+			delete[] buf;
 		}else{
 			leerTipoInt(POSREL_BLOCKSIZE_HEAD,&(this->blocksize)); // Guardo de cabecera el blocksize
 			if ( this->blocksize == blocksize ){
@@ -191,12 +192,19 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 				if (this->currmetadata > 0) this->currpos = this->obtenerCurrPos();
 				else this->currpos = 0;
 			}else{
-				cerr << "El archivo existente tiene un tamaño de bloque distinto al definido. Archivo NO iniciado"<<endl;
-				archivo->cerrar();
+				cerr << "El archivo existente tiene un tamaño de bloque distinto al definido. Archivo NO iniciado. \nPrograma terminado."<<endl;
+				exit(1);
 			}
 		}
 	}else{
-		cerr << "El bloque definido debe ser por lo menos de "<< ((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) << " bytes. Archivo NO creado.-" << endl;
+		if((blocksize%(TAM_CAMPOS_CTRL))!=0){
+			cerr << "El bloque definido debe ser múltiplo de "<< (TAM_CAMPOS_CTRL) << endl;
+		}
+		if ( (blocksize) < (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) ){
+		cerr << "El bloque definido debe ser por lo menos de "<< ((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) << " bytes." << endl;
+		}
+		cerr << "Archivo NO creado. \nPrograma terminado." << endl;
+		exit(1);
 	}
 }
 
@@ -218,9 +226,6 @@ void ArchivoBloques::guardarBloque(int nrr, char *datos){
 	this->archivo->escribir(datos,this->blocksize);
 }
 
-void ArchivoBloques::cerrarArchivo(){
-	this->archivo->cerrar();
-}
 
 // Función temporal: Depués se borra
 void ArchivoBloques::infoInts(){
@@ -228,14 +233,16 @@ void ArchivoBloques::infoInts(){
 	this->archivo->posicionarse(0);
 	int i = 0;
 	char* buf= new char[TAM_CAMPOS_CTRL];
-	cout << "Tamaño " << this->blocksize *this->maxblocknum << endl;
-	for(i=0;((i)*(TAM_CAMPOS_CTRL))<(this->blocksize *this->maxblocknum );i++){
-		this->leerTipoInt(i*4,(int*)buf);
-		cout << "Int["<<i<<"]-NRR["<< i*4 << "]: "<< *(int*)buf << endl;
+	cout << "Tamaño del archivo: " << this->blocksize *this->maxblocknum << " bytes."<<endl;
+	for(i=0; i<(this->blocksize *this->maxblocknum) ;i+=(TAM_CAMPOS_CTRL)){
+		this->leerTipoInt(i,(int*)buf);
+		cout << "Int["<<i/4<<"]-NRR["<< i << "]: "<< *(int*)buf << endl;
 	}
+	delete[] buf;
 }
 
 
 ArchivoBloques::~ArchivoBloques() {
 	this->archivo->cerrar();
+	delete (this->archivo);
 }
