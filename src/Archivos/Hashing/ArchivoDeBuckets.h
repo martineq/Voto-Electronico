@@ -5,7 +5,6 @@
 
 #include "../EnBloques/ArchivoBloques.h"
 #include "Bucket.h"
-#include "ResultadosEnArchivosDeBuckets.h"
 
 class ArchivoDeBuckets {
 private:
