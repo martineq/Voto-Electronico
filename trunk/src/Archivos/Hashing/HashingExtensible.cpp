@@ -25,19 +25,6 @@ int HashingExtensible::obtenerPosicion(int clave){
 	return posicion;
 }
 
-//Bucket* HashingExtensible::obtenerBucket(int numeroDeBucket){
-//	Bucket* bucket;
-//
-//	if ( numeroUltimoBucketLeido == numeroDeBucket ){
-//		bucket = ultimoBucketLeido;
-//	}else{
-//		bucket = archivo->obtenerBucket(numeroDeBucket);
-//		ultimoBucketLeido = bucket;
-//		numeroUltimoBucketLeido = numeroDeBucket;
-//	}
-//	return bucket;
-//}
-
 void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash){
 	vector<int>::iterator it;
 	Bucket* nuevoBucket;
@@ -83,11 +70,11 @@ void HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucket,int 
 	this->tablaDeDispersion.push_back(dispersionNuevoBucket);
 
 	// Se crea el nuevo Bucket.
-	nuevoBucket = new Bucket(archivo->getDimensionDelBucket(),dispersionNuevoBucket);
+	nuevoBucket = new Bucket(dispersionNuevoBucket,archivo->getDimensionDelBucket());
 	this->archivo->guardarBucket(nuevoBucket);
 
 	// Se crea un nuevo Bucket para redispersar los elementos.
-	bucketActualizado = new Bucket(archivo->getDimensionDelBucket(),dispersionBucketActualizado);
+	bucketActualizado = new Bucket(dispersionBucketActualizado,archivo->getDimensionDelBucket());
 	this->archivo->guardarBucket(bucketActualizado);
 
 	int cantidadDeRegistros = bucket->getCantidadDeRegistros();
@@ -170,7 +157,6 @@ void HashingExtensible::liberarBucket(int posicionEnTablaDeHash){
 
 		// Libero el bucket y lo ubico en la lista de libres.
 		this->tablaDeDispersion.at(numeroDeBucket) = BUCKET_LIBRE;
-		this->listaDeBucketsLibres.push_back(numeroDeBucket);
 		this->archivo->liberarBucket(numeroDeBucket);
 
 		//Reemplazo el bucket a eliminar por el posterior/anterior.
@@ -205,16 +191,13 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 
 	}else {
 		// Si la tabla está vacía entonces tengo que crear un nuevo bucket
-		Bucket* nuevoBucket = new Bucket(archivo->getDimensionDelBucket(),0);
+		Bucket* nuevoBucket = new Bucket(0,archivo->getDimensionDelBucket());
 		numeroDeBucket = this->archivo->guardarBucket(nuevoBucket);
 
 		// Agrego el nuevo bucket en la lógica del hashing y le asigno su dispersión.
 		this->tablaDeHash.push_back(numeroDeBucket);
 		this->tablaDeDispersion.push_back(this->tablaDeHash.size());
 
-		// Obtengo el nuevo bucket y le modifico el tamaño de dispersión.
-//		this->numeroUltimoBucketLeido = nuevoBucket;
-//		this->ultimoBucketLeido = nuevoBucket;
 		bucket = nuevoBucket;
 		bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
 	}
@@ -230,8 +213,6 @@ void HashingExtensible::agregarRegistro(Registro* registro){
 		// Reintento agregar el registro que generó la redispersion
 		this->agregarRegistro(registro);
 	}
-
-	delete(bucket);
 }
 
 void HashingExtensible::modificarRegistro(Registro* registro){
@@ -293,7 +274,6 @@ Registro* HashingExtensible::obtenerRegistro(int clave){
 
 	Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
 	Registro* registro = bucket->getRegistro(clave);
-	delete bucket;
 
 	return registro;
 }

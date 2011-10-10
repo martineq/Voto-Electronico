@@ -23,25 +23,11 @@ private:
 	 * Tabla de hash necesaria para emplear el hashing extensible.
 	 */
 	vector<int>			tablaDeHash;
+
 	/*
 	 * Tabla de dispersión, para evitar accesos a disco.
 	 */
 	vector<int> 		tablaDeDispersion;
-
-	/*
-	 * Lista de Buckets libres, permite evitar accesos a disco.
-	 */
-	list<int>			listaDeBucketsLibres;
-
-//	/*
-//	 * Mantiene en memoria el último bucket leído, para evitar accesos a disco.
-//	 */
-//	Bucket*				ultimoBucketLeido;
-//
-//	/*
-//	 * Mantiene en memoria el número del último bucket leído, para evitar accesos a disco.
-//	 */
-//	int					numeroUltimoBucketLeido;
 
 	/*
 	 * Aplica la función de hash y devuelve la posicion en la tabla de Hash.
@@ -69,12 +55,6 @@ private:
 	 * iguales, e informa si se realizó o no la operación.
 	 */
 	bool reducirTablaDeHash();
-
-//	/*
-//	 * Lógica que decide si emplear el último bucket leído o acceder a disco
-//	 * para buscar uno nuevo.
-//	 */
-//	Bucket* obtenerBucket(int numeroDeBucket);
 
 public:
 
@@ -104,7 +84,6 @@ public:
 	 *	Devuelve el registro a partir de la clave introducida.
 	 */
 	Registro* obtenerRegistro(int clave);
-
 
 	/*
 	 * Elimina la instancia de memoria.
