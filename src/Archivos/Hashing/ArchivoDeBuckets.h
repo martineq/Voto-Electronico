@@ -15,9 +15,13 @@ private:
 	int					dimensionBucket;
 	int					bucketsAlmacenados;
 
+	/*
+	 *	Duplica el bucket.
+	 */
+	Bucket* duplicarBucket(Bucket* bucket);
 
 	/*
-	 * Modifica el bucket interno por uno nuevo.
+	 *	Modifica el bucket interno por uno nuevo.
 	 */
 	void modificarBucketInterno(Bucket* bucket,int numeroDeBucket);
 
