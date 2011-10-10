@@ -1,7 +1,7 @@
 #include "TestArchivoDeBuckets.h"
 
 Bucket* TestArchivoDeBuckets::crearBucket1(){
-	Bucket* bucket = new Bucket(0);
+	Bucket* bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	string distritos[] = {"Buenos Aires","Puerto Esperanza","Bahia Blancaaaaa","ushuaia"};
 
 	for (int i=0; i < 4 ;i++){
@@ -12,11 +12,12 @@ Bucket* TestArchivoDeBuckets::crearBucket1(){
 		bucket->agregarRegistro(registro);
 		delete(registro);
 	}
+
 	return bucket;
 }
 
 Bucket* TestArchivoDeBuckets::crearBucket2(){
-	Bucket* bucket = new Bucket(0);
+	Bucket* bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	string distritos[] = {"Montevideo","San Francisco","Paris","Londres"};
 
 	for (int i=0; i < 4 ;i++){
@@ -31,7 +32,7 @@ Bucket* TestArchivoDeBuckets::crearBucket2(){
 }
 
 Bucket* TestArchivoDeBuckets::crearBucket3(){
-	Bucket* bucket = new Bucket(0);
+	Bucket* bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	string distritos[] = {"Moscu","Auckland","Canberra","Puerto Moresby"};
 
 	for (int i=0; i < 4 ;i++){
@@ -46,7 +47,7 @@ Bucket* TestArchivoDeBuckets::crearBucket3(){
 }
 
 Bucket* TestArchivoDeBuckets::crearBucket4(){
-	Bucket* bucket = new Bucket(0);
+	Bucket* bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	string distritos[] = {"Washington","Nueva York","Roma","Atenas"};
 
 	for (int i=0; i < 4 ;i++){
@@ -61,7 +62,7 @@ Bucket* TestArchivoDeBuckets::crearBucket4(){
 }
 
 Bucket* TestArchivoDeBuckets::crearBucket5(){
-	Bucket* bucket = new Bucket(0);
+	Bucket* bucket = new Bucket(LONGITUD_BLOQUE_PRUEBA,0);
 	string distritos[] = {"Copenhague","Marseille","Viena","Praga"};
 
 	for (int i=0; i < 4 ;i++){
@@ -81,7 +82,7 @@ void TestArchivoDeBuckets::mostrarBucket(ArchivoDeBuckets* archivo,int numeroDeB
 	int cantRegistros = bucketNuevo->getCantidadDeRegistros();
 
 	list<Registro*>::iterator it = bucketNuevo->ubicarPrimero();
-	for(int i =0; i <cantRegistros;i++){
+	for(int i =0; i < cantRegistros;i++){
 		Registro* registro = *it;
 		Distrito* d = (Distrito*)registro->getContenido();
 		cout << d->getDistrito() << endl;
@@ -97,8 +98,11 @@ TestArchivoDeBuckets::TestArchivoDeBuckets()
 }
 
 void TestArchivoDeBuckets::testAltaBajaDeBucketsEnArchivoDeBuckets(){
-	std::remove("Archivo.bin");
-	ArchivoDeBuckets* archivo = new ArchivoDeBuckets("Archivo.bin",100);
+	char nombreDelArchivo[]= "Archivo.bin";
+	remove(nombreDelArchivo);
+	int numero = LONGITUD_BLOQUE_PRUEBA;
+
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDelArchivo,numero);
 
 	Bucket* bucket = this->crearBucket1();
 	int numeroDeBucket1 = archivo->guardarBucket(bucket);
@@ -136,9 +140,6 @@ void TestArchivoDeBuckets::testAltaBajaDeBucketsEnArchivoDeBuckets(){
 	cout << "Se muesta el bucket de la posicion: " << numeroDeBucket5 << endl;
 	this->mostrarBucket(archivo,numeroDeBucket5);
 
-	cout << "El siguiente bucket fue borrado, verificar comportamiento" << endl;
-	cout << "Se muesta el bucket de la posicion: " << numeroDeBucket2 << endl;
-	this->mostrarBucket(archivo,numeroDeBucket2);
 	delete archivo;
 }
 

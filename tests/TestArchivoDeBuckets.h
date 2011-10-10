@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../Archivos/Hashing/Bucket.h"
-#include "../Archivos/Hashing/ArchivoDeBuckets.h"
+#include "../src/Archivos/Hashing/Bucket.h"
+#include "../src/Archivos/Hashing/ArchivoDeBuckets.h"
 
 #ifndef TESTARCHIVODEBUCKETS_H_
 #define TESTARCHIVODEBUCKETS_H_
