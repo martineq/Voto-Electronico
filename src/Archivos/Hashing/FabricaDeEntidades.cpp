@@ -33,6 +33,10 @@ Entidad *FabricaDeEntidades::crearEntidad(NombreDeEntidad nombre)
 			entidad = (Entidad*) new Votante();
 			cout << "Creamos una entidad Votante" << endl;
 			break;
+		case tConteo:
+			entidad = (Entidad*) new Conteo();
+			cout << "Creamos una entidad Conteo" << endl;
+			break;
 	}
 	return entidad;
 }

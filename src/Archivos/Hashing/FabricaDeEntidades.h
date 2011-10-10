@@ -7,6 +7,7 @@
 #include "../../Entidades/Eleccion.h"
 #include "../../Entidades/Lista.h"
 #include "../../Entidades/Votante.h"
+#include "../../Entidades/Conteo.h"
 
 class FabricaDeEntidades {
 public:
