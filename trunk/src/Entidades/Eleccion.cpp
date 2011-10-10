@@ -25,9 +25,9 @@ int Eleccion::getTamanio(){
 	list<Distrito>::iterator it = this->distritos.begin();
 	while (it != this->distritos.end()){
 		tamanioListaDistritos = it->getTamanio();
+		it++;
 	}
 	return (tamanioFecha + tamanioCargoPrincipal + tamanioListaDistritos);
-
 }
 
 int Eleccion::getClave(){
@@ -96,6 +96,7 @@ Entidad *Eleccion::duplicar()
 	list<Distrito>::iterator it = this->distritos.begin();
 	while (it != this->distritos.end()){
 		copia->agregarDistrito(*it);
+		it++;
 	}
 	return copia;
 
