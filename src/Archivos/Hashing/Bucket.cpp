@@ -19,6 +19,22 @@ Registro* Bucket::getRegistro(int clave){
 		list<Registro*>::iterator it = this->listaDeRegistros.begin();
 		while (it!=listaDeRegistros.end()) {
 			int claveDeRegistroActual = (*it)->obtenerClave();
+			if (claveDeRegistroActual==clave) {
+				Registro* unRegistro = (*it)->duplicar();
+				return unRegistro;
+			}
+			it++;
+		}
+	}
+	return NULL;
+}
+
+Registro* Bucket::consultarRegistro(int clave){
+	if (this->listaDeRegistros.empty()) return NULL;
+	else {
+		list<Registro*>::iterator it = this->listaDeRegistros.begin();
+		while (it!=listaDeRegistros.end()) {
+			int claveDeRegistroActual = (*it)->obtenerClave();
 			if (claveDeRegistroActual==clave) return *it;
 			it++;
 		}
@@ -28,13 +44,13 @@ Registro* Bucket::getRegistro(int clave){
 
 //devuelve el resultado de la operacion
 bool Bucket::agregarRegistro(Registro* unRegistro){
-	if (this->getRegistro(unRegistro->obtenerClave())!=NULL) return false;
+	if (this->consultarRegistro(unRegistro->obtenerClave())!=NULL) return false;
 	else
-		if ((unRegistro->getTamanio()+4)>this->espacioLibre) return  false;
+		if ((unRegistro->getTamanio()+TAM_INT)>this->espacioLibre) return  false;
 		else {
 			Registro* registro = unRegistro->duplicar();
 			this->listaDeRegistros.push_back(registro);
-			this->espacioLibre-= (unRegistro->getTamanio()+4);
+			this->espacioLibre-= (unRegistro->getTamanio()+TAM_INT);
 			return true;
 		}
 }
@@ -45,13 +61,13 @@ bool Bucket::eliminarRegistro(int clave){
 		return false;
 	}
 	else {
-		if (this->getRegistro(clave)==NULL) return false;
+		if (this->consultarRegistro(clave)==NULL) return false;
 		else {
 			list<Registro*>::iterator it = this->listaDeRegistros.begin();
 			while (it!=listaDeRegistros.end()) {
 				int claveDeRegistroActual = (*it)->obtenerClave();
 				if (claveDeRegistroActual==clave) {
-					this->espacioLibre+=((*it)->getTamanio()+4);
+					this->espacioLibre+=((*it)->getTamanio()+TAM_INT);
 					delete *it;
 					this->listaDeRegistros.erase (it);
 					return true;
@@ -66,9 +82,9 @@ bool Bucket::reemplazarRegistro(Registro* unRegistro){
 	if (this->listaDeRegistros.empty()) return false;
 	else {
 		int clave=unRegistro->obtenerClave();
-		if (this->getRegistro(clave)==NULL) return false;
+		if (this->consultarRegistro(clave)==NULL) return false;
 		else {
-			Registro* registroAReemplazar = this->getRegistro(clave);
+			Registro* registroAReemplazar = this->consultarRegistro(clave);
 			if ((registroAReemplazar->getTamanio()+this->espacioLibre) >= unRegistro->getTamanio()){
 				this->eliminarRegistro(clave);
 				this->agregarRegistro(unRegistro);
