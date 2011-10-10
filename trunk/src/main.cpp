@@ -21,18 +21,21 @@ int main(int argc,char* argv[]) {
 //	prueba->pruebaAgregarRegistrosAlBucket();
 //	prueba->pruebaEliminarRegistrosDelBucket();
 //	prueba->pruebaReemplazarRegistroEnBucket();
-	prueba->serializarDeserializarBucket();
+//	prueba->serializarDeserializarBucket();
 
 //  Pruebas de serializar y deserializar entidades!
-//	prueba->serializarDeserializarCargo();
 //	prueba->serializarDeserializarVotante();
 //	prueba->serializarDeserializarDistrito();
+//	prueba->serializarDeserializarCargo();
+//	prueba->serializarDeserializarCandidato();
 //	prueba->serializarDeserializarLista();
 //	prueba->serializarDeserializarEleccion();
-//	prueba->serializarDeserializarCandidato();
 
 //	Pruebas para el Archivo en Bloques:
 //	prueba->pruebaArchivoBloques();
+
+//	Pruebas de integracion
+	prueba->pruebaDeSimulacionDePrograma();
 
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();

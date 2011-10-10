@@ -72,7 +72,7 @@ int Distrito::getClave(){
 	return this->distrito.size();
 }
 
-Distrito::~Distrito(){cout << "destruyo distrito" << endl;}
+Distrito::~Distrito(){}
 
 Entidad* Distrito::duplicar(){
 	return new Distrito(this->distrito);
