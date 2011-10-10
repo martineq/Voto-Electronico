@@ -8,7 +8,7 @@
 
 #include "../src/Entidades/Distrito.h"
 
-class testDistrito : public CxxTest::TestSuite
+class TestDistrito : public CxxTest::TestSuite
 {
 public:
 
