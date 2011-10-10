@@ -1,5 +1,7 @@
 #include "ArchivoDeBuckets.h"
 
+/*** METODOS PRIVADOS *********************************************************/
+
 /*
  * Realiza un pasaje desde un char del tamanio del bucket a un string
  */
@@ -7,11 +9,10 @@
 std::string* ArchivoDeBuckets::charToString(char* cadena){
 
 	stringstream stream;
-	stream.write(cadena,this->tamanioBucket);
+	stream.write(cadena,this->dimensionBucket);
 	std::string* nuevoString = new string( stream.str() );
 
 	cout << *nuevoString << "size " << nuevoString->size() << endl;
-	//cout << *nuevoString << endl;
 	return nuevoString;
 }
 
@@ -24,140 +25,111 @@ char* ArchivoDeBuckets::stringToChar(std::string* cadena){
 	cout << "cadena: " << *cadena << endl;
 	cout << "Conversion desde un char a un string" << endl;
 
-	char* nuevaCadena = new char[this->tamanioBucket];
-	memcpy(nuevaCadena,cadena->c_str(),this->tamanioBucket);
+	char* nuevaCadena = new char[this->dimensionBucket];
+	memcpy(nuevaCadena,cadena->c_str(),this->dimensionBucket);
 
 	return nuevaCadena;
 }
 
-ArchivoDeBuckets::ArchivoDeBuckets(char* path, int tamanioBucket)
-{
+int	ArchivoDeBuckets::obtenerNumeroDeBucket(int numeroDeBloque){
+	return numeroDeBloque/this->dimensionBucket - 1;
+}
+
+int	ArchivoDeBuckets::obtenerNumeroDeBloque(int numeroDeBucket){
+	return (numeroDeBucket+1)*this->dimensionBucket;
+}
+
+int ArchivoDeBuckets::guardarBukcetEnBloque(int numeroDeBloque,Bucket* bucket){
+
+	string* stringBucket = bucket->serializar();
+	char* bucketSerializado = stringToChar(stringBucket);
+
+	cout << "bucketSerializado: (size = " << stringBucket->size() << " ) "<< endl;
+
+	this->archivo->guardarBloque(numeroDeBloque,bucketSerializado);
+	delete[] bucketSerializado;
+
+	cout << "Se guardo el bucket: " << *stringBucket << endl;
+	delete stringBucket;
+}
+
+/*** METODOS PUBLICOS *********************************************************/
+
+ArchivoDeBuckets::ArchivoDeBuckets(char* path, int tamanioBucket){
+
 	this->archivo = new ArchivoBloques(path,tamanioBucket);
-	this->tamanioBucket = tamanioBucket;
+	this->dimensionBucket = tamanioBucket;
 	this->ultimoNumeroDeBucketAlmacenado = -1;
-
 }
 
-int ArchivoDeBuckets::crearNuevoBucket()
-{
-	int numeroDeBucket;
-	this->archivo->crearNuevoBloque(&numeroDeBucket);
+Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
-	// Realizo una transformacion para que los bloques se asignen segun
-	// los numeros naturales.
-	numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;
+	Bucket* bucket = NULL;
 
-	this->ultimoNumeroDeBucketAlmacenado++;
+	if ( numeroDeBucket <= this->ultimoNumeroDeBucketAlmacenado ){
 
-	return numeroDeBucket;
-}
+		#warning "Si el numeroDeBucket fue liberado me lo devuelve igual".
+		int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
+		char* bucketSerializado = new char[this->dimensionBucket];
+		this->archivo->obtenerBloque(nrr,bucketSerializado);
 
-Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket)
-{
-	Bucket* bucket2;
-	if (this->ultimoNumeroDeBucketAlmacenado >= numeroDeBucket){
+		string* stringBucket = charToString(bucketSerializado);
+		delete[] bucketSerializado;
 
-		char* bucketSerializado = new char[this->tamanioBucket];
+		#warning "El bucketSerializado podría tener tamaño nulo, ver como lo resuelve el Bucket.";
 
-		// transformo el valor a el espacio de bloques.
-		numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
-		this->archivo->obtenerBloque(numeroDeBucket,bucketSerializado);
-
-		std::string* stringBucket = charToString(bucketSerializado);
-		delete bucketSerializado;
-//		cout << "Se obtuvo el siguiente bucket: " << *stringBucket << endl;
-
-		bucket2 = new Bucket(0);
-		bucket2->deserializar(stringBucket);
+		cout << "dimension del bucket a deserealizar: " << stringBucket->size() << endl;
+		bucket = new Bucket(this->dimensionBucket,0);
+		bucket->deserializar(stringBucket);
 
 		delete stringBucket;
 	}
-	else
-		throw "Bucket inexistente";
 
-
-	return bucket2;
+	return bucket;
 }
 
-void ArchivoDeBuckets::liberarBucket(int numeroDeBucket)
-{
-	if ( this->ultimoNumeroDeBucketAlmacenado > numeroDeBucket ){
-		this->bucketsLibres.push_back(numeroDeBucket);
+int ArchivoDeBuckets::liberarBucket(int numeroDeBucket){
 
-		// transformo el valor a el espacio de bloques.
-		numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
-		this->archivo->borrarBloque(numeroDeBucket);
-	}else{
-		throw "Bucket disponible";
-	}
-
+	int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
+	this->archivo->borrarBloque(nrr);
 }
 
-void ArchivoDeBuckets::modificarBucket(int numeroDeBucket,Bucket* bucket){
+int ArchivoDeBuckets::modificarBucket(int numeroDeBucket,Bucket* bucket){
 
-	if (this->ultimoNumeroDeBucketAlmacenado >= numeroDeBucket ){
+	int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
+	this->guardarBukcetEnBloque(nrr,bucket);
 
-		std::string* stringBucket = bucket->serializar();
-		int size = stringBucket->size();
-
-		if (size < this->tamanioBucket){
-			char* bucketSerializado = stringToChar(stringBucket);
-
-			// transformo el valor a el espacio de bloques.
-			numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
-			this->archivo->guardarBloque(numeroDeBucket,bucketSerializado);
-		}else{
-			cerr << "Bucket supera el tamanio del bloque." << endl;
-		}
-
-		delete(stringBucket);
-	}else{
-		throw "numeroDeBucket excede cantidad de buckets almacenados.";
-	}
 }
-
 
 int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 {
-	int numeroDeBucket;
-	string* aux_bucketSerializado = bucket->serializar();
+	int nrr;
+	this->archivo->crearNuevoBloque(&nrr);
+	int numeroDeBucket = this->obtenerNumeroDeBucket(nrr);
 
-	cout << "bucketSerializado: " << *aux_bucketSerializado << " size: " << aux_bucketSerializado->size() << endl;
-
-//	char* bucketSerializado = new char[this->tamanioBucket];
-//	strcpy(bucketSerializado,aux_bucketSerializado->c_str());
-	char* bucketSerializado = stringToChar(aux_bucketSerializado);
-
-	// se busca en la lista de libres, si está vacio, se agrega al final.
-//	if ( this->bucketsLibres.empty() ){
-
+	if ( this->ultimoNumeroDeBucketAlmacenado < numeroDeBucket )
 		this->ultimoNumeroDeBucketAlmacenado++;
-//		numeroDeBucket = this->ultimoNumeroDeBucketAlmacenado;
-		archivo->crearNuevoBloque(&numeroDeBucket);
-		archivo->guardarBloque(numeroDeBucket,bucketSerializado);
-		numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;	// transformo el valor a el espacio de bloques.
 
-		cout << "Se guardo el bucket: " << *aux_bucketSerializado << endl;
-//	}else{
-//		// si la lista tiene elementos, se obtiene el primer bucket disponible
-//		int cantidadDeBucketsLibres = this->bucketsLibres.size();
-//		numeroDeBucket = this->bucketsLibres.at(cantidadDeBucketsLibres);
-//		this->bucketsLibres.erase(this->bucketsLibres.end());
-//
-//		// transformo el valor a el espacio de bloques.
-//		numeroDeBucket = (numeroDeBucket+1)*this->tamanioBucket;
-//		archivo->guardarBloque(numeroDeBucket,bucketSerializado);
-//		// transformo el valor a el espacio de bloques.
-//		numeroDeBucket = numeroDeBucket/this->tamanioBucket - 1;
-//	}
+	this->guardarBukcetEnBloque(nrr,bucket);
 
-	delete aux_bucketSerializado;
-	delete bucketSerializado;
 	return numeroDeBucket;
+}
 
+int ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
+{
+}
+
+int ArchivoDeBuckets::getDimensionDelBucket()
+{
+	return this->dimensionBucket;
+}
+
+void ArchivoDeBuckets::eliminarArchivoDeBuckets()
+{
 }
 
 ArchivoDeBuckets::~ArchivoDeBuckets() {
 	this->archivo->cerrarArchivo();
+	cout << "se cerro el archivo";
 }
 
