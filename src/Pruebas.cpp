@@ -596,7 +596,7 @@ void Pruebas::SerializarGuardarEnBloqueHidratar(){
 
 	int dato1 = 99999;
 	int dato2 = 88888;
-	string dato3 = "Cadenita de texto";
+	string dato3 = "Cadenita de text";
 	string nombre ("BloqueSerializado.bin");
 	stringstream buffer,stream;
 	int leido1,leido2;
