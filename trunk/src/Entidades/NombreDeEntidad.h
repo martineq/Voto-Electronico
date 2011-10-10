@@ -8,7 +8,7 @@ enum NombreDeEntidad {
 	  tEleccion,
 	  tLista,
 	  tVotante,
-	  tConteo,
+	  tConteo
 	};
 
 #endif /* NOMBREDEENTIDAD_H_ */
