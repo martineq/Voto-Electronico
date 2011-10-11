@@ -4,7 +4,7 @@
 
 Bucket* ArchivoDeBuckets::duplicarBucket(Bucket* bucket){
 
-	Bucket* nuevoBucket = new Bucket(this->dimensionBucket,0);
+	Bucket* nuevoBucket = new Bucket(0,dimensionBucket);
 	string* stringSerializado = bucket->serializar();
 	nuevoBucket->deserializar(stringSerializado);
 	delete stringSerializado;
@@ -12,16 +12,11 @@ Bucket* ArchivoDeBuckets::duplicarBucket(Bucket* bucket){
 }
 
 void ArchivoDeBuckets::modificarBucketInterno(Bucket* bucket, int numeroDeBucket){
-	//if (numeroDeBucket != this->numeroUltimoBucket){
-		if ( this->ultimoBucket != NULL ){
-			cout << "Se borró el bucket" << this->ultimoBucket << endl;
-			delete this->ultimoBucket;
+		if ( ultimoBucket != NULL )
+			delete ultimoBucket;
 
-		}
-		this->ultimoBucket = this->duplicarBucket(bucket);
-		cout << "Se duplico el bucket en RAM" << this->ultimoBucket << endl;
-		this->numeroUltimoBucket = numeroDeBucket;
-	//}
+		ultimoBucket = duplicarBucket(bucket);
+		numeroUltimoBucket = numeroDeBucket;
 }
 
 char* ArchivoDeBuckets::stringToChar(std::string* cadena){
@@ -32,11 +27,8 @@ char* ArchivoDeBuckets::stringToChar(std::string* cadena){
 	stream.write((char*)&valido,STATUS_SIZE);
 	stream.write(cadena->c_str(),cadena->size());
 
-	cout << "cadena: " << stream.str() << endl;
-	cout << "Conversion desde un char a un string" << endl;
-
-	char* nuevaCadena = new char[this->dimensionBucket];
-	stream.get(nuevaCadena,this->dimensionBucket);
+	char* nuevaCadena = new char[dimensionBucket];
+	stream.get(nuevaCadena,dimensionBucket);
 
 	return nuevaCadena;
 }
@@ -49,13 +41,13 @@ int	ArchivoDeBuckets::obtenerNumeroDeBloque(int numeroDeBucket){
 	return (numeroDeBucket+1)*this->dimensionBucket;
 }
 
-void ArchivoDeBuckets::guardarBukcetEnBloque(int nrr,Bucket* bucket){
+void ArchivoDeBuckets::guardarBukcetEnBloque(int nrr){
 
-	string* stringBucket = bucket->serializar();
+	string* stringBucket = ultimoBucket->serializar();
 	char* bucketSerializado = stringToChar(stringBucket);
 
-	cout << "bucketSerializado: (size = " << stringBucket->size() << " ) "<< endl;
-	int numeroDeBloque = this->obtenerNumeroDeBucket(nrr);
+	cout << "bucketSerializado: (size = " << stringBucket->size()+4 << " ) "<< endl;
+	int numeroDeBloque = obtenerNumeroDeBucket(nrr);
 	cout << "** Almacenado en numero de bloque: " << numeroDeBloque << endl << endl;
 
 	this->archivo->guardarBloque(nrr,bucketSerializado);
@@ -72,49 +64,46 @@ ArchivoDeBuckets::ArchivoDeBuckets(char* path, int tamanioBucket){
 	// Agrego 1byte más para manejar el estado del bucket.
 	tamanioBucket = tamanioBucket+STATUS_SIZE;
 
-	this->archivo = new ArchivoBloques(path,tamanioBucket);
-	this->dimensionBucket = tamanioBucket;
-	this->bucketsAlmacenados = -1;
+	archivo = new ArchivoBloques(path,tamanioBucket);
+	dimensionBucket = tamanioBucket;
+	bucketsAlmacenados = -1;
+	cantidadBucketsLibres = 0;
+	ultimoBucketLibre = -1;
 
-	this->ultimoBucket = NULL;
-	this->numeroUltimoBucket = -1;
+	ultimoBucket = NULL;
+	numeroUltimoBucket = -1;
+	bucketSerializado = NULL;
 }
 
 Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 {
 	Resultados resultado = bucketOcupado;
 
-	if ( numeroDeBucket <= this->bucketsAlmacenados ){
+	if ( numeroDeBucket <= bucketsAlmacenados and numeroDeBucket >= 0){
 
 		if ( this->numeroUltimoBucket != numeroDeBucket){
 
 			int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
-			char* bucketSerializado = new char[this->dimensionBucket];
-			this->archivo->obtenerBloque(nrr,bucketSerializado);
+			char* bucketEnDisco = new char[this->dimensionBucket];
+			this->archivo->obtenerBloque(nrr,bucketEnDisco);
 
 			stringstream stream;
-			stream.write(bucketSerializado,this->dimensionBucket);
-			delete[] bucketSerializado;
+			stream.write(bucketEnDisco,this->dimensionBucket);
+			delete[] bucketEnDisco;
 
 			int numero;
 			stream.read((char*)&numero,STATUS_SIZE);
 
 			if (bucketOcupado == numero){
 
-				string stringBucket = stream.str().substr(0,dimensionBucket-STATUS_SIZE);
+				if (this->bucketSerializado != NULL)
+					delete bucketSerializado;
+				bucketSerializado = new string(stream.str().substr(0,dimensionBucket-STATUS_SIZE));
 
-				#warning "El bucketSerializado podría tener tamaño nulo, ver como lo resuelve el Bucket.";
-
-				cout << "dimension del bucket a deserealizar: " << stringBucket.size() << endl;
-				Bucket* nuevoBucket = new Bucket(0,this->dimensionBucket);
-				nuevoBucket->deserializar(&stringBucket);
-
-				this->modificarBucketInterno(nuevoBucket,numeroDeBucket);
 			}else{
 				resultado = bucketLibre;
 			}
 		}
-		//else reutiliza el bucket en memoria.
 	}else{
 		resultado = bucketNoDisponible;
 	}
@@ -125,23 +114,55 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
 	Bucket* bucket = NULL;
 
-		if (bucketDisponible(numeroDeBucket)==bucketOcupado)
-			bucket = this->duplicarBucket(this->ultimoBucket);
+		if ( bucketDisponible(numeroDeBucket) == bucketOcupado ){
+
+			if ( numeroDeBucket != numeroUltimoBucket ){
+
+				Bucket* nuevoBucket = new Bucket(0,dimensionBucket);
+				nuevoBucket->deserializar(bucketSerializado);
+				modificarBucketInterno(nuevoBucket,numeroDeBucket);
+			}
+
+			bucket = duplicarBucket(ultimoBucket);
+		}
 
 	return bucket;
 }
 
 Resultados ArchivoDeBuckets::liberarBucket(int numeroDeBucket){
 
-	int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
-
 	Resultados resultado = bucketDisponible(numeroDeBucket);
-	if (resultado == bucketOcupado){
-		if ( this->ultimoBucket != NULL )
-			delete this->ultimoBucket;
-		this->numeroUltimoBucket = -1;
-		this->ultimoBucket = NULL;
-		this->archivo->borrarBloque(nrr);
+
+	if ( resultado == bucketOcupado ){
+
+		if ( ultimoBucket != NULL )
+			delete ultimoBucket;
+		numeroUltimoBucket = -1;
+		ultimoBucket = NULL;
+
+		if ( numeroDeBucket == bucketsAlmacenados ){
+			int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
+			this->archivo->borrarBloque(nrr);
+			bucketsAlmacenados--;
+
+		}else{
+
+			stringstream stream;
+			int num = bucketLibre;
+			stream.write((char*)&num,STATUS_SIZE);
+
+			cantidadBucketsLibres++;
+			stream.write((char*)&ultimoBucketLibre,STATUS_SIZE);
+			ultimoBucketLibre = numeroDeBucket;
+
+			char* cadena = new char[dimensionBucket];
+			stream.read(cadena,STATUS_SIZE);
+
+			int nrr = obtenerNumeroDeBloque(numeroDeBucket);
+			archivo->guardarBloque(nrr,cadena);
+			delete[] cadena;
+		}
+
 		resultado = operacionOK;
 	}
 
@@ -150,35 +171,73 @@ Resultados ArchivoDeBuckets::liberarBucket(int numeroDeBucket){
 
 Resultados ArchivoDeBuckets::modificarBucket(int numeroDeBucket,Bucket* bucket){
 
-	int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
+	Resultados resultado;
 
-	Resultados resultado = bucketDisponible(numeroDeBucket);
-	if (resultado == bucketOcupado){
-		this->modificarBucketInterno(bucket,numeroDeBucket);
-		this->guardarBukcetEnBloque(nrr,bucket);
+	if ( bucket == NULL){
+		resultado = bucketNULO;
+	}else{
+		resultado = bucketDisponible(numeroDeBucket);
+
+		if (resultado == bucketOcupado){
+
+			modificarBucketInterno(bucket,numeroDeBucket);
+
+			int nrr = obtenerNumeroDeBloque(numeroDeBucket);
+			guardarBukcetEnBloque(nrr);
+
+			resultado = operacionOK;
+		}
 	}
-
 	return resultado;
 }
 
 int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 {
-	int nrr;
-	this->archivo->crearNuevoBloque(&nrr);
-	int numeroDeBucket = this->obtenerNumeroDeBucket(nrr);
+	int resultado;
 
-	if ( this->bucketsAlmacenados < numeroDeBucket )
-		this->bucketsAlmacenados++;
+	if ( cantidadBucketsLibres > 0 ){
+		int nrrA = obtenerNumeroDeBloque(ultimoBucketLibre);
 
-	this->guardarBukcetEnBloque(nrr,bucket);
-	this->modificarBucketInterno(bucket,numeroDeBucket);
+		if (cantidadBucketsLibres == 1){
+			ultimoBucketLibre = -1;
+		}else{
+			char* cadena = new char[dimensionBucket];
+			archivo->obtenerBloque(nrrA,cadena);
+			stringstream buffer;
+			buffer.write(cadena,dimensionBucket);
+			delete[] cadena;
+			int num;
+			buffer.read((char*)&num,STATUS_SIZE);
+			buffer.read((char*)&num,STATUS_SIZE);
+			ultimoBucketLibre = num;
+		}
 
-	return numeroDeBucket;
+		archivo->borrarBloque(nrrA);
+		cantidadBucketsLibres--;
+	}
+
+	if (bucket != NULL){
+
+		int nrr;
+		this->archivo->crearNuevoBloque(&nrr);
+		int numeroDeBucket = obtenerNumeroDeBucket(nrr);
+
+		if ( this->bucketsAlmacenados < numeroDeBucket )
+			this->bucketsAlmacenados++;
+
+		modificarBucketInterno(bucket,numeroDeBucket);
+		guardarBukcetEnBloque(nrr);
+
+		resultado = numeroDeBucket;
+	}else{
+		resultado = bucketNULO;
+	}
+	return resultado;
 }
 
 int ArchivoDeBuckets::getDimensionDelBucket()
 {
-	return this->dimensionBucket;
+	return dimensionBucket;
 }
 
 Resultados ArchivoDeBuckets::eliminarArchivoDeBuckets()
@@ -189,6 +248,8 @@ ArchivoDeBuckets::~ArchivoDeBuckets() {
 	delete this->archivo;
 	if ( this->ultimoBucket != NULL )
 		delete this->ultimoBucket;
+	if (this->bucketSerializado != NULL)
+		delete bucketSerializado;
 	cout << "se cerro el archivo";
 }
 

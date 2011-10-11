@@ -11,6 +11,9 @@ class ArchivoDeBuckets {
 private:
 	ArchivoBloques*		archivo;
 	Bucket*				ultimoBucket;
+	string*				bucketSerializado;
+	int					cantidadBucketsLibres;
+	int					ultimoBucketLibre;
 	int					numeroUltimoBucket;
 	int					dimensionBucket;
 	int					bucketsAlmacenados;
@@ -49,7 +52,7 @@ private:
 	/*
 	 * Guardar el Bucket en bloque.
 	 */
-	void guardarBukcetEnBloque(int numeroDeBloque,Bucket* bucket);
+	void guardarBukcetEnBloque(int numeroDeBloque);
 
 public:
 
