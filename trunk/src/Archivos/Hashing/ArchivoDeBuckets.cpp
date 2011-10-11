@@ -28,7 +28,7 @@ char* ArchivoDeBuckets::stringToChar(std::string* cadena){
 	stream.write(cadena->c_str(),cadena->size());
 
 	char* nuevaCadena = new char[dimensionBucket];
-	stream.get(nuevaCadena,dimensionBucket);
+	stream.read(nuevaCadena,dimensionBucket);
 
 	return nuevaCadena;
 }
@@ -50,6 +50,7 @@ void ArchivoDeBuckets::guardarBukcetEnBloque(int nrr){
 	int numeroDeBloque = obtenerNumeroDeBucket(nrr);
 
 	this->archivo->guardarBloque(nrr,bucketSerializado);
+	cout << "** Se ALMACENA EN DISCO el bucket: "<< numeroDeBloque << endl;
 	delete[] bucketSerializado;
 
 	delete stringBucket;
@@ -97,6 +98,8 @@ Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 				if (this->bucketSerializado != NULL)
 					delete bucketSerializado;
 				bucketSerializado = new string(stream.str().substr(STATUS_SIZE,dimensionBucket-STATUS_SIZE));
+
+				cout << "**Se OBTUVO DE DISCO el bucket: " << numeroDeBucket << endl;
 
 			}else{
 				resultado = bucketLibre;

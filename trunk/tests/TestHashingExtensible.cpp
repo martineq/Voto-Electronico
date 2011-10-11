@@ -31,7 +31,6 @@ void TestHashingExtensible::testAgregarRegistros(){
 	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDeArchivo,dimensionBucket);
 	HashingExtensible* he = new HashingExtensible(archivo);
 
-	//string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Washington DC","Edinburgo","Amsterdam","Roma","Madrid","Brasilia","Mexico DF","Santiago de Compostela","Atenas","San Francisco","Cupertino","San Diego","Las Vegas","Mendoza","Corrientes","San Fernando del Valle de Catamarca","San Martin de los Andes","Valeria del Mar","Resistencia","San Salvador de Jujuy"};
 	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Washington DC","Edinburgo","Amsterdam","Madrid","Brasilia","Mexico DF","Santiago de Compostela","Atenas","San Francisco","Cupertino","San Diego","Las Vegas","Mendoza","Corrientes","San Fernando del Valle de Catamarca","San Martin de los Andes","Valeria del Mar","Resistencia","San Salvador de Jujuy"};
 	for( int i=0;i < 26 ; i++ ){
 		Distrito* distrito = new Distrito(distritos[i]);
@@ -82,6 +81,35 @@ void TestHashingExtensible::testAgregarRegistros(){
 		cout << "Distrito: " << distrito->getDistrito() << endl;
 		delete registroNuevo;
 	}
+
+	cout << endl << endl << "Prueba obtener distrito: San Fernando del Valle de Catamarca" << endl;
+	registroNuevo = he->obtenerRegistro(35);
+	if ( registroNuevo != NULL ){
+		Distrito* distrito = (Distrito*)registroNuevo->getContenido();
+		cout << "Distrito: " << distrito->getDistrito() << endl;
+		delete registroNuevo;
+	}
+
+	cout << endl << endl << "Prueba obtener distrito: Amsterdam" << endl;
+	registroNuevo = he->obtenerRegistro(9);
+	if ( registroNuevo != NULL ){
+		Distrito* distrito = (Distrito*)registroNuevo->getContenido();
+		cout << "Distrito: " << distrito->getDistrito() << endl;
+		delete registroNuevo;
+	}
+	cout << "Este el caso de la clave duplicada, busca por clave y es Marseille y no Amsterdam la almacenada." << endl;
+
+
+	cout << endl << endl << "Prueba obtener distrito: Roma" << endl;
+	registroNuevo = he->obtenerRegistro(4);
+	if ( registroNuevo != NULL ){
+		Distrito* distrito = (Distrito*)registroNuevo->getContenido();
+		cout << "Distrito: " << distrito->getDistrito() << endl;
+		delete registroNuevo;
+	}else{
+		cout << "Este distrito no fue agregado, por lo que no debe encontrarse." << endl;
+	}
+
 
 	delete archivo;
 	delete he;

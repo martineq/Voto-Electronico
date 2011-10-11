@@ -38,6 +38,9 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 	// Se agrega un nuevo numeroDeBucket en la posicion actual
 	nuevoNumeroDeBucket = this->tablaDeDispersion.size();
 
+	// Se imprime la tabla de hash
+	imprimirTablaDeDispersion();
+
 	// Determina cuantas posiciones en la tabla de Hash serán reemplazadas
 	int posicionesAreemplazar = numeroPosicionesAreemplazar(numeroDeBucket);
 
@@ -59,6 +62,9 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		// Se calculan los nuevos tamaños de dispersion, del bucket a redispersar y del nuevo bucket.
 		dispersionBucketActualizado = 2 * tablaDeDispersion[numeroDeBucket];
 		dispersionNuevoBucket 		 = dispersionBucketActualizado;
+
+		// Se calcula la dispersión de nuevo bucket
+		this->tablaDeDispersion.push_back(dispersionNuevoBucket);
 
 		// Actualiza la tabla de hash incoorporando el valor del nuevo bloque.
 		while (posicionesAreemplazar > 0){
@@ -234,6 +240,9 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 		}
 
 		registroAgregado = bucket->agregarRegistro(registro);
+
+		// Se imprime la tabla de hash
+		imprimirTablaDeDispersion();
 
 		if (registroAgregado){
 			if ( this->archivo->modificarBucket(numeroDeBucket,bucket) == operacionOK)
