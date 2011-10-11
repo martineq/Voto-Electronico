@@ -13,8 +13,12 @@ private:
 	Bucket* crearBucket4();
 	Bucket* crearBucket5();
 	void mostrarBucket(ArchivoDeBuckets* archivo,int numeroDeBucket);
+	void testAgregarDistrito(Bucket* bucket,string lugar);
 public:
 	TestArchivoDeBuckets();
+	void testAgotamiento();
+	void testObtenerBucketFallas();
+	void testAccesoADisco();
 	void testAltaBajaDeBucketsEnArchivoDeBuckets();
 	~TestArchivoDeBuckets();
 };
