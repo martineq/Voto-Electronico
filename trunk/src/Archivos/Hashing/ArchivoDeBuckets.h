@@ -68,6 +68,8 @@ public:
 
 	/*
 	 * Devuelve el numero de bucket solicitado, si no lo encuentra devuelve NULL.
+	 * El elemento es una copia del bucket almacenado por lo que debe ser liberado,
+	 * luego de ser utilizado.
 	 */
 	Bucket* obtenerBucket(int numeroDeBucket);
 

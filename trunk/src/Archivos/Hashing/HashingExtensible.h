@@ -30,31 +30,41 @@ private:
 	vector<int> 		tablaDeDispersion;
 
 	/*
+	 * Se imprime por pantalla la tabla de dispersion.
+	 */
+	void imprimirTablaDeDispersion();
+
+	/*
+	 * Se imprime por pantalla la tabla de hash.
+	 */
+	void imprimirTablaDeHash();
+
+	/*
 	 * Aplica la función de hash y devuelve la posicion en la tabla de Hash.
 	 */
-	int obtenerPosicion(int clave);
+	unsigned int obtenerPosicion(unsigned int clave);
 
 	/*
 	 * Devuelve cuantas posiciones de la tabla de hash serán reemplazadas basándose
 	 * en la dispersión del bloque que se encuentra en <posicion> de la tabla.
 	 */
-	int numeroPosicionesAreemplazar(int posicion);
+	unsigned int numeroPosicionesAreemplazar(unsigned int posicion);
 
 	/*
 	 * Obtiene uno a uno los elementos del bucket y los vuelve a agregar en el archivo.
 	 */
-	void redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash);
+	Resultados redispersarBucket(Bucket* bucket,int numeroDeBucket,int posicionEnTablaDeHash);
 
 	/*
 	 * Evalua si puede liberar el bucket. Si se dan las condiciones, lo libera.
 	 */
-	void liberarBucket(int numeroDeBucket);
+	Resultados liberarBucket(unsigned int numeroDeBucket);
 
 	/*
 	 * Reduce la tabla de hash si al dividir en dos la tabla, las dos mitades resultan
 	 * iguales, e informa si se realizó o no la operación.
 	 */
-	bool reducirTablaDeHash();
+	Resultados reducirTablaDeHash();
 
 	/*
 	 * 	Se duplica un bucket.
@@ -70,24 +80,28 @@ public:
 
 	/*
 	 * Agrega el registro al bucket determinado por la clave que contiene.
+	 * Realiza verificacionde unicidad de clave.
+	 * Devuelve claveRepetida si existe un registro con esa clave u operacionOK.
 	 */
-	void agregarRegistro(Registro* registro);
+	Resultados agregarRegistro(Registro* registro);
 
 	/*
 	 * Modifica el registro al bucket determinado por la clave que contiene.
 	 */
-	void modificarRegistro(Registro* registro);
+	Resultados modificarRegistro(Registro* registro);
 
 	/*
 	 * Elimina el registro luego de buscarlo por la clave y libera el bucket
 	 * que lo contiene de ser posible.
 	 */
-	int eliminarRegistro(int clave);
+	Resultados eliminarRegistro(unsigned int clave);
 
 	/*
 	 *	Devuelve el registro a partir de la clave introducida.
+	 *	Registro* es una nueva instancia por lo que debe ser eliminada tras ser
+	 *	utilizada.
 	 */
-	Registro* obtenerRegistro(int clave);
+	Registro* obtenerRegistro(unsigned int clave);
 
 	/*
 	 * Elimina la instancia de memoria.

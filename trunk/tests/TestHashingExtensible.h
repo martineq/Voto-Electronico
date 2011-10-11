@@ -14,6 +14,7 @@ private:
 public:
 	TestHashingExtensible();
 	void testAgregarRegistros();
+	void testObtenerRegistro();
 	virtual ~TestHashingExtensible();
 };
 
