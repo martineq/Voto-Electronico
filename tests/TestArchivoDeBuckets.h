@@ -16,6 +16,7 @@ private:
 	void testAgregarDistrito(Bucket* bucket,string lugar);
 public:
 	TestArchivoDeBuckets();
+	void testLecturaEscrituraDeBuckets();
 	void testAgotamiento();
 	void testObtenerBucketFallas();
 	void testAccesoADisco();

@@ -79,6 +79,10 @@ Bucket* TestArchivoDeBuckets::crearBucket5(){
 void TestArchivoDeBuckets::mostrarBucket(ArchivoDeBuckets* archivo,int numeroDeBucket){
 	Bucket* bucketNuevo = archivo->obtenerBucket(numeroDeBucket);
 
+	string* serializacion = bucketNuevo->serializar();
+	cout << "bucketSerializado "<< serializacion->size() << endl;
+	delete serializacion;
+
 	int cantRegistros = bucketNuevo->getCantidadDeRegistros();
 
 	list<Registro*>::iterator it = bucketNuevo->ubicarPrimero();
@@ -391,6 +395,70 @@ void TestArchivoDeBuckets::testAgotamiento(){
 	Registro* reg = *it;
 	Distrito* dis = (Distrito*)reg->getContenido();
 	cout << "distrito: " << dis->getDistrito() << endl;
+	delete archivo;
+}
+
+void TestArchivoDeBuckets::testLecturaEscrituraDeBuckets(){
+	char nombreDelArchivo[]= "Archivo.bin";
+	remove(nombreDelArchivo);
+	int numero = LONGITUD_BLOQUE_PRUEBA;
+
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDelArchivo,numero);
+
+	Distrito* distrito = new Distrito("Buenos Aires");
+	string* serializacion = distrito->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	Registro* registro = new Registro(distrito);
+	serializacion = registro->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	delete distrito;
+
+	Bucket* bucket = new Bucket(0,numero);
+	serializacion = bucket->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	bucket->agregarRegistro(registro);
+	serializacion = bucket->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	delete registro;
+
+	int numeroDeBucket1 = archivo->guardarBucket(bucket);
+	delete bucket;
+
+	bucket = archivo->obtenerBucket(numeroDeBucket1);
+
+	distrito = new Distrito("Puerto Esperanza");
+	serializacion = distrito->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	registro = new Registro(distrito);
+	serializacion = registro->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	delete distrito;
+
+	bucket->agregarRegistro(registro);
+	serializacion = bucket->serializar();
+	cout << "longitud: "<< serializacion->size() << endl;
+	delete serializacion;
+
+	delete registro;
+
+	numeroDeBucket1 = archivo->guardarBucket(bucket);
+	delete bucket;
+
+	cout << "Se muesta el bucket de la posicion: " << numeroDeBucket1 << endl;
+	this->mostrarBucket(archivo,numeroDeBucket1);
+
 	delete archivo;
 }
 TestArchivoDeBuckets::~TestArchivoDeBuckets()

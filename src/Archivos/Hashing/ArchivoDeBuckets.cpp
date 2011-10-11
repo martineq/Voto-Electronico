@@ -48,12 +48,10 @@ void ArchivoDeBuckets::guardarBukcetEnBloque(int nrr){
 
 	cout << "bucketSerializado: (size = " << stringBucket->size()+4 << " ) "<< endl;
 	int numeroDeBloque = obtenerNumeroDeBucket(nrr);
-	cout << "** Almacenado en numero de bloque: " << numeroDeBloque << endl << endl;
 
 	this->archivo->guardarBloque(nrr,bucketSerializado);
 	delete[] bucketSerializado;
 
-	cout << "Se guardo el bucket: " << *stringBucket << endl;
 	delete stringBucket;
 }
 
@@ -81,7 +79,7 @@ Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 
 	if ( numeroDeBucket <= bucketsAlmacenados and numeroDeBucket >= 0){
 
-		if ( this->numeroUltimoBucket != numeroDeBucket){
+		if ( numeroUltimoBucket != numeroDeBucket){
 
 			int nrr = this->obtenerNumeroDeBloque(numeroDeBucket);
 			char* bucketEnDisco = new char[this->dimensionBucket];
@@ -98,7 +96,7 @@ Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 
 				if (this->bucketSerializado != NULL)
 					delete bucketSerializado;
-				bucketSerializado = new string(stream.str().substr(0,dimensionBucket-STATUS_SIZE));
+				bucketSerializado = new string(stream.str().substr(STATUS_SIZE,dimensionBucket-STATUS_SIZE));
 
 			}else{
 				resultado = bucketLibre;
@@ -115,6 +113,8 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 	Bucket* bucket = NULL;
 
 		if ( bucketDisponible(numeroDeBucket) == bucketOcupado ){
+
+			cout << "Bucket Accedido: "<< numeroDeBucket << " ultimo accedido:" << numeroUltimoBucket << endl;
 
 			if ( numeroDeBucket != numeroUltimoBucket ){
 

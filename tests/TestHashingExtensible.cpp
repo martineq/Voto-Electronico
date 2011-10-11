@@ -31,13 +31,17 @@ void TestHashingExtensible::testAgregarRegistros(){
 	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDeArchivo,dimensionBucket);
 	HashingExtensible* he = new HashingExtensible(archivo);
 
-	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Roma"};
-	for( int i=0;i < 8 ; i++ ){
+	//string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Washington DC","Edinburgo","Amsterdam","Roma","Madrid","Brasilia","Mexico DF","Santiago de Compostela","Atenas","San Francisco","Cupertino","San Diego","Las Vegas","Mendoza","Corrientes","San Fernando del Valle de Catamarca","San Martin de los Andes","Valeria del Mar","Resistencia","San Salvador de Jujuy"};
+	string distritos[] = {"Buenos Aires","Puerto Esperanza","Montecarlo","Eldorado","Pekin","Santiago del Estero","Marseille","Washington DC","Edinburgo","Amsterdam","Madrid","Brasilia","Mexico DF","Santiago de Compostela","Atenas","San Francisco","Cupertino","San Diego","Las Vegas","Mendoza","Corrientes","San Fernando del Valle de Catamarca","San Martin de los Andes","Valeria del Mar","Resistencia","San Salvador de Jujuy"};
+	for( int i=0;i < 26 ; i++ ){
 		Distrito* distrito = new Distrito(distritos[i]);
 		Registro* registro = new Registro(distrito);
 
 		cout << endl << "** Se intenta agregar "<< distrito->getDistrito() <<" al hashing" << endl;
-		he->agregarRegistro(registro);
+		if ( he->agregarRegistro(registro) == operacionOK )
+			cout << "OPERACION EXITOSA" << endl;
+		else
+			cout << "OPERACION FALLO" << endl;
 
 		delete distrito;
 		delete registro;
@@ -78,6 +82,26 @@ void TestHashingExtensible::testAgregarRegistros(){
 		cout << "Distrito: " << distrito->getDistrito() << endl;
 		delete registroNuevo;
 	}
+
+	delete archivo;
+	delete he;
+}
+
+void TestHashingExtensible::testObtenerRegistro()
+{
+	int dimensionBucket = 128;
+	char nombreDeArchivo[] = "he.bin";
+	remove(nombreDeArchivo);
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDeArchivo,dimensionBucket);
+	HashingExtensible* he = new HashingExtensible(archivo);
+
+	cout << "Prueba 1 - ";
+	if ( he->obtenerRegistro(12) == NULL )
+	cout << " OK " <<endl; else cout << " ERROR "<<endl;
+
+	cout << "Prueba 2 - ";
+	if ( he->obtenerRegistro(-12) == NULL )
+	cout << " OK " <<endl; else cout << " ERROR "<<endl;
 
 	delete archivo;
 	delete he;
