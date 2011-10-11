@@ -50,6 +50,7 @@ int  Votante::getTamanio(){
 	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
 	while (it != this->listaDeEleccionesAnteriores->end()){
 		tamanioEleccionesAnteriores += (*it)->getTamanio();
+		it++;
 	}
 
 	return (tamanioDni + tamanioNombre + tamanioNombre + tamanioPassword + tamanioDomicilio +
@@ -230,6 +231,7 @@ Entidad *Votante::duplicar()
 	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
 	while (it != this->listaDeEleccionesAnteriores->end()){
 		copia->agregarEleccion((*it)->getFecha(),(*it)->getCargo());
+		it++;
 	}
 	return copia;
 }
