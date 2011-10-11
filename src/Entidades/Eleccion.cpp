@@ -19,19 +19,27 @@ Eleccion::Eleccion(string fecha,string cargoPrincipal){
 }
 
 int Eleccion::getTamanio(){
-	int tamanioFecha = this->fecha.size(); //por default es 8
+	int tamanioFecha = TAM_FECHA; //por default es 8
 	int tamanioCargoPrincipal = TAM_INT + this->cargoPrincipal.size();
 	int tamanioListaDistritos = TAM_INT; // este tam_int es la cantidad de distritos
 	list<Distrito>::iterator it = this->distritos.begin();
 	while (it != this->distritos.end()){
-		tamanioListaDistritos = it->getTamanio();
+		tamanioListaDistritos += (TAM_INT +  it->getTamanio());
+		it++;
 		it++;
 	}
 	return (tamanioFecha + tamanioCargoPrincipal + tamanioListaDistritos);
 }
 
 int Eleccion::getClave(){
-	return 0;
+	int c = 0;
+	for (int i=0; i<this->fecha.length(); i++) {
+		c += (int)this->fecha[i];
+	}
+	for (int i=0; i<this->cargoPrincipal.length(); i++) {
+		c += (int)this->cargoPrincipal[i];
+	}
+	return c;
 }
 
 string Eleccion::getFecha(){
@@ -50,19 +58,17 @@ void Eleccion::setCargo(string cargoPrincipal){
 	this->cargoPrincipal = cargoPrincipal;
 }
 
-bool Eleccion::agregarDistrito(Distrito distrito){
-	bool encontrado = false;
+bool Eleccion::agregarDistrito(string nombre){
+	Distrito unDistrito (nombre);
 	list<Distrito>::iterator iterador = this->distritos.begin();
-	while (iterador != this->distritos.end() and (!encontrado)){
-		if ((iterador->getDistrito()).compare(distrito.getDistrito()) == 0){
-			encontrado = true;
+	while (iterador != this->distritos.end()){
+		if ((iterador->getDistrito()).compare(unDistrito.getDistrito()) == 0){
+			return false;
 		}
 		iterador++;
 	}
-	if (!encontrado){
-		this->distritos.push_back(distrito);
-	}
-	return (!encontrado); //devuelve el resultado de la inserción
+	this->distritos.push_back(unDistrito);
+	return true; //devuelve el resultado de la inserción
 }
 
 bool Eleccion::eliminarDistrito(Distrito distrito){
@@ -95,7 +101,7 @@ Entidad *Eleccion::duplicar()
 	copia->fecha = this->fecha;
 	list<Distrito>::iterator it = this->distritos.begin();
 	while (it != this->distritos.end()){
-		copia->agregarDistrito(*it);
+		copia->agregarDistrito(it->getDistrito());
 		it++;
 	}
 	return copia;
@@ -115,11 +121,14 @@ string* Eleccion::serializar() {
 	buffer.write((char*)this->cargoPrincipal.c_str(),cantidadDeBytes);
 	int tamanioDeListaDeDistritos = this->distritos.size();
 	buffer.write((char*)&tamanioDeListaDeDistritos,TAM_INT);
+
 	list<Distrito>::iterator it = this->distritos.begin();
 	for (int i=0; i<tamanioDeListaDeDistritos; i++) {
-		cantidadDeBytes = ((*it).getDistrito()).size();
+		cantidadDeBytes = (*it).getTamanio();
 		buffer.write((char*)&cantidadDeBytes,TAM_INT);
-		buffer.write((char*)((*it).getDistrito()).c_str(),cantidadDeBytes);
+		string* distritoSerializado = (*it).serializar();
+		buffer.write((char*)distritoSerializado->c_str(),cantidadDeBytes);
+		delete distritoSerializado;
 		it++;
 	}
 	string* datos = new string(buffer.str());
@@ -151,19 +160,10 @@ void Eleccion::deserializar(string* source) {
     	tamanio = tamanioDelDistrito.get();
     	posicion += TAM_INT;
     	stringstream unDistrito (source->substr(posicion,posicion+tamanio-1));
-    	Distrito distrito (unDistrito.str());
+    	Distrito distrito;
+    	distrito.deserializar(&unDistrito.str());
     	this->distritos.push_back(distrito);
     	posicion += tamanio;
-
-//    	stringstream* bufferAuxiliar = new stringstream;
-//    	buffer.read((char*)&cantidadDeBytes,TAM_INT);
-//    	char* distritoSerializado = new char[cantidadDeBytes];
-//    	buffer.read(distritoSerializado,cantidadDeBytes);
-//    	bufferAuxiliar->write(distritoSerializado,cantidadDeBytes);
-//    	Distrito unDistrito(bufferAuxiliar->str());
-//    	this->distritos.push_back(unDistrito);
-//    	delete bufferAuxiliar;
-//    	delete []distritoSerializado;
     }
 }
 

@@ -34,7 +34,17 @@ int Lista::getTamanio(){
 }
 
 int Lista::getClave(){
-	return 0;
+	int c = 0;
+	for (int i=0; i<this->fecha.length(); i++) {
+		c += (int)this->fecha[i];
+	}
+	for (int i=0; i<this->cargo.length(); i++) {
+		c += (int)this->cargo[i];
+	}
+	for (int i=0; i<this->nombre.length(); i++) {
+		c += (int)this->nombre[i];
+	}
+	return c;
 }
 
 string Lista::getCargo () {

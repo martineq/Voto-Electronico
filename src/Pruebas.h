@@ -32,6 +32,18 @@ private:
 	Distrito* distrito2;
 	Distrito* distrito3;
 	Distrito* distrito4;
+	Eleccion* eleccion1;
+	Eleccion* eleccion2;
+	Eleccion* eleccion3;
+	Eleccion* eleccion4;
+	Candidato* candidato1;
+	Candidato* candidato2;
+	Candidato* candidato3;
+	Candidato* candidato4;
+	Lista* lista1;
+	Lista* lista2;
+	Lista* lista3;
+	Lista* lista4;
 	Registro* registroVotante1;
 	Registro* registroVotante2;
 	Registro* registroVotante3;
@@ -40,6 +52,18 @@ private:
 	Registro* registroDistrito2;
 	Registro* registroDistrito3;
 	Registro* registroDistrito4;
+	Registro* registroEleccion1;
+	Registro* registroEleccion2;
+	Registro* registroEleccion3;
+	Registro* registroEleccion4;
+	Registro* registroCandidato1;
+	Registro* registroCandidato2;
+	Registro* registroCandidato3;
+	Registro* registroCandidato4;
+	Registro* registroLista1;
+	Registro* registroLista2;
+	Registro* registroLista3;
+	Registro* registroLista4;
 	Bucket* bucketVotante;
 	Bucket* bucketDistrito;
 	Bucket* bucketEleccion;
@@ -49,10 +73,16 @@ private:
 	Bucket* bucketConteo;
 	void iniciarRegistrosDePrueba();
 	void iniciarRegistrosDistrito();
-	void inciarVotantesParaIntegracion();
+	void iniciarEleccionesParaIntegracion();
+	void iniciarVotantesParaIntegracion();
 	void iniciarDistritosParaIntegracion();
+	void iniciarCandidatosParaIntegracion();
+	void iniciarListasParaIntegracion();
 	void verContenidoBucketDistrito(Bucket*);
 	void verContenidoBucketVotante(Bucket*);
+	void verContenidoBucketEleccion(Bucket*);
+	void verContenidoBucketCandidato(Bucket*);
+	void verContenidoBucketLista(Bucket*);
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques

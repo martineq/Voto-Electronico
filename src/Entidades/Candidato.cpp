@@ -103,13 +103,23 @@ void Candidato::verCandidato() {
 int Candidato::getTamanio(){
 	int tamanioCargo = TAM_INT + this->cargo.size();
 	int tamanioDni = TAM_INT;
-	int tamanioFecha = this->fecha.size(); //por definición siempre va a ser 8
+	int tamanioFecha = TAM_FECHA;
 	int tamanioNombre = TAM_INT + this->nombre.size();
 	return (tamanioCargo + tamanioDni + tamanioFecha + tamanioNombre);
 }
 
 int Candidato::getClave(){
-	return 0;
+	int c = 0;
+	for (int i=0; i<this->fecha.length(); i++) {
+		c += (int)this->fecha[i];
+	}
+	for (int i=0; i<this->cargo.length(); i++) {
+		c += (int)this->cargo[i];
+	}
+	for (int i=0; i<this->nombre.length(); i++) {
+		c += (int)this->nombre[i];
+	}
+	return c;
 }
 
 Entidad *Candidato::duplicar()

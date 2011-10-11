@@ -41,7 +41,7 @@ public:
 
 	void setCargo(string cargoPrincipal);
 
-	bool agregarDistrito(Distrito distrito);
+	bool agregarDistrito(string);
 
 	bool eliminarDistrito(Distrito distrito);
 
