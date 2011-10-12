@@ -59,9 +59,16 @@ int main(int argc,char* argv[]) {
 //	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
 
 //	Pruebas de Hashing!
-	TestHashingExtensible the;
+//	TestHashingExtensible the;
+//	the.testAgregarRegistros();
 //	the.testObtenerRegistro();
-	the.testAgregarRegistros();
+//	the.testEliminarRegistro();
+//	the.testEliminarRegistrosReduciendoTablaDehash();
+//	the.testEliminarRegistrosYBucketSinReducirTabladeHash();
+//	the.testModificarRegistroInexistente();
+//	the.testModificarRegistroExistente();
+//	the.testModificarRegistroConRedispersion();
+
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
