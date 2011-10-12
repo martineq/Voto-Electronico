@@ -48,6 +48,10 @@ string Conteo::getLista(){
 	return this->nombreLista;
 }
 
+string Conteo::getDistrito(){
+	return this->distrito;
+}
+
 unsigned int Conteo::getCantidadVotos(){
 	return this->cantidadVotos;
 }
@@ -124,6 +128,7 @@ void Conteo::deserializar(string* source){
     //Deserializado distrito
 	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
     char* distritoChar = new char[cantidadDeBytes];
+    miString = new stringstream();
     streamDatos.read((char*)distritoChar,cantidadDeBytes);
     miString->write(distritoChar,cantidadDeBytes);
     string distritoString = miString->str();
@@ -134,6 +139,8 @@ void Conteo::deserializar(string* source){
     //Deserializado fecha elección
     cantidadDeBytes = TAM_FECHA;
     char* fechaChar = new char[cantidadDeBytes];
+    miString = new stringstream();
+    streamDatos.read((char*)fechaChar,cantidadDeBytes);
     miString->write(fechaChar,cantidadDeBytes);
     string fechaString = miString->str();
     this->fechaEleccion = fechaString;
@@ -143,17 +150,25 @@ void Conteo::deserializar(string* source){
     //Deserializado nombre lista
 	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
     char* listaChar = new char[cantidadDeBytes];
+    miString = new stringstream();
     streamDatos.read((char*)listaChar,cantidadDeBytes);
     miString->write(listaChar,cantidadDeBytes);
     string listaString = miString->str();
     this->nombreLista = listaString;
     delete []listaChar;
     delete miString;
-
 }
 
 NombreDeEntidad Conteo::getNombreDeEntidad(){
 	return tConteo;
+}
+
+void Conteo::imprimirConteo(){
+	cout <<"Fecha de la elección: "<<this->fechaEleccion<<endl;
+	cout <<"Cargo a votar: " << this->cargoEleccion<<endl;
+	cout <<"Nombre de la lista: "<<this->nombreLista<<endl;
+	cout <<"Distrito: "<<this->distrito<<endl;
+	cout <<"Votos conseguidos: "<<this->cantidadVotos<<endl<<endl;
 }
 
 

@@ -11,6 +11,7 @@
 #define CONTEO_H_
 
 #include "Entidad.h"
+#include <iostream>
 
 using namespace std;
 
@@ -36,6 +37,8 @@ public:
 
 	string getLista();
 
+	string getDistrito();
+
 	unsigned int getCantidadVotos();
 
 	void incrementarVotos();
@@ -51,6 +54,8 @@ public:
 	void deserializar(string*);
 
 	NombreDeEntidad getNombreDeEntidad();
+
+	void imprimirConteo();
 
 	virtual ~Conteo();
 };
