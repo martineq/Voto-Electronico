@@ -99,6 +99,12 @@ public:
 	Resultados eliminarArchivoDeBuckets();
 
 	/*
+	 * Muestra el contenido de los buckets almacenados.
+	 */
+	void mostrarBuckets();
+
+
+	/*
 	 *	Cierra el archivo de buckets.
 	 */
 	~ArchivoDeBuckets();

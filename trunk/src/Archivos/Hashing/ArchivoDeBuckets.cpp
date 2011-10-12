@@ -23,7 +23,7 @@ char* ArchivoDeBuckets::stringToChar(std::string* cadena){
 
 	stringstream stream;
 
-	int valido = bucketOcupado;
+	int valido = bucketEnUso;
 	stream.write((char*)&valido,STATUS_SIZE);
 	stream.write(cadena->c_str(),cadena->size());
 
@@ -58,6 +58,36 @@ void ArchivoDeBuckets::guardarBukcetEnBloque(int nrr){
 
 /*** METODOS PUBLICOS *********************************************************/
 
+void ArchivoDeBuckets::mostrarBuckets(){
+	int numeroDeBucket = 0;
+	Bucket* bucket;
+
+
+	while ( bucketNoDisponible != bucketDisponible(numeroDeBucket) ){
+
+		bucket = this->obtenerBucket(numeroDeBucket);
+		if (bucket != NULL){
+
+			list<Registro*>::iterator it = bucket->ubicarPrimero();
+			int cantidad = bucket->getCantidadDeRegistros();
+			cout << endl << "Bucket "<<numeroDeBucket << " (disp = ";
+			cout << bucket->getTamanioDeDispersion() <<") : ";
+			for(int i = 0; i < cantidad ; i++ ){
+				Entidad* e = ((Registro*)*it)->getContenido();
+				cout <<" "<< e->getClave();
+				delete e;
+				it++;
+			}
+			cout << endl;
+			numeroDeBucket++;
+			delete bucket;
+
+		}else
+			cout << endl << "Bucket liberado " << endl;
+
+	}
+}
+
 ArchivoDeBuckets::ArchivoDeBuckets(char* path, int tamanioBucket){
 
 	// Agrego 1byte más para manejar el estado del bucket.
@@ -76,7 +106,7 @@ ArchivoDeBuckets::ArchivoDeBuckets(char* path, int tamanioBucket){
 
 Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 {
-	Resultados resultado = bucketOcupado;
+	Resultados resultado = bucketEnUso;
 
 	if ( numeroDeBucket <= bucketsAlmacenados and numeroDeBucket >= 0){
 
@@ -93,7 +123,7 @@ Resultados ArchivoDeBuckets::bucketDisponible(int numeroDeBucket)
 			int numero;
 			stream.read((char*)&numero,STATUS_SIZE);
 
-			if (bucketOcupado == numero){
+			if (bucketEnUso == numero){
 
 				if (this->bucketSerializado != NULL)
 					delete bucketSerializado;
@@ -115,7 +145,7 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
 	Bucket* bucket = NULL;
 
-		if ( bucketDisponible(numeroDeBucket) == bucketOcupado ){
+		if ( bucketDisponible(numeroDeBucket) == bucketEnUso ){
 
 			cout << "Bucket Accedido: "<< numeroDeBucket << " ultimo accedido:" << numeroUltimoBucket << endl;
 
@@ -124,6 +154,7 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 				Bucket* nuevoBucket = new Bucket(0,dimensionBucket);
 				nuevoBucket->deserializar(bucketSerializado);
 				modificarBucketInterno(nuevoBucket,numeroDeBucket);
+				delete nuevoBucket;
 			}
 
 			bucket = duplicarBucket(ultimoBucket);
@@ -136,7 +167,7 @@ Resultados ArchivoDeBuckets::liberarBucket(int numeroDeBucket){
 
 	Resultados resultado = bucketDisponible(numeroDeBucket);
 
-	if ( resultado == bucketOcupado ){
+	if ( resultado == bucketEnUso ){
 
 		if ( ultimoBucket != NULL )
 			delete ultimoBucket;
@@ -181,7 +212,7 @@ Resultados ArchivoDeBuckets::modificarBucket(int numeroDeBucket,Bucket* bucket){
 	}else{
 		resultado = bucketDisponible(numeroDeBucket);
 
-		if (resultado == bucketOcupado){
+		if (resultado == bucketEnUso){
 
 			modificarBucketInterno(bucket,numeroDeBucket);
 

@@ -30,6 +30,11 @@ private:
 	vector<int> 		tablaDeDispersion;
 
 	/*
+	 * Lista de buckets libres.
+	 */
+	list<int> 			listaDeBucketsLibres;
+
+	/*
 	 * Se imprime por pantalla la tabla de dispersion.
 	 */
 	void imprimirTablaDeDispersion();
@@ -80,13 +85,17 @@ public:
 
 	/*
 	 * Agrega el registro al bucket determinado por la clave que contiene.
-	 * Realiza verificacionde unicidad de clave.
+	 * Realiza verificacion de unicidad de clave.
 	 * Devuelve claveRepetida si existe un registro con esa clave u operacionOK.
 	 */
 	Resultados agregarRegistro(Registro* registro);
 
 	/*
 	 * Modifica el registro al bucket determinado por la clave que contiene.
+	 * Si el registro no se encuentra en el archivo de hashing devuelve el
+	 * resultado "registroInexistente".
+	 * Si el registro si se encuentra en el archivo de hashing puede devolver
+	 * operacionOK u operacionFALLO.
 	 */
 	Resultados modificarRegistro(Registro* registro);
 
@@ -104,9 +113,13 @@ public:
 	Registro* obtenerRegistro(unsigned int clave);
 
 	/*
+	 * Muestra el contenido del archivo de hashing.
+	 */
+	void mostrarArchivoDeHash();
+
+	/*
 	 * Elimina la instancia de memoria.
 	 */
-
 	virtual ~HashingExtensible();
 };
 
