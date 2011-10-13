@@ -48,9 +48,6 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		usandoBucketLibre = true;
 	}
 
-	// Se imprime la tabla de hash
-	imprimirTablaDeDispersion();
-
 	// Determina cuantas posiciones en la tabla de Hash serán reemplazadas
 	int posicionesAreemplazar = numeroPosicionesAreemplazar(numeroDeBucket);
 
@@ -85,9 +82,14 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		// Actualiza la tabla de hash incoorporando el valor del nuevo bloque.
 		while (posicionesAreemplazar > 0){
 			posicionesAreemplazar--;
-			this->tablaDeHash[posicionEnTablaDeHash+posicionesAreemplazar*dispersionNuevoBucket] = nuevoNumeroDeBucket;
+			int posicion = (posicionEnTablaDeHash+posicionesAreemplazar*dispersionNuevoBucket);
+			posicion = posicion % tablaDeHash.size();
+			tablaDeHash[posicion] = nuevoNumeroDeBucket;
 		}
 	}
+
+	// Se imprime la tabla de hash para reflejar los cambios.
+	imprimirTablaDeHash();
 
 	// Se actualiza la dispersion del bucket a redispersar.
 	this->tablaDeDispersion[numeroDeBucket] = dispersionBucketActualizado;
@@ -95,7 +97,6 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 #warning "esto fue calculado anteriormente"
 	// Se agrega la dispersión del nuevo bloque
 //	this->tablaDeDispersion.push_back(dispersionNuevoBucket);
-
 
 	// Se crea el nuevo Bucket.
 	nuevoBucket = new Bucket(dispersionNuevoBucket,archivo->getDimensionDelBucket());
@@ -105,25 +106,23 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 	else
 		posBloque = this->archivo->guardarBucket(nuevoBucket);
 
-	cout << "Se almacena un nuevo bloque para almacenar los desbordes en bloque: " << posBloque << endl;
-	cout << "tamaño de dispersion: " << nuevoBucket->getTamanioDeDispersion() << endl;
-	cout << "espacio libre: " << nuevoBucket->getEspacioLibre() << endl;
+	cout << "Se crea un nuevo bucket#: " << posBloque << endl;
+	cout << "dispersion: " << nuevoBucket->getTamanioDeDispersion() << endl;
 	delete nuevoBucket;
 
 	// Se crea un nuevo Bucket para redispersar los elementos.
 	bucketActualizado = new Bucket(dispersionBucketActualizado,archivo->getDimensionDelBucket());
 	this->archivo->modificarBucket(numeroDeBucket,bucketActualizado);
-	cout << "Se modifica el bloque " << numeroDeBucket << " para realizar la redispersion" << endl;
-	cout << "tamaño de dispersion: " << bucketActualizado->getTamanioDeDispersion() << endl;
-	cout << "espacio libre: " << bucketActualizado->getEspacioLibre() << endl;
+	cout << "Se modifica el bucket " << numeroDeBucket << " para realizar la redispersion" << endl;
+	cout << "dispersion: " << bucketActualizado->getTamanioDeDispersion() << endl;
 	delete bucketActualizado;
 
-	cout << "** Inicio de la redispersión" << endl << endl;
+	cout << endl << "** Inicio de la redispersión" << endl << endl;
 	int cantidadDeRegistros = bucket->getCantidadDeRegistros();
 	list<Registro*>::iterator iterador = bucket->ubicarPrimero();
 	for(int i = 0;i< cantidadDeRegistros;i++){
 
-		if ( agregarRegistro(*iterador) == operacionFALLO ){
+		if ( agregarRegistro(*iterador) != operacionOK ){
 			resultado = operacionFALLO;
 			cout << "OPERACION FALLO" << endl << endl;
 		}
@@ -246,9 +245,9 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 Resultados HashingExtensible::agregarRegistro(Registro* registro){
 
 	Resultados resultado = operacionOK;
-	int numeroDeBucket = -1;
 	Bucket* bucket = NULL;
 	bool registroAgregado;
+	int numeroDeBucket = -1;
 	int posicionEnTablaDeHash = -1;
 
 	//Obtener clave devuelve el resultado de aplicar la función de hashing sobre el registro.
@@ -271,7 +270,7 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 			// Si la tabla está vacía entonces tengo que crear un nuevo bucket
 			Bucket* nuevoBucket = new Bucket(0,archivo->getDimensionDelBucket());
 			numeroDeBucket = this->archivo->guardarBucket(nuevoBucket);
-			cout << " Se crea un nuevo bloque: " << numeroDeBucket << endl;
+			cout << "Se crea un nuevo bloque" << endl;
 
 			// Agrego el nuevo bucket en la lógica del hashing y le asigno su dispersión.
 			this->tablaDeHash.push_back(numeroDeBucket);
@@ -281,16 +280,15 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 			bucket->setTamanioDeDispersion(tablaDeDispersion.at(numeroDeBucket));
 		}
 
+		// Se intenta agregar el registro al bucket, si no se pude se redispersa.
 		registroAgregado = bucket->agregarRegistro(registro);
-
-		// Se imprime la tabla de hash
-		imprimirTablaDeDispersion();
 
 		if (registroAgregado){
 			if ( this->archivo->modificarBucket(numeroDeBucket,bucket) == operacionOK)
-				cout << "** Se almacena en numero de bloque: " << numeroDeBucket << endl;
+				cout << "Se almacena en bucket#: " << numeroDeBucket << endl;
 
 		}else{
+			cout << "No se puede agregar al bucket, inicio de redispersion." << endl << endl;
 			resultado = redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
 
 			// Reintento agregar el registro que generó la redispersion
@@ -395,14 +393,11 @@ Registro* HashingExtensible::obtenerRegistro(unsigned int clave){
 	// Obtengo el Bucket a partir de la clave.
 	unsigned int posicionEnTablaDeHash = obtenerPosicion(clave);
 
-	imprimirTablaDeHash();
-	cout << "posicion en Tabla de Hash: " << posicionEnTablaDeHash << endl;
-
 	if (posicionEnTablaDeHash < tablaDeHash.size()){
 
 		int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
-		Bucket* bucket = this->archivo->obtenerBucket(numeroDeBucket);
+		Bucket* bucket = archivo->obtenerBucket(numeroDeBucket);
 		if (bucket != NULL)
 			registro = bucket->getRegistro(clave);
 		else

@@ -10,11 +10,17 @@
 class TestHashingExtensible {
 private:
 	void verContenidoBucketDistrito(Bucket* bucket);
-
+	void cargarRegistros(HashingExtensible* he);
 public:
 	TestHashingExtensible();
 	void testAgregarRegistros();
 	void testObtenerRegistro();
+	void testEliminarRegistro();
+	void testEliminarRegistrosReduciendoTablaDehash();
+	void testEliminarRegistrosYBucketSinReducirTabladeHash();
+	void testModificarRegistroInexistente();
+	void testModificarRegistroExistente();
+	void testModificarRegistroConRedispersion();
 	virtual ~TestHashingExtensible();
 };
 
