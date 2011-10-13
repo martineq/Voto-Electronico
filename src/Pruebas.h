@@ -44,6 +44,8 @@ private:
 	Lista* lista2;
 	Lista* lista3;
 	Lista* lista4;
+	Cargo* cargo1;
+	Cargo* cargo2;
 	Registro* registroVotante1;
 	Registro* registroVotante2;
 	Registro* registroVotante3;
@@ -64,6 +66,8 @@ private:
 	Registro* registroLista2;
 	Registro* registroLista3;
 	Registro* registroLista4;
+	Registro* registroCargo1;
+	Registro* registroCargo2;
 	Bucket* bucketVotante;
 	Bucket* bucketDistrito;
 	Bucket* bucketEleccion;
@@ -78,11 +82,13 @@ private:
 	void iniciarDistritosParaIntegracion();
 	void iniciarCandidatosParaIntegracion();
 	void iniciarListasParaIntegracion();
+	void iniciarCargosParaIntegracion();
 	void verContenidoBucketDistrito(Bucket*);
 	void verContenidoBucketVotante(Bucket*);
 	void verContenidoBucketEleccion(Bucket*);
 	void verContenidoBucketCandidato(Bucket*);
 	void verContenidoBucketLista(Bucket*);
+	void verContenidoBucketCargo(Bucket*);
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
@@ -101,6 +107,9 @@ public:
 	void serializarDeserializarCandidato();
 	void serializarDeserializarEleccion();
 //	pruebas de integracion
+	void cargarBaseDeDatos(Administrador);
+	void inicioDeSimulacion(Administrador);
+	void destruir();
 	void pruebaDeSimulacionDePrograma ();
 //	pruebas para ver si anda el compilador
 	int holaMundo();

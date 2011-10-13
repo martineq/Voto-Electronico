@@ -10,8 +10,14 @@ Votante::Votante(int dni, string nombre, string password, string domicilio, stri
 	this->nombre=nombre;
 	this->password=password;
 	this->domicilio=domicilio;
-	this->distrito=distrito;
+	if (this->verificarDistrito(distrito)) this->distrito=distrito;
+	else cout << "EL VOTANTE NO PERTENECE A UN DISTRITO VALIDO" << endl;
 	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
+}
+
+bool Votante::verificarDistrito(string distrito) {
+	#warning "Debe buscarse si el distrito existe usando hashing"
+	return true;
 }
 
 Votante::~Votante() {
@@ -26,18 +32,32 @@ Votante::~Votante() {
 void Votante::setNombre (string nombre) {
 	this->nombre=nombre;
 }
+
 void Votante::setPassword (string password) {
 	this->password=password;
 }
+
 void Votante::setDomicilio (string domicilio) {
 	this->domicilio=domicilio;
 }
 void Votante::setDistrito (string distrito) {
 	this->distrito=distrito;
 }
-void Votante::agregarEleccion (string fecha, string cargo) {
+
+bool Votante::agregarEleccion (string fecha, string cargo) {
 	EleccionAnterior* unaEleccionAnterior = new EleccionAnterior (fecha,cargo);
+	list <EleccionAnterior*>::iterator it = listaDeEleccionesAnteriores->begin();
+	while (it!=listaDeEleccionesAnteriores->end()) {
+		EleccionAnterior* unaEleccionAnterior= new EleccionAnterior((*it)->getFecha(),(*it)->getCargo());
+		if ((unaEleccionAnterior->getFecha()==fecha)&&(unaEleccionAnterior->getCargo()==cargo)){
+			cout << "ERROR: EL VOTANTE YA PARTICIPO EN ESTA ELECCION" << endl;
+			return false;
+		}
+		delete unaEleccionAnterior;
+		it++;
+	}
 	listaDeEleccionesAnteriores->push_back(unaEleccionAnterior);
+	return true;
 }
 
 int  Votante::getTamanio(){

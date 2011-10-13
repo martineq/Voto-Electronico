@@ -124,7 +124,7 @@ Registro *Registro::duplicar(){
 
 Registro::~Registro()
 {
-	cout << "destruyo Registro" << endl;
+//	cout << "destruyo Registro" << endl;
 	delete(this->contenido);
 	this->contenido = NULL;
 }

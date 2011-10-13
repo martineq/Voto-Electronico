@@ -1,7 +1,6 @@
 #include "Pruebas.h"
 
 Pruebas::Pruebas() {
-
 }
 
 
@@ -11,6 +10,7 @@ Pruebas::~Pruebas() {
 	delete this->bucketEleccion;
 	delete this->bucketCandidato;
 	delete this->bucketLista;
+	delete this->bucketCargo;
 }
 
 void Pruebas::iniciarRegistrosDePrueba(){
@@ -619,7 +619,7 @@ void Pruebas::verContenidoBucketDistrito(Bucket* unBucket){
 	else{
 		cout << "Los registros cargados son:" << endl;
 		list<Registro*>::iterator it = unBucket->ubicarPrimero();
-		int n = bucketDistrito->getCantidadDeRegistros();
+		int n = unBucket->getCantidadDeRegistros();
 		cout <<"El valor de N es: " << n << endl;
 		for(int i = 0; i <n;i++ ){
 			Registro* unRegistro = *it;
@@ -682,7 +682,7 @@ void Pruebas::verContenidoBucketCandidato(Bucket* unBucket){
 	else{
 		cout << "Los registros cargados son:" << endl;
 		list<Registro*>::iterator it = unBucket->ubicarPrimero();
-		int n = bucketDistrito->getCantidadDeRegistros();
+		int n = unBucket->getCantidadDeRegistros();
 		cout <<"El valor de N es: " << n << endl;
 		for(int i = 0; i <n;i++ ){
 			Registro* unRegistro = *it;
@@ -709,12 +709,40 @@ void Pruebas::verContenidoBucketLista(Bucket* unBucket){
 			cout << "Fecha: " << unaLista->getFecha() << endl;
 			cout << "Cargo: " << unaLista->getCargo() << endl;
 			cout << "Votos: " << unaLista->getCantidadDeVotos() << endl;
+			cout << "----------" << endl;
 			delete unaLista;
 			it++;
 		}
 		cout << endl;
 	}
 }
+
+void Pruebas::verContenidoBucketCargo(Bucket* unBucket){
+	if (unBucket->getCantidadDeRegistros()==0) cout << "BUCKET VACIO" << endl;
+	else{
+		cout << "Los registros cargados son:" << endl;
+		list<Registro*>::iterator it = unBucket->ubicarPrimero();
+		int n = unBucket->getCantidadDeRegistros();
+		for(int i = 0; i <n;i++ ){
+			Registro* unRegistro = *it;
+			Cargo* unCargo  = (Cargo*)unRegistro->getContenido();
+			cout << "Cargo " << i << endl;
+			cout << "-------" << endl;
+			cout << "Cargo: " << unCargo->getCargo() << endl;
+			list<string> lista = unCargo->devolverSubCargos();
+			list<string>::iterator itCargo = lista.begin();
+			int j=1;
+			while (itCargo != lista.end()){
+				cout << "Subcargo " << j << ": "<< (*itCargo) <<endl;
+				itCargo++; j++;
+			}
+			delete unCargo;
+			it++;
+		}
+		cout << endl;
+	}
+}
+
 
 void Pruebas::iniciarVotantesParaIntegracion() {
 	this->votante1 = new Votante(1,"Martin","m","","Recoleta");
@@ -756,27 +784,27 @@ void Pruebas::iniciarDistritosParaIntegracion(){
 
 void Pruebas::iniciarEleccionesParaIntegracion(){
 	this->eleccion1 = new Eleccion("19970701","Presidente");
-	this->eleccion1->agregarDistrito("Misiones");
-	this->eleccion1->agregarDistrito("Chaco");
-	this->eleccion1->agregarDistrito("Corrientes");
-	this->eleccion1->agregarDistrito("Formosa");
+	this->eleccion1->agregarDistrito("Recoleta");
+	this->eleccion1->agregarDistrito("Retiro");
+	this->eleccion1->agregarDistrito("Mataderos");
+	this->eleccion1->agregarDistrito("Colegiales");
 	this->eleccion2 = new Eleccion("19970701","Gobernador");
-	this->eleccion2->agregarDistrito("Misiones");
-	this->eleccion2->agregarDistrito("Chaco");
-	this->eleccion2->agregarDistrito("Corrientes");
-	this->eleccion2->agregarDistrito("Formosa");
+	this->eleccion2->agregarDistrito("Recoleta");
+	this->eleccion2->agregarDistrito("Retiro");
+	this->eleccion2->agregarDistrito("Mataderos");
+	this->eleccion2->agregarDistrito("Colegiales");
 	this->eleccion3 = new Eleccion("19970702","Presidente");
-	this->eleccion3->agregarDistrito("Misiones");
-	this->eleccion3->agregarDistrito("Chaco");
-	this->eleccion3->agregarDistrito("Corrientes");
-	this->eleccion3->agregarDistrito("Formosa");
+	this->eleccion3->agregarDistrito("Recoleta");
+	this->eleccion3->agregarDistrito("Retiro");
+	this->eleccion3->agregarDistrito("Mataderos");
+	this->eleccion3->agregarDistrito("Colegiales");
 	this->registroEleccion1 = new Registro(eleccion1);
 	this->registroEleccion2 = new Registro(eleccion2);
 	this->registroEleccion3 = new Registro(eleccion3);
 	delete this->eleccion1;
 	delete this->eleccion2;
-	delete this->eleccion3;
-	this->bucketEleccion = new Bucket(0,412);
+//	delete this->eleccion3;
+	this->bucketEleccion = new Bucket(0,450);
 	this->bucketEleccion->agregarRegistro(registroEleccion1);
 	this->bucketEleccion->agregarRegistro(registroEleccion2);
 	this->bucketEleccion->agregarRegistro(registroEleccion3);
@@ -805,20 +833,168 @@ void Pruebas::iniciarListasParaIntegracion(){
 	this->registroLista1 = new Registro(lista1);
 	this->registroLista2 = new Registro(lista2);
 	this->registroLista3 = new Registro(lista3);
-	cout << "TAMANIO candidato1= " << this->registroLista1->getTamanio() << endl;
-	cout << "TAMANIO candidato2= " << this->registroLista2->getTamanio() << endl;
-	cout << "TAMANIO candidato3= " << this->registroLista3->getTamanio() << endl;
+//	cout << "TAMANIO candidato1= " << this->registroLista1->getTamanio() << endl;
+//	cout << "TAMANIO candidato2= " << this->registroLista2->getTamanio() << endl;
+//	cout << "TAMANIO candidato3= " << this->registroLista3->getTamanio() << endl;
 	delete this->lista1;
 	delete this->lista2;
 	delete this->lista3;
 	this->bucketLista = new Bucket(0,190);
-	cout << this->bucketLista->getEspacioLibre() << endl;
+//	cout << this->bucketLista->getEspacioLibre() << endl;
 	this->bucketLista->agregarRegistro(registroLista1);
-	cout << this->bucketLista->getEspacioLibre() << endl;
+//	cout << this->bucketLista->getEspacioLibre() << endl;
 	this->bucketLista->agregarRegistro(registroLista2);
-	cout << this->bucketLista->getEspacioLibre() << endl;
+//	cout << this->bucketLista->getEspacioLibre() << endl;
 	this->bucketLista->agregarRegistro(registroLista3);
-	cout << this->bucketLista->getEspacioLibre() << endl;
+//	cout << this->bucketLista->getEspacioLibre() << endl;
+}
+
+void Pruebas::iniciarCargosParaIntegracion() {
+	this->cargo1 = new Cargo("Presidente");
+	this->cargo1->agregarCargo("Vice Presidente");
+	this->registroCargo1 = new Registro(cargo1);
+	delete this->cargo1;
+	this->bucketCargo = new Bucket(0,204);
+	this->bucketCargo->agregarRegistro(registroCargo1);
+}
+
+void Pruebas::cargarBaseDeDatos(Administrador administrador) {
+	cout << "Inicio de carga de padron electoral" << endl;
+	this->iniciarVotantesParaIntegracion();
+	cout << "Se cargo el padron electoral" << endl;
+	cout << "Se carga un votante nuevo" << endl;
+	this->votante4 = new Votante(4,"Ignacio","i","","Recoleta");
+	this->votante4->agregarEleccion ("19970701","Presidente");
+	this->votante4->agregarEleccion ("19970701","Gobernador");
+	this->registroVotante4 = new Registro(votante4);
+	if (administrador.alta(this->bucketVotante,this->registroVotante4)) cout << "Se cargo votante nuevo" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketVotante(this->bucketVotante);
+
+
+	cout << "Inicio de carga de distritos" << endl;
+	this->iniciarDistritosParaIntegracion();
+	this->distrito4 = new Distrito("Colegiales");
+	this->registroDistrito4 = new Registro(distrito4);
+	if (administrador.alta(this->bucketDistrito,this->registroDistrito4)) cout << "Se cargo distrito nuevo" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketDistrito(this->bucketDistrito);
+
+	cout << "Inicio de carga de Cargos posibles" << endl;
+	this->iniciarCargosParaIntegracion();
+	cout << "Fin de carga de Cargos posibles" << endl;
+	this->cargo2 = new Cargo ("Gobernador");
+	this->cargo2->agregarCargo("Vice Gobernador");
+	this->registroCargo2 = new Registro(cargo2);
+	if (administrador.alta(this->bucketCargo,this->registroCargo2)) cout << "Se un nuevo cargo para poder ser votado" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketCargo(this->bucketCargo);
+
+	cout << "Inicio de carga de Elecciones pasadas" << endl;
+	this->iniciarEleccionesParaIntegracion();
+	cout << "Fin de carga de Elecciones pasadas" << endl;
+	this->eleccion4 = new Eleccion ("19970702","Gobernador");
+	this->eleccion4->agregarDistrito("Recoleta");
+	this->eleccion4->agregarDistrito("Retiro");
+	this->eleccion4->agregarDistrito("Mataderos");
+	this->eleccion4->agregarDistrito("Colegiales");
+	this->registroEleccion4 = new Registro(eleccion4);
+	cout << this->registroEleccion4->getTamanio() << endl;
+	if (administrador.alta(this->bucketEleccion,this->registroEleccion4)) cout << "Se cargo eleccion nueva" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketEleccion(this->bucketEleccion);
+
+
+	cout << "Inicio de carga de Candidatos pasados" << endl;
+	this->iniciarCandidatosParaIntegracion();
+	cout << "Fin de carga de Elecciones pasadas" << endl;
+	this->candidato4 = new Candidato ("19970702","Gobernador","VodkaTonic",4);
+	this->registroCandidato4 = new Registro(candidato4);
+	cout << "El registro 4 pesa = " << this->registroCandidato4->getTamanio() << endl;
+	cout << "espacio libre en bucket " << this->bucketCandidato->getEspacioLibre() << endl;
+	if (administrador.alta(this->bucketCandidato,this->registroCandidato4)) cout << "Se cargo candidato nuevo" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketCandidato(this->bucketCandidato);
+
+
+	cout << "Inicio de carga de Listas de elecciones pasadas" << endl;
+	this->iniciarListasParaIntegracion();
+	cout << "Fin de carga de Listas de elecciones pasadas" << endl;
+	this->lista4 = new Lista ("Socialista","19970702","Gobernador");
+	this->registroLista4 = new Registro(lista4);
+	cout << "El registro 4 pesa = " << this->registroLista4->getTamanio() << endl;
+	cout << "espacio libre en bucket " << this->bucketLista->getEspacioLibre() << endl;
+	if (administrador.alta(this->bucketLista,this->registroLista4)) cout << "Se cargo lista nueva" << endl;
+	else cout << "ERROR" << endl;
+	this->verContenidoBucketLista(this->bucketLista);
+//		cout << this->bucketLista->getEspacioLibre() << endl;
+}
+
+void Pruebas::inicioDeSimulacion(Administrador administrador){
+//	Inicio del sistema
+//	El administrador habilita una eleccion valida que esta en el archivo de elecciones
+	list<Registro*>::iterator itEleccion = this->bucketEleccion->ubicarPrimero();
+	itEleccion++;itEleccion++;
+	administrador.habilitarEleccion((Eleccion*)(*itEleccion)->getContenido());
+	administrador.habilitarEleccion(eleccion4);
+	administrador.getEleccionesHabilitadas();
+//	ingresa el votante1
+	int numeroDeEleccion;
+	int dni;
+	char c;
+	cout << "Bienvenido al sistema de voto electronico de los Gutierrez" << endl;
+	bool ok=false;
+	while (!ok) {
+		cout << "Ingrese su DNI: " << endl;
+		cin >> dni;
+		cout << "Su dni es: " << dni << endl;
+		while (!ok) {
+			cout << "Presione s para confirmar, n para cancelar" << endl;
+			cin >> c;
+			if ((c=='s')||(c=='n')) ok=true;
+			else cout << "Tecla no reconocida" << endl;
+		}
+		if (c=='n') ok=false;
+	}
+	#warning "Hashea el dni en el archivo para ver si esta en el padron"
+	if (!this->bucketVotante->getRegistro(dni)) cout << "NO EXISTE EN EL PADRON" << endl;
+	else {
+		Registro* registro = this->bucketVotante->getRegistro(dni);
+		Votante* votante = (Votante*) registro->getContenido();
+		cout << "Bienvenido " << votante->getNombre() << endl;
+		administrador.consultarEleccionesHabilitadasParaElVotante(votante);
+		ok=false;
+		while (!ok){
+			cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
+			int n;
+			cin >> n;
+			if (((n)<=((administrador.getListaDeEleccionesHabilitadas()).size())) && (c>0)) {
+				while (!ok) {
+					cout << "Usted eligio la eleccion " << n << endl;
+					cout << "Si es correcto presione s sino n" << endl;
+					numeroDeEleccion=n;
+					cin >> c;
+					if ((c=='s')||(c=='n')) ok=true;
+				}
+				if (c=='s') ok=true;
+				else ok=false;
+			}
+			else cout << "Numero invalido" << endl;
+		}
+		ok=false;
+		while (!ok) {
+			while (!ok) {
+				int boleta = administrador.mostrarListasDeEleccion(numeroDeEleccion,this->bucketLista);
+				c=administrador.sufragar(boleta);
+				if ((c=='s')||(c=='n')) ok=true;
+				else cout << "Tecla no reconocida" << endl;
+			}
+			if (c=='n') ok=false;
+		}
+//		INCREMENTAR CLASE CONTEO
+		delete registro;
+		delete votante;
+	}
 }
 
 void Pruebas::pruebaDeSimulacionDePrograma () {
@@ -828,96 +1004,46 @@ void Pruebas::pruebaDeSimulacionDePrograma () {
 	if (administrador.acceder("undomiel","aragorn")) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
-
-
-		cout << "Inicio de carga de padron electoral" << endl;
-		this->iniciarVotantesParaIntegracion();
-		cout << "Se cargo el padron electoral" << endl;
-		cout << "Se carga un votante nuevo" << endl;
-		this->votante4 = new Votante(4,"Ignacio","i","","Recoleta");
-		this->votante4->agregarEleccion ("19970701","Presidente");
-		this->votante4->agregarEleccion ("19970701","Gobernador");		this->votante4->agregarEleccion ("19970701","Presidente");
-		this->registroVotante4 = new Registro(votante4);
-		if (administrador.alta(this->bucketVotante,this->registroVotante4)) cout << "Se cargo votante nuevo" << endl;
-		else cout << "ERROR" << endl;
-		this->verContenidoBucketVotante(this->bucketVotante);
-
-
-		cout << "Inicio de carga de distritos" << endl;
-		this->iniciarDistritosParaIntegracion();
-		this->distrito4 = new Distrito("Colegiales");
-		this->registroDistrito4 = new Registro(distrito4);
-		if (administrador.alta(this->bucketDistrito,this->registroDistrito4)) cout << "Se cargo distrito nuevo" << endl;
-		else cout << "ERROR" << endl;
-		this->verContenidoBucketDistrito(this->bucketDistrito);
-
-
-		cout << "Inicio de carga de Elecciones pasadas" << endl;
-		this->iniciarEleccionesParaIntegracion();
-		cout << "Fin de carga de Elecciones pasadas" << endl;
-		this->eleccion4 = new Eleccion ("19970702","Gobernador");
-		this->eleccion4->agregarDistrito("Misiones");
-		this->eleccion4->agregarDistrito("Chaco");
-		this->eleccion4->agregarDistrito("Corrientes");
-		this->eleccion4->agregarDistrito("Formosa");
-		this->registroEleccion4 = new Registro(eleccion4);
-		cout << this->registroEleccion4->getTamanio() << endl;
-		if (administrador.alta(this->bucketEleccion,this->registroEleccion4)) cout << "Se cargo eleccion nueva" << endl;
-		else cout << "ERROR" << endl;
-		this->verContenidoBucketEleccion(this->bucketEleccion);
-
-
-		cout << "Inicio de carga de Candidatos pasados" << endl;
-		this->iniciarCandidatosParaIntegracion();
-		cout << "Fin de carga de Elecciones pasadas" << endl;
-		this->candidato4 = new Candidato ("19970702","Gobernador","VodkaTonic",4);
-		this->registroCandidato4 = new Registro(candidato4);
-		cout << "El registro 4 pesa = " << this->registroCandidato4->getTamanio() << endl;
-		cout << "espacio libre en bucket " << this->bucketCandidato->getEspacioLibre() << endl;
-		if (administrador.alta(this->bucketCandidato,this->registroCandidato4)) cout << "Se cargo candidato nuevo" << endl;
-		else cout << "ERROR" << endl;
-		this->verContenidoBucketCandidato(this->bucketCandidato);
-
-
-		cout << "Inicio de carga de Listas de elecciones pasadas" << endl;
-		this->iniciarListasParaIntegracion();
-		cout << "Fin de carga de Listas de elecciones pasadas" << endl;
-		this->lista4 = new Lista ("Socialista","19970702","Gobernador");
-		this->registroLista4 = new Registro(lista4);
-		cout << "El registro 4 pesa = " << this->registroLista4->getTamanio() << endl;
-		cout << "espacio libre en bucket " << this->bucketLista->getEspacioLibre() << endl;
-		if (administrador.alta(this->bucketLista,this->registroLista4)) cout << "Se cargo lista nueva" << endl;
-		else cout << "ERROR" << endl;
-		this->verContenidoBucketLista(this->bucketLista);
-		cout << this->bucketLista->getEspacioLibre() << endl;
-
-		delete votante4;
-		delete distrito4;
-		delete eleccion4;
-		delete candidato4;
-		delete lista4;
-		delete registroVotante1;
-		delete registroVotante2;
-		delete registroVotante3;
-		delete registroVotante4;
-		delete registroDistrito1;
-		delete registroDistrito2;
-		delete registroDistrito3;
-		delete registroDistrito4;
-		delete registroEleccion1;
-		delete registroEleccion2;
-		delete registroEleccion3;
-		delete registroEleccion4;
-		delete registroCandidato1;
-		delete registroCandidato2;
-		delete registroCandidato3;
-		delete registroCandidato4;
-		delete registroLista1;
-		delete registroLista2;
-		delete registroLista3;
-		delete registroLista4;
+		this->cargarBaseDeDatos(administrador);
+		this->inicioDeSimulacion(administrador);
 	}
+	else cout << "Adios" << endl;
+	this->destruir();
 }
+
+void Pruebas::destruir() {
+	delete votante4;
+	delete distrito4;
+	delete eleccion3;
+	delete eleccion4;
+	delete candidato4;
+	delete lista4;
+	delete cargo2;
+	delete registroVotante1;
+	delete registroVotante2;
+	delete registroVotante3;
+	delete registroVotante4;
+	delete registroDistrito1;
+	delete registroDistrito2;
+	delete registroDistrito3;
+	delete registroDistrito4;
+	delete registroEleccion1;
+	delete registroEleccion2;
+	delete registroEleccion3;
+	delete registroEleccion4;
+	delete registroCandidato1;
+	delete registroCandidato2;
+	delete registroCandidato3;
+	delete registroCandidato4;
+	delete registroLista1;
+	delete registroLista2;
+	delete registroLista3;
+	delete registroLista4;
+	delete registroCargo1;
+	delete registroCargo2;
+
+}
+
 
 
 

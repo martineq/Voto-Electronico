@@ -67,9 +67,11 @@ int Distrito::getTamanio(){
 
 int Distrito::getClave(){
 
-	#warning "Hay que modificar la obtencion de la clave";
-
-	return this->distrito.size();
+	int c = 0;
+	for (int i=0; i<this->distrito.length(); i++) {
+		c += (int)this->distrito[i];
+	}
+	return c;
 }
 
 Distrito::~Distrito(){}

@@ -54,20 +54,20 @@ int main(int argc,char* argv[]) {
 //	ab.testObtenerBloque();
 
 //	Pruebas Archivo de Buckets
-//	TestArchivoDeBuckets testArchivoDeBuckets;
-//	testArchivoDeBuckets.testLecturaEscrituraDeBuckets();
-//	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
+	TestArchivoDeBuckets testArchivoDeBuckets;
+	testArchivoDeBuckets.testLecturaEscrituraDeBuckets();
+	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
 
 //	Pruebas de Hashing!
-//	TestHashingExtensible the;
-//	the.testAgregarRegistros();
-//	the.testObtenerRegistro();
-//	the.testEliminarRegistro();
-//	the.testEliminarRegistrosReduciendoTablaDehash();
-//	the.testEliminarRegistrosYBucketSinReducirTabladeHash();
-//	the.testModificarRegistroInexistente();
-//	the.testModificarRegistroExistente();
-//	the.testModificarRegistroConRedispersion();
+	TestHashingExtensible the;
+	the.testAgregarRegistros();
+	the.testObtenerRegistro();
+	the.testEliminarRegistro();
+	the.testEliminarRegistrosReduciendoTablaDehash();
+	the.testEliminarRegistrosYBucketSinReducirTabladeHash();
+	the.testModificarRegistroInexistente();
+	the.testModificarRegistroExistente();
+	the.testModificarRegistroConRedispersion();
 
 
 	cout << "\n\n** EXITO! **" << endl;
