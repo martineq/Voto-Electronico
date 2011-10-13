@@ -196,7 +196,7 @@ void TestArchivoDeBuckets::testObtenerBucketFallas(){
 		cout << "Prueba 10 - FALLO" << endl;
 
 	cout << "Prueba 11 -";
-	if ( archivo->bucketDisponible(nB) == bucketOcupado )
+	if ( archivo->bucketDisponible(nB) == bucketEnUso )
 		cout << " OK" << endl;
 	else
 		cout << " FALLO" << endl;
