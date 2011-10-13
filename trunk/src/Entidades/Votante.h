@@ -19,7 +19,7 @@ private:
 	string distrito;
 	list <EleccionAnterior*>* listaDeEleccionesAnteriores;
 	void verEleccionesAnteriores ();
-
+	bool verificarDistrito(string);
 public:
 	Votante();
 	Votante(int dni, string nombre, string password, string domicilio, string distrito);
@@ -28,7 +28,7 @@ public:
 	void setPassword (string);
 	void setDomicilio (string);
 	void setDistrito (string);
-	void agregarEleccion (string,string);
+	bool agregarEleccion (string,string);
 	int  getTamanio();
 	int getClave();
 	void deserializar (string* source);

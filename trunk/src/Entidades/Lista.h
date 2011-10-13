@@ -12,6 +12,7 @@ private:
 	string fecha;
 	string cargo;
 	short int cantidadDeVotos;
+	bool verificarCargo(string);
 public:
 	Lista();
 	Lista(string nombre, string fecha, string cargo);

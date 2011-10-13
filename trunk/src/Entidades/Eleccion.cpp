@@ -7,6 +7,7 @@
 
 #include "Eleccion.h"
 using namespace std;
+
 Eleccion::Eleccion() {
 	this->fecha = "";
 	this->cargoPrincipal = "";
@@ -15,7 +16,8 @@ Eleccion::Eleccion() {
 
 Eleccion::Eleccion(string fecha,string cargoPrincipal){
 	this->fecha 		= fecha;
-	this->cargoPrincipal= cargoPrincipal;
+	if (this->verificarCargo(cargoPrincipal))	this->cargoPrincipal= cargoPrincipal;
+	else cout << "NO EXISTE ESE CARGO HABILITADO" << endl;
 }
 
 int Eleccion::getTamanio(){
@@ -23,7 +25,7 @@ int Eleccion::getTamanio(){
 	int tamanioCargoPrincipal = TAM_INT + this->cargoPrincipal.size();
 	int tamanioListaDistritos = TAM_INT; // este tam_int es la cantidad de distritos
 	list<Distrito>::iterator it = this->distritos.begin();
-	while (it != this->distritos.end()){
+	while (it != this->distzritos.end()){
 		tamanioListaDistritos += (TAM_INT +  it->getTamanio());
 		it++;
 		it++;
@@ -55,7 +57,8 @@ string Eleccion::getCargo(){
 }
 
 void Eleccion::setCargo(string cargoPrincipal){
-	this->cargoPrincipal = cargoPrincipal;
+	if (this->verificarCargo(cargoPrincipal)) this->cargoPrincipal = cargoPrincipal;
+	else cout << "CARGO NO EXISTENTE" << endl;
 }
 
 bool Eleccion::agregarDistrito(string nombre){
@@ -67,8 +70,21 @@ bool Eleccion::agregarDistrito(string nombre){
 		}
 		iterador++;
 	}
-	this->distritos.push_back(unDistrito);
-	return true; //devuelve el resultado de la inserción
+	if (this->verificarDistrito(nombre)) {
+		this->distritos.push_back(unDistrito);
+		return true;
+	}
+	return false;
+}
+
+bool Eleccion::verificarDistrito(string cargo) {
+	#warning "Debe buscarse si el distrito existe usando hashing"
+	return true;
+}
+
+bool Eleccion::verificarCargo(string cargo) {
+	#warning "Debe buscarse si el cargo existe usando busqueda secuencial probablemente ya que son pocos cargos"
+	return true;
 }
 
 bool Eleccion::eliminarDistrito(Distrito distrito){
@@ -94,8 +110,7 @@ list<Distrito>::iterator Eleccion::obtenerIterador(){
 }
 
 
-Entidad *Eleccion::duplicar()
-{
+Entidad *Eleccion::duplicar(){
 	Eleccion* copia = new Eleccion();
 	copia->cargoPrincipal = this->cargoPrincipal;
 	copia->fecha = this->fecha;
@@ -161,7 +176,8 @@ void Eleccion::deserializar(string* source) {
     	posicion += TAM_INT;
     	stringstream unDistrito (source->substr(posicion,posicion+tamanio-1));
     	Distrito distrito;
-    	distrito.deserializar(&unDistrito.str());
+    	string str = unDistrito.str();
+    	distrito.deserializar(&str);
     	this->distritos.push_back(distrito);
     	posicion += tamanio;
     }

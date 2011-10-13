@@ -58,16 +58,21 @@ bool Cargo::eliminarCargo(string subCargo){
 
 int Cargo::getTamanio(){
 	int tamanioCargo = TAM_INT + this->cargo.size();
-	int tamanioLista = TAM_INT * this->listaCargos.size();
+	int tamanioLista = this->listaCargos.size();
 	list<string>::iterator it = this->listaCargos.begin();
 	while (it != this->listaCargos.end()){
-		tamanioLista += it->size();
+		tamanioLista += TAM_INT + it->size();
+		it++;
 	}
 	return (tamanioCargo + tamanioLista);
 }
 
 int Cargo::getClave(){
-	return 0;
+	int c = 0;
+	for (int i=0; i<this->cargo.length(); i++) {
+		c += (int)this->cargo[i];
+	}
+	return c;
 }
 
 
@@ -134,6 +139,7 @@ Entidad *Cargo::duplicar()
 	list<string>::iterator it = this->listaCargos.begin();
 	while (it != this->listaCargos.end()){
 		copia->agregarCargo(*it);
+		it++;
 	}
 	return copia;
 }
