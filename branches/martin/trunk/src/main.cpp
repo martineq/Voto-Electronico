@@ -1,6 +1,5 @@
 #include <iostream>
 #include <list>
-#include "./tests/Pruebas.h"
 #include "./tests/Test.h"
 #include "./tests/TestArchivoBloques.h"
 #include "./tests/TestArchivoDeBuckets.h"
