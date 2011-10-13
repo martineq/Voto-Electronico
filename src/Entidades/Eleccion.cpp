@@ -25,7 +25,7 @@ int Eleccion::getTamanio(){
 	int tamanioCargoPrincipal = TAM_INT + this->cargoPrincipal.size();
 	int tamanioListaDistritos = TAM_INT; // este tam_int es la cantidad de distritos
 	list<Distrito>::iterator it = this->distritos.begin();
-	while (it != this->distzritos.end()){
+	while (it != this->distritos.end()){
 		tamanioListaDistritos += (TAM_INT +  it->getTamanio());
 		it++;
 		it++;
