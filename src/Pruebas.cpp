@@ -930,37 +930,63 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 //		cout << this->bucketLista->getEspacioLibre() << endl;
 }
 
+void Pruebas::pruebaLog(){
+//	FILE *archivo = fopen("texto","w+");
+//	this->insertarTimestamp(archivo);
+//	fputs (" Un votante ingreso al sistema",archivo);
+//	sleep(10);
+//	this->insertarTimestamp(archivo);
+//	fputs (" Otro votante ingreso al sistema",archivo);
+//	fclose (archivo);
+//	Abrir y escribir al final texto
+//	archivo = fopen("texto","a+");
+//	fputs ("\n y espero que sea sensacional",archivo);
+//	fclose (archivo);
+}
+
 void Pruebas::inicioDeSimulacion(Administrador administrador){
+//	Se abre el Log
+	Log log;
+	log.abrir();
 //	Inicio del sistema
 //	El administrador habilita una eleccion valida que esta en el archivo de elecciones
 	list<Registro*>::iterator itEleccion = this->bucketEleccion->ubicarPrimero();
 	itEleccion++;itEleccion++;
 	administrador.habilitarEleccion((Eleccion*)(*itEleccion)->getContenido());
-	administrador.habilitarEleccion(eleccion4);
+	itEleccion++;
+	administrador.habilitarEleccion((Eleccion*)(*itEleccion)->getContenido());
 	administrador.getEleccionesHabilitadas();
 //	ingresa el votante1
 	int numeroDeEleccion;
 	int dni;
 	char c;
+	cout << endl;
 	cout << "Bienvenido al sistema de voto electronico de los Gutierrez" << endl;
+	cout << endl;
 	bool ok=false;
 	while (!ok) {
 		cout << "Ingrese su DNI: " << endl;
 		cin >> dni;
 		cout << "Su dni es: " << dni << endl;
 		while (!ok) {
-			cout << "Presione s para confirmar, n para cancelar" << endl;
+			cout << "Presione ""S"" para confirmar, ""N"" para cancelar" << endl;
 			cin >> c;
 			if ((c=='s')||(c=='n')) ok=true;
 			else cout << "Tecla no reconocida" << endl;
 		}
 		if (c=='n') ok=false;
 	}
-	#warning "Hashea el dni en el archivo para ver si esta en el padron"
-	if (!this->bucketVotante->getRegistro(dni)) cout << "NO EXISTE EN EL PADRON" << endl;
+//	#warning "Hashea el dni en el archivo para ver si esta en el padron"
+	Registro* registroAuxiliar = this->bucketVotante->getRegistro(dni);
+	if (!registroAuxiliar) {
+		cout << "NO EXISTE EN EL PADRON" << endl;
+		log.insertarMensajeConEntero(dni);
+	}
 	else {
 		Registro* registro = this->bucketVotante->getRegistro(dni);
 		Votante* votante = (Votante*) registro->getContenido();
+		string mensaje= " Ingreso el votante: ";
+		log.insertarMensajeConEntidad(votante,mensaje);
 		cout << "Bienvenido " << votante->getNombre() << endl;
 		administrador.consultarEleccionesHabilitadasParaElVotante(votante);
 		ok=false;
@@ -968,33 +994,61 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 			cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
 			int n;
 			cin >> n;
-			if (((n)<=((administrador.getListaDeEleccionesHabilitadas()).size())) && (c>0)) {
+			if (((n)<=((int)((administrador.getListaDeEleccionesHabilitadas()).size()))) && (c>0)) {
 				while (!ok) {
 					cout << "Usted eligio la eleccion " << n << endl;
 					cout << "Si es correcto presione s sino n" << endl;
 					numeroDeEleccion=n;
 					cin >> c;
 					if ((c=='s')||(c=='n')) ok=true;
+					else cout << "Tecla incorrecta" << endl;
 				}
 				if (c=='s') ok=true;
 				else ok=false;
 			}
 			else cout << "Numero invalido" << endl;
 		}
+		//	me posiciono en la eleccion habilitada elegida para votar ahora
+		list<Eleccion*> listaHabilitadas= (administrador.getListaDeEleccionesHabilitadas());
+		list<Eleccion*>::iterator itHabilitadas = listaHabilitadas.begin();
+		for (int i=0;i<numeroDeEleccion-1;i++) itHabilitadas++;
+		mensaje = "El votante participara en la eleccion: ";
+		log.insertarMensajeConEntidad(*itHabilitadas,mensaje);
 		ok=false;
+		int boleta;
+		administrador.cargarListasDeEleccion(numeroDeEleccion,this->bucketLista);
 		while (!ok) {
 			while (!ok) {
-				int boleta = administrador.mostrarListasDeEleccion(numeroDeEleccion,this->bucketLista);
+				boleta = administrador.elegirBoleta(numeroDeEleccion,this->bucketLista);
 				c=administrador.sufragar(boleta);
 				if ((c=='s')||(c=='n')) ok=true;
 				else cout << "Tecla no reconocida" << endl;
 			}
 			if (c=='n') ok=false;
 		}
+		list<Lista*> listaBoletas = administrador.getListaDeBoletas();
+		list<Lista*>::iterator itBoletas = listaBoletas.begin();
+		if (boleta==listaBoletas.size()+1) {
+			string mensaje="El votante voto en blanco ";
+			log.insertarMensaje(mensaje);
+		}
+		else if (boleta==listaBoletas.size()+2){
+			string mensaje="El votante voto impugnado, nulo, etc ";
+			log.insertarMensaje(mensaje);
+		}
+		else {
+			//	me posiciono en la lista elegida de las opciones dadas
+			for (int i=0; i< boleta-1;i++) itBoletas++;
+			string mensaje="El votante voto lista: ";
+			log.insertarMensajeConEntidad(*itBoletas,mensaje);
+		}
+
 //		INCREMENTAR CLASE CONTEO
 		delete registro;
 		delete votante;
 	}
+	log.cerrar();
+	delete registroAuxiliar;
 }
 
 void Pruebas::pruebaDeSimulacionDePrograma () {
