@@ -15,9 +15,12 @@
 #include "./Entidades/Eleccion.h"
 #include "./Entidades/Conteo.h"
 #include "./Entidades/Administrador.h"
+#include "./Entidades/Log.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/EnBloques/ArchivoBloques.h"
 #include <list>
+#include <time.h>
+#include <stdio.h>
 #include <string>
 #include <iostream>
 using namespace std;
@@ -111,6 +114,7 @@ public:
 	void inicioDeSimulacion(Administrador);
 	void destruir();
 	void pruebaDeSimulacionDePrograma ();
+	void pruebaLog();
 //	pruebas para ver si anda el compilador
 	int holaMundo();
 	virtual ~Pruebas();

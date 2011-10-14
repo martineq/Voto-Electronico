@@ -34,6 +34,7 @@ bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
 			if ((unaEleccion->getCargo()==eleccion->getCargo()) && (unaEleccion->getFecha()==eleccion->getFecha())) {
 				cout << "LA ELECCION YA ESTA HABILITADA" << endl;
 				delete eleccion;
+				delete unaEleccion;
 				return false;
 			}
 			delete eleccion;
@@ -41,28 +42,37 @@ bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
 		}
 		Eleccion* eleccion = (Eleccion*) unaEleccion->duplicar();
 		this->listaDeEleccionesHabilitadas.push_back(eleccion);
+		delete unaEleccion;
 		return true;
 	}
 	else cout << "NO EXISTE ELECCION. CREE LA ELECCION PRIMERO" << endl;
+	delete unaEleccion;
 	return false;
 
 }
 
 void Administrador::getEleccionesHabilitadas(){
-	list<Eleccion*>::iterator it=this->listaDeEleccionesHabilitadas.begin();
-	int i=1;
-	while (it!=this->listaDeEleccionesHabilitadas.end()){
-		Eleccion* eleccion = *it;
-		cout << "Eleccion " << i << endl;
-		cout << "Fecha: " << eleccion->getFecha() << endl;
-		cout << "Cargo Principal: " << eleccion->getCargo() << endl;
-		cout << "------------------------------------------" << endl;
-		it++; i++;
+	if (this->listaDeEleccionesHabilitadas.size()==0) cout << "No hay elecciones habilitadas" << endl;
+	else{
+		list<Eleccion*>::iterator it=this->listaDeEleccionesHabilitadas.begin();
+		int i=1;
+		while (it!=this->listaDeEleccionesHabilitadas.end()){
+			Eleccion* eleccion = *it;
+			cout << "Eleccion " << i << endl;
+			cout << "Fecha: " << eleccion->getFecha() << endl;
+			cout << "Cargo Principal: " << eleccion->getCargo() << endl;
+			cout << "------------------------------------------" << endl;
+			it++; i++;
+		}
 	}
 }
 
 list <Eleccion*> Administrador::getListaDeEleccionesHabilitadas(){
 	return this->listaDeEleccionesHabilitadas;
+}
+
+list <Lista*> Administrador::getListaDeBoletas(){
+	return this->listaDeBoletas;
 }
 
 void Administrador::mostrarEleccionesDelVotante(list<Eleccion*>listaDeEleccionesDelVotante){
@@ -104,27 +114,15 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 	this->mostrarEleccionesDelVotante(listaDeEleccionesDelVotante);
 }
 
-int Administrador::mostrarListasDeEleccion(int numeroDeEleccion, Bucket* bucketLista){
-	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
-//	me posiciono en la eleccion habilitada elegida para votar ahora
-	for (int i=0;i<numeroDeEleccion-1;i++) it++;
-	#warning "hashear la lista, yo no la hasheo porque no tengo idea"
-	list <Registro*>::iterator itListas = bucketLista->ubicarPrimero();
-	#warning "hardcodeado a full, necesitaria tener la lista para saber cuando parar de leer"
-	#warning "en realidad hay que hashear la lista y creo que es mejor idexado asi que aca va el arbol"
+int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
+	cout << endl;
 	cout << "Estas son sus boletas a elegir" << endl;
 	int j=1;
-	for (int i=0; i<4; i++){
-		Registro* registro = *itListas;
-		Lista* lista = (Lista*)registro->getContenido();
-		if (((*it)->getFecha()==lista->getFecha()) && ((*it)->getCargo()==lista->getCargo())){
-			cout << "Lista " << j << endl; j++;
-			cout << "Nombre: " << lista->getNombre() << endl;
-			Lista* unaLista = (Lista*)lista->duplicar();
-			this->listaDeBoletas.push_back(unaLista);
-		}
+	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
+	while (itListas!=this->listaDeBoletas.end()) {
+		cout << "Lista " << j << endl; j++;
+		cout << "Nombre: " << (*itListas)->getNombre() << endl;
 		itListas++;
-		delete lista;
 	}
 	cout << "Opcion " << j << endl; j++;
 	cout << "Voto En Blanco" << endl;
@@ -136,10 +134,30 @@ int Administrador::mostrarListasDeEleccion(int numeroDeEleccion, Bucket* bucketL
 	while (!ok) {
 		cout << "Elija su boleta en base al numero de opcion indicado" << endl;
 		cin >> c;
-		if ((((c)<=(this->listaDeBoletas.size()))+2)&&(c>0)) ok=true;
+		if ((((c)<=(((int)(this->listaDeBoletas.size()))+2)))&&(c>0)) ok=true;
 		else cout << "Numero de boleta invalido" << endl;
 	}
 	return c;
+}
+
+void Administrador::cargarListasDeEleccion(int numeroDeEleccion, Bucket* bucketLista){
+	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
+//	me posiciono en la eleccion habilitada elegida para votar ahora
+	for (int i=0;i<numeroDeEleccion-1;i++) it++;
+	#warning "hashear la lista, yo no la hasheo porque no tengo idea"
+	list <Registro*>::iterator itListas = bucketLista->ubicarPrimero();
+	#warning "hardcodeado a full, necesitaria tener la lista para saber cuando parar de leer"
+	#warning "en realidad hay que hashear la lista y creo que es mejor idexado asi que aca va el arbol"
+	for (int i=0; i<4; i++){
+		Registro* registro = *itListas;
+		Lista* lista = (Lista*)registro->getContenido();
+		if (((*it)->getFecha()==lista->getFecha()) && ((*it)->getCargo()==lista->getCargo())){
+			Lista* unaLista = (Lista*)lista->duplicar();
+			this->listaDeBoletas.push_back(unaLista);
+		}
+		itListas++;
+		delete lista;
+	}
 }
 
 char Administrador::sufragar (int numeroDeBoleta){

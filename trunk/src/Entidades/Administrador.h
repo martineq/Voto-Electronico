@@ -36,8 +36,10 @@ public:
 	void consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
 	char sufragar(int);
-	int mostrarListasDeEleccion(int,Bucket*);
+	void cargarListasDeEleccion(int,Bucket*);
+	int elegirBoleta(int, Bucket*);
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
+	list <Lista*> getListaDeBoletas();
 	virtual ~Administrador();
 };
 
