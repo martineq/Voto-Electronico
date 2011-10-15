@@ -1,19 +1,9 @@
-/*
- * Cargo.h
- *
- *  Created on: 17/09/2011
- *      Author: lucas
- */
-
 #ifndef CARGO_H_
 #define CARGO_H_
-
-
 
 #include <iostream>
 #include <list>
 #include "Entidad.h"
-
 
 using namespace std;
 

@@ -1,10 +1,3 @@
-/*
- * Cargo.cpp
- *
- *  Created on: 17/09/2011
- *      Author: lucas
- */
-
 #include "Cargo.h"
 
 Cargo::Cargo() {
@@ -57,19 +50,22 @@ bool Cargo::eliminarCargo(string subCargo){
 }
 
 int Cargo::getTamanio(){
+
 	int tamanioCargo = TAM_INT + this->cargo.size();
-	int tamanioLista = this->listaCargos.size();
+	int tamanioLista = TAM_INT + this->listaCargos.size();
 	list<string>::iterator it = this->listaCargos.begin();
 	while (it != this->listaCargos.end()){
 		tamanioLista += TAM_INT + it->size();
 		it++;
 	}
+
 	return (tamanioCargo + tamanioLista);
 }
 
 int Cargo::getClave(){
+	int size = cargo.length();
 	int c = 0;
-	for (int i=0; i<this->cargo.length(); i++) {
+	for (int i=0; i < size; i++) {
 		c += (int)this->cargo[i];
 	}
 	return c;
@@ -83,53 +79,36 @@ Cargo::~Cargo() {
 
 
 string* Cargo::serializar(){
-	stringstream streamDatos;
-	int sizeOfCargo = this->cargo.size();
-	list<string>::iterator it = this->listaCargos.begin();
-	unsigned int cantCargos = this->listaCargos.size();
-	string subCargo;
-	streamDatos.write((char*)&sizeOfCargo,TAM_INT);
-	streamDatos.write((char*)cargo.c_str(),sizeOfCargo);
-	streamDatos.write((char*)&cantCargos,TAM_INT);
-	for (unsigned int i = 0; i < cantCargos;i++){
-		sizeOfCargo = it->size();
-		subCargo = (*it);
-		streamDatos.write((char*)&sizeOfCargo,TAM_INT);
-		streamDatos.write((char*)subCargo.c_str(),sizeOfCargo);
+
+	Serializadora serializadora;
+
+	serializadora.agregarString(&cargo);
+
+	int cantidadCargos = listaCargos.size();
+
+	serializadora.agregarInt(cantidadCargos);
+
+	list<string>::iterator it = listaCargos.begin();
+	for(int i = 0; i < cantidadCargos; i++){
+		string subcargo = *it;
+		serializadora.agregarString(&subcargo);
 		it++;
 	}
-	string* datos = new string(streamDatos.str());
-	return datos;
+
+	return serializadora.obtenerSerializacion();
 
 }
 
 void Cargo::deserializar(string * source){
-	istringstream streamDatos(*source);
-	stringstream * miString;
-	delete source;
-	int sizeOfCargo;
-	unsigned int cantCargos;
-    streamDatos.read((char*)&sizeOfCargo,TAM_INT);
-    char* cargoChar = new char[sizeOfCargo];
-    streamDatos.read((char*)cargoChar,sizeOfCargo);
-    miString = new stringstream();
-    miString->write(cargoChar,sizeOfCargo);
-    string cargoString = miString->str();
-    delete miString;
-    delete [] cargoChar;
-    this->cargo = cargoString;
-    streamDatos.read((char*)&cantCargos,TAM_INT);
-	for (unsigned int i = 0; i < cantCargos;i++){
-		streamDatos.read((char*)&sizeOfCargo,TAM_INT);
-		miString = new stringstream();
-		char* cargoTemp = new char[sizeOfCargo];
-		streamDatos.read(cargoTemp,sizeOfCargo);
-		miString->write(cargoTemp,sizeOfCargo);
-		string subCargo = miString->str();
-		this->listaCargos.push_back(subCargo);
-		delete [] cargoTemp;
-		delete miString;
-	}
+
+	Serializadora serializadora(source);
+
+	cargo = serializadora.obtenerString();
+
+	int cantidadCargos = serializadora.obtenerInt();
+
+	for(int i=0; i< cantidadCargos; i++)
+		this->agregarCargo(serializadora.obtenerString());
 }
 
 Entidad *Cargo::duplicar()
