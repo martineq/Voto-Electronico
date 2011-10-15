@@ -37,7 +37,7 @@ char* ArchivoDeBuckets::serializarBucket(Bucket* bucket){
 	return nuevaCadena;
 }
 
-Bucket* ArchivoDeBuckets::deserializadBucket(char* cadena){
+Bucket* ArchivoDeBuckets::deserializarBucket(char* cadena){
 	stringstream stream;
 
 	stream.write(cadena,dimensionBucket);
@@ -74,7 +74,7 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
 			char* cadena = new char[dimensionBucket];
 			this->archivo->obtenerBloque(numeroDeBucket,cadena);
-			Bucket* nuevoBucket = deserializadBucket(cadena);
+			Bucket* nuevoBucket = deserializarBucket(cadena);
 			delete[] cadena;
 			modificarBucketInterno(nuevoBucket,numeroDeBucket);
 		}

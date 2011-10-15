@@ -27,7 +27,7 @@ private:
 	/*
 	 * Devuelve un bucket a partir de un char*.
 	 */
-	Bucket* deserializadBucket(char* cadena);
+	Bucket* deserializarBucket(char* cadena);
 
 	/*
 	 * Devuelve un puntero a un char* con memoria reservada.
