@@ -1,13 +1,14 @@
 #include "ManejadorDeArchivo.h"
 
-// Constructor
-ManejadorDeArchivo::ManejadorDeArchivo(){
-
+// Constructor con parámetro para abrir automáticamente
+ManejadorDeArchivo::ManejadorDeArchivo(string nombre){
+	this->abrir(nombre);
 }
 
 // Destructor
 ManejadorDeArchivo::~ManejadorDeArchivo(){
-
+	// Al destruir la clase cierro el archivo
+	this->archivo.close();
 }
 
 // Borra el archivo del disco
@@ -118,10 +119,6 @@ void ManejadorDeArchivo::leer(char* registro, size_t cantBytes){
 	}
 }
 
-// Cierro el archivo
-void ManejadorDeArchivo::cerrar(){
-	this->archivo.close();
-}
 
 // Abro el archivo de nombre <nombre>
 void ManejadorDeArchivo::abrir(string nombre){

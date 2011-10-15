@@ -14,25 +14,24 @@ class ManejadorDeArchivo{
         fstream archivo;
         string nombre;
 
-    public:
-        ManejadorDeArchivo();
-        virtual ~ManejadorDeArchivo();
-
         void abrir(string nombre);
-        void cerrar();
+        string obtenerNombreArchivo();			// Por ahora no se usa
+        string obtenerNombreArchivoTmp();		// Por ahora no se usa
+        void renombrar(string nombreNuevo);		// Por ahora no se usa
+        bool fin();								// Por ahora no se usa
+
+    public:
+
+        ManejadorDeArchivo(string nombre);
         void leer(char* registro, size_t cantBytes);
         void escribir(const char* registro, size_t cantBytes);
         void posicionarse(ios::pos_type pos);
         void posicionarseEnFin();
         void guardarBuffer();
-        bool fin();
         ios::pos_type obtenerPosicionDeLectura();
         ios::pos_type obtenerTamArchivo();
-        string obtenerNombreArchivo();
-        string obtenerNombreArchivoTmp();
-        void renombrar(string nombreNuevo);
         void borrar();
-
+        virtual ~ManejadorDeArchivo();
 
 };
 

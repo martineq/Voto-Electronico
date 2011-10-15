@@ -53,8 +53,8 @@ private:
 	void serializehead();
 	//deserializehead() populates a filehandle struct from the metadata in the first block of a file
 	void deserializehead();
-	//truncatefile() truncates a file by 1 blocksize
-	void truncatefile();
+	//truncarUltimoBolque() truncates a file by 1 blocksize
+	void truncarUltimoBolque();
 	// obtenerCurrPos() Obtiene la posición actual dentro del metadata actual
 	int obtenerCurrPos();
 	// Lee un sector del archivo de tamaño int, desde la posición <pos>
@@ -65,8 +65,7 @@ private:
 	void guardarTipoInt(int pos,int* dest);
 
 public:
-
-	ArchivoBloques();
+	//Constructor
 	ArchivoBloques(char *path, int blocksize);
 	// Devuelve un bloque (de datos), según la posición <nrr> dada
 	void obtenerBloque(int nrr, char *datos);
