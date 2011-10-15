@@ -48,12 +48,18 @@ int ArchivoBloques::newblock(){
     return posNuevo;
 }
 
-//delblock() marks a block as deleted, by adding it to the current metadata file
-//in the current position + 1 or in the first block of a new metadata file if position*4 + 1
-//is larger than blocksize (blocksize is in chars and an int ocupies 4 chars)
-//***Supongo que siempre se va a borrar un bloque de datos***
+// delblock() marks a block as deleted, by adding it to the current metadata file
+// in the current position + 1 or in the first block of a new metadata file if position*4 + 1
+// is larger than blocksize (blocksize is in chars and an int ocupies 4 chars)
+// Si el bloque a borrar se encuentra en la última posición del archivo, lo trunca del mismo
+// ***Siempre se va a borrar un bloque de datos***
 int ArchivoBloques::delblock(int nrrBorrado){
-	 // Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
+	// Si el bloque a borrar es el último del archivo, lo trunco.
+	if ( nrrBorrado == ((this->blocksize) * (this->maxblocknum - 1)) ){
+		truncarUltimoBolque();
+		return 0;
+	}
+	// Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
 	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-TAM_CAMPOS_CTRL ){
 		int metadataAnterior = this->currmetadata;					// Me guardo el bloque de metadata anterior
 		int nrrNuevo = growfile();									// Pido un NUEVO bloque de metadata
@@ -126,7 +132,9 @@ void ArchivoBloques::deserializehead(){
 }
 
 
-void ArchivoBloques::truncatefile(){
+void ArchivoBloques::truncarUltimoBolque(){
+
+	cout << "Trunco último bloque" << endl;
 
 	// Posible solución: Truncar justo antes de terminar el programa (o sea que el truncate debería ir dentro
 	// de "cerrarArchivo").	Ver el último bloque, si este es uno borrado mirar el siguiente borrado
@@ -162,17 +170,13 @@ void ArchivoBloques::truncatefile(){
 ////		Públic:			///////
 ///////////////////////////////////
 
-ArchivoBloques::ArchivoBloques(){
-
-}
 
 ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 
 	if ( (blocksize) >= (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) && ((blocksize%(TAM_CAMPOS_CTRL))==0) ){
-		this->archivo = new ManejadorDeArchivo();
-		archivo->abrir(path);
+		this->archivo = new ManejadorDeArchivo(path);
 
-		if (archivo->obtenerTamArchivo() <= 0){		// Si el archivo está vacio inicialo loa atributos en cero
+		if (archivo->obtenerTamArchivo() <= 0){		// Si el archivo está vacio inicialo los atributos en cero
 			string bloque (blocksize, '\0');			// Creo un bloque con ceros
 			char* buf = new char[blocksize];
 			strcpy(buf,bloque.c_str());
@@ -243,6 +247,5 @@ void ArchivoBloques::infoInts(){
 
 
 ArchivoBloques::~ArchivoBloques() {
-	this->archivo->cerrar();
 	delete (this->archivo);
 }
