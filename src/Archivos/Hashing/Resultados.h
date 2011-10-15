@@ -2,7 +2,7 @@
 #define RESULTADOS_H_
 
 enum Resultados {
-	  bucketEnUso 			= -1,
+	  bucketDisponible		= -1,
 	  bucketLibre 			= -2,
 	  bucketNoDisponible	= -3,
 	  bucketNULO			= -4,
