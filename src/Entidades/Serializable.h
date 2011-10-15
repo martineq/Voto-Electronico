@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include "../Serializadora.h"
 
 class Serializable {
 public:
