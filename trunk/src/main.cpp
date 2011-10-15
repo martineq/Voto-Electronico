@@ -1,6 +1,5 @@
 #include <iostream>
 #include <list>
-#include "Pruebas.h"
 #include "../tests/Test.h"
 #include "../tests/TestArchivoBloques.h"
 #include "../tests/TestArchivoDeBuckets.h"
@@ -15,34 +14,32 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-	 Pruebas* prueba = new Pruebas();
+//	Pruebas* prueba = new Pruebas();
 
-	//	Pruebas de Bucket!
-	//	prueba->pruebaAgregarRegistrosAlBucket();
-	//	prueba->pruebaEliminarRegistrosDelBucket();
-	//	prueba->pruebaReemplazarRegistroEnBucket();
-	//	prueba->serializarDeserializarBucket();
+//	Pruebas de Bucket!
+//	prueba->pruebaAgregarRegistrosAlBucket();
+//	prueba->pruebaEliminarRegistrosDelBucket();
+//	prueba->pruebaReemplazarRegistroEnBucket();
+//	prueba->serializarDeserializarBucket();
 
-	//  Pruebas de serializar y deserializar entidades!
-	//	prueba->serializarDeserializarVotante();
-	//	prueba->serializarDeserializarDistrito();
-	//	prueba->serializarDeserializarCargo();
-	//	prueba->serializarDeserializarCandidato();
-	//	prueba->serializarDeserializarLista();
-	//	prueba->serializarDeserializarEleccion();
+//  Pruebas de serializar y deserializar entidades!
+//	prueba->serializarDeserializarVotante();
+//	prueba->serializarDeserializarDistrito();
+//	prueba->serializarDeserializarCargo();
+//	prueba->serializarDeserializarCandidato();
+//	prueba->serializarDeserializarLista();
+//	prueba->serializarDeserializarEleccion();
 
-	//	Pruebas para el Archivo en Bloques:
-	//	prueba->pruebaArchivoBloques();
+//	Pruebas para el Archivo en Bloques:
+//	prueba->pruebaArchivoBloques();
 
-	//	Pruebas de integracion
-	//	prueba->pruebaLog();
-		prueba->pruebaDeSimulacionDePrograma();
+//	Pruebas de integracion
+//	prueba->pruebaDeSimulacionDePrograma();
 
-	//  Prueba que funciona el eclipse!
-	//	prueba->holaMundo();
+//  Prueba que funciona el eclipse!
+//	prueba->holaMundo();
 
-		delete (prueba);
-
+//	delete (prueba);
 
 //	Test test;
 //	test.testStringstream();
@@ -57,12 +54,17 @@ int main(int argc,char* argv[]) {
 
 //	Pruebas Archivo de Buckets
 //	TestArchivoDeBuckets testArchivoDeBuckets;
+//	testArchivoDeBuckets.testVotante();
+//	testArchivoDeBuckets.testCargo();
+//	testArchivoDeBuckets.tests();
 //	testArchivoDeBuckets.testLecturaEscrituraDeBuckets();
 //	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
 
 //	Pruebas de Hashing!
-//	TestHashingExtensible the;
-//	the.testAgregarRegistros();
+	TestHashingExtensible the;
+//	the.testAgregarRegistros1();
+//	the.testCargarYmostrarContenidoDelArchivo();
+//	the.testAgregarRegistros2();
 //	the.testObtenerRegistro();
 //	the.testEliminarRegistro();
 //	the.testEliminarRegistrosReduciendoTablaDehash();
@@ -70,6 +72,7 @@ int main(int argc,char* argv[]) {
 //	the.testModificarRegistroInexistente();
 //	the.testModificarRegistroExistente();
 //	the.testModificarRegistroConRedispersion();
+	the.testSimple();
 
 
 	cout << "\n\n** EXITO! **" << endl;

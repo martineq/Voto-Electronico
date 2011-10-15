@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "ArchivoDeBuckets.h"
+#include "ArchivoDeControl.h"
 #include "Bucket.h"
 #include "Registro.h"
 
@@ -20,6 +21,12 @@ private:
 	ArchivoDeBuckets*	archivo;
 
 	/*
+	 * Archivo donde se almacena información necesaria para reconstruir el
+	 * hashing luego de ser almacenado.
+	 */
+	ArchivoDeControl*	archivoDeControl;
+
+	/*
 	 * Tabla de hash necesaria para emplear el hashing extensible.
 	 */
 	vector<int>			tablaDeHash;
@@ -32,7 +39,27 @@ private:
 	/*
 	 * Lista de buckets libres.
 	 */
-	list<int> 			listaDeBucketsLibres;
+	list<int>			listaDeBucketsLibres;
+
+	/*
+	 * Traduce de direcciones fisicas a lógicas.
+	 */
+	vector<int>			tablaDeTraduccion;
+
+	/*
+	 * Mantiene una lista de buckets durante la redispersión.
+	 */
+	list<Bucket*>		bucketsEnRedispersion;
+
+	/*
+	 * Permite activar o desactivar el flag de redispersion.
+	 */
+	bool				redispersando;
+
+	/*
+	 *	Duplica el bucket.
+	 */
+	Bucket* duplicarBucket(Bucket* bucket);
 
 	/*
 	 * Se imprime por pantalla la tabla de dispersion.
@@ -72,16 +99,31 @@ private:
 	Resultados reducirTablaDeHash();
 
 	/*
-	 * 	Se duplica un bucket.
+	 * Devuelve BucketDisponible, BucketLibre o BucketNoDisponible.
 	 */
-	Bucket* duplicarBucket(Bucket* bucket);
+	Resultados estadoDelBucket(unsigned int numeroDeBucket);
+
+	/*
+	 * Metodo para agregar registro.
+	 */
+	Resultados agregarRegistroInt(Registro* regisrtro,int clave);
 public:
 
 	/*
-	 * Instancia un objeto hashing extensible para aplicar la lógica sobre
-	 * un archivo de buckets.
+	 * Permite operar con un archivo de hashing dinámico, recibiendo los path
+	 * del archivo donde se almacenarán los datos y uno de control para funcionamiento
+	 * interno del hashing. Además es necesario pasarle el tamaño del bucket.
+	 * Si se desea eliminar los archivos, se debe realizar directamente sobre
+	 * el path de los archivos.
 	 */
-	HashingExtensible(ArchivoDeBuckets* nombreArchivo);
+	HashingExtensible(int dimensionDelBucket,char* archivoDeDatos,char* archivoDeControl);
+
+	/*
+	 * Agrega el registro al bucket determinado por la clave que contiene.
+	 * No realiza verificacion de unicidad de clave.
+	 * Devuelve operacion OK.
+	 */
+	Resultados cargarRegistro(Registro* registro);
 
 	/*
 	 * Agrega el registro al bucket determinado por la clave que contiene.

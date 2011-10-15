@@ -16,11 +16,14 @@ private:
 	void testAgregarDistrito(Bucket* bucket,string lugar);
 public:
 	TestArchivoDeBuckets();
+	void testVotante();
+	void testCargo();
 	void testLecturaEscrituraDeBuckets();
 	void testAgotamiento();
 	void testObtenerBucketFallas();
 	void testAccesoADisco();
 	void testAltaBajaDeBucketsEnArchivoDeBuckets();
+	void tests();
 	~TestArchivoDeBuckets();
 };
 

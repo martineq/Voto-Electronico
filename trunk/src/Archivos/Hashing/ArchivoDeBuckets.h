@@ -11,12 +11,8 @@ class ArchivoDeBuckets {
 private:
 	ArchivoBloques*		archivo;
 	Bucket*				ultimoBucket;
-	string*				bucketSerializado;
-	int					cantidadBucketsLibres;
-	int					ultimoBucketLibre;
 	int					numeroUltimoBucket;
 	int					dimensionBucket;
-	int					bucketsAlmacenados;
 
 	/*
 	 *	Duplica el bucket.
@@ -29,25 +25,15 @@ private:
 	void modificarBucketInterno(Bucket* bucket,int numeroDeBucket);
 
 	/*
-	 * Devuelve un puntero a un string* con memoria reservada.
+	 * Devuelve un bucket a partir de un char*.
 	 */
-	std::string* charToString(char* cadena);
+	Bucket* deserializadBucket(char* cadena);
 
 	/*
 	 * Devuelve un puntero a un char* con memoria reservada.
 	 */
 
-	char* stringToChar(std::string* cadena);
-
-	/*
-	 * Obtiene el numero de bucket a partir del nrr.
-	 */
-	int obtenerNumeroDeBucket(int numeroDeBloque);
-
-	/*
-	 * Obtiene el nrr del bloque a partir de un numero de bucket.
-	 */
-	int	obtenerNumeroDeBloque(int numeroDeBucket);
+	char* serializarBucket(Bucket* bucket);
 
 	/*
 	 * Guardar el Bucket en bloque.
@@ -76,12 +62,12 @@ public:
 	/*
 	 * Modifica el bucket almacenado.
 	 */
-	Resultados modificarBucket(int numeroDeBucket,Bucket* bucket);
+	void modificarBucket(int numeroDeBucket,Bucket* bucket);
 
 	/*
 	 * Elimina el bucket del archivo.
 	 */
-	Resultados liberarBucket(int numeroBucket);
+	void liberarBucket(int numeroBucket);
 
 	/*
 	 *	Determina si el bucket que se desea obtener tiene contenido valido.
@@ -92,17 +78,6 @@ public:
 	 * Devuelve el tamaño del bucket.
 	 */
 	int getDimensionDelBucket();
-
-	/*
-	 * Elimina el archivo de buckets del disco.
-	 */
-	Resultados eliminarArchivoDeBuckets();
-
-	/*
-	 * Muestra el contenido de los buckets almacenados.
-	 */
-	void mostrarBuckets();
-
 
 	/*
 	 *	Cierra el archivo de buckets.

@@ -93,8 +93,67 @@ void TestArchivoDeBuckets::mostrarBucket(ArchivoDeBuckets* archivo,int numeroDeB
 		delete d;
 		it++;
 	}
+}
 
-	delete bucketNuevo;
+void TestArchivoDeBuckets::testVotante(){
+	int numero = 320;
+	char nombre[]={"buckets.bin"};
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombre,numero);
+
+	Votante* v = new Votante(32,"nombre","password","domicilio","distrito");
+	Registro* r = new Registro(v);
+	Bucket* b = new Bucket(0,numero);
+	b->agregarRegistro(r);
+
+	delete r;
+	delete v;
+
+	int nrr = archivo->guardarBucket(b);
+
+	delete archivo;
+
+	archivo = new ArchivoDeBuckets(nombre,numero);
+
+	b = archivo->obtenerBucket(nrr);
+
+	r = b->getRegistro(32);
+	v = (Votante*)r->getContenido();
+	cout << v->getNombre() << endl;
+	delete v;
+	delete r;
+
+	delete archivo;
+
+	archivo = new ArchivoDeBuckets(nombre,numero);
+
+	b = archivo->obtenerBucket(nrr);
+	r = b->getRegistro(32);
+	v = (Votante*)r->getContenido();
+
+	v->setNombre("Vincent Van Gogh");
+	v->setDistrito("Arles, Provence-Alpes-Côte d'Azur");
+	v->setDomicilio("Rue des Suisses - 13200 ");
+	v->setPassword("oreille");
+
+	r->setContenido(v);
+	b->reemplazarRegistro(r);
+	delete r;
+
+	archivo->modificarBucket(nrr,b);
+
+	delete archivo;
+
+	archivo = new ArchivoDeBuckets(nombre,numero);
+
+	b = archivo->obtenerBucket(nrr);
+	r = b->getRegistro(32);
+	v = (Votante*)r->getContenido();
+
+	cout << v->getNombre() << endl;
+	cout << v->getDomicilio() << endl;
+	cout << v->getDistrito() << endl;
+
+	delete archivo;
 }
 
 TestArchivoDeBuckets::TestArchivoDeBuckets()
@@ -112,154 +171,154 @@ void TestArchivoDeBuckets::testAgregarDistrito(Bucket* bucket,string lugar){
 	delete registro;
 }
 
-void TestArchivoDeBuckets::testObtenerBucketFallas(){
-	Bucket* bucket;
-	int nB;
-	int nB1;
-	int nB2;
-	int nB4;
-	char nombreDelArchivo[]= "Archivo.bin";
-	remove(nombreDelArchivo);
-	int numero = LONGITUD_BLOQUE_PRUEBA;
-
-	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDelArchivo,numero);
-
-	cout << "** Carga de Bucket" << endl;
-	Bucket* bucketValido = new Bucket(0,numero);
-	testAgregarDistrito(bucketValido,"Buenos Aires");
-	nB = archivo->guardarBucket(bucketValido);
-
-	cout << "** Carga de Bucket" << endl;
-	Bucket* bucketValido2 = new Bucket(0,numero);
-	testAgregarDistrito(bucketValido,"Puerto Esperanza");
-	nB1 = archivo->guardarBucket(bucketValido);
-
-	cout << "** Carga de Bucket" << endl;
-	Bucket* bucketValido3 = new Bucket(0,numero);
-	testAgregarDistrito(bucketValido,"Montecarlo");
-	nB2 = archivo->guardarBucket(bucketValido);
-
-	cout << endl << endl << "INICIO DE PRUEBAS" << endl << endl;
-
-	bucket = archivo->obtenerBucket(-1);
-	if ( bucket==NULL )
-		cout << "Prueba 1 - OK" << endl;
-	else
-		cout << "Prueba 1 - FALLO" << endl;
-
-	bucket = archivo->obtenerBucket(100);
-	if ( bucket==NULL )
-		cout << "Prueba 2 - OK" << endl;
-	else
-		cout << "Prueba 2 - FALLO" << endl;
-
-	bucket = NULL;
-
-	if ( archivo->bucketDisponible(-100) == bucketNoDisponible )
-		cout << "Prueba 3 - OK" << endl;
-	else
-		cout << "Prueba 3 - FALLO" << endl;
-
-	if ( archivo->bucketDisponible(100) == bucketNoDisponible )
-		cout << "Prueba 4 - OK" << endl;
-	else
-		cout << "Prueba 4 - FALLO" << endl;
-
-	if ( archivo->liberarBucket(-100) == bucketNoDisponible )
-		cout << "Prueba 5 - OK" << endl;
-	else
-		cout << "Prueba 5 - FALLO" << endl;
-
-	if ( archivo->liberarBucket(100) == bucketNoDisponible )
-		cout << "Prueba 6 - OK" << endl;
-	else
-		cout << "Prueba 6 - FALLO" << endl;
-
-	if ( archivo->guardarBucket(bucket) == bucketNULO )
-		cout << "Prueba 7 - OK" << endl;
-	else
-		cout << "Prueba 7 - FALLO" << endl;
-
-	if ( archivo->modificarBucket(18,bucket) == bucketNULO )
-		cout << "Prueba 8 - OK" << endl;
-	else
-		cout << "Prueba 8 - FALLO" << endl;
-
-	if ( archivo->modificarBucket(-100,bucketValido) == bucketNoDisponible )
-		cout << "Prueba 9 - OK" << endl;
-	else
-		cout << "Prueba 9 - FALLO" << endl;
-
-	if ( archivo->modificarBucket(100,bucketValido) == bucketNoDisponible )
-		cout << "Prueba 10 - OK" << endl;
-	else
-		cout << "Prueba 10 - FALLO" << endl;
-
-	cout << "Prueba 11 -";
-	if ( archivo->bucketDisponible(nB) == bucketEnUso )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "Prueba 12 -";
-	if ( archivo->liberarBucket(nB) == operacionOK )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "Prueba 13 -";
-	if ( archivo->bucketDisponible(nB) == bucketLibre )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "Prueba 14 -";
-	if ( archivo->modificarBucket(nB,bucketValido2) == bucketLibre )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "Prueba 15 -";
-	if ( archivo->obtenerBucket(nB) == NULL )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	archivo->liberarBucket(nB2);
-
-	cout << "Prueba 16 -";
-	if ( archivo->bucketDisponible(nB2) == bucketNoDisponible )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	archivo->liberarBucket(nB1);
-
-	cout << "Prueba 17 -";
-	if ( archivo->bucketDisponible(nB1) == bucketNoDisponible )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "Prueba 18 -";
-	if ( archivo->liberarBucket(nB) == bucketLibre )
-		cout << " OK" << endl;
-	else
-		cout << " FALLO" << endl;
-
-	cout << "** Carga de Bucket" << endl;
-	Bucket* bucketValido4 = new Bucket(0,numero);
-	testAgregarDistrito(bucketValido,"Hong Kong");
-	nB4 = archivo->guardarBucket(bucketValido);
-
-	cout << nB4 << endl;
-
-	delete bucketValido4;
-	delete bucketValido;
-	delete bucketValido2;
-	delete bucketValido3;
-	delete archivo;
-}
+//void TestArchivoDeBuckets::testObtenerBucketFallas(){
+//	Bucket* bucket;
+////	int nB;
+////	int nB1;
+////	int nB2;
+////	int nB4;
+//	char nombreDelArchivo[]= "Archivo.bin";
+//	remove(nombreDelArchivo);
+//	int numero = LONGITUD_BLOQUE_PRUEBA;
+//
+//	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombreDelArchivo,numero);
+//
+//	cout << "** Carga de Bucket" << endl;
+//	Bucket* bucketValido = new Bucket(0,numero);
+//	testAgregarDistrito(bucketValido,"Buenos Aires");
+//	nB = archivo->guardarBucket(bucketValido);
+//
+//	cout << "** Carga de Bucket" << endl;
+//	Bucket* bucketValido2 = new Bucket(0,numero);
+//	testAgregarDistrito(bucketValido,"Puerto Esperanza");
+//	nB1 = archivo->guardarBucket(bucketValido);
+//
+//	cout << "** Carga de Bucket" << endl;
+//	Bucket* bucketValido3 = new Bucket(0,numero);
+//	testAgregarDistrito(bucketValido,"Montecarlo");
+//	nB2 = archivo->guardarBucket(bucketValido);
+//
+//	cout << endl << endl << "INICIO DE PRUEBAS" << endl << endl;
+//
+//	bucket = archivo->obtenerBucket(-1);
+//	if ( bucket==NULL )
+//		cout << "Prueba 1 - OK" << endl;
+//	else
+//		cout << "Prueba 1 - FALLO" << endl;
+//
+//	bucket = archivo->obtenerBucket(100);
+//	if ( bucket==NULL )
+//		cout << "Prueba 2 - OK" << endl;
+//	else
+//		cout << "Prueba 2 - FALLO" << endl;
+//
+//	bucket = NULL;
+//
+////	if ( archivo->bucketDisponible(-100) == bucketNoDisponible )
+////		cout << "Prueba 3 - OK" << endl;
+////	else
+////		cout << "Prueba 3 - FALLO" << endl;
+////
+////	if ( archivo->bucketDisponible(100) == bucketNoDisponible )
+////		cout << "Prueba 4 - OK" << endl;
+////	else
+////		cout << "Prueba 4 - FALLO" << endl;
+////
+////	if ( archivo->liberarBucket(-100) == bucketNoDisponible )
+////		cout << "Prueba 5 - OK" << endl;
+////	else
+////		cout << "Prueba 5 - FALLO" << endl;
+////
+////	if ( archivo->liberarBucket(100) == bucketNoDisponible )
+////		cout << "Prueba 6 - OK" << endl;
+////	else
+////		cout << "Prueba 6 - FALLO" << endl;
+////
+////	if ( archivo->guardarBucket(bucket) == bucketNULO )
+////		cout << "Prueba 7 - OK" << endl;
+////	else
+////		cout << "Prueba 7 - FALLO" << endl;
+////
+////	if ( archivo->modificarBucket(18,bucket) == bucketNULO )
+////		cout << "Prueba 8 - OK" << endl;
+////	else
+////		cout << "Prueba 8 - FALLO" << endl;
+////
+////	if ( archivo->modificarBucket(-100,bucketValido) == bucketNoDisponible )
+////		cout << "Prueba 9 - OK" << endl;
+////	else
+////		cout << "Prueba 9 - FALLO" << endl;
+////
+////	if ( archivo->modificarBucket(100,bucketValido) == bucketNoDisponible )
+////		cout << "Prueba 10 - OK" << endl;
+////	else
+////		cout << "Prueba 10 - FALLO" << endl;
+////
+////	cout << "Prueba 11 -";
+////	if ( archivo->bucketDisponible(nB) == bucketEnUso )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	cout << "Prueba 12 -";
+////	if ( archivo->liberarBucket(nB) == operacionOK )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	cout << "Prueba 13 -";
+////	if ( archivo->bucketDisponible(nB) == bucketLibre )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	cout << "Prueba 14 -";
+////	if ( archivo->modificarBucket(nB,bucketValido2) == bucketLibre )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	cout << "Prueba 15 -";
+////	if ( archivo->obtenerBucket(nB) == NULL )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	archivo->liberarBucket(nB2);
+////
+////	cout << "Prueba 16 -";
+////	if ( archivo->bucketDisponible(nB2) == bucketNoDisponible )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	archivo->liberarBucket(nB1);
+////
+////	cout << "Prueba 17 -";
+////	if ( archivo->bucketDisponible(nB1) == bucketNoDisponible )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+////
+////	cout << "Prueba 18 -";
+////	if ( archivo->liberarBucket(nB) == bucketLibre )
+////		cout << " OK" << endl;
+////	else
+////		cout << " FALLO" << endl;
+//
+//	cout << "** Carga de Bucket" << endl;
+//	Bucket* bucketValido4 = new Bucket(0,numero);
+//	testAgregarDistrito(bucketValido,"Hong Kong");
+//	nB4 = archivo->guardarBucket(bucketValido);
+//
+//	cout << nB4 << endl;
+//
+//	delete bucketValido4;
+//	delete bucketValido;
+//	delete bucketValido2;
+//	delete bucketValido3;
+//	delete archivo;
+//}
 
 void TestArchivoDeBuckets::testAccesoADisco(){
 	Bucket* bucket;
@@ -407,30 +466,30 @@ void TestArchivoDeBuckets::testLecturaEscrituraDeBuckets(){
 
 	Distrito* distrito = new Distrito("Buenos Aires");
 	string* serializacion = distrito->serializar();
-	cout << "longitud: "<< serializacion->size() << endl;
+	cout << "longitud distrito: "<< serializacion->size() << endl;
 	delete serializacion;
 
 	Registro* registro = new Registro(distrito);
 	serializacion = registro->serializar();
-	cout << "longitud: "<< serializacion->size() << endl;
+	cout << "longitud registro: "<< serializacion->size() << endl;
 	delete serializacion;
 
 	delete distrito;
 
 	Bucket* bucket = new Bucket(0,numero);
 	serializacion = bucket->serializar();
-	cout << "longitud: "<< serializacion->size() << endl;
+	cout << "longitud bucket: "<< serializacion->size() << endl;
 	delete serializacion;
 
 	bucket->agregarRegistro(registro);
 	serializacion = bucket->serializar();
-	cout << "longitud: "<< serializacion->size() << endl;
+	cout << "longitud bucket luego de agregar registro: "<< serializacion->size() << endl;
 	delete serializacion;
 
 	delete registro;
 
 	int numeroDeBucket1 = archivo->guardarBucket(bucket);
-	delete bucket;
+	//delete bucket;
 
 	bucket = archivo->obtenerBucket(numeroDeBucket1);
 
@@ -454,15 +513,85 @@ void TestArchivoDeBuckets::testLecturaEscrituraDeBuckets(){
 	delete registro;
 
 	numeroDeBucket1 = archivo->guardarBucket(bucket);
-	delete bucket;
+	//delete bucket;
 
 	cout << "Se muesta el bucket de la posicion: " << numeroDeBucket1 << endl;
 	this->mostrarBucket(archivo,numeroDeBucket1);
 
+
+	cout << "FIN DE EJECUCION" << endl;
 	delete archivo;
 }
+
+void TestArchivoDeBuckets::tests(){
+	char nombre[]= "archivo.bin";
+	remove(nombre);
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombre,128);
+
+	Distrito* d = new Distrito("Buenos Aires");
+	Registro* r = new Registro(d);
+	Bucket*	b	= new Bucket(9,128);
+
+	b->agregarRegistro(r);
+
+	int nrr = archivo->guardarBucket(b);
+
+	delete r;
+
+	b = archivo->obtenerBucket(nrr);
+	cout << b->getEspacioLibre() << endl;
+	cout << b->getTamanioDeDispersion() << endl;
+	cout << b->getCantidadDeRegistros() << endl;
+	r = b->getRegistro(d->getClave());
+	delete d;
+	d = (Distrito*)r->getContenido();
+	cout << "Distrito: " << d->getDistrito() << endl;
+
+
+	delete r;
+	delete d;
+	delete archivo;
+}
+
+void TestArchivoDeBuckets::testCargo()
+{
+	int numero = 320;
+	char nombre[]={"buckets.bin"};
+	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombre,numero);
+
+	Cargo* c = new Cargo("presidente");
+	Registro* r = new Registro(c);
+	Bucket* b = new Bucket(0,numero);
+	b->agregarRegistro(r);
+	delete c;
+	delete r;
+
+	c = new Cargo("vicepresidente");
+	r = new Registro(c);
+	b->agregarRegistro(r);
+	delete r;
+	delete c;
+
+	int nrr = archivo->guardarBucket(b);
+
+	Bucket* z = archivo->obtenerBucket(nrr);
+
+	cout << "espacio libre: " << z->getEspacioLibre() << endl;
+	cout << "cant registros: " << z->getCantidadDeRegistros() << endl;
+
+	list<Registro*>::iterator it = z->ubicarPrimero();
+	int cant = z->getCantidadDeRegistros();
+	for(int i = 0;i<cant;i++){
+		Cargo* cargo = (Cargo*)((*it)->getContenido());
+		cout << cargo->getCargo() << endl;
+		delete cargo;
+	}
+
+	delete archivo;
+
+}
+
 TestArchivoDeBuckets::~TestArchivoDeBuckets()
 {
 }
-
 
