@@ -32,24 +32,28 @@ string Lista::getFecha () {
 }
 
 int Lista::getTamanio(){
-	int tamanioNombre = TAM_INT + this->nombre.size();
-	int tamanioFecha = this->fecha.size(); //por default 8
-	int tamanioCargo = TAM_INT + this->cargo.size();
-	int tamanioCantVotos = sizeof(short int);
+	int tamanioFecha 	= TAM_INT;
+	int tamanioNombre 	= TAM_INT + this->nombre.size();
+	int tamanioCargo	= TAM_INT + this->cargo.size();
+	int tamanioCantVotos= sizeof(short int);
 	return (tamanioNombre + tamanioFecha + tamanioCargo + tamanioCantVotos);
 }
 
 int Lista::getClave(){
 	int c = 0;
-	for (int i=0; i<this->fecha.length(); i++) {
+
+	int size = fecha.length();
+	for (int i=0; i< size; i++)
 		c += (int)this->fecha[i];
-	}
-	for (int i=0; i<this->cargo.length(); i++) {
+
+	size = cargo.length();
+	for (int i=0; i< size ; i++)
 		c += (int)this->cargo[i];
-	}
-	for (int i=0; i<this->nombre.length(); i++) {
+
+	size = nombre.length();
+	for (int i=0; i< size ; i++)
 		c += (int)this->nombre[i];
-	}
+
 	return c;
 }
 
@@ -64,48 +68,33 @@ void Lista::incrementarVotos () {
 }
 
 string* Lista::serializar() {
-	stringstream buffer;
-	int cantidadDeBytes;
-	cantidadDeBytes   = this->nombre.size();
-	buffer.write((char*)&cantidadDeBytes,TAM_INT);
-	buffer.write((char*)this->nombre.c_str(),cantidadDeBytes);
-	buffer.write((char*)this->fecha.c_str(),cantidadDeBytes);
-	cantidadDeBytes   = this->cargo.size();
-	buffer.write((char*)&cantidadDeBytes,TAM_INT);
-	buffer.write((char*)this->cargo.c_str(),cantidadDeBytes);
-	buffer.write((char*)&this->cantidadDeVotos,TAM_SINT);
-	string* datos = new string(buffer.str());
-	return datos;
+
+	int fechaInt;
+
+	Serializadora serializadora;
+	stringstream fechaStream (fecha);
+	fechaStream >> fechaInt;
+
+	serializadora.agregarInt(fechaInt);
+	serializadora.agregarString(&nombre);
+	serializadora.agregarString(&cargo);
+	serializadora.agregarShortInt(cantidadDeVotos);
+
+	return serializadora.obtenerSerializacion();
 }
 
 void Lista::deserializar(string* source) {
-	int posicion=0;
 
-//	hidrato la nombre
-	stringstream tamanioDeNombre(source->substr(posicion,posicion+TAM_INT-1));
-	int tamanio = tamanioDeNombre.get();
-	posicion += TAM_INT;
-	stringstream nombre(source->substr(posicion,posicion+tamanio-1));
-	this->nombre = nombre.get();
-	posicion += tamanio;
+	Serializadora serializadora(source);
 
-//	hidrato la fecha
-	stringstream fecha(source->substr(posicion,posicion+TAM_FECHA-1));
-	this->fecha = fecha.get();
-	posicion += TAM_FECHA;
+	stringstream fechaStream;
+	fechaStream << serializadora.obtenerInt();
 
-//	hidrato el cargo
-	stringstream tamanioDeCargo(source->substr(posicion,posicion+TAM_INT-1));
-	tamanio = tamanioDeCargo.get();
-	posicion += TAM_INT;
-	stringstream cargo(source->substr(posicion,posicion+tamanio-1));
-	this->cargo = cargo.get();
-	posicion += tamanio;
+	fecha  = fechaStream.str();
+	nombre = serializadora.obtenerString();
+	cargo  = serializadora.obtenerString();
+	cantidadDeVotos = serializadora.obtenerShortInt();
 
-//	hidrato cantidad De Votos
-	stringstream votos(source->substr(posicion,posicion+TAM_INT-1));
-	this->cantidadDeVotos = votos.get();
-	posicion += TAM_INT;
 }
 
 Entidad *Lista::duplicar()
