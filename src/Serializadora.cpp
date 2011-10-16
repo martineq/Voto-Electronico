@@ -63,6 +63,18 @@ string Serializadora::obtenerString()
 	return abc.str();
 }
 
+void Serializadora::agregarShortInt(short int valor)
+{
+	stream->write((char*)&valor,sizeof(short int));
+}
+
+short int Serializadora::obtenerShortInt()
+{
+	short int valor;
+	stream->read((char*)&valor,sizeof(short int));
+	return valor;
+}
+
 Serializadora::~Serializadora() {
 	delete stream;
 }
