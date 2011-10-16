@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 
+
 using namespace std;
 
 class ManejadorDeArchivo{
@@ -18,9 +19,9 @@ class ManejadorDeArchivo{
         string obtenerNombreArchivo();			// Por ahora no se usa
         string obtenerNombreArchivoTmp();		// Por ahora no se usa
         void renombrar(string nombreNuevo);		// Por ahora no se usa
-        bool fin();								// Por ahora no se usa
 
     public:
+
 
         ManejadorDeArchivo(string nombre);
         void leer(char* registro, size_t cantBytes);
@@ -28,6 +29,7 @@ class ManejadorDeArchivo{
         void posicionarse(ios::pos_type pos);
         void posicionarseEnFin();
         void guardarBuffer();
+        bool fin();
         ios::pos_type obtenerPosicionDeLectura();
         ios::pos_type obtenerTamArchivo();
         void borrar();
