@@ -67,8 +67,6 @@ int Candidato::getTamanio(){
 	int tamanioNombre 	= TAM_INT + nombre.size();
 	int tamanioDni 		= TAM_INT;
 
-	cout << "** tamanio candidato : " << tamanioCargo+tamanioDni+tamanioFecha+tamanioNombre << endl;
-	cout << "** tamanio serializado: " << serializar()->size() << endl;
 	return (tamanioCargo + tamanioDni + tamanioFecha + tamanioNombre);
 }
 
