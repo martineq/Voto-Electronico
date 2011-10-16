@@ -33,7 +33,21 @@ int Conteo::getTamanio(){
 }
 
 int Conteo::getClave(){
-	return 0;
+	int c = 0;
+
+	int size = fechaEleccion.length();
+	for (int i=0; i< size; i++)
+		c += (int)fechaEleccion[i];
+
+	size = cargoEleccion.length();
+	for (int i=0; i< size ; i++)
+		c += (int)cargoEleccion[i];
+
+	size = nombreLista.length();
+	for (int i=0; i< size ; i++)
+		c += (int)nombreLista[i];
+
+	return c;
 }
 
 string Conteo::getFechaEleccion(){
@@ -157,6 +171,12 @@ void Conteo::deserializar(string* source){
     this->nombreLista = listaString;
     delete []listaChar;
     delete miString;
+
+    cout << fechaEleccion << endl;
+    cout << cargoEleccion << endl;
+    cout << nombreLista << endl;
+    cout << distrito << endl;
+    cout << cantidadVotos << endl;
 }
 
 NombreDeEntidad Conteo::getNombreDeEntidad(){
