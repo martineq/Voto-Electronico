@@ -17,29 +17,25 @@
 
 using namespace std;
 
-
 class Configuracion {
 private:
-
 	string rutaConfig;
 	string rutaHash;
 	string rutaArbol;
 	bool vAuto;
 	bool vManual;
 	void cargarArgumentos(int argc, const char** argv);
-	void cargarchivoConfig();
+	void cargarArchivoConfig();
+	void mostrarAyuda();
+	void mostrarVersion();
 
 public:
-
 	Configuracion(int argc, const char** argv);
-	virtual ~Configuracion();
-
 	string pathHash();
 	string pathArbol();
 	bool isAuto();
 	bool isManual();
-
+	virtual ~Configuracion();
 };
-
 
 #endif /* CONFIGURACION_H_ */
