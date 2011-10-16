@@ -171,12 +171,6 @@ void Conteo::deserializar(string* source){
     this->nombreLista = listaString;
     delete []listaChar;
     delete miString;
-
-    cout << fechaEleccion << endl;
-    cout << cargoEleccion << endl;
-    cout << nombreLista << endl;
-    cout << distrito << endl;
-    cout << cantidadVotos << endl;
 }
 
 NombreDeEntidad Conteo::getNombreDeEntidad(){
