@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
-#include "./Archivos/EnBloques/ManejadorDeArchivo.h"
+#include "../Archivos/EnBloques/ManejadorDeArchivo.h"
 
 using namespace std;
 
