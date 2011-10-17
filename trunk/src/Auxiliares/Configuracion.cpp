@@ -47,6 +47,7 @@ void Configuracion::cargarArgumentos(int argc, const char** argv){
           else
             fprintf (stderr,"Caracter de opción desconocida `\\x%x'.\n",optopt);
         default:
+        	cerr << "Para ayuda consulte con: -h \nPrograma terminado."<<endl;
         	exit(1);
         }
     for (index = optind; index < argc; index++)
