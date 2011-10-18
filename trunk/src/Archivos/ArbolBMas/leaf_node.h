@@ -1,5 +1,4 @@
-#ifndef LEAF_NODE_H
-#define	LEAF_NODE_H
+#pragma once
 #include <string>
 #include <utility>
 #include <iostream>
@@ -7,10 +6,13 @@
 #include <vector>
 #include <algorithm>
 #include "inner_node.h"
+#include <string.h>
 
 using namespace std;
 
-  
+
+class inner_node;
+
 class leaf_node {
 public:
 	void initialization();
@@ -37,4 +39,4 @@ private:
 	std::vector<std::pair<vector<char>,std::string> > l; 
 };
 
-#endif	/* LEAF_NODE_H */
+
