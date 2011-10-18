@@ -123,7 +123,7 @@ std::vector<char> leaf_node::serialize()
  vector<char> *mem = &retval;
  std::vector<std::pair<vector<char>, std::string> >::iterator it;
  char *tmp;
- unsigned int size;
+ int size;
  //add header
  mem->push_back('L'); //this is a Leaf node, therefore, it uses an L header
  

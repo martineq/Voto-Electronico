@@ -620,7 +620,9 @@ void Pruebas::pruebaBMas(){
 	 vector<char> tmp;
 	 std::pair<vector<char>,std::string> gn;
 	 bplustree b;
+
 	 b.newtree("test",60);
+
 	 v.push_back(1);
 	 b.add("deloitte",v);
 	 v.push_back(2);
@@ -665,15 +667,18 @@ void Pruebas::pruebaBMas(){
 	 b.del("faghgd");
 	 tmp=b.search("aaaa");
 	 gn=b.getnext();
+	 cout <<"Salida A:"<<endl;
 	 while(gn.second.size()!=0)
 	 {
 		 cout << gn.second << endl;
 		 gn=b.getnext();
 	 }
 	 tmp=b.search("dddd");
-	 for(int c=0;c<tmp.size();c++)
+	 cout <<"\nSalida B:"<<endl;
+	 for(int c=0;c<(int)tmp.size();c++)
 		 cout << (int)tmp[c];
 	 cout << endl;
+
 }
 
 

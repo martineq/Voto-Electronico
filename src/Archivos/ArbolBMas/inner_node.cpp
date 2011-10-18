@@ -82,7 +82,7 @@ std::vector<char> inner_node::serialize()
  vector<char> *mem = &retval;
  std::vector<std::pair<int, std::string> >::iterator it;
  char *tmp;
- unsigned int size=0;
+ int size=0;
  //add header
  mem->push_back('I');
  
