@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include "Pruebas.h"
 #include "../tests/Test.h"
 #include "../tests/TestArchivoBloques.h"
 #include "../tests/TestArchivoDeBuckets.h"
@@ -14,7 +15,7 @@ using namespace std;
 	 */
 int main(int argc,char* argv[]) {
 
-//	Pruebas* prueba = new Pruebas();
+	Pruebas* prueba = new Pruebas();
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
@@ -32,6 +33,10 @@ int main(int argc,char* argv[]) {
 
 //	Pruebas para el Archivo en Bloques:
 //	prueba->pruebaArchivoBloques();
+//	prueba->SerializarGuardarEnBloqueHidratar();
+
+//	Pruebas para el Árbol B+:
+	prueba->pruebaBMas();
 
 //	Pruebas de integracion
 //	prueba->pruebaDeSimulacionDePrograma();
@@ -61,7 +66,7 @@ int main(int argc,char* argv[]) {
 //	testArchivoDeBuckets.testAltaBajaDeBucketsEnArchivoDeBuckets();
 
 //	Pruebas de Hashing!
-	TestHashingExtensible the;
+//	TestHashingExtensible the;
 //	the.testAgregarRegistros1();
 //	the.testCargarYmostrarContenidoDelArchivo();
 //	the.testAgregarRegistros2();
@@ -72,8 +77,7 @@ int main(int argc,char* argv[]) {
 //	the.testModificarRegistroInexistente();
 //	the.testModificarRegistroExistente();
 //	the.testModificarRegistroConRedispersion();
-	the.testSimple();
-
+//	the.testSimple();
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
