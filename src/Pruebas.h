@@ -18,6 +18,7 @@
 #include "./Entidades/Log.h"
 #include "./Archivos/Hashing/Bucket.h"
 #include "./Archivos/EnBloques/ArchivoBloques.h"
+#include "./Archivos/ArbolBMas/bplustree.h"
 #include <list>
 #include <time.h>
 #include <stdio.h>
@@ -97,6 +98,8 @@ public:
 //	pruebas para el Archivo en Bloques
 	void pruebaArchivoBloques();
 	void SerializarGuardarEnBloqueHidratar();
+//	pruebas para el Árbol B+
+	void pruebaBMas();
 //	pruebas para serializar y deserializar
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();

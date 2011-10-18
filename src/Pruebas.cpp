@@ -3,7 +3,6 @@
 Pruebas::Pruebas() {
 }
 
-
 Pruebas::~Pruebas() {
 	delete this->bucketVotante;
 	delete this->bucketDistrito;
@@ -613,6 +612,70 @@ void Pruebas::SerializarGuardarEnBloqueHidratar(){
 	cout << "Datos Hidratado: "<< leido1 << " (int), " << leido2 << " (int), " << leido3<<" (string)" << endl;
 	cout << "\n------------\nSe acabó =D"<< endl;
 }
+
+
+void Pruebas::pruebaBMas(){
+
+	 vector<char> v;
+	 vector<char> tmp;
+	 std::pair<vector<char>,std::string> gn;
+	 bplustree b;
+	 b.newtree("test",60);
+	 v.push_back(1);
+	 b.add("deloitte",v);
+	 v.push_back(2);
+	 b.add("nacho",v);
+	 v.push_back(5);
+	 b.add("this",v);
+	 v.push_back(4);
+	 b.add("vb",v);
+	 v.push_back(5);
+	 b.add("mama",v);
+	 v.push_back(6);
+	 b.add("eeee",v);
+	 b.add("oiuy",v);
+	 b.add("faffs",v);
+	 b.add("fgfd",v);
+	 b.add("faghgd",v);
+	 b.add("ytytefe",v);
+	 b.add("fsfsgfsff",v);
+	 b.add("ytrefc",v);
+	 b.add("rtyu",v);
+	 b.add("aaaa",v);
+	 b.add("bbbb",v);
+	 b.add("cccc",v);
+	 b.add("jjjj",v);
+	 b.add("kkkkk",v);
+	 b.add("llll",v);
+	 b.add("mmmm",v);
+	 b.add("nnnnn",v);
+	 b.add("ooooo",v);
+	 b.add("ppppppp",v);
+	 b.add("rrrrrrr",v);
+	 b.add("ssssssss",v);
+	 b.add("tttttt",v);
+	 b.add("uuuuuuu",v);
+	 b.add("kkkkk",v);
+	 b.add("dddd",v);
+	 v.push_back(5);
+	 b.modify("dddd",v);
+	 tmp=b.search("aaaa");
+	 b.del("faffs");
+	 b.del("fgfd");
+	 b.del("faghgd");
+	 tmp=b.search("aaaa");
+	 gn=b.getnext();
+	 while(gn.second.size()!=0)
+	 {
+		 cout << gn.second << endl;
+		 gn=b.getnext();
+	 }
+	 tmp=b.search("dddd");
+	 for(int c=0;c<tmp.size();c++)
+		 cout << (int)tmp[c];
+	 cout << endl;
+}
+
 
 void Pruebas::verContenidoBucketDistrito(Bucket* unBucket){
 	if (unBucket->getCantidadDeRegistros()==0) cout << "BUCKET VACIO" << endl;
