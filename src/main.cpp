@@ -36,7 +36,8 @@ int main(int argc,char* argv[]) {
 //	prueba->SerializarGuardarEnBloqueHidratar();
 
 //	Pruebas para el Árbol B+:
-	prueba->pruebaBMas();
+//	prueba->pruebaBMas();
+	prueba->pruebaBMasAuto();
 
 //	Pruebas de integracion
 //	prueba->pruebaDeSimulacionDePrograma();
