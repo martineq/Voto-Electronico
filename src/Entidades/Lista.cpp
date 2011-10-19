@@ -4,7 +4,12 @@ Lista::Lista() {
 	this->nombre="";
 	this->fecha="";
 	this->cargo="";
-	this->cantidadDeVotos=0;
+}
+
+void Lista::verEntidad(){
+	cout << "Nombre: "<<nombre << endl;
+	cout << "Fecha: "<<fecha << endl;
+	cout << "Cargo: "<<cargo << endl;
 }
 
 Lista::Lista(string nombre, string fecha, string cargo) {
@@ -12,7 +17,6 @@ Lista::Lista(string nombre, string fecha, string cargo) {
 	this->fecha=fecha;
 	if (this->verificarCargo(cargo)) this->cargo=cargo;
 	else cout << "ERROR CARGO INEXISTENTE" << endl;
-	this->cantidadDeVotos=0;
 }
 
 bool Lista::verificarCargo(string cargo) {
@@ -35,8 +39,7 @@ int Lista::getTamanio(){
 	int tamanioFecha 	= TAM_INT;
 	int tamanioNombre 	= TAM_INT + this->nombre.size();
 	int tamanioCargo	= TAM_INT + this->cargo.size();
-	int tamanioCantVotos= sizeof(short int);
-	return (tamanioNombre + tamanioFecha + tamanioCargo + tamanioCantVotos);
+	return (tamanioNombre + tamanioFecha + tamanioCargo);
 }
 
 int Lista::getClave(){
@@ -60,12 +63,6 @@ int Lista::getClave(){
 string Lista::getCargo () {
 	return cargo;
 }
-short int Lista::getCantidadDeVotos () {
-	return cantidadDeVotos;
-}
-void Lista::incrementarVotos () {
-	this->cantidadDeVotos++;
-}
 
 string* Lista::serializar() {
 
@@ -78,7 +75,6 @@ string* Lista::serializar() {
 	serializadora.agregarInt(fechaInt);
 	serializadora.agregarString(&nombre);
 	serializadora.agregarString(&cargo);
-	serializadora.agregarShortInt(cantidadDeVotos);
 
 	return serializadora.obtenerSerializacion();
 }
@@ -93,14 +89,12 @@ void Lista::deserializar(string* source) {
 	fecha  = fechaStream.str();
 	nombre = serializadora.obtenerString();
 	cargo  = serializadora.obtenerString();
-	cantidadDeVotos = serializadora.obtenerShortInt();
 
 }
 
 Entidad *Lista::duplicar()
 {
 	Lista* copia = new Lista();
-	copia->cantidadDeVotos = this->cantidadDeVotos;
 	copia->cargo = this->cargo;
 	copia->fecha = this->fecha;
 	copia->nombre = this->nombre;
@@ -109,5 +103,35 @@ Entidad *Lista::duplicar()
 
 NombreDeEntidad Lista::getNombreDeEntidad(){
 	return tLista;
+
 }
 
+ResultadoComparacion Lista::comparar(Entidad* entidad){
+	if ( tLista != entidad->getNombreDeEntidad() ){
+		return comparacionInvalida;
+	}
+	Lista* listaNueva = (Lista*) entidad;
+	int compararFecha = this->fecha.compare(listaNueva->fecha);
+	int compararCargo = this->cargo.compare(listaNueva->cargo);
+	int compararLista = this->nombre.compare(listaNueva->nombre);
+	if (compararFecha < 0){
+		return menor;
+	}
+	if (compararFecha > 0){
+		return mayor;
+	}
+	if (compararCargo < 0){
+		return menor;
+	}
+	if (compararCargo > 0){
+		return mayor;
+	}
+	if (compararLista < 0){
+		return menor;
+	}
+	if (compararLista > 0){
+		return mayor;
+	}
+	return igual;
+
+}

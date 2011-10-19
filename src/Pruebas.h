@@ -15,15 +15,19 @@
 #include "./Entidades/Eleccion.h"
 #include "./Entidades/Conteo.h"
 #include "./Entidades/Administrador.h"
-#include "./Entidades/Log.h"
+#include "./Entidades/Constantes.h"
+#include "Log.h"
 #include "./Archivos/Hashing/Bucket.h"
+#include "./Archivos/Hashing/HashingExtensible.h"
 #include "./Archivos/EnBloques/ArchivoBloques.h"
 #include "./Archivos/ArbolBMas/bplustree.h"
 #include <list>
 #include <time.h>
 #include <stdio.h>
+#include "./Archivos/ArbolBMas/bplustree.h"
 #include <string>
 #include <iostream>
+
 using namespace std;
 
 class Pruebas {
@@ -73,6 +77,12 @@ private:
 	Registro* registroCargo1;
 	Registro* registroCargo2;
 	Bucket* bucketVotante;
+	HashingExtensible* heVotante;
+	HashingExtensible* heDistrito;
+	HashingExtensible* heEleccion;
+	HashingExtensible* heCandidato;
+	HashingExtensible* heLista;
+	HashingExtensible* heCargo;
 	Bucket* bucketDistrito;
 	Bucket* bucketEleccion;
 	Bucket* bucketCandidato;
@@ -93,9 +103,6 @@ private:
 	void verContenidoBucketCandidato(Bucket*);
 	void verContenidoBucketLista(Bucket*);
 	void verContenidoBucketCargo(Bucket*);
-	void cadenaNumericaAlAzar(char *s, const int len);
-	void cadenaAlfaNumAlAzar(char *s, const int len);
-
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
@@ -103,7 +110,6 @@ public:
 	void SerializarGuardarEnBloqueHidratar();
 //	pruebas para el Árbol B+
 	void pruebaBMas();
-	void pruebaBMasAuto();
 //	pruebas para serializar y deserializar
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();

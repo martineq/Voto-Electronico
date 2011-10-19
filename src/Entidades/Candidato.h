@@ -28,6 +28,7 @@ private:
 public:
 	Candidato();
 	Candidato(string fecha, string cargo, string nombre, int dni);
+	void verEntidad();
 	void verCandidato ();
 	int getTamanio();
 	int getClave();
@@ -45,6 +46,8 @@ public:
 	 * Devuelve el tipo de la entidad instanciada.
 	 */
 	NombreDeEntidad getNombreDeEntidad();
+
+	ResultadoComparacion comparar(Entidad* entidad);
 
 };
 

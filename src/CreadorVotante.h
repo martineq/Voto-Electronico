@@ -8,7 +8,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string.h>
+#include <string>
+#include <ctime>
 #include "./Entidades/Votante.h"
 
 
@@ -19,6 +20,9 @@ using namespace std;
 
 class CreadorVotante {
 private:
+
+	int		semilla;
+
 	string getNombre();
 	string getApellido();
 	int getDNI();
@@ -28,7 +32,7 @@ private:
 	int getCantLineas(string path);
 
 public:
-	CreadorVotante();
+	CreadorVotante(int seed);
 	Votante* crearVotante();
 	virtual ~CreadorVotante();
 };

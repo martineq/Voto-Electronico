@@ -11,21 +11,20 @@ private:
 	string nombre;
 	string fecha;
 	string cargo;
-	short int cantidadDeVotos;
 	bool verificarCargo(string);
 public:
 	Lista();
 	Lista(string nombre, string fecha, string cargo);
+	void verEntidad();
 	string getNombre ();
 	string getFecha ();
 	string getCargo ();
 	int getTamanio();
 	int getClave();
-	short int getCantidadDeVotos ();
-	void incrementarVotos ();
 	virtual ~Lista();
 	string* serializar();
 	void deserializar (string*);
+	ResultadoComparacion comparar(Entidad* entidad);
 
 	/*
 	 * Instancia un nuevo objeto, copia de actual.

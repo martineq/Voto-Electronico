@@ -74,7 +74,30 @@ int Distrito::getClave(){
 	return c;
 }
 
+ResultadoComparacion Distrito::comparar(Entidad *entidad)
+{
+	ResultadoComparacion resultado = comparacionInvalida;
+
+	if ( tDistrito == entidad->getNombreDeEntidad() ){
+
+		int r = distrito.compare(((Distrito*)entidad)->distrito);
+
+		resultado == mayor;
+
+		if ( r == 0 )
+			resultado = igual;
+
+		else if ( r < 0 )
+			resultado = menor;
+	}
+	return resultado;
+}
+
 Distrito::~Distrito(){}
+
+void Distrito::verEntidad(){
+	cout << "Distrito: " << distrito << endl;
+}
 
 Entidad* Distrito::duplicar(){
 	return new Distrito(this->distrito);

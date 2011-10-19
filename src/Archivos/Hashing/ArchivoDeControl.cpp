@@ -12,6 +12,8 @@ void ArchivoDeControl::persistirVector(vector<int>* tabla){
 	stringstream* stream =  new stringstream();
 	int size = tabla->size();
 
+	cout << "size de la tabla: "<< size << endl;
+
 	// Almaceno la cantidad de elementos de la lista.
 	stream->write((char*)&size,sizeof(int));
 

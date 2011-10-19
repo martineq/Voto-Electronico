@@ -111,6 +111,25 @@ void Cargo::deserializar(string * source){
 		this->agregarCargo(serializadora.obtenerString());
 }
 
+ResultadoComparacion Cargo::comparar(Entidad *entidad)
+{
+	ResultadoComparacion resultado = comparacionInvalida;
+
+	if ( tCargo == entidad->getNombreDeEntidad() ){
+
+		int r = cargo.compare(((Cargo*)entidad)->cargo);
+
+		resultado == mayor;
+
+		if ( r == 0 )
+			resultado = igual;
+
+		else if ( r < 0 )
+			resultado = menor;
+	}
+	return resultado;
+}
+
 Entidad *Cargo::duplicar()
 {
 	Cargo * copia = new Cargo();
@@ -121,6 +140,15 @@ Entidad *Cargo::duplicar()
 		it++;
 	}
 	return copia;
+}
+
+void Cargo::verEntidad(){
+	cout << "Cargo Principal: " << cargo;
+	list<string>::iterator it = listaCargos.begin();
+	while(it != listaCargos.end()){
+		cout << "Subcargo: "<< *it;
+		it++;
+	}
 }
 
 NombreDeEntidad Cargo::getNombreDeEntidad(){

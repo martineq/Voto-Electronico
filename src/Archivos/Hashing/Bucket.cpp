@@ -13,13 +13,12 @@ Bucket::Bucket(int tamanioDispersion,int tamanioDeBucket){
 //	this->espacioLibre=LONGITUD_BLOQUE;
 }
 
-Registro* Bucket::getRegistro(int clave){
+Registro* Bucket::getRegistro(Registro* registro){
 	if (this->listaDeRegistros.empty()) return NULL;
 	else {
 		list<Registro*>::iterator it = this->listaDeRegistros.begin();
 		while (it!=listaDeRegistros.end()) {
-			int claveDeRegistroActual = (*it)->obtenerClave();
-			if (claveDeRegistroActual==clave) {
+			if ( (*it)->comparar(registro) == igual ) {
 				Registro* unRegistro = (*it)->duplicar();
 				return unRegistro;
 			}
@@ -29,13 +28,12 @@ Registro* Bucket::getRegistro(int clave){
 	return NULL;
 }
 
-Registro* Bucket::consultarRegistro(int clave){
+Registro* Bucket::consultarRegistro(Registro* registro){
 	if (this->listaDeRegistros.empty()) return NULL;
 	else {
 		list<Registro*>::iterator it = this->listaDeRegistros.begin();
 		while (it!=listaDeRegistros.end()) {
-			int claveDeRegistroActual = (*it)->obtenerClave();
-			if (claveDeRegistroActual==clave) return *it;
+			if ( (*it)->comparar(registro) == igual ) return *it;
 			it++;
 		}
 	}
@@ -44,7 +42,7 @@ Registro* Bucket::consultarRegistro(int clave){
 
 //devuelve el resultado de la operacion
 bool Bucket::agregarRegistro(Registro* unRegistro){
-	if (this->consultarRegistro(unRegistro->obtenerClave())!=NULL) return false;
+	if (this->consultarRegistro(unRegistro)!=NULL) return false;
 	else
 		if ((unRegistro->getTamanio()+TAM_INT)>this->espacioLibre) return  false;
 		else {
@@ -55,18 +53,17 @@ bool Bucket::agregarRegistro(Registro* unRegistro){
 		}
 }
 
-bool Bucket::eliminarRegistro(int clave){
+bool Bucket::eliminarRegistro(Registro* registro){
 	if (this->listaDeRegistros.empty()) {
 		cout << "ERROR: EL BUCKET ESTA VACIO" << endl;
 		return false;
 	}
 	else {
-		if (this->consultarRegistro(clave)==NULL) return false;
+		if (this->consultarRegistro(registro)==NULL) return false;
 		else {
 			list<Registro*>::iterator it = this->listaDeRegistros.begin();
 			while (it!=listaDeRegistros.end()) {
-				int claveDeRegistroActual = (*it)->obtenerClave();
-				if (claveDeRegistroActual==clave) {
+				if ( (*it)->comparar(registro) == igual ) {
 					this->espacioLibre+=((*it)->getTamanio()+TAM_INT);
 					delete *it;
 					this->listaDeRegistros.erase (it);
@@ -74,6 +71,7 @@ bool Bucket::eliminarRegistro(int clave){
 				}
 				else it++;
 			}
+			return false;
 		}
 	}
 }
@@ -81,12 +79,11 @@ bool Bucket::eliminarRegistro(int clave){
 bool Bucket::reemplazarRegistro(Registro* unRegistro){
 	if (this->listaDeRegistros.empty()) return false;
 	else {
-		int clave=unRegistro->obtenerClave();
-		if (this->consultarRegistro(clave)==NULL) return false;
+		if (this->consultarRegistro(unRegistro)==NULL) return false;
 		else {
-			Registro* registroAReemplazar = this->consultarRegistro(clave);
+			Registro* registroAReemplazar = this->consultarRegistro(unRegistro);
 			if ((registroAReemplazar->getTamanio()+this->espacioLibre) >= unRegistro->getTamanio()){
-				this->eliminarRegistro(clave);
+				this->eliminarRegistro(unRegistro);
 				this->agregarRegistro(unRegistro);
 				return true;
 			}
@@ -105,83 +102,104 @@ list<Registro*>::iterator Bucket::ubicarPrimero(){
 }
 
 string* Bucket::serializar(){
-	cout << endl << "Usted esta en el serializar de bucket" << endl;
+	//cout << endl << "Usted esta en el serializar de bucket" << endl;
 
 	stringstream buffer;
 	int cantidadDeBytes;
 
-	cout << "Comienza la carga de elementos en buffer." << endl;
+	//cout << "Comienza la carga de elementos en buffer." << endl;
 
 	buffer.write((char*)&this->espacioLibre,TAM_INT);
-	cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
+	//cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
 
 	buffer.write((char*)&this->tamanioDeDispersion,TAM_INT);
-	cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+	//cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
 
 	int cantidadDeRegistros= this->listaDeRegistros.size();
 	buffer.write((char*)&cantidadDeRegistros,TAM_INT);
-	cout << "Se cargo la cantidad de registros: " << cantidadDeRegistros << endl;
+	//cout << "Se cargo la cantidad de registros: " << cantidadDeRegistros << endl;
 
 	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
 
 		cantidadDeBytes = ((*it)->getTamanio());
 		buffer.write((char*)&cantidadDeBytes,TAM_INT);
-		cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
+		//cout << "Se cargo el tamanio de un registro: " << cantidadDeBytes << endl;
 
 		string* registroSerializado = (*it)->serializar();
 		buffer.write(registroSerializado->c_str(),cantidadDeBytes);
 		delete registroSerializado;
 
 	}
-	cout << "Fin del serializado del bucket" << endl << endl;
+	//cout << "Fin del serializado del bucket" << endl << endl;
 	string* datos = new string(buffer.str());
 	return datos;
 }
 void Bucket::deserializar(string* bufferSerializado){
-	cout << endl << "Usted esta en el deserializar de bucket" << endl;
+	//cout << endl << "Usted esta en el deserializar de bucket" << endl;
 	if (bufferSerializado->size()==0) cout << "No se pudo hidratar el Bucket pues la fuente es nula" << endl;
 	else {
-		int posicion=0;
+
+		Serializadora serializadora(bufferSerializado);
 
 		//	hidrato el espacio libre
-		stringstream espacioLibre (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
-		posicion+=TAM_INT;
-		this->espacioLibre = espacioLibre.get();
-		cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
+		espacioLibre = serializadora.obtenerInt();
+//		cout << "Se cargo el espacio libre: " << this->espacioLibre << endl;
 
 		//	hidrato el tamanio de dispersion
-		stringstream tamanioDeDispersion (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
-		posicion+=TAM_INT;
-		this->tamanioDeDispersion = tamanioDeDispersion.get();
-		cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
+		tamanioDeDispersion = serializadora.obtenerInt();
+//		cout << "Se cargo el tamanio de dispersion: " << this->tamanioDeDispersion << endl;
 
 		//	hidrato la lista de registros
-		stringstream cantidadDeRegistros (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
-		posicion+=TAM_INT;
-		int tamanioDeLaLista = cantidadDeRegistros.get();
-		cout << "Se cargo la cantidad de registros: " << tamanioDeLaLista << endl;
+		int tamanioDeLaLista = serializadora.obtenerInt();
+//		cout << "Se cargo la cantidad de registros: " << tamanioDeLaLista << endl;
 
-		cout << "Carga de registros" << endl;
+		//cout << "Carga de registros" << endl;
 		for (int i=0; i<tamanioDeLaLista;i++){
+
+			string* registroSerializado = serializadora.obtenerStringPointer();
+
 			//hidrato el registro
-			stringstream tamanioDeRegistroHidratado (bufferSerializado->substr(posicion,posicion+TAM_INT-1));
-			posicion+=TAM_INT;
-			int tamanioDeRegistro = tamanioDeRegistroHidratado.get();
-			cout << "Se cargo el tamanio de un registro: " << tamanioDeRegistro << endl;
-			stringstream registroAHidratar (bufferSerializado->substr(posicion,posicion+tamanioDeRegistro-1));
-			posicion+=tamanioDeRegistro;
 			Registro* unRegistro = new Registro();
-			cout << "Deserializando registro" << endl;
-			string* source = new string (registroAHidratar.str());
-			unRegistro->deserializar(source);
-			delete source;
-			cout << "Registro deserializado" << endl;
+			unRegistro->deserializar(registroSerializado);
+
+			delete registroSerializado;
+
 			this->listaDeRegistros.push_back(unRegistro);
-			cout << "Registro cargado" << endl;
 		}
-		cout << "Chauuu!" << endl;
 	}
 }
+void Bucket::mostarClavesDeBucket()
+{
+	cout <<"Contenido del bucket: ";
+	list<Registro*>::iterator it = this->listaDeRegistros.begin();
+	while( it != listaDeRegistros.end()){
+		cout << " " << (*it)->obtenerClave();
+		it++;
+	}
+	cout << endl;
+}
+
+void Bucket::verInfoBucket(){
+	cout << "Contenido del bucket: "<<endl;
+	cout << " - Espacio libre: " << espacioLibre << endl;
+	cout << " - Tamanio de Dispersion: " << tamanioDeDispersion << endl;
+	int cantidadRegistros = listaDeRegistros.size();
+	cout << " - Cantidad de registros: " << cantidadRegistros << endl;
+}
+
+void Bucket::mostarBucket(){
+	verInfoBucket();
+
+	list<Registro*>::iterator it = this->listaDeRegistros.begin();
+	int i = 1;
+	while( it != listaDeRegistros.end()){
+		cout << "Contenido del registro " << i++ <<endl;
+		(*it)->verContenido();
+		it++;
+	}
+	cout << endl;
+}
+
 Bucket::~Bucket() {
 	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
 		delete *it;

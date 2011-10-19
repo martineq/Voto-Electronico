@@ -37,15 +37,15 @@ int main(int argc,char* argv[]) {
 
 //	Pruebas para el Árbol B+:
 //	prueba->pruebaBMas();
-	prueba->pruebaBMasAuto();
+//	prueba->pruebaBMasAuto();
 
 //	Pruebas de integracion
-//	prueba->pruebaDeSimulacionDePrograma();
+	prueba->pruebaDeSimulacionDePrograma();
 
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-//	delete (prueba);
+	delete (prueba);
 
 //	Test test;
 //	test.testStringstream();

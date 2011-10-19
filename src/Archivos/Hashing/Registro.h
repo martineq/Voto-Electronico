@@ -3,8 +3,9 @@
 #define REGISTRO_H_
 
 #include "../../Entidades/Entidad.h"
+#include "../../Auxiliares/ResultadoComparacion.h"
 #include "FabricaDeEntidades.h"
-#include <cstring>
+#include <string>
 
 class Registro : public Serializable {
 
@@ -63,10 +64,25 @@ public:
 	int obtenerClave();
 
 	/*
+	 * Compara el registro actual contra otro registro para verificar si se
+	 * trata del mismo elemento.
+	 * Devuelve mayor, menor, igual o comparacionInvalida si no se pueden
+	 * comparar.
+	 * Si el elemento que se está comparando es mayor al pasado por parámetro
+	 * entonces devuelve mayor.
+	 */
+	ResultadoComparacion comparar(Registro* registro);
+
+	/*
 	 * Devuelve el objeto serializado como un string.
 	 * Si el registro no tiene contenido, devuelve un string de longitud 0.
 	 */
 	std::string* serializar();
+
+	/*
+	 * Muestra el contenido del registro.
+	 */
+	void verContenido();
 
 	/*
 	 * Devuelve el contenido del registro, NULL si no lo tiene.
@@ -74,7 +90,7 @@ public:
 	 */
 	Entidad* getContenido();
 
-	~Registro();
+	virtual ~Registro();
 };
 
 #endif /* REGISTRO_H_ */

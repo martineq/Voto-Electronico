@@ -7,6 +7,10 @@
 
 #include "Entidad.h"
 
+ResultadoComparacion Entidad::comparar(Entidad *entidad)
+{
+}
+
 Entidad::~Entidad() {
 
 }

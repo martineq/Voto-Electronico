@@ -15,6 +15,14 @@ Conteo::Conteo() {
 	cantidadVotos = 0;
 }
 
+void Conteo::verEntidad(){
+	cout << "Fecha Eleccion: "<< fechaEleccion << endl;
+	cout << "Cargo eleccion: "<< cargoEleccion << endl;
+	cout << "Nombre de lista: "<< nombreLista << endl;
+	cout << "Distrito: "<< distrito << endl;
+	cout << "Cantidad de votos: "<< cantidadVotos << endl;
+}
+
 Conteo::Conteo(string fecha,string cargo,string lista,string distrito){
 	this->fechaEleccion = fecha;
 	this->cargoEleccion = cargo;
@@ -185,6 +193,44 @@ void Conteo::imprimirConteo(){
 	cout <<"Votos conseguidos: "<<this->cantidadVotos<<endl<<endl;
 }
 
+
+ResultadoComparacion Conteo::comparar(Entidad* entidad){
+	if (entidad->getNombreDeEntidad() != tConteo){
+		return comparacionInvalida;
+	}
+	Conteo* conteoNuevo = (Conteo*) entidad;
+	int compararFecha = this->fechaEleccion.compare(conteoNuevo->fechaEleccion);
+	int compararCargo = this->cargoEleccion.compare(conteoNuevo->cargoEleccion);
+	int compararLista = this->nombreLista.compare(conteoNuevo->nombreLista);
+	int compararDistrito = this->distrito.compare(conteoNuevo->distrito);
+
+	if (compararFecha < 0){
+		return menor;
+	}
+	if (compararFecha > 0){
+		return mayor;
+	}
+	if (compararCargo < 0){
+		return menor;
+	}
+	if (compararCargo > 0){
+		return mayor;
+	}
+	if (compararLista < 0){
+		return menor;
+	}
+	if (compararLista > 0){
+		return mayor;
+	}
+
+	if ( compararDistrito < 0 )
+		return menor;
+	else if ( compararDistrito == 0 )
+		return igual;
+	else
+		return mayor;
+
+}
 
 
 Conteo::~Conteo() {
