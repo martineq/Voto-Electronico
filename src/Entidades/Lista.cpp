@@ -36,7 +36,7 @@ string Lista::getFecha () {
 }
 
 int Lista::getTamanio(){
-	int tamanioFecha 	= TAM_INT + this->fecha.size();
+	int tamanioFecha 	= TAM_INT;
 	int tamanioNombre 	= TAM_INT + this->nombre.size();
 	int tamanioCargo	= TAM_INT + this->cargo.size();
 	return (tamanioNombre + tamanioFecha + tamanioCargo);
@@ -66,9 +66,13 @@ string Lista::getCargo () {
 
 string* Lista::serializar() {
 
-	Serializadora serializadora;
+	int fechaInt;
 
-	serializadora.agregarString(&fecha);
+	Serializadora serializadora;
+	stringstream fechaStream (fecha);
+	fechaStream >> fechaInt;
+
+	serializadora.agregarInt(fechaInt);
 	serializadora.agregarString(&nombre);
 	serializadora.agregarString(&cargo);
 
@@ -79,14 +83,17 @@ void Lista::deserializar(string* source) {
 
 	Serializadora serializadora(source);
 
-	fecha  = serializadora.obtenerString();
+	stringstream fechaStream;
+	fechaStream << serializadora.obtenerInt();
+
+	fecha  = fechaStream.str();
 	nombre = serializadora.obtenerString();
 	cargo  = serializadora.obtenerString();
 
 }
 
-Entidad *Lista::duplicar(){
-
+Entidad *Lista::duplicar()
+{
 	Lista* copia = new Lista();
 	copia->cargo = this->cargo;
 	copia->fecha = this->fecha;
