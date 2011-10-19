@@ -8,8 +8,8 @@ Pruebas::~Pruebas() {
 	delete this->heDistrito;
 	delete this->heEleccion;
 	delete this->heCandidato;
-//	delete this->heLista;
 	delete this->heCargo;
+	delete this->arbolB;
 	remove ("archivoDeControlVotante.txt");
 	remove ("archivoDeDatosVotante.txt");
 	remove ("archivoDeControlDistrito.txt");
@@ -18,10 +18,9 @@ Pruebas::~Pruebas() {
 	remove ("archivoDeDatosEleccion.txt");
 	remove ("archivoDeControlCandidato.txt");
 	remove ("archivoDeDatosCandidato.txt");
-//	remove ("archivoDeControlLista.txt");
-//	remove ("archivoDeDatosLista.txt");
 	remove ("archivoDeControlCargo.txt");
 	remove ("archivoDeDatosCargo.txt");
+	remove("arbolDeListas");
 }
 
 void Pruebas::iniciarRegistrosDePrueba(){
@@ -470,7 +469,12 @@ void Pruebas::serializarDeserializarCandidato(){
 }
 
 void Pruebas::serializarDeserializarEleccion(){
-	Eleccion* unaEleccion = new Eleccion ("040795","Jefe De Comuna");
+	Eleccion* unaEleccion = new Eleccion ("04071995","Jefe De Comuna");
+	unaEleccion->agregarDistrito("Iguazu");
+	unaEleccion->agregarDistrito("Posadas");
+	unaEleccion->agregarDistrito("Obera");
+	unaEleccion->agregarDistrito("Wanda");
+	unaEleccion->verEntidad();
 	cout << endl;
 	cout << "Comienzo de serializado de Eleccion" << endl;
 	string* datos = unaEleccion->serializar();
@@ -907,18 +911,18 @@ void Pruebas::iniciarEleccionesParaIntegracion(){
 	this->registroEleccion3 = new Registro(eleccion3);
 	delete this->eleccion1;
 	delete this->eleccion2;
-//	delete this->eleccion3;
+	delete this->eleccion3;
 	char archivoDeControl[]="archivoDeControlEleccion.txt";
 	char archivoDeDatos[]="archivoDeDatosEleccion.txt";
 	this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
 	if ( this->heEleccion->agregarRegistro(registroEleccion1) == operacionOK )
-		cout << "Se agrego una eleccion" << endl;
+		cout << "Se agrego una eleccion1" << endl;
 	else cout << "Error agregando eleccion1" << endl;
 	if ( this->heEleccion->agregarRegistro(registroEleccion2) == operacionOK )
-		cout << "Se agrego una eleccion" << endl;
+		cout << "Se agrego una eleccion2" << endl;
 	else cout << "Error agregando eleccion2" << endl;
 	if ( this->heEleccion->agregarRegistro(registroEleccion3) == operacionOK )
-		cout << "Se agrego un eleccion" << endl;
+		cout << "Se agrego un eleccion3" << endl;
 	else cout << "Error agregando eleccion3" << endl;
 
 //	this->bucketEleccion = new Bucket(0,450);
@@ -956,115 +960,147 @@ void Pruebas::iniciarCandidatosParaIntegracion(){
 //	this->bucketCandidato->agregarRegistro(registroCandidato3);
 }
 
+void Pruebas::verContenidoArbolListas (){
+//	se posiciona en el primer registro
+	this->arbolB->search("");
+	pair<vector<char>,string> par=this->arbolB->getnext();
+	vector<char> registroObtenidoDelArbol=par.first;
+	string* registroSerializado;
+	for (int i=0;i<registroObtenidoDelArbol.size();i++) {
+		cout << "registroObtenidoDelArbol[i]: " << registroObtenidoDelArbol[i] << endl;
+		registroSerializado->at(i) = registroObtenidoDelArbol[i];
+	}
+	Registro* unRegistro;
+	unRegistro->deserializar(registroSerializado);
+	unRegistro->verContenido();
+	par=this->arbolB->getnext();
+	while(par.second.size()!=0) {
+		registroObtenidoDelArbol=par.first;
+		for (int i=0;i<registroObtenidoDelArbol.size();i++)
+			registroSerializado->at(i) = registroObtenidoDelArbol[i];
+		unRegistro->deserializar(registroSerializado);
+		unRegistro->verContenido();
+		par=this->arbolB->getnext();
+	}
+}
+
+void Pruebas::agregarBoletaAlArbol(Registro* registro){
+	string* registroSerializado = registro->serializar();
+	vector<char> data;
+	for (int i=0;i<registroSerializado->length();i++) {
+		char c = registroSerializado->at(i);
+		data.push_back(c);
+	}
+	int claveInt = registro->obtenerClave();
+	stringstream claveIntAString;//create a stringstream
+	claveIntAString << claveInt;//add number to the stream
+	string claveString = claveIntAString.str();
+	this->arbolB->add(claveString,data);
+}
+
 void Pruebas::iniciarListasParaIntegracion(){
 	this->lista1 = new Lista("UCR","19970701","Presidente");
-	this->lista2 = new Lista("UCR","19970701","Gobernador");
+	this->lista2 = new Lista("UCR","19980701","Gobernador");
 	this->lista3 = new Lista("PJ","19970702","Presidente");
 	this->registroLista1 = new Registro(lista1);
 	this->registroLista2 = new Registro(lista2);
 	this->registroLista3 = new Registro(lista3);
+	delete this->lista1;
+	delete this->lista2;
+	delete this->lista3;
+	arbolB = new bplustree();
+	arbolB->newtree("arbolDeListas",LONGITUD_BLOQUE);
+	this->agregarBoletaAlArbol(registroLista1);
+	this->agregarBoletaAlArbol(registroLista2);
+	this->agregarBoletaAlArbol(registroLista3);
+	this->verContenidoArbolListas();
+
+//	this->lista1 = new Lista("UCR","19970701","Presidente");
+//	this->lista2 = new Lista("UCR","19970701","Gobernador");
+//	this->lista3 = new Lista("PJ","19970702","Presidente");
+//	this->registroLista1 = new Registro(lista1);
+//	this->registroLista2 = new Registro(lista2);
+//	this->registroLista3 = new Registro(lista3);
 //	delete this->lista1;
 //	delete this->lista2;
 //	delete this->lista3;
-	cout << "WHY" << endl;
-
-	string* s_1 = lista1->serializar();
-
-	Lista* lw1 = new Lista("","","");
-	lw1->deserializar(s_1);
-	lw1->verEntidad();
-	delete s_1;
-
-	cout << endl << endl;
-
-	string* s2 = registroLista1->serializar();
-
-	Registro* reg = new Registro();
-	reg->deserializar(s2);
-	reg->verContenido();
-
-	bplustree arbolB;
-	remove("arbolDeListas");
-	arbolB.newtree("arbolDeListas",LONGITUD_BLOQUE);
-
-	stringstream clave1;
-	clave1 << registroLista1->obtenerClave();
-	cout << "clave1 " << registroLista1->obtenerClave() << endl;
-	cout << "clave1 comparada " << clave1.str() << endl;
-
-
-	string* registroSerializado = registroLista1->serializar();
-	vector<char> data1(registroSerializado->begin(), registroSerializado->end());
-	cout << registroSerializado->size() << endl;
-
-
-	arbolB.add(clave1.str(),data1);
-
-	vector<char> vector1;
-
-	vector1 = arbolB.search(clave1.str());
-
-	if(data1.size() != vector1.size())
-	{
-		cout << "crap" << endl;
-		return;
-	}
-	int sizeData1 = data1.size();
-	for(int p=0; p< sizeData1; p++)
-		if(data1[p]!=vector1[p])
-		{
-			cout << "more crap" << endl;
-			return;
-		}
-
-	int sizeVector1 = vector1.size();
-
-	string stringVector;
-	for (int i= 0 ; i < sizeVector1;i++)
-		stringVector.push_back(vector1[i]);
-
-	if(stringVector.size() != registroSerializado->size())
-		{
-			cout << "crap" << endl;
-			return;
-		}
-	int size2 = registroSerializado->size();
-	for(int p=0 ; p < size2 ; p++)
-		if(registroSerializado->at(p)!=stringVector.at(p))
-		{
-			cout << "more crap" << endl;
-			return;
-		}
-
-
-	Registro* r1 = new Registro();
-	r1->deserializar(&stringVector);
-	r1->verContenido();
-
-	delete r1;
-	delete registroSerializado;
-
-//	char archivoDeControl[]="archivoDeControlLista.txt";
-//	char archivoDeDatos[]="archivoDeDatosLista.txt";
-//	this->heLista = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
-//	if ( this->heLista->agregarRegistro(registroLista1) == operacionOK )
-//		cout << "Se agrego una lista" << endl;
-//	else cout << "Error agregando lista1" << endl;
-//	if ( this->heLista->agregarRegistro(registroLista2) == operacionOK )
-//		cout << "Se agrego una lista" << endl;
-//	else cout << "Error agregando lista2" << endl;
-//	if ( this->heLista->agregarRegistro(registroLista3) == operacionOK )
-//		cout << "Se agrego una lista" << endl;
-//	else cout << "Error agregando listas3" << endl;
-
-//	this->bucketLista = new Bucket(0,190);
-//	cout << this->bucketLista->getEspacioLibre() << endl;
-//	this->bucketLista->agregarRegistro(registroLista1);
-//	cout << this->bucketLista->getEspacioLibre() << endl;
-//	this->bucketLista->agregarRegistro(registroLista2);
-//	cout << this->bucketLista->getEspacioLibre() << endl;
-//	this->bucketLista->agregarRegistro(registroLista3);
-//	cout << this->bucketLista->getEspacioLibre() << endl;
+//	cout << "WHY" << endl;
+//
+//	string* s_1 = lista1->serializar();
+//
+//	Lista* lw1 = new Lista("","","");
+//	lw1->deserializar(s_1);
+//	lw1->verEntidad();
+//	delete s_1;
+//
+//	cout << endl << endl;
+//
+//	string* s2 = registroLista1->serializar();
+//
+//	Registro* reg = new Registro();
+//	reg->deserializar(s2);
+//	reg->verContenido();
+//
+//	bplustree arbolB;
+//	remove("arbolDeListas");
+//	arbolB.newtree("arbolDeListas",LONGITUD_BLOQUE);
+//
+//	stringstream clave1;
+//	clave1 << registroLista1->obtenerClave();
+//	cout << "clave1 " << registroLista1->obtenerClave() << endl;
+//	cout << "clave1 comparada " << clave1.str() << endl;
+//
+//
+//	string* registroSerializado = registroLista1->serializar();
+//	vector<char> data1(registroSerializado->begin(), registroSerializado->end());
+//	cout << registroSerializado->size() << endl;
+//
+//
+//	arbolB.add(clave1.str(),data1);
+//
+//	vector<char> vector1;
+//
+//	vector1 = arbolB.search(clave1.str());
+//
+//	if(data1.size() != vector1.size())
+//	{
+//		cout << "crap" << endl;
+//		return;
+//	}
+//	int sizeData1 = data1.size();
+//	for(int p=0; p< sizeData1; p++)
+//		if(data1[p]!=vector1[p])
+//		{
+//			cout << "more crap" << endl;
+//			return;
+//		}
+//
+//	int sizeVector1 = vector1.size();
+//
+//	string stringVector;
+//	for (int i= 0 ; i < sizeVector1;i++)
+//		stringVector.push_back(vector1[i]);
+//
+//	if(stringVector.size() != registroSerializado->size())
+//	{
+//		cout << "crap" << endl;
+//		return;
+//	}
+//	int size2 = registroSerializado->size();
+//	for(int p=0 ; p < size2 ; p++)
+//		if(registroSerializado->at(p)!=stringVector.at(p))
+//		{
+//			cout << "more crap" << endl;
+//			return;
+//		}
+//
+//
+//	Registro* r1 = new Registro();
+//	r1->deserializar(&stringVector);
+//	r1->verContenido();
+//
+//	delete r1;
+//	delete registroSerializado;
 }
 
 void Pruebas::iniciarCargosParaIntegracion() {
@@ -1093,7 +1129,7 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->votante4->agregarEleccion ("19970701","Gobernador");
 	this->registroVotante4 = new Registro(votante4);
 	delete this->votante4;
-	if (administrador.alta(this->heVotante,this->registroVotante4)==operacionOK )
+	if (administrador.altaHash(this->heVotante,this->registroVotante4)==operacionOK )
 		cout << "Se agrego un votante" << endl;
 	else cout << "Error agregando votante4" << endl;
 	heVotante->mostrarArchivoDeHash();
@@ -1101,12 +1137,11 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 //	this->verContenidoBucketVotante(this->bucketVotante);
 //	==============================
 
-
 	cout << "Inicio de carga de distritos" << endl;
 	this->iniciarDistritosParaIntegracion();
 	this->distrito4 = new Distrito("Colegiales");
 	this->registroDistrito4 = new Registro(distrito4);
-	if (administrador.alta(this->heDistrito,this->registroDistrito4)==operacionOK )
+	if (administrador.altaHash(this->heDistrito,this->registroDistrito4)==operacionOK )
 		cout << "Se agrego un distrito4" << endl;
 	else cout << "Error agregando distrito4" << endl;
 	heDistrito->mostrarArchivoDeHash();
@@ -1123,7 +1158,7 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->cargo2 = new Cargo ("Gobernador");
 	this->cargo2->agregarCargo("Vice Gobernador");
 	this->registroCargo2 = new Registro(cargo2);
-	if (administrador.alta(this->heCargo,this->registroCargo2)==operacionOK )
+	if (administrador.altaHash(this->heCargo,this->registroCargo2)==operacionOK )
 		cout << "Se agrego un cargo2" << endl;
 	else cout << "Error agregando cargo2" << endl;
 	heCargo->mostrarArchivoDeHash();
@@ -1143,7 +1178,7 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->eleccion4->agregarDistrito("Mataderos");
 	this->eleccion4->agregarDistrito("Colegiales");
 	this->registroEleccion4 = new Registro(eleccion4);
-	if (administrador.alta(this->heEleccion,this->registroEleccion4)==operacionOK )
+	if (administrador.altaHash(this->heEleccion,this->registroEleccion4)==operacionOK )
 		cout << "Se agrego una eleccion4" << endl;
 	else cout << "Error agregando eleccion4" << endl;
 	heEleccion->mostrarArchivoDeHash();
@@ -1159,12 +1194,12 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	cout << "Fin de carga de Elecciones pasadas" << endl;
 	this->candidato4 = new Candidato ("19970702","Gobernador","VodkaTonic",4);
 	this->registroCandidato4 = new Registro(candidato4);
-	if (administrador.alta(this->heCandidato,this->registroCandidato4)==operacionOK )
+	if (administrador.altaHash(this->heCandidato,this->registroCandidato4)==operacionOK )
 		cout << "Se agrego un candidato4" << endl;
 	else cout << "Error agregando candidato4" << endl;
 	heCandidato->mostrarArchivoDeHash();
 
-//	version anterior ===============>
+	//	version anterior ===============>
 //	if (administrador.alta(this->bucketCandidato,this->registroCandidato4)) cout << "Se cargo candidato nuevo" << endl;
 //	else cout << "ERROR" << endl;
 //	this->verContenidoBucketCandidato(this->bucketCandidato);
@@ -1174,12 +1209,12 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->iniciarListasParaIntegracion();
 	cout << "Fin de carga de Listas de elecciones pasadas" << endl;
 
-
 	this->lista4 = new Lista ("Socialista","19970702","Gobernador");
 	this->registroLista4 = new Registro(lista4);
-//	if (administrador.alta(this->heLista,this->registroLista4)==operacionOK )
-//		cout << "Se agrego una Lista4" << endl;
-//	else cout << "Error agregando lista4" << endl;
+	if (administrador.altaArbol(this->arbolB,this->registroLista4)==0)
+		cout << "Se agrego una Lista4" << endl;
+	else cout << "Error agregando lista4" << endl;
+
 
 //	version anterior ===============>
 //	if (administrador.alta(this->bucketLista,this->registroLista4)) cout << "Se cargo lista nueva" << endl;
@@ -1279,7 +1314,7 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 		log.insertarMensajeConEntidad(*itHabilitadas,mensaje);
 		ok=false;
 		int boleta;
-		administrador.cargarListasDeEleccion(*itHabilitadas,this->heLista);
+		administrador.cargarListasDeEleccion(*itHabilitadas,this->arbolB);
 		while (!ok) {
 			while (!ok) {
 				boleta = administrador.elegirBoleta(numeroDeEleccion,this->bucketLista);
@@ -1332,16 +1367,15 @@ void Pruebas::pruebaDeSimulacionDePrograma () {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		this->cargarBaseDeDatos(administrador);
-		this->inicioDeSimulacion(administrador);
+//		this->inicioDeSimulacion(administrador);
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	this->destruir();
 }
 
 void Pruebas::destruir() {
-	delete votante4;
+//	delete votante4;
 	delete distrito4;
-	delete eleccion3;
 	delete eleccion4;
 	delete candidato4;
 	delete lista4;
@@ -1368,12 +1402,7 @@ void Pruebas::destruir() {
 	delete registroLista4;
 	delete registroCargo1;
 	delete registroCargo2;
-
 }
-
-
-
-
 
 int Pruebas::holaMundo(){
 

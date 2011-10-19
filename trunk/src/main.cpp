@@ -1,10 +1,8 @@
 #include <iostream>
 #include <list>
 #include "Pruebas.h"
-#include "../tests/Test.h"
-#include "../tests/TestArchivoBloques.h"
-#include "../tests/TestArchivoDeBuckets.h"
-#include "../tests/TestHashingExtensible.h"
+
+
 
 using namespace std;
 
@@ -79,6 +77,7 @@ int main(int argc,char* argv[]) {
 //	the.testModificarRegistroExistente();
 //	the.testModificarRegistroConRedispersion();
 //	the.testSimple();
+
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

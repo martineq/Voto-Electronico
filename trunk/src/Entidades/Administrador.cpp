@@ -7,6 +7,7 @@
 
 #include "Administrador.h"
 
+
 Administrador::Administrador(string pathArchivo) {
 	archivo = new fstream(pathArchivo.c_str());
 
@@ -30,8 +31,19 @@ bool Administrador::acceder(string nomb,string pass){
 	else return false;
 }
 
-Resultados Administrador::alta (HashingExtensible* he,Registro* unRegistro){
+Resultados Administrador::altaHash (HashingExtensible* he,Registro* unRegistro){
 	return he->agregarRegistro(unRegistro);
+}
+
+int Administrador::altaArbol (bplustree* arbolB,Registro* registro){
+	string* registroSerializado = registro->serializar();
+	vector<char> data;
+	for (int i=0;i<registroSerializado->length();i++) data.push_back(registroSerializado->at(i));
+	int claveInt = registro->obtenerClave();
+	stringstream claveIntAString;//create a stringstream
+	claveIntAString << claveInt;//add number to the stream
+	string claveString = claveIntAString.str();
+	return  arbolB->add(claveString,data);
 }
 
 bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
@@ -153,25 +165,59 @@ int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
 	return c;
 }
 
-void Administrador::cargarListasDeEleccion(Eleccion* eleccion, HashingExtensible* heLista){
+int Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
 	#warning "INTEGRAR CON ARBOL B+, 4 = CANTIDAD DE REGISTROS"
-	list <Lista*> listaChamuyo;
-	Lista* lista1 = new Lista("UCR","19970701","Presidente");
-	Lista* lista2 = new Lista("UCR","19970701","Gobernador");
-	Lista* lista3 = new Lista("PJ","19970702","Presidente");
-	Lista* lista4 = new Lista("Socialista","19970702","Gobernador");
-	listaChamuyo.push_back(lista1);
-	listaChamuyo.push_back(lista2);
-	listaChamuyo.push_back(lista3);
-	listaChamuyo.push_back(lista4);
-	list<Lista*>::iterator it = listaChamuyo.begin();
-	for (int i=0; i<4; i++){
-		if (((*it)->getFecha()==eleccion->getFecha()) && ((*it)->getCargo()==eleccion->getCargo())){
-			Lista* lista = (Lista*)(*it)->duplicar();
+//	list <Lista*> listaChamuyo;
+//	Lista* lista1 = new Lista("UCR","19970701","Presidente");
+//	Lista* lista2 = new Lista("UCR","19970701","Gobernador");
+//	Lista* lista3 = new Lista("PJ","19970702","Presidente");
+//	Lista* lista4 = new Lista("Socialista","19970702","Gobernador");
+//	listaChamuyo.push_back(lista1);
+//	listaChamuyo.push_back(lista2);
+//	listaChamuyo.push_back(lista3);
+//	listaChamuyo.push_back(lista4);
+//	list<Lista*>::iterator it = listaChamuyo.begin();
+	pair<vector<char>,std::string> siguienteRegistro;
+	vector <char> registroSerializadoChar = arbol->search(eleccion->getFecha());
+	string registroSerializadoString;
+	cout << "registro serializador char " << registroSerializadoChar.size() << endl;
+	for (int i=0; i < registroSerializadoChar.size(); i++){
+		cout << "for" << endl;
+		registroSerializadoString.push_back(registroSerializadoChar[i]);
+	}
+	Registro* registro;
+	cout << "Estoy en la linea 187 de Administrador.cpp" << endl;
+//	========================================================
+	registro->deserializar(&registroSerializadoString);
+//	========================================================
+	Lista* boletaDelArbol = (Lista*)registro->getContenido();
+	if (boletaDelArbol->getFecha()==eleccion->getFecha()){
+		if (boletaDelArbol->getCargo()==eleccion->getCargo()){
+			Lista* lista = (Lista*)lista->duplicar();
 			this->listaDeBoletas.push_back(lista);
+			delete boletaDelArbol;
 		}
-		delete *it;
-		it++;
+	}
+	else return 0;
+	delete boletaDelArbol;
+	siguienteRegistro=arbol->getnext();
+	while(siguienteRegistro.second.size()!=0) {
+		registroSerializadoChar = siguienteRegistro.first;
+		for (int i=0; i < registroSerializadoChar.size(); i++){
+			registroSerializadoString.push_back(registroSerializadoChar[i]);
+		}
+		registro->deserializar(&registroSerializadoString);
+		Lista* boletaDelArbol = (Lista*)registro->getContenido();
+		if (boletaDelArbol->getFecha()==eleccion->getFecha()){
+			if (boletaDelArbol->getCargo()==eleccion->getCargo()){
+				Lista* lista = (Lista*)lista->duplicar();
+				this->listaDeBoletas.push_back(lista);
+				delete boletaDelArbol;
+			}
+		}
+		else return 0;
+		delete boletaDelArbol;
+		siguienteRegistro=arbol->getnext();
 	}
 }
 
@@ -220,6 +266,5 @@ Administrador::~Administrador() {
 		delete *it2;
 		it2++;
 	}
-
 	delete archivo;
 }
