@@ -5,6 +5,7 @@
 #include <list>
 #include "../../Entidades/Constantes.h"
 #include "../../Entidades/Serializable.h"
+#include "../../Serializadora.h"
 #include "Registro.h"
 #include <iostream>
 using namespace std;
@@ -15,21 +16,24 @@ private:
 	int espacioLibre;
 	int tamanioDeDispersion;
 	list<Registro*> listaDeRegistros;
-	Registro* consultarRegistro(int);
+	Registro* consultarRegistro(Registro*);
 public:
 	Bucket(int,int);
 	//devuelve el resultado de la operacion
 	bool agregarRegistro(Registro*);
-	bool eliminarRegistro(int);
+	bool eliminarRegistro(Registro*);
 	bool reemplazarRegistro(Registro*);
-	Registro* getRegistro(int);
+	Registro* getRegistro(Registro*);
 	int getEspacioLibre ();
 	int getTamanioDeDispersion ();
 	int getCantidadDeRegistros ();
 	void  setTamanioDeDispersion (int);
+	void mostarClavesDeBucket();
 	list<Registro*>::iterator ubicarPrimero();
 	string* serializar();
 	void deserializar(string*);
+	void mostarBucket();
+	void verInfoBucket();
 	~Bucket();
 };
 

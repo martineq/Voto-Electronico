@@ -70,14 +70,15 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
 	Bucket* bucket = NULL;
 
-		if ( numeroDeBucket != numeroUltimoBucket ){
+		//if ( numeroDeBucket != numeroUltimoBucket ){
 
 			char* cadena = new char[dimensionBucket];
 			this->archivo->obtenerBloque(numeroDeBucket,cadena);
+
 			Bucket* nuevoBucket = deserializarBucket(cadena);
 			delete[] cadena;
 			modificarBucketInterno(nuevoBucket,numeroDeBucket);
-		}
+		//}
 
 		bucket = ultimoBucket;
 
@@ -102,7 +103,6 @@ int ArchivoDeBuckets::guardarBucket(Bucket* bucket)
 	archivo->crearNuevoBloque(&nrr);
 	modificarBucketInterno(bucket,nrr);
 	guardarBukcetEnBloque(nrr);
-
 	return nrr;
 }
 
@@ -115,6 +115,5 @@ ArchivoDeBuckets::~ArchivoDeBuckets() {
 	delete archivo;
 	if ( ultimoBucket != NULL )
 		delete ultimoBucket;
-	cout << endl << "se cerro el archivo" << endl;
 }
 

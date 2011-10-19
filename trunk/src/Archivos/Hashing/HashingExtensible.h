@@ -145,14 +145,14 @@ public:
 	 * Elimina el registro luego de buscarlo por la clave y libera el bucket
 	 * que lo contiene de ser posible.
 	 */
-	Resultados eliminarRegistro(unsigned int clave);
+	Resultados eliminarRegistro(Registro* registro);
 
 	/*
-	 *	Devuelve el registro a partir de la clave introducida.
+	 *	Devuelve el registro a partir del registro introducido.
 	 *	Registro* es una nueva instancia por lo que debe ser eliminada tras ser
 	 *	utilizada.
 	 */
-	Registro* obtenerRegistro(unsigned int clave);
+	Registro* obtenerRegistro(Registro* registro);
 
 	/*
 	 * Muestra el contenido del archivo de hashing.

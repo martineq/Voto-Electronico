@@ -100,8 +100,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 
 	cout << endl << endl << "Prueba obtener distrito: Buenos Aires" << endl;
 	distrito = new Distrito("Buenos Aires");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -113,8 +115,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 	cout << endl << endl << "Prueba obtener distrito: Eldorado" << endl;
 
 	distrito = new Distrito("Eldorado");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -126,8 +130,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 	cout << endl << endl << "Prueba obtener distrito: Montecarlo" << endl;
 
 	distrito = new Distrito("Montecarlo");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -139,8 +145,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 	cout << endl << endl << "Prueba obtener distrito: Puerto Esperanza" << endl;
 
 	distrito = new Distrito("Puerto Esperanza");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -151,8 +159,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 
 	cout << endl << endl << "Prueba obtener distrito: San Fernando del Valle de Catamarca" << endl;
 	distrito = new Distrito("San Fernando del Valle de Catamarca");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -163,8 +173,10 @@ void TestHashingExtensible::testAgregarRegistros2(){
 
 	cout << endl << endl << "Prueba obtener distrito: Amsterdam" << endl;
 	distrito = new Distrito("Amsterdam");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
@@ -177,8 +189,11 @@ void TestHashingExtensible::testAgregarRegistros2(){
 
 	cout << endl << endl << "Prueba obtener distrito: Roma" << endl;
 	distrito = new Distrito("Roma");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registro = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
+
 	if ( registro != NULL ){
 		distrito = (Distrito*)registro->getContenido();
 		cout << "Distrito: " << distrito->getDistrito() << endl;
@@ -195,13 +210,13 @@ void TestHashingExtensible::testObtenerRegistro()
 {
 	HashingExtensible* he = inicializarArchivosDePrueba();
 
-	cout << "Prueba 1 - ";
-	if ( he->obtenerRegistro(12) == NULL )
-	cout << " OK " <<endl; else cout << " ERROR "<<endl;
-
-	cout << "Prueba 2 - ";
-	if ( he->obtenerRegistro(-12) == NULL )
-	cout << " OK " <<endl; else cout << " ERROR "<<endl;
+//	cout << "Prueba 1 - ";
+//	if ( he->obtenerRegistro(12) == NULL )
+//	cout << " OK " <<endl; else cout << " ERROR "<<endl;
+//
+//	cout << "Prueba 2 - ";
+//	if ( he->obtenerRegistro(-12) == NULL )
+//	cout << " OK " <<endl; else cout << " ERROR "<<endl;
 
 	delete he;
 }
@@ -224,6 +239,7 @@ void TestHashingExtensible::cargarRegistros(HashingExtensible* he){
 }
 
 void TestHashingExtensible::testEliminarRegistrosYBucketSinReducirTabladeHash(){
+	Registro* registro;
 	HashingExtensible* he = inicializarArchivosDePrueba();
 	this->cargarRegistros(he);
 	he->mostrarArchivoDeHash();
@@ -233,49 +249,58 @@ void TestHashingExtensible::testEliminarRegistrosYBucketSinReducirTabladeHash(){
 	Distrito* distrito;
 
 	distrito = new Distrito("Buenos Aires");
+	registro = new Registro(distrito);
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	distrito = new Distrito("Puerto Esperanza");
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	registro = new Registro(distrito);
+	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	distrito = new Distrito("Montecarlo");
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	registro = new Registro(distrito);
+	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	distrito = new Distrito("Atenas");
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
 
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	registro = new Registro(distrito);
+	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	distrito = new Distrito("Buenos Aires");
 	cout << endl << "Se intenta obtener el registro "<< distrito->getDistrito() << endl;
-
-	if ( he->obtenerRegistro(distrito->getClave()) == NULL )
+	registro = new Registro(distrito);
+	if ( he->obtenerRegistro(registro) == NULL )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
-
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
@@ -293,58 +318,69 @@ void TestHashingExtensible::testEliminarRegistrosReduciendoTablaDehash()
 	cout << endl << endl << "** INICIO DE ELIMINACION DE REGISTROS *****" << endl;
 
 	Distrito* distrito;
+	Registro* registro;
 
 	distrito = new Distrito("Santiago del Estero");
+	registro = new Registro(distrito);
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
 
 	distrito = new Distrito("San Fernando del Valle de Catamarca");
+	registro = new Registro(distrito);
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
 
 	distrito = new Distrito("Resistencia");
+	registro = new Registro(distrito);
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
 
 	distrito = new Distrito("Resistencia");
 	cout << endl << "Se intenta obtener el registro "<< distrito->getDistrito() << endl;
-	if ( he->obtenerRegistro(distrito->getClave()) == NULL )
+	registro = new Registro(distrito);
+	if ( he->obtenerRegistro(registro) == NULL )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
 
 	distrito = new Distrito("Mendoza");
+	registro = new Registro(distrito);
 	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
-	if ( he->eliminarRegistro(distrito->getClave()) == operacionOK )
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	cout << endl << "Se muestra el archivo de HASH " << endl;
 	he->mostrarArchivoDeHash();
@@ -372,22 +408,27 @@ void TestHashingExtensible::testEliminarRegistro()
 
 	cout << endl << "Se intenta eliminar al registro Buenos Aires" << endl;
 	distrito = new Distrito("Buenos Aires");
-	int clave = distrito->getClave();
-	if ( he->eliminarRegistro(clave) == operacionOK )
+	registro = new Registro(distrito);
+	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	he->mostrarArchivoDeHash();
 
 	cout << endl << "Se intenta acceder al registro Buenos Aires" << endl;
 	distrito = new Distrito("Buenos Aires");
-	if ( he->obtenerRegistro(distrito->getClave()) == NULL )
+	registro = new Registro(distrito);
+	cout << endl << "Se intenta eliminar el registro "<< distrito->getDistrito() << endl;
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	he->mostrarArchivoDeHash();
 
@@ -465,8 +506,8 @@ void TestHashingExtensible::testEliminarRegistro()
 
 	cout << endl << "Se intenta eliminar al registro Buenos Aires" << endl;
 	distrito = new Distrito("Buenos Aires");
-	clave = distrito->getClave();
-	if ( he->eliminarRegistro(clave) == operacionOK )
+	registro = new Registro(distrito);
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
@@ -477,33 +518,37 @@ void TestHashingExtensible::testEliminarRegistro()
 
 	cout << endl << "Se intenta acceder al registro Buenos Aires" << endl;
 	distrito = new Distrito("Buenos Aires");
-	if ( he->obtenerRegistro(distrito->getClave()) == NULL )
+	registro = new Registro(distrito);
+	if ( he->obtenerRegistro(registro) == NULL )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	he->mostrarArchivoDeHash();
 
 	cout << endl << "Se intenta eliminar al registro Montevideo" << endl;
 	distrito = new Distrito("Montevideo");
-	clave = distrito->getClave();
-	if ( he->eliminarRegistro(clave) == operacionOK )
+	registro = new Registro(distrito);
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	he->mostrarArchivoDeHash();
 
 	cout << endl << "Se intenta eliminar al registro Puerto Esperanza" << endl;
 	distrito = new Distrito("Puerto Esperanza");
-	clave = distrito->getClave();
-	if ( he->eliminarRegistro(clave) == operacionOK )
+	registro = new Registro(distrito);
+	if ( he->eliminarRegistro(registro) == operacionOK )
 		cout << "OPERACION EXITOSA" << endl;
 	else
 		cout << "OPERACION FALLO" << endl;
 	delete distrito;
+	delete registro;
 
 	he->mostrarArchivoDeHash();
 
@@ -552,6 +597,7 @@ void TestHashingExtensible::testModificarRegistroExistente()
 
 	Distrito* distrito;
 	Registro* registro;
+	Registro* registroObtenido;
 
 	this->cargarRegistros(he);
 	he->mostrarArchivoDeHash();
@@ -559,16 +605,19 @@ void TestHashingExtensible::testModificarRegistroExistente()
 	cout << endl << "Se intenta acceder al registro Marseille" << endl;
 
 	distrito = new Distrito("Marseille");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registroObtenido = he->obtenerRegistro(registro);
 	delete distrito;
+	delete registro;
 
 	if ( registro != NULL ){
 		cout << "OPERACION EXITOSA" << endl;
-		distrito = (Distrito*)registro->getContenido();
+		distrito = (Distrito*)(registroObtenido->getContenido());
 		cout << "Se obtuvo el distrito: " << distrito->getDistrito() << endl;
 	}else
 		cout << "OPERACION FALLO" << endl;
 
+	delete registroObtenido;
 	delete registro;
 	delete distrito;
 
@@ -588,41 +637,44 @@ void TestHashingExtensible::testModificarRegistroExistente()
 
 	cout << endl << "Se intenta acceder al registro Amsterdam" << endl;
 	distrito = new Distrito("Amsterdam");
-	registro = he->obtenerRegistro(distrito->getClave());
+	registro = new Registro(distrito);
+	registroObtenido = he->obtenerRegistro(registro);
+	delete registro;
 	delete distrito;
+
 	if ( registro != NULL ){
 		cout << "OPERACION EXITOSA" << endl;
-		distrito = (Distrito*)registro->getContenido();
+		distrito = (Distrito*)registroObtenido->getContenido();
 		cout << "Se obtuvo el distrito: " << distrito->getDistrito() << endl;
 	}else
 		cout << "OPERACION FALLO" << endl;
 
 	delete registro;
 	delete distrito;
+	delete registroObtenido;
 
 	delete he;
 }
 
 void TestHashingExtensible::testModificarRegistroConRedispersion()
 {
-	int dimensionBucket = 384;
+	int dimensionBucket = 256;
 	char nombreDeArchivo[] = "he.bin";
 	char archivoConfiguracion[] = "conf.bin";
 	remove(nombreDeArchivo);
 	remove(archivoConfiguracion);
 	HashingExtensible* he = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
 
-	for(int i= 0;i<5;i++){
-		cout << endl << endl << "Votante: " << i << endl;
+	for(int i= 0;i<10;i++){
+		cout <<  "Votante: " << i << endl;
 		Votante* v = new Votante(i,"nombre","password","domicilio","distrito");
 		Registro* r = new Registro(v);
 		delete v;
-		if (i == 4)
-			cout << "stop" << endl;
 		he->agregarRegistro(r);
 		delete r;
 
 		he->mostrarArchivoDeHash();
+		cout << endl;
 
 	}
 
@@ -653,17 +705,22 @@ void TestHashingExtensible::testSimple(){
 			delete d;
 		}
 
+		cout << "*FIN DE CARGA******" << endl;
+
 		for(int i=0;i<26;i++){
 			cout << "DISTRITO: " << vect[i] << endl;
 			Distrito* d = new Distrito(vect[i]);
-			he->eliminarRegistro(d->getClave());
+			Registro* r = new Registro(d);
+			cout << "Registro a buscar: " << r->obtenerClave() << endl;
+			he->eliminarRegistro(r);
 
 			he->mostrarArchivoDeHash();
 			delete d;
+			delete r;
 
 		}
 
-		for(int i= 0;i<26;i++){
+		for(int i= 25; i >= 0 ;i--){
 			cout << "DISTRITO: " << vect[i] << endl;
 			Distrito* d = new Distrito(vect[i]);
 			Registro* r = new Registro(d);

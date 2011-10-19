@@ -78,25 +78,21 @@ std::string *Registro::serializar()
 }
 
 void Registro::deserializar(std::string *source){
-	int size = sizeof(int);
-	int posicion = 0;
 
 	if ( source->size() > 0 ){
 
-		stringstream bufferNombreDeEntidad(source->substr(posicion,posicion+size-1));
-		NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)bufferNombreDeEntidad.get();
-		posicion += size;
+		Serializadora serializadora(source);
 
-		stringstream bufferTamanioEntidad(source->substr(posicion,posicion+size-1));
-		int tamanioEntidad = bufferTamanioEntidad.get();
-		posicion += size;
+		NombreDeEntidad nombreDeEntidad = (NombreDeEntidad)serializadora.obtenerInt();
 
-		string entidadSerializada = source->substr(posicion,posicion+tamanioEntidad-1);
+		string* entidadSerializada = serializadora.obtenerStringPointer();
 
 		FabricaDeEntidades fabrica;
 		Entidad* nuevoContenido = fabrica.crearEntidad(nombreDeEntidad);
-		nuevoContenido->deserializar(&entidadSerializada);
-		cout << "Deserializamos con exito" << endl;
+		nuevoContenido->deserializar(entidadSerializada);
+
+		delete entidadSerializada;
+//		cout << "Deserializamos con exito" << endl;
 		this->setContenido(nuevoContenido);
 		delete nuevoContenido;
 
@@ -120,6 +116,16 @@ Registro *Registro::duplicar(){
 	registro->setContenido(this->contenido);
 	registro->determinarClave();
 	return registro;
+}
+
+ResultadoComparacion Registro::comparar(Registro *registroMuestra)
+{
+	return contenido->comparar(registroMuestra->contenido);
+}
+
+void Registro::verContenido()
+{
+	contenido->verEntidad();
 }
 
 Registro::~Registro()

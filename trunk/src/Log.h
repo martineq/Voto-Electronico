@@ -14,8 +14,8 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include "Votante.h"
-#include "Lista.h"
+#include "./Entidades/Votante.h"
+#include "./Entidades/Lista.h"
 
 using namespace std;
 

@@ -98,46 +98,62 @@ void TestArchivoDeBuckets::mostrarBucket(ArchivoDeBuckets* archivo,int numeroDeB
 void TestArchivoDeBuckets::testVotante(){
 	int numero = 320;
 	char nombre[]={"buckets.bin"};
+	remove(nombre);
 	ArchivoDeBuckets* archivo = new ArchivoDeBuckets(nombre,numero);
 
 	Votante* v = new Votante(32,"nombre","password","domicilio","distrito");
 	Registro* r = new Registro(v);
 	Bucket* b = new Bucket(0,numero);
+	b->mostarBucket();
 	b->agregarRegistro(r);
+	b->mostarBucket();
 
 	delete r;
 	delete v;
 
 	int nrr = archivo->guardarBucket(b);
 
-	delete archivo;
-
-	archivo = new ArchivoDeBuckets(nombre,numero);
+//	delete archivo;
+//
+//	archivo = new ArchivoDeBuckets(nombre,numero);
 
 	b = archivo->obtenerBucket(nrr);
+	cout << "A continuacion se muestra el bucket leido desde disco" << endl;
+	b->mostarBucket();
 
-	r = b->getRegistro(32);
-	v = (Votante*)r->getContenido();
-	cout << v->getNombre() << endl;
+	v = new Votante(32,"","","","");
+	r = new Registro(v);
+	Registro* r2 = b->getRegistro(r);
+	b->mostarClavesDeBucket();
 	delete v;
 	delete r;
+	v = (Votante*)(r2->getContenido());
+
+	cout << "A continuacion se muestra la informacion del votante leido"<<endl;
+	v->verVotante();
+	delete v;
+	delete r2;
 
 	delete archivo;
 
 	archivo = new ArchivoDeBuckets(nombre,numero);
 
 	b = archivo->obtenerBucket(nrr);
-	r = b->getRegistro(32);
-	v = (Votante*)r->getContenido();
+	v = new Votante(32,"","","","");
+	r = new Registro(v);
+	r2 = b->getRegistro(r);
+	delete r;
+	delete v;
+	v = (Votante*)r2->getContenido();
 
 	v->setNombre("Vincent Van Gogh");
 	v->setDistrito("Arles, Provence-Alpes-Côte d'Azur");
 	v->setDomicilio("Rue des Suisses - 13200 ");
 	v->setPassword("oreille");
 
-	r->setContenido(v);
-	b->reemplazarRegistro(r);
-	delete r;
+	r2->setContenido(v);
+	b->reemplazarRegistro(r2);
+	delete r2;
 
 	archivo->modificarBucket(nrr,b);
 
@@ -146,8 +162,12 @@ void TestArchivoDeBuckets::testVotante(){
 	archivo = new ArchivoDeBuckets(nombre,numero);
 
 	b = archivo->obtenerBucket(nrr);
-	r = b->getRegistro(32);
-	v = (Votante*)r->getContenido();
+	v = new Votante(32,"","","","");
+	r = new Registro(v);
+	r2 = b->getRegistro(r);
+	delete r;
+	delete v;
+	v = (Votante*)r2->getContenido();
 
 	cout << v->getNombre() << endl;
 	cout << v->getDomicilio() << endl;
@@ -542,13 +562,15 @@ void TestArchivoDeBuckets::tests(){
 	cout << b->getEspacioLibre() << endl;
 	cout << b->getTamanioDeDispersion() << endl;
 	cout << b->getCantidadDeRegistros() << endl;
-	r = b->getRegistro(d->getClave());
+	r = new Registro(d);
+	Registro* r2 = b->getRegistro(r);
+	delete r;
 	delete d;
-	d = (Distrito*)r->getContenido();
+	d = (Distrito*)r2->getContenido();
 	cout << "Distrito: " << d->getDistrito() << endl;
 
 
-	delete r;
+	delete r2;
 	delete d;
 	delete archivo;
 }

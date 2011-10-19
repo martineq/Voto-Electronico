@@ -1,9 +1,10 @@
+#ifndef SERIALIZADORA_H_
+#define SERIALIZADORA_H_
+
 #include <string>
 #include <sstream>
 #include <iostream>
-
-#ifndef SERIALIZADORA_H_
-#define SERIALIZADORA_H_
+#include "./Entidades/Constantes.h"
 
 using std::string;
 using std::stringstream;

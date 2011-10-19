@@ -39,6 +39,8 @@ public:
 
 	string getDistrito();
 
+	void verEntidad();
+
 	unsigned int getCantidadVotos();
 
 	void incrementarVotos();
@@ -54,6 +56,8 @@ public:
 	void deserializar(string*);
 
 	NombreDeEntidad getNombreDeEntidad();
+
+	ResultadoComparacion comparar(Entidad* entidad);
 
 	void imprimirConteo();
 

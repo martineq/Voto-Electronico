@@ -18,7 +18,7 @@ Serializadora::Serializadora(string *stringSerializado)
 
 void Serializadora::agregarInt(int valor)
 {
-	stream->write((char*)&valor,sizeof(int));
+	stream->write((char*)&valor,TAM_INT);
 }
 
 void Serializadora::agregarString(string* cadena)
@@ -36,7 +36,7 @@ string *Serializadora::obtenerSerializacion()
 int Serializadora::obtenerInt()
 {
 	int valor;
-	stream->read((char*)&valor,sizeof(int));
+	stream->read((char*)&valor,TAM_INT);
 	return valor;
 }
 
@@ -65,13 +65,13 @@ string Serializadora::obtenerString()
 
 void Serializadora::agregarShortInt(short int valor)
 {
-	stream->write((char*)&valor,sizeof(short int));
+	stream->write((char*)&valor,TAM_SINT);
 }
 
 short int Serializadora::obtenerShortInt()
 {
 	short int valor;
-	stream->read((char*)&valor,sizeof(short int));
+	stream->read((char*)&valor,TAM_SINT);
 	return valor;
 }
 

@@ -88,7 +88,7 @@ Resultados HashingExtensible::agregarRegistroInt(Registro *registro,int clave){
 	}else {
 		// Si la tabla está vacía entonces tengo que crear un nuevo bucket.
 		if (this->listaDeBucketsLibres.empty()){
-
+			numeroDeBucket = 0;
 			bucket = new Bucket(0,archivo->getDimensionDelBucket());
 			nrr = archivo->guardarBucket(bucket);
 			tablaDeTraduccion.push_back(nrr);
@@ -199,16 +199,11 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		}
 	}
 
-	// Se imprime la tabla de hash para reflejar los cambios.
-	imprimirTablaDeHash();
-
 	// Se actualiza la dispersion del bucket a redispersar.
 	tablaDeDispersion[numeroDeBucket] = dispersionBucketAredispersar;
 
 	// Se crea el nuevo Bucket.
 	nuevoBucket = new Bucket(dispersionNuevoBucket,archivo->getDimensionDelBucket());
-
-	cout << "Se creo un nuevo bucket con espLibre:"<<nuevoBucket->getEspacioLibre() <<endl;
 
 	if ( usandoBucketLibre ){
 		int nrr = tablaDeTraduccion[nuevoNumeroDeBucket];
@@ -222,41 +217,23 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		tablaDeTraduccion.push_back(posBloque);
 	}
 
-	cout << "Se crea un nuevo bucket#: " << posBloque << endl;
-	cout << "dispersion: " << nuevoBucket->getTamanioDeDispersion() << endl;
-
 	// Se crea un nuevo Bucket para redispersar los elementos.
 	bucketActualizado = new Bucket(dispersionBucketAredispersar,archivo->getDimensionDelBucket());
 	int nrr = tablaDeTraduccion[numeroDeBucket];
 	archivo->modificarBucket(nrr,bucketActualizado);
-	cout << "Se modifica el bucket " << numeroDeBucket << " para realizar la redispersion" << endl;
-	cout << "dispersion: " << bucketActualizado->getTamanioDeDispersion() << endl;
 
-	cout << "Se actualiza el bucket en disco con espLibre:"<<bucketActualizado->getEspacioLibre() <<endl;
-
-	cout << endl << "** Inicio de la redispersión" << endl << endl;
 	int cantidadDeRegistros = bucket->getCantidadDeRegistros();
 	list<Registro*>::iterator iterador = bucket->ubicarPrimero();
-
-	mostrarArchivoDeHash();
 
 	for(int i = 0;i< cantidadDeRegistros;i++){
 
 		int clave = (*iterador)->obtenerClave();
-		cout << "clave: " << clave << endl;
 
-		if ( agregarRegistroInt(*iterador,clave) != operacionOK ){
-
+		if ( agregarRegistroInt(*iterador,clave) != operacionOK )
 			resultado = operacionFALLO;
-			cout << "OPERACION FALLO" << endl << endl;
 
-		}else
-			cout << "OPERACION EXITOSA" << endl << endl;
-
-		mostrarArchivoDeHash();
 		iterador++;
 	}
-	cout << "** Fin de la redispersión" << endl << endl;
 
 	// libero el bucket que instancie para la redispersion
 	delete bucket;
@@ -266,13 +243,11 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 
 /* METODOS PUBLICOS ***********************************************************/
 
-Registro* HashingExtensible::obtenerRegistro(unsigned int clave){
+Registro* HashingExtensible::obtenerRegistro(Registro* registro){
 
-	Registro* registro = NULL;
+	Registro* registroObtenido = NULL;
 
-	unsigned int posicionEnTablaDeHash = obtenerPosicion(clave);
-
-	cout << "posicion en la tabla de hash: " << posicionEnTablaDeHash << endl;
+	unsigned int posicionEnTablaDeHash = obtenerPosicion(registro->obtenerClave());
 
 	if (posicionEnTablaDeHash < tablaDeHash.size()){
 
@@ -283,11 +258,11 @@ Registro* HashingExtensible::obtenerRegistro(unsigned int clave){
 		if ( resultado == bucketDisponible ){
 			int nrr = tablaDeTraduccion[numeroDeBucket];
 			Bucket* bucket = archivo->obtenerBucket(nrr);
-			registro = bucket->getRegistro(clave);
+			registroObtenido = bucket->getRegistro(registro);
 		}
 	}
 
-	return registro;
+	return registroObtenido;
 }
 
 Resultados HashingExtensible::cargarRegistro(Registro *registro){
@@ -304,8 +279,8 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 
 	// Verficacion de unicidad de clave.
 	int clave = registro->obtenerClave();
-	cout << "clave: " << clave << endl;
-	Registro* registroDuplicado = obtenerRegistro(clave);
+//	cout << "clave: " << clave << endl;
+	Registro* registroDuplicado = obtenerRegistro(registro);
 
 	if ( !registroDuplicado )
 		resultado = agregarRegistroInt(registro,clave);
@@ -473,12 +448,12 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 
 			}else{
 
-				Registro* registro = bucket->getRegistro(clave);
+				Registro* registroObtenido = bucket->getRegistro(registro);
 
-				if ( registro != NULL ){
+				if ( registroObtenido != NULL ){
 					// En este caso no hubo exito al almacenar el registro y
 					// estaba disponible dentro del bucket.
-					bucket->eliminarRegistro(clave);
+					bucket->eliminarRegistro(registroObtenido);
 
 					resultado = redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
 
@@ -486,18 +461,19 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 						agregarRegistro(registro);
 				}
 
-				delete registro;
+				delete registroObtenido;
 			}
 		}
 	}
 	return resultado;
 }
 
-Resultados HashingExtensible::eliminarRegistro(unsigned int clave){
+Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 
 	Resultados resultado = operacionOK;
 
 	// Obtengo el Bucket a partir de la clave.
+	int clave = registro->obtenerClave();
 	cout << "clave: " << clave << endl;
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
 	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
@@ -508,12 +484,13 @@ Resultados HashingExtensible::eliminarRegistro(unsigned int clave){
 		Bucket* bucket = archivo->obtenerBucket(nrr);
 
 		// Obtengo el registro.
-		Registro* registro = bucket->getRegistro(clave);
+		cout << "Registro a buscar en eliminar registro: " << registro->obtenerClave() << endl;
+		Registro* registroObtenido = bucket->getRegistro(registro);
 
-		if ( registro !=NULL ){
+		if ( registroObtenido !=NULL ){
 
 			// Eliminamos el registro
-			if ( bucket->eliminarRegistro(clave) )
+			if ( bucket->eliminarRegistro(registroObtenido) )
 				archivo->modificarBucket(nrr,bucket);
 
 			else
@@ -523,7 +500,7 @@ Resultados HashingExtensible::eliminarRegistro(unsigned int clave){
 			if ( bucket->getCantidadDeRegistros() == 0 )
 				liberarBucket(posicionEnTablaDeHash);
 
-			delete registro;
+			delete registroObtenido;
 		}
 
 		else
@@ -609,6 +586,7 @@ void HashingExtensible::mostrarArchivoDeHash()
 			int espacioLibre = bucket->getEspacioLibre();
 			cout << "(free=" << espacioLibre<<") :";
 			int cantRegs = bucket->getCantidadDeRegistros();
+			cout << " (cant: " << cantRegs << "): ";
 			list<Registro*>::iterator it = bucket->ubicarPrimero();
 			for(int i = 0; i < cantRegs; i++){
 				cout << " " << (*it)->obtenerClave();

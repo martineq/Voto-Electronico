@@ -7,29 +7,38 @@
 
 #include "Administrador.h"
 
-Administrador::Administrador() {
-	this->nombre="";
-	this->password="";
-}
+Administrador::Administrador(string pathArchivo) {
+	archivo = new fstream(pathArchivo.c_str());
 
-Administrador::Administrador(string nomb, string pass) {
-	this->nombre=nomb;
-	this->password=pass;
+	char cadena[1024];
+	archivo->getline(cadena,1024);
+	string str(cadena);
+
+	int espacio  = str.find(" ");
+	nombre   = str.substr(0,espacio);
+	espacio++;
+	password = str.substr(espacio);
+
+	cout << nombre;
+	cout << password;
+
+	archivo->close();
 }
 
 bool Administrador::acceder(string nomb,string pass){
-	if ((this->nombre==nomb) && (this->password==pass)) return true;
+	if (((this->nombre.compare(nomb))==0) && ((this->password.compare(pass))==0)) return true;
 	else return false;
 }
 
-bool Administrador::alta (Bucket* bucket,Registro* unRegistro){
-	return bucket->agregarRegistro(unRegistro);
+Resultados Administrador::alta (HashingExtensible* he,Registro* unRegistro){
+	return he->agregarRegistro(unRegistro);
 }
 
 bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
 	if (this->verificarEleccion(unaEleccion)) {
 		list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
-		for (int i=0; i<this->listaDeEleccionesHabilitadas.size(); i++){
+		int size = listaDeEleccionesHabilitadas.size();
+		for (int i=0; i < size; i++){
 			Eleccion* eleccion = new Eleccion ((*it)->getFecha(),(*it)->getCargo());
 			if ((unaEleccion->getCargo()==eleccion->getCargo()) && (unaEleccion->getFecha()==eleccion->getFecha())) {
 				cout << "LA ELECCION YA ESTA HABILITADA" << endl;
@@ -52,6 +61,8 @@ bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
 }
 
 void Administrador::getEleccionesHabilitadas(){
+	cout << endl;
+	cout << endl;
 	if (this->listaDeEleccionesHabilitadas.size()==0) cout << "No hay elecciones habilitadas" << endl;
 	else{
 		list<Eleccion*>::iterator it=this->listaDeEleccionesHabilitadas.begin();
@@ -65,6 +76,8 @@ void Administrador::getEleccionesHabilitadas(){
 			it++; i++;
 		}
 	}
+	cout << endl;
+	cout << endl;
 }
 
 list <Eleccion*> Administrador::getListaDeEleccionesHabilitadas(){
@@ -140,37 +153,41 @@ int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
 	return c;
 }
 
-void Administrador::cargarListasDeEleccion(int numeroDeEleccion, Bucket* bucketLista){
-	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
-//	me posiciono en la eleccion habilitada elegida para votar ahora
-	for (int i=0;i<numeroDeEleccion-1;i++) it++;
-	#warning "hashear la lista, yo no la hasheo porque no tengo idea"
-	list <Registro*>::iterator itListas = bucketLista->ubicarPrimero();
-	#warning "hardcodeado a full, necesitaria tener la lista para saber cuando parar de leer"
-	#warning "en realidad hay que hashear la lista y creo que es mejor idexado asi que aca va el arbol"
+void Administrador::cargarListasDeEleccion(Eleccion* eleccion, HashingExtensible* heLista){
+	#warning "INTEGRAR CON ARBOL B+, 4 = CANTIDAD DE REGISTROS"
+	list <Lista*> listaChamuyo;
+	Lista* lista1 = new Lista("UCR","19970701","Presidente");
+	Lista* lista2 = new Lista("UCR","19970701","Gobernador");
+	Lista* lista3 = new Lista("PJ","19970702","Presidente");
+	Lista* lista4 = new Lista("Socialista","19970702","Gobernador");
+	listaChamuyo.push_back(lista1);
+	listaChamuyo.push_back(lista2);
+	listaChamuyo.push_back(lista3);
+	listaChamuyo.push_back(lista4);
+	list<Lista*>::iterator it = listaChamuyo.begin();
 	for (int i=0; i<4; i++){
-		Registro* registro = *itListas;
-		Lista* lista = (Lista*)registro->getContenido();
-		if (((*it)->getFecha()==lista->getFecha()) && ((*it)->getCargo()==lista->getCargo())){
-			Lista* unaLista = (Lista*)lista->duplicar();
-			this->listaDeBoletas.push_back(unaLista);
+		if (((*it)->getFecha()==eleccion->getFecha()) && ((*it)->getCargo()==eleccion->getCargo())){
+			Lista* lista = (Lista*)(*it)->duplicar();
+			this->listaDeBoletas.push_back(lista);
 		}
-		itListas++;
-		delete lista;
+		delete *it;
+		it++;
 	}
 }
 
 char Administrador::sufragar (int numeroDeBoleta){
 	char c;
+	int size;
 	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
-	if (numeroDeBoleta==this->listaDeBoletas.size()+1) {
+	size = listaDeBoletas.size();
+	if (numeroDeBoleta==size+1) {
 		cout << "La opcion elegida es: VOTO EN BLANCO" << endl;
 		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
 		cin >> c;
 		if (c=='s') this->blancos++;
 		return c;
 	}
-	if (numeroDeBoleta==this->listaDeBoletas.size()+2) {
+	if (numeroDeBoleta==size+2) {
 		cout << "La opcion elegida es: VOTO NULO, IMPUGNADO, ETC" << endl;
 		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
 		cin >> c;
@@ -183,7 +200,7 @@ char Administrador::sufragar (int numeroDeBoleta){
 	cout << "LISTA: " << (*itListas)->getNombre() << endl;
 	cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
 	cin >> c;
-	if (c=='s') (*itListas)->incrementarVotos();
+	//if (c=='s') (*itListas)->incrementarVotos();
 	return c;
 }
 
@@ -204,4 +221,5 @@ Administrador::~Administrador() {
 		it2++;
 	}
 
+	delete archivo;
 }

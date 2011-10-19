@@ -54,7 +54,7 @@ public:
 
 	void deserializar(string*);
 
-
+	void verEntidad();
 	/*
 	 * Instancia un nuevo objeto, copia de actual.
 	 */
@@ -64,6 +64,8 @@ public:
 	 * Devuelve el tipo de la entidad instanciada.
 	 */
 	NombreDeEntidad getNombreDeEntidad();
+
+	ResultadoComparacion comparar(Entidad* entidad);
 
 	virtual ~Eleccion();
 };

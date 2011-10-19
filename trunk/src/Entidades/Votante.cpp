@@ -113,11 +113,11 @@ void Votante::verEleccionesAnteriores (){
 }
 
 void Votante::verVotante() {
-	cout << "Nombre: "    << this->nombre   << endl;
-	cout << "DNI: "       << this->dni      << endl;
-	cout << "Password: "  << this->password << endl;
-	cout << "Domicilio: " << this->domicilio<< endl;
-	cout << "Distrito: "  << this->distrito << endl;
+	cout << " - Nombre: "    << this->nombre   << endl;
+	cout << " - DNI: "       << this->dni      << endl;
+	cout << " - Password: "  << this->password << endl;
+	cout << " - Domicilio: " << this->domicilio<< endl;
+	cout << " - Distrito: "  << this->distrito << endl;
 	this->verEleccionesAnteriores ();
 }
 
@@ -149,8 +149,8 @@ string* Votante::serializar(){
 		buffer.write((char*)((*it)->getCargo()).c_str(),cantidadDeBytes);
 		it++;
 	}
-	string* datos = new string(buffer.str());
-	return datos;
+
+	return new string(buffer.str());
 }
 
 void Votante::deserializar(string* source){
@@ -240,6 +240,25 @@ void Votante::deserializar(string* source){
 	}
 }
 
+ResultadoComparacion Votante::comparar(Entidad *entidad)
+{
+	ResultadoComparacion resultado = comparacionInvalida;
+
+	if ( tVotante == entidad->getNombreDeEntidad() ){
+
+		int r = dni-(((Votante*)entidad)->dni);
+
+		resultado = mayor;
+
+		if ( r == 0 )
+			resultado = igual;
+
+		else if ( r < 0 )
+			resultado = menor;
+	}
+	return resultado;
+}
+
 Entidad *Votante::duplicar()
 {
 	Votante* copia = new Votante();
@@ -254,6 +273,11 @@ Entidad *Votante::duplicar()
 		it++;
 	}
 	return copia;
+}
+
+void Votante::verEntidad()
+{
+	this->verVotante();
 }
 
 NombreDeEntidad Votante::getNombreDeEntidad(){

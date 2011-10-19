@@ -61,6 +61,10 @@ void Candidato::verCandidato() {
 	cout << "Fecha de eleccion: " << this->fecha << endl;
 }
 
+void Candidato::verEntidad(){
+	verCandidato();
+}
+
 int Candidato::getTamanio(){
 	int tamanioFecha 	= TAM_INT;
 	int tamanioCargo 	= TAM_INT + cargo.size();
@@ -101,4 +105,39 @@ Entidad *Candidato::duplicar()
 
 NombreDeEntidad Candidato::getNombreDeEntidad(){
 	return tCandidato;
+}
+
+ResultadoComparacion Candidato::comparar(Entidad* entidad){
+	if ( tCandidato != entidad->getNombreDeEntidad() ){
+		return comparacionInvalida;
+	}
+	Candidato* candidatoNuevo = (Candidato*) entidad;
+	int compararFecha = this->fecha.compare(candidatoNuevo->fecha);
+	int compararCargo = this->cargo.compare(candidatoNuevo->cargo);
+	int compararLista = this->nombre.compare(candidatoNuevo->nombre);
+	if (compararFecha < 0){
+		return menor;
+	}
+	if (compararFecha > 0){
+		return mayor;
+	}
+	if (compararCargo < 0){
+		return menor;
+	}
+	if (compararCargo > 0){
+		return mayor;
+	}
+	if (compararLista < 0){
+		return menor;
+	}
+	if (compararLista > 0){
+		return mayor;
+	}
+	if (this->dni < candidatoNuevo->dni) {
+		return menor;
+	}
+	if (this->dni > candidatoNuevo->dni){
+		return mayor;
+	}
+	return igual;
 }

@@ -4,12 +4,24 @@ Pruebas::Pruebas() {
 }
 
 Pruebas::~Pruebas() {
-	delete this->bucketVotante;
-	delete this->bucketDistrito;
-	delete this->bucketEleccion;
-	delete this->bucketCandidato;
-	delete this->bucketLista;
-	delete this->bucketCargo;
+//	delete this->heVotante;
+	delete this->heDistrito;
+	delete this->heEleccion;
+	delete this->heCandidato;
+//	delete this->heLista;
+	delete this->heCargo;
+	remove ("archivoDeControlVotante.txt");
+	remove ("archivoDeDatosVotante.txt");
+	remove ("archivoDeControlDistrito.txt");
+	remove ("archivoDeDatosDistrito.txt");
+	remove ("archivoDeControlEleccion.txt");
+	remove ("archivoDeDatosEleccion.txt");
+	remove ("archivoDeControlCandidato.txt");
+	remove ("archivoDeDatosCandidato.txt");
+//	remove ("archivoDeControlLista.txt");
+//	remove ("archivoDeDatosLista.txt");
+	remove ("archivoDeControlCargo.txt");
+	remove ("archivoDeDatosCargo.txt");
 }
 
 void Pruebas::iniciarRegistrosDePrueba(){
@@ -51,236 +63,236 @@ void Pruebas::iniciarRegistrosDistrito(){
 }
 
 void Pruebas::pruebaAgregarRegistrosAlBucket(){
-	cout << endl;
-	cout << "Bienvenido a las pruebas de agregar registros a un bucket" << endl;
-	cout << "Observe y disfrute" << endl;
-	cout << "Iniciando prueba carga de cero" << endl;
-	this->iniciarRegistrosDePrueba();
-	cout << "Carga finalizada" << endl;
-	cout << "El espacio libre es: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	if (bucketVotante->getCantidadDeRegistros()==4) cout << "Prueba OK" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketDistrito(this->bucketDistrito);
-	cout << "Iniciando prueba agregar un registro sin espacio libre" << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	Distrito* distrito5 = new Distrito("Obera");
-	Registro* registro5 = new Registro(distrito5);
-	cout << "Intentando carga de registro" << endl;
-	if (!this->bucketVotante->agregarRegistro(registro5)) {
-		cout << "No se pudo cargar el registro" << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << endl;
-	cout << "Iniciando prueba carga de registro luego de eliminar registros" << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	list<Registro*>::iterator it = this->bucketVotante->ubicarPrimero();
-	int clave = (*it)->obtenerClave();
-	cout << "Eliminando el primer registro" << endl;
-	this->bucketVotante->eliminarRegistro(clave);
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "El tamaño del registro nuevo es: " << registro5->getTamanio() << endl;
-	cout << "Intentando carga del registro" << endl;
-	if (this->bucketVotante->agregarRegistro(registro5)) {
-		cout << "El registro fue cargado" << endl;
-		cout << "Se elimino el primer registro Puerto Esperanza y se agrego Obera" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketDistrito(this->bucketDistrito);
-	cout << endl;
-	cout << "Iniciando prueba carga de registro con clave ya existente" << endl;
-	cout << "Se intenta agregar el registro Eldorado ya existente" << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	it = this->bucketVotante->ubicarPrimero();
-	clave = (*it)->obtenerClave();
-	this->bucketVotante->eliminarRegistro(clave);
-	it = this->bucketVotante->ubicarPrimero();
-	clave = (*it)->obtenerClave();
-	this->bucketVotante->eliminarRegistro(clave);
-	cout << "Se hizo espacio para el nuevo registro Eldorado" << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	Distrito* distrito6 = new Distrito("Eldorado");
-	Registro* registro6 = new Registro(distrito6);
-	cout << "Se intenta la carga del registro duplicado" << endl;
-	if (!this->bucketVotante->agregarRegistro(registro6)) {
-		cout << "El registro no fue cargado" << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		cout << "La prueba es exitosa porque el registro esta duplicado y no por no tener espacio" << endl;
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketDistrito(this->bucketDistrito);
-	cout << endl;
-	cout << "Estas fueron todas las pruebas de agregar registros al bucket" << endl;
-	cout << "Gracias! Hasta luego" << endl;
-	delete distrito5;
-	delete registro5;
-	delete distrito6;
-	delete registro6;
-	delete this->registroDistrito1;
-	delete this->registroDistrito2;
-	delete this->registroDistrito3;
-	delete this->registroDistrito4;
+//	cout << endl;
+//	cout << "Bienvenido a las pruebas de agregar registros a un bucket" << endl;
+//	cout << "Observe y disfrute" << endl;
+//	cout << "Iniciando prueba carga de cero" << endl;
+//	this->iniciarRegistrosDePrueba();
+//	cout << "Carga finalizada" << endl;
+//	cout << "El espacio libre es: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	if (bucketVotante->getCantidadDeRegistros()==4) cout << "Prueba OK" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketDistrito(this->bucketDistrito);
+//	cout << "Iniciando prueba agregar un registro sin espacio libre" << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	Distrito* distrito5 = new Distrito("Obera");
+//	Registro* registro5 = new Registro(distrito5);
+//	cout << "Intentando carga de registro" << endl;
+//	if (!this->bucketVotante->agregarRegistro(registro5)) {
+//		cout << "No se pudo cargar el registro" << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << endl;
+//	cout << "Iniciando prueba carga de registro luego de eliminar registros" << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	list<Registro*>::iterator it = this->bucketVotante->ubicarPrimero();
+//	int clave = (*it)->obtenerClave();
+//	cout << "Eliminando el primer registro" << endl;
+//	this->bucketVotante->eliminarRegistro(clave);
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "El tamaño del registro nuevo es: " << registro5->getTamanio() << endl;
+//	cout << "Intentando carga del registro" << endl;
+//	if (this->bucketVotante->agregarRegistro(registro5)) {
+//		cout << "El registro fue cargado" << endl;
+//		cout << "Se elimino el primer registro Puerto Esperanza y se agrego Obera" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketDistrito(this->bucketDistrito);
+//	cout << endl;
+//	cout << "Iniciando prueba carga de registro con clave ya existente" << endl;
+//	cout << "Se intenta agregar el registro Eldorado ya existente" << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	it = this->bucketVotante->ubicarPrimero();
+//	clave = (*it)->obtenerClave();
+//	this->bucketVotante->eliminarRegistro(clave);
+//	it = this->bucketVotante->ubicarPrimero();
+//	clave = (*it)->obtenerClave();
+//	this->bucketVotante->eliminarRegistro(clave);
+//	cout << "Se hizo espacio para el nuevo registro Eldorado" << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	Distrito* distrito6 = new Distrito("Eldorado");
+//	Registro* registro6 = new Registro(distrito6);
+//	cout << "Se intenta la carga del registro duplicado" << endl;
+//	if (!this->bucketVotante->agregarRegistro(registro6)) {
+//		cout << "El registro no fue cargado" << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		cout << "La prueba es exitosa porque el registro esta duplicado y no por no tener espacio" << endl;
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketDistrito(this->bucketDistrito);
+//	cout << endl;
+//	cout << "Estas fueron todas las pruebas de agregar registros al bucket" << endl;
+//	cout << "Gracias! Hasta luego" << endl;
+//	delete distrito5;
+//	delete registro5;
+//	delete distrito6;
+//	delete registro6;
+//	delete this->registroDistrito1;
+//	delete this->registroDistrito2;
+//	delete this->registroDistrito3;
+//	delete this->registroDistrito4;
 }
 
 void Pruebas::pruebaEliminarRegistrosDelBucket(){
-	cout << endl;
-	cout << "Bienvenido a las pruebas de eliminacion de registros en un bucket" << endl;
-	cout << "Observe y disfrute" << endl;
-	cout << "Prueba eliminar un registro con bucket vacio" << endl;
-	cout << "Intentando eliminar un registro" << endl;
-	Bucket* unBucket = new Bucket (0,128);
-	if (!unBucket->eliminarRegistro(8)) cout << "Prueba OK" << endl;
-	else cout << "ERROR" << endl;
-	delete unBucket;
-	cout << "Prueba eliminar el primer registro" << endl;
-	this->iniciarRegistrosDePrueba();
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	this->verContenidoBucketDistrito(this->bucketDistrito);
-//	elimino el primer registro
-	list<Registro*>::iterator it = this->bucketVotante->ubicarPrimero();
-	int clave = (*it)->obtenerClave();
-	cout << "Eliminando el primer registro" << endl;
-	if (this->bucketVotante->eliminarRegistro(clave)) {
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketDistrito(this->bucketDistrito);
-		cout << "prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << endl;
-	cout << "Prueba eliminar un registro inexistente" << endl;
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "Intento de eliminar Resistencia" << endl;
-	it = this->bucketVotante->ubicarPrimero();
-	Distrito* distrito5 = new Distrito ("Resistencia");
-	Registro* registro5 = new Registro (distrito5);
-	clave = registro5->obtenerClave();
-	if (!this->bucketVotante->eliminarRegistro(clave)) {
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketDistrito(this->bucketDistrito);
-		cout << "prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << "Prueba eliminar un registro intermedio" << endl;
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	clave = this->registroDistrito3->obtenerClave();
-	cout << "intento eliminar Montecarlo" << endl;
-	if (this->bucketVotante->eliminarRegistro(clave)) {
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketDistrito(this->bucketDistrito);
-		cout << "prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << "Estas fueron todas las pruebas de eliminar registros del bucket" << endl;
-	cout << "Gracias! Hasta luego" << endl;
-	delete (distrito5);
-	delete (registro5);
-	delete this->registroDistrito1;
-	delete this->registroDistrito2;
-	delete this->registroDistrito3;
-	delete this->registroDistrito4;
+//	cout << endl;
+//	cout << "Bienvenido a las pruebas de eliminacion de registros en un bucket" << endl;
+//	cout << "Observe y disfrute" << endl;
+//	cout << "Prueba eliminar un registro con bucket vacio" << endl;
+//	cout << "Intentando eliminar un registro" << endl;
+//	Bucket* unBucket = new Bucket (0,128);
+////	if (!unBucket->eliminarRegistro(8)) cout << "Prueba OK" << endl;
+//	else cout << "ERROR" << endl;
+//	delete unBucket;
+//	cout << "Prueba eliminar el primer registro" << endl;
+//	this->iniciarRegistrosDePrueba();
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	this->verContenidoBucketDistrito(this->bucketDistrito);
+////	elimino el primer registro
+//	list<Registro*>::iterator it = this->bucketVotante->ubicarPrimero();
+//	int clave = (*it)->obtenerClave();
+//	cout << "Eliminando el primer registro" << endl;
+////	if (this->bucketVotante->eliminarRegistro(clave)) {
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketDistrito(this->bucketDistrito);
+//		cout << "prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << endl;
+//	cout << "Prueba eliminar un registro inexistente" << endl;
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "Intento de eliminar Resistencia" << endl;
+//	it = this->bucketVotante->ubicarPrimero();
+//	Distrito* distrito5 = new Distrito ("Resistencia");
+//	Registro* registro5 = new Registro (distrito5);
+//	clave = registro5->obtenerClave();
+////	if (!this->bucketVotante->eliminarRegistro(clave)) {
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketDistrito(this->bucketDistrito);
+//		cout << "prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << "Prueba eliminar un registro intermedio" << endl;
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	clave = this->registroDistrito3->obtenerClave();
+//	cout << "intento eliminar Montecarlo" << endl;
+//	if (this->bucketVotante->eliminarRegistro(clave)) {
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketDistrito(this->bucketDistrito);
+//		cout << "prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << "Estas fueron todas las pruebas de eliminar registros del bucket" << endl;
+//	cout << "Gracias! Hasta luego" << endl;
+//	delete (distrito5);
+//	delete (registro5);
+//	delete this->registroDistrito1;
+//	delete this->registroDistrito2;
+//	delete this->registroDistrito3;
+//	delete this->registroDistrito4;
 }
 
 void Pruebas::pruebaReemplazarRegistroEnBucket() {
-	//TODO
-	cout << endl;
-	cout << "Bienvenido a las pruebas de actualizacion de registros en un bucket" << endl;
-	cout << "Observe y disfrute" << endl;
-	this->votante1 = new Votante (1,"Daniel","","","");
-	this->votante2 = new Votante (2,"A","","","");
-	this->registroVotante1 = new Registro (votante1);
-	this->registroVotante2 = new Registro (votante2);
-	bucketVotante = new Bucket (0,128);
-	this->bucketVotante->agregarRegistro(registroVotante1);
-	this->bucketVotante->agregarRegistro(registroVotante2);
-	this->verContenidoBucketVotante(this->bucketVotante);
-	cout << "Se intentará reemplazar Daniel por Martin" << endl;
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "Inicio de reemplazo" << endl;
-	this->votante3 = new Votante (1,"Martin","","","");
-	this->registroVotante3 = new Registro (votante3);
-	if (this->bucketVotante->reemplazarRegistro(registroVotante3)){
-		cout << "Fin de reemplazo" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketVotante(this->bucketVotante);
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << "Se intentara reemplazar un registro que no entre en el bucket" << endl;
-	cout << "Se intentara reemplazar el registro A con el registro Gonzalo" << endl;
-	this->votante4 = new Votante (2,"Gonzalo","","","");
-	this->registroVotante4 = new Registro (votante4);
-	cout << "Tamanio de registro A= " << this->registroVotante2->getTamanio() << endl;
-	cout << "Tamanio de registro Gonzalo= " << this->registroVotante4->getTamanio() << endl;
-	cout << "Inicio de reemplazo" << endl;
-	if (!bucketVotante->reemplazarRegistro(registroVotante4)) {
-		cout << "Fin de reemplazo" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketVotante(this->bucketVotante);
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << "Se intentara un reemplazo con bucket vacio" << endl;
-	this->bucketVotante->eliminarRegistro(2);
-	this->bucketVotante->eliminarRegistro(1);
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "Inicio de reemplazo" << endl;
-	if (!bucketVotante->reemplazarRegistro(registroVotante4)) {
-		cout << "Fin de reemplazo" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketVotante(this->bucketVotante);
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << endl;
-	cout << "Se intentara reemplazar un registro con clave inexistente" << endl;
-	Votante* votante5 = new Votante (3,"Celeste","","","");
-	Registro* registro5 = new Registro (votante5);
-	this->bucketVotante->agregarRegistro(registroVotante2);
-	this->verContenidoBucketVotante(this->bucketVotante);
-	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-	cout << "Tamanio del registro a ingresar: " << this->registroVotante3->getTamanio() << endl;
-	cout << "De esta forma me aseguro que la prueba falle porque no esta el registro y no por espacio" << endl;
-	cout << "Inicio de reemplazo" << endl;
-	if (!bucketVotante->reemplazarRegistro(registro5)) {
-		cout << "Fin de reemplazo" << endl;
-		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
-		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
-		this->verContenidoBucketVotante(this->bucketVotante);
-		cout << "Prueba OK" << endl;
-	}
-	else cout << "ERROR" << endl;
-	cout << "Estas fueron todas las pruebas de actualizacion de registros de un bucket" << endl;
-	cout << "Gracias! Hasta luego" << endl;
-	delete this->votante1;
-	delete this->votante2;
-	delete this->votante3;
-	delete this->votante4;
-	delete votante5;
-	delete this->registroVotante1;
-	delete this->registroVotante2;
-	delete this->registroVotante3;
-	delete this->registroVotante4;
-	delete registro5;
+//	//TODO
+//	cout << endl;
+//	cout << "Bienvenido a las pruebas de actualizacion de registros en un bucket" << endl;
+//	cout << "Observe y disfrute" << endl;
+//	this->votante1 = new Votante (1,"Daniel","","","");
+//	this->votante2 = new Votante (2,"A","","","");
+//	this->registroVotante1 = new Registro (votante1);
+//	this->registroVotante2 = new Registro (votante2);
+//	bucketVotante = new Bucket (0,128);
+//	this->bucketVotante->agregarRegistro(registroVotante1);
+//	this->bucketVotante->agregarRegistro(registroVotante2);
+//	this->verContenidoBucketVotante(this->bucketVotante);
+//	cout << "Se intentará reemplazar Daniel por Martin" << endl;
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "Inicio de reemplazo" << endl;
+//	this->votante3 = new Votante (1,"Martin","","","");
+//	this->registroVotante3 = new Registro (votante3);
+//	if (this->bucketVotante->reemplazarRegistro(registroVotante3)){
+//		cout << "Fin de reemplazo" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketVotante(this->bucketVotante);
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << "Se intentara reemplazar un registro que no entre en el bucket" << endl;
+//	cout << "Se intentara reemplazar el registro A con el registro Gonzalo" << endl;
+//	this->votante4 = new Votante (2,"Gonzalo","","","");
+//	this->registroVotante4 = new Registro (votante4);
+//	cout << "Tamanio de registro A= " << this->registroVotante2->getTamanio() << endl;
+//	cout << "Tamanio de registro Gonzalo= " << this->registroVotante4->getTamanio() << endl;
+//	cout << "Inicio de reemplazo" << endl;
+//	if (!bucketVotante->reemplazarRegistro(registroVotante4)) {
+//		cout << "Fin de reemplazo" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketVotante(this->bucketVotante);
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << "Se intentara un reemplazo con bucket vacio" << endl;
+//	this->bucketVotante->eliminarRegistro(2);
+//	this->bucketVotante->eliminarRegistro(1);
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "Inicio de reemplazo" << endl;
+//	if (!bucketVotante->reemplazarRegistro(registroVotante4)) {
+//		cout << "Fin de reemplazo" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketVotante(this->bucketVotante);
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << endl;
+//	cout << "Se intentara reemplazar un registro con clave inexistente" << endl;
+//	Votante* votante5 = new Votante (3,"Celeste","","","");
+//	Registro* registro5 = new Registro (votante5);
+//	this->bucketVotante->agregarRegistro(registroVotante2);
+//	this->verContenidoBucketVotante(this->bucketVotante);
+//	cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//	cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//	cout << "Tamanio del registro a ingresar: " << this->registroVotante3->getTamanio() << endl;
+//	cout << "De esta forma me aseguro que la prueba falle porque no esta el registro y no por espacio" << endl;
+//	cout << "Inicio de reemplazo" << endl;
+//	if (!bucketVotante->reemplazarRegistro(registro5)) {
+//		cout << "Fin de reemplazo" << endl;
+//		cout << "cantidad de registros en Bucket: " << this->bucketVotante->getCantidadDeRegistros() << endl;
+//		cout << "Espacio libre: " << this->bucketVotante->getEspacioLibre() << " Bytes" << endl;
+//		this->verContenidoBucketVotante(this->bucketVotante);
+//		cout << "Prueba OK" << endl;
+//	}
+//	else cout << "ERROR" << endl;
+//	cout << "Estas fueron todas las pruebas de actualizacion de registros de un bucket" << endl;
+//	cout << "Gracias! Hasta luego" << endl;
+//	delete this->votante1;
+//	delete this->votante2;
+//	delete this->votante3;
+//	delete this->votante4;
+//	delete votante5;
+//	delete this->registroVotante1;
+//	delete this->registroVotante2;
+//	delete this->registroVotante3;
+//	delete this->registroVotante4;
+//	delete registro5;
 
 }
 
@@ -438,7 +450,7 @@ void Pruebas::serializarDeserializarLista() {
 	cout << "Lista: " << unaLista->getNombre() << endl;
 	cout << "Fecha de eleccion: " << unaLista->getFecha() << endl;
 	cout << "Cargo: " << unaLista->getCargo() << endl;
-	cout << "Votos: " << unaLista->getCantidadDeVotos() << endl;
+//	cout << "Votos: " << unaLista->getCantidadDeVotos() << endl;
 	delete unaLista;
 }
 
@@ -620,9 +632,7 @@ void Pruebas::pruebaBMas(){
 	 vector<char> tmp;
 	 std::pair<vector<char>,std::string> gn;
 	 bplustree b;
-
-	 b.newtree("test",64);
-
+	 b.newtree("test",60);
 	 v.push_back(1);
 	 b.add("deloitte",v);
 	 v.push_back(2);
@@ -667,156 +677,15 @@ void Pruebas::pruebaBMas(){
 	 b.del("faghgd");
 	 tmp=b.search("aaaa");
 	 gn=b.getnext();
-	 cout <<"Salida A:"<<endl;
 	 while(gn.second.size()!=0)
 	 {
 		 cout << gn.second << endl;
 		 gn=b.getnext();
 	 }
 	 tmp=b.search("dddd");
-	 cout <<"\nSalida B:"<<endl;
-	 for(int c=0;c<(int)tmp.size();c++)
+	 for(int c=0;c< (int)tmp.size();c++)
 		 cout << (int)tmp[c];
 	 cout << endl;
-
-}
-
-
-void Pruebas::pruebaBMasAuto(){
-
-	string rutaArbol("test");	// Ruta del archivo de Árbol B+
-	int tamanioNodo = 64;		// Tamaño del nodo.
-	string id;					// Identificador del registro.
-	vector<char> datos;			// Vector con valores "aleatorios". Simula los datos de un registro
-	vector<char> resultado;		// Vector que recibe datos de un registro, producto de una búsqueda
-	std::pair<vector<char>,std::string> registro;	// Recibe el ID y los datos de un registro
-	bplustree b;				// Árbol B+
-
-	b.newtree(rutaArbol,tamanioNodo);
-
-
-	///////////////////
-	// Carga manual: //
-	///////////////////
-	cout << "Carga manual de varios registros... " <<endl;
-	datos.push_back(1);
-	id = "deloitte";
-	b.add(id.c_str(),datos);
-	datos.push_back(2);
-	id = "nacho";
-	b.add(id.c_str(),datos);
-	datos.push_back(5);
-	b.add("this",datos);
-	datos.push_back(4);
-	b.add("vbbb",datos);
-	datos.push_back(5);
-	b.add("mama",datos);
-	datos.push_back(6);
-	b.add("eeee",datos);
-	b.add("oiuy",datos);
-	b.add("faffs",datos);
-	b.add("fgfd",datos);
-	b.add("faghgd",datos);
-	b.add("ytytefe",datos);
-	b.add("fsfsgfsff",datos);
-	b.add("ytrefc",datos);
-	b.add("rtyu",datos);
-	b.add("aaaa",datos);
-	b.add("bbbb",datos);
-	b.add("cccc",datos);
-	b.add("jjjj",datos);
-	b.add("kkkkk",datos);
-	b.add("llll",datos);
-	b.add("mmmm",datos);
-	b.add("nnnnn",datos);
-	b.add("ooooo",datos);
-	b.add("ppppppp",datos);
-	b.add("rrrrrrr",datos);
-	b.add("ssssssss",datos);
-	b.add("tttttt",datos);
-	b.add("uuuuuuu",datos);
-	id = "kkkkk";
-	b.add(id.c_str(),datos);
-
-
-	///////////////////////
-	// Carga automática: //
-	///////////////////////
-	cout << "Carga automática: " <<endl;
-	char* ID = new char[5];
-	for (int i=1; i<=5 ; i++){		// Creo cadenas de longitud entre 1 y 10 caracteres
-		char* cad = new char[i+1];
-		for (int j=1; j<=2 ; j++){	// Creo varias cadenas de cada longitud, con contenido al azar
-			datos.clear();
-			this->cadenaAlfaNumAlAzar(cad,i);
-			this->cadenaNumericaAlAzar(ID,4);
-			id = cad;
-			for(int k=0 ; k < 4 ; k++){ datos.push_back((char)ID[k]);}
-			cout << "agrego: "<< id << " dato: " ;
-			for(int k=0;k<(int)datos.size();k++) cout << (int)datos[k];
-			cout << endl;
-			b.add(id.c_str(),datos);
-		}
-		delete[] cad;
-	}
-	delete[] ID;
-	datos.clear();
-
-
-	////////////////////////
-	// Otras operaciones: //
-	////////////////////////
-	cout << "Otras operaciones... " <<endl;
-	datos.push_back(3);
-	datos.push_back(9);
-	b.add("dddd",datos);
-	datos.push_back(5);
-	b.modify("dddd",datos);
-	resultado=b.search("aaaa");
-	b.del("faffs");
-	b.del("fgfd");
-	b.del("faghgd");
-	resultado=b.search("0000000");
-	registro=b.getnext();
-
-	cout <<"\nRecorro secuencialmente el árbol:";
-	int cant = 0;
-	while(registro.second.size()!=0){
-		cant++;
-		cout << "\nID: " << registro.second <<"\t Datos: ";
-	 resultado = registro.first;
-	 for(int c=0;c<(int)resultado.size();c++){ cout << (int)resultado[c];}
-	 registro=b.getnext();
-	}
-	cout << "\n-----------------\nCantidad de registros: "<<cant<<endl;
-
-	id = "dddd";
-	cout <<"\n\nBusco el contenido del registro con ID '"<< id << "' y obtengo: "<<endl;
-	resultado=b.search(id.c_str());
-	for(int c=0;c<(int)resultado.size();c++) cout << (int)resultado[c];
-	cout << endl;
-
-}
-
-
-void Pruebas::cadenaNumericaAlAzar(char *s, const int len) {
-    static const char alphanum[] = "0123456789";
-    for (int i = 0; i < len; ++i) {s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];}
-    s[len] = '\0';
-}
-
-void Pruebas::cadenaAlfaNumAlAzar(char *s, const int len) {
-    static const char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-
-    for (int i = 0; i < len; ++i) {
-        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
-    }
-
-    s[len] = 0;
-
 }
 
 
@@ -914,7 +783,7 @@ void Pruebas::verContenidoBucketLista(Bucket* unBucket){
 			cout << "Nombre: " << unaLista->getNombre() << endl;
 			cout << "Fecha: " << unaLista->getFecha() << endl;
 			cout << "Cargo: " << unaLista->getCargo() << endl;
-			cout << "Votos: " << unaLista->getCantidadDeVotos() << endl;
+//			cout << "Votos: " << unaLista->getCantidadDeVotos() << endl;
 			cout << "----------" << endl;
 			delete unaLista;
 			it++;
@@ -966,10 +835,25 @@ void Pruebas::iniciarVotantesParaIntegracion() {
 	delete this->votante1;
 	delete this->votante2;
 	delete this->votante3;
-	this->bucketVotante = new Bucket(0,454);
-	this->bucketVotante->agregarRegistro(registroVotante1);
-	this->bucketVotante->agregarRegistro(registroVotante2);
-	this->bucketVotante->agregarRegistro(registroVotante3);
+	char archivoDeControl[]="archivoDeControlVotante.txt";
+	char archivoDeDatos[]="archivoDeDatosVotante.txt";
+	remove(archivoDeControl);
+	remove(archivoDeDatos);
+	this->heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	if ( this->heVotante->agregarRegistro(registroVotante1) == operacionOK )
+		cout << "Se agrego un votante1" << endl;
+	else cout << "Error agregando votante1" << endl;
+	if ( this->heVotante->agregarRegistro(registroVotante2) == operacionOK )
+			cout << "Se agrego un votante2" << endl;
+		else cout << "Error agregando votante2" << endl;
+	if ( this->heVotante->agregarRegistro(registroVotante3) == operacionOK )
+			cout << "Se agrego un votante3" << endl;
+		else cout << "Error agregando votante3" << endl;
+
+//	this->bucketVotante = new Bucket(0,454);
+//	this->bucketVotante->agregarRegistro(registroVotante1);
+//	this->bucketVotante->agregarRegistro(registroVotante2);
+//	this->bucketVotante->agregarRegistro(registroVotante3);
 }
 
 void Pruebas::iniciarDistritosParaIntegracion(){
@@ -982,10 +866,24 @@ void Pruebas::iniciarDistritosParaIntegracion(){
 	delete this->distrito1;
 	delete this->distrito2;
 	delete this->distrito3;
-	this->bucketDistrito = new Bucket(0,256);
-	this->bucketDistrito->agregarRegistro(registroDistrito1);
-	this->bucketDistrito->agregarRegistro(registroDistrito2);
-	this->bucketDistrito->agregarRegistro(registroDistrito3);
+	char archivoDeControl[]="archivoDeControlDistrito.txt";
+	char archivoDeDatos[]="archivoDeDatosDistrito.txt";
+	this->heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	if ( this->heDistrito->agregarRegistro(registroDistrito1) == operacionOK )
+		cout << "Se agrego distrito1" << endl;
+	else cout << "Error agregando distrito1" << endl;
+	if ( this->heDistrito->agregarRegistro(registroDistrito2) == operacionOK )
+		cout << "Se agrego un distrito2" << endl;
+	else cout << "Error agregando distrito2" << endl;
+	if ( this->heDistrito->agregarRegistro(registroDistrito3) == operacionOK )
+		cout << "Se agrego un distrito3" << endl;
+	else cout << "Error agregando distrito3" << endl;
+
+
+//	this->bucketDistrito = new Bucket(0,256);
+//	this->bucketDistrito->agregarRegistro(registroDistrito1);
+//	this->bucketDistrito->agregarRegistro(registroDistrito2);
+//	this->bucketDistrito->agregarRegistro(registroDistrito3);
 }
 
 void Pruebas::iniciarEleccionesParaIntegracion(){
@@ -1010,10 +908,23 @@ void Pruebas::iniciarEleccionesParaIntegracion(){
 	delete this->eleccion1;
 	delete this->eleccion2;
 //	delete this->eleccion3;
-	this->bucketEleccion = new Bucket(0,450);
-	this->bucketEleccion->agregarRegistro(registroEleccion1);
-	this->bucketEleccion->agregarRegistro(registroEleccion2);
-	this->bucketEleccion->agregarRegistro(registroEleccion3);
+	char archivoDeControl[]="archivoDeControlEleccion.txt";
+	char archivoDeDatos[]="archivoDeDatosEleccion.txt";
+	this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	if ( this->heEleccion->agregarRegistro(registroEleccion1) == operacionOK )
+		cout << "Se agrego una eleccion" << endl;
+	else cout << "Error agregando eleccion1" << endl;
+	if ( this->heEleccion->agregarRegistro(registroEleccion2) == operacionOK )
+		cout << "Se agrego una eleccion" << endl;
+	else cout << "Error agregando eleccion2" << endl;
+	if ( this->heEleccion->agregarRegistro(registroEleccion3) == operacionOK )
+		cout << "Se agrego un eleccion" << endl;
+	else cout << "Error agregando eleccion3" << endl;
+
+//	this->bucketEleccion = new Bucket(0,450);
+//	this->bucketEleccion->agregarRegistro(registroEleccion1);
+//	this->bucketEleccion->agregarRegistro(registroEleccion2);
+//	this->bucketEleccion->agregarRegistro(registroEleccion3);
 }
 
 void Pruebas::iniciarCandidatosParaIntegracion(){
@@ -1026,10 +937,23 @@ void Pruebas::iniciarCandidatosParaIntegracion(){
 	delete this->candidato1;
 	delete this->candidato2;
 	delete this->candidato3;
-	this->bucketCandidato = new Bucket(0,204);
-	this->bucketCandidato->agregarRegistro(registroCandidato1);
-	this->bucketCandidato->agregarRegistro(registroCandidato2);
-	this->bucketCandidato->agregarRegistro(registroCandidato3);
+	char archivoDeControl[]="archivoDeControlCandidato.txt";
+	char archivoDeDatos[]="archivoDeDatosCandidato.txt";
+	this->heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	if ( this->heCandidato->agregarRegistro(registroCandidato1) == operacionOK )
+		cout << "Se agrego un candidato" << endl;
+	else cout << "Error agregando candidato1" << endl;
+	if ( this->heCandidato->agregarRegistro(registroCandidato2) == operacionOK )
+		cout << "Se agrego un candidato" << endl;
+	else cout << "Error agregando candidato2" << endl;
+	if ( this->heCandidato->agregarRegistro(registroCandidato3) == operacionOK )
+		cout << "Se agrego un candidato" << endl;
+	else cout << "Error agregando candidato3" << endl;
+
+//	this->bucketCandidato = new Bucket(0,204);
+//	this->bucketCandidato->agregarRegistro(registroCandidato1);
+//	this->bucketCandidato->agregarRegistro(registroCandidato2);
+//	this->bucketCandidato->agregarRegistro(registroCandidato3);
 }
 
 void Pruebas::iniciarListasParaIntegracion(){
@@ -1039,19 +963,107 @@ void Pruebas::iniciarListasParaIntegracion(){
 	this->registroLista1 = new Registro(lista1);
 	this->registroLista2 = new Registro(lista2);
 	this->registroLista3 = new Registro(lista3);
-//	cout << "TAMANIO candidato1= " << this->registroLista1->getTamanio() << endl;
-//	cout << "TAMANIO candidato2= " << this->registroLista2->getTamanio() << endl;
-//	cout << "TAMANIO candidato3= " << this->registroLista3->getTamanio() << endl;
-	delete this->lista1;
-	delete this->lista2;
-	delete this->lista3;
-	this->bucketLista = new Bucket(0,190);
+//	delete this->lista1;
+//	delete this->lista2;
+//	delete this->lista3;
+	cout << "WHY" << endl;
+
+	string* s_1 = lista1->serializar();
+
+	Lista* lw1 = new Lista("","","");
+	lw1->deserializar(s_1);
+	lw1->verEntidad();
+	delete s_1;
+
+	cout << endl << endl;
+
+	string* s2 = registroLista1->serializar();
+
+	Registro* reg = new Registro();
+	reg->deserializar(s2);
+	reg->verContenido();
+
+	bplustree arbolB;
+	remove("arbolDeListas");
+	arbolB.newtree("arbolDeListas",LONGITUD_BLOQUE);
+
+	stringstream clave1;
+	clave1 << registroLista1->obtenerClave();
+	cout << "clave1 " << registroLista1->obtenerClave() << endl;
+	cout << "clave1 comparada " << clave1.str() << endl;
+
+
+	string* registroSerializado = registroLista1->serializar();
+	vector<char> data1(registroSerializado->begin(), registroSerializado->end());
+	cout << registroSerializado->size() << endl;
+
+
+	arbolB.add(clave1.str(),data1);
+
+	vector<char> vector1;
+
+	vector1 = arbolB.search(clave1.str());
+
+	if(data1.size() != vector1.size())
+	{
+		cout << "crap" << endl;
+		return;
+	}
+	int sizeData1 = data1.size();
+	for(int p=0; p< sizeData1; p++)
+		if(data1[p]!=vector1[p])
+		{
+			cout << "more crap" << endl;
+			return;
+		}
+
+	int sizeVector1 = vector1.size();
+
+	string stringVector;
+	for (int i= 0 ; i < sizeVector1;i++)
+		stringVector.push_back(vector1[i]);
+
+	if(stringVector.size() != registroSerializado->size())
+		{
+			cout << "crap" << endl;
+			return;
+		}
+	int size2 = registroSerializado->size();
+	for(int p=0 ; p < size2 ; p++)
+		if(registroSerializado->at(p)!=stringVector.at(p))
+		{
+			cout << "more crap" << endl;
+			return;
+		}
+
+
+	Registro* r1 = new Registro();
+	r1->deserializar(&stringVector);
+	r1->verContenido();
+
+	delete r1;
+	delete registroSerializado;
+
+//	char archivoDeControl[]="archivoDeControlLista.txt";
+//	char archivoDeDatos[]="archivoDeDatosLista.txt";
+//	this->heLista = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+//	if ( this->heLista->agregarRegistro(registroLista1) == operacionOK )
+//		cout << "Se agrego una lista" << endl;
+//	else cout << "Error agregando lista1" << endl;
+//	if ( this->heLista->agregarRegistro(registroLista2) == operacionOK )
+//		cout << "Se agrego una lista" << endl;
+//	else cout << "Error agregando lista2" << endl;
+//	if ( this->heLista->agregarRegistro(registroLista3) == operacionOK )
+//		cout << "Se agrego una lista" << endl;
+//	else cout << "Error agregando listas3" << endl;
+
+//	this->bucketLista = new Bucket(0,190);
 //	cout << this->bucketLista->getEspacioLibre() << endl;
-	this->bucketLista->agregarRegistro(registroLista1);
+//	this->bucketLista->agregarRegistro(registroLista1);
 //	cout << this->bucketLista->getEspacioLibre() << endl;
-	this->bucketLista->agregarRegistro(registroLista2);
+//	this->bucketLista->agregarRegistro(registroLista2);
 //	cout << this->bucketLista->getEspacioLibre() << endl;
-	this->bucketLista->agregarRegistro(registroLista3);
+//	this->bucketLista->agregarRegistro(registroLista3);
 //	cout << this->bucketLista->getEspacioLibre() << endl;
 }
 
@@ -1060,8 +1072,15 @@ void Pruebas::iniciarCargosParaIntegracion() {
 	this->cargo1->agregarCargo("Vice Presidente");
 	this->registroCargo1 = new Registro(cargo1);
 	delete this->cargo1;
-	this->bucketCargo = new Bucket(0,204);
-	this->bucketCargo->agregarRegistro(registroCargo1);
+	char archivoDeControl[]="archivoDeControlCargo.txt";
+	char archivoDeDatos[]="archivoDeDatosCargo.txt";
+	this->heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	if ( this->heCargo->agregarRegistro(registroCargo1) == operacionOK )
+		cout << "Se agrego un cargo1" << endl;
+
+//
+//	this->bucketCargo = new Bucket(0,204);
+//	this->bucketCargo->agregarRegistro(registroCargo1);
 }
 
 void Pruebas::cargarBaseDeDatos(Administrador administrador) {
@@ -1073,18 +1092,30 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->votante4->agregarEleccion ("19970701","Presidente");
 	this->votante4->agregarEleccion ("19970701","Gobernador");
 	this->registroVotante4 = new Registro(votante4);
-	if (administrador.alta(this->bucketVotante,this->registroVotante4)) cout << "Se cargo votante nuevo" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketVotante(this->bucketVotante);
+	delete this->votante4;
+	if (administrador.alta(this->heVotante,this->registroVotante4)==operacionOK )
+		cout << "Se agrego un votante" << endl;
+	else cout << "Error agregando votante4" << endl;
+	heVotante->mostrarArchivoDeHash();
+//	Anterior=============>
+//	this->verContenidoBucketVotante(this->bucketVotante);
+//	==============================
 
 
 	cout << "Inicio de carga de distritos" << endl;
 	this->iniciarDistritosParaIntegracion();
 	this->distrito4 = new Distrito("Colegiales");
 	this->registroDistrito4 = new Registro(distrito4);
-	if (administrador.alta(this->bucketDistrito,this->registroDistrito4)) cout << "Se cargo distrito nuevo" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketDistrito(this->bucketDistrito);
+	if (administrador.alta(this->heDistrito,this->registroDistrito4)==operacionOK )
+		cout << "Se agrego un distrito4" << endl;
+	else cout << "Error agregando distrito4" << endl;
+	heDistrito->mostrarArchivoDeHash();
+
+//	version anterior ===============>
+//	if (administrador.alta(this->bucketDistrito,this->registroDistrito4)) cout << "Se cargo distrito nuevo" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketDistrito(this->bucketDistrito);
+//	===============================
 
 	cout << "Inicio de carga de Cargos posibles" << endl;
 	this->iniciarCargosParaIntegracion();
@@ -1092,9 +1123,16 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->cargo2 = new Cargo ("Gobernador");
 	this->cargo2->agregarCargo("Vice Gobernador");
 	this->registroCargo2 = new Registro(cargo2);
-	if (administrador.alta(this->bucketCargo,this->registroCargo2)) cout << "Se un nuevo cargo para poder ser votado" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketCargo(this->bucketCargo);
+	if (administrador.alta(this->heCargo,this->registroCargo2)==operacionOK )
+		cout << "Se agrego un cargo2" << endl;
+	else cout << "Error agregando cargo2" << endl;
+	heCargo->mostrarArchivoDeHash();
+
+//	version anterior ===============>
+//	if (administrador.alta(this->bucketCargo,this->registroCargo2)) cout << "Se un nuevo cargo para poder ser votado" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketCargo(this->bucketCargo);
+//	=================================
 
 	cout << "Inicio de carga de Elecciones pasadas" << endl;
 	this->iniciarEleccionesParaIntegracion();
@@ -1105,35 +1143,49 @@ void Pruebas::cargarBaseDeDatos(Administrador administrador) {
 	this->eleccion4->agregarDistrito("Mataderos");
 	this->eleccion4->agregarDistrito("Colegiales");
 	this->registroEleccion4 = new Registro(eleccion4);
-	cout << this->registroEleccion4->getTamanio() << endl;
-	if (administrador.alta(this->bucketEleccion,this->registroEleccion4)) cout << "Se cargo eleccion nueva" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketEleccion(this->bucketEleccion);
+	if (administrador.alta(this->heEleccion,this->registroEleccion4)==operacionOK )
+		cout << "Se agrego una eleccion4" << endl;
+	else cout << "Error agregando eleccion4" << endl;
+	heEleccion->mostrarArchivoDeHash();
 
+	//	version anterior ===============>
+//	if (administrador.alta(this->bucketEleccion,this->registroEleccion4)) cout << "Se cargo eleccion nueva" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketEleccion(this->bucketEleccion);
+//	=======================================
 
 	cout << "Inicio de carga de Candidatos pasados" << endl;
 	this->iniciarCandidatosParaIntegracion();
 	cout << "Fin de carga de Elecciones pasadas" << endl;
 	this->candidato4 = new Candidato ("19970702","Gobernador","VodkaTonic",4);
 	this->registroCandidato4 = new Registro(candidato4);
-	cout << "El registro 4 pesa = " << this->registroCandidato4->getTamanio() << endl;
-	cout << "espacio libre en bucket " << this->bucketCandidato->getEspacioLibre() << endl;
-	if (administrador.alta(this->bucketCandidato,this->registroCandidato4)) cout << "Se cargo candidato nuevo" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketCandidato(this->bucketCandidato);
+	if (administrador.alta(this->heCandidato,this->registroCandidato4)==operacionOK )
+		cout << "Se agrego un candidato4" << endl;
+	else cout << "Error agregando candidato4" << endl;
+	heCandidato->mostrarArchivoDeHash();
 
+//	version anterior ===============>
+//	if (administrador.alta(this->bucketCandidato,this->registroCandidato4)) cout << "Se cargo candidato nuevo" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketCandidato(this->bucketCandidato);
+//	================================
 
 	cout << "Inicio de carga de Listas de elecciones pasadas" << endl;
 	this->iniciarListasParaIntegracion();
 	cout << "Fin de carga de Listas de elecciones pasadas" << endl;
+
+
 	this->lista4 = new Lista ("Socialista","19970702","Gobernador");
 	this->registroLista4 = new Registro(lista4);
-	cout << "El registro 4 pesa = " << this->registroLista4->getTamanio() << endl;
-	cout << "espacio libre en bucket " << this->bucketLista->getEspacioLibre() << endl;
-	if (administrador.alta(this->bucketLista,this->registroLista4)) cout << "Se cargo lista nueva" << endl;
-	else cout << "ERROR" << endl;
-	this->verContenidoBucketLista(this->bucketLista);
-//		cout << this->bucketLista->getEspacioLibre() << endl;
+//	if (administrador.alta(this->heLista,this->registroLista4)==operacionOK )
+//		cout << "Se agrego una Lista4" << endl;
+//	else cout << "Error agregando lista4" << endl;
+
+//	version anterior ===============>
+//	if (administrador.alta(this->bucketLista,this->registroLista4)) cout << "Se cargo lista nueva" << endl;
+//	else cout << "ERROR" << endl;
+//	this->verContenidoBucketLista(this->bucketLista);
+//    =========================================
 }
 
 void Pruebas::pruebaLog(){
@@ -1156,11 +1208,15 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 	log.abrir();
 //	Inicio del sistema
 //	El administrador habilita una eleccion valida que esta en el archivo de elecciones
-	list<Registro*>::iterator itEleccion = this->bucketEleccion->ubicarPrimero();
-	itEleccion++;itEleccion++;
-	administrador.habilitarEleccion((Eleccion*)(*itEleccion)->getContenido());
-	itEleccion++;
-	administrador.habilitarEleccion((Eleccion*)(*itEleccion)->getContenido());
+	Eleccion* eleccionAHabilitar1 = new Eleccion ("19970702","Presidente");
+	Eleccion* eleccionAHabilitar2 = new Eleccion ("19970702","Presidente");
+	Eleccion* eleccionAHabilitar3 = new Eleccion ("19970702","Gobernador");
+	Registro* registroAHabilitar1 = new Registro (eleccionAHabilitar1);
+	Registro* registroAHabilitar2 = new Registro (eleccionAHabilitar2);
+	Registro* registroAHabilitar3 = new Registro (eleccionAHabilitar3);
+	administrador.habilitarEleccion((Eleccion*)(this->heEleccion->obtenerRegistro(registroAHabilitar1)->getContenido()));
+	administrador.habilitarEleccion((Eleccion*)(this->heEleccion->obtenerRegistro(registroAHabilitar2)->getContenido()));
+	administrador.habilitarEleccion((Eleccion*)(this->heEleccion->obtenerRegistro(registroAHabilitar3)->getContenido()));
 	administrador.getEleccionesHabilitadas();
 //	ingresa el votante1
 	int numeroDeEleccion;
@@ -1183,18 +1239,19 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 		if (c=='n') ok=false;
 	}
 //	#warning "Hashea el dni en el archivo para ver si esta en el padron"
-	Registro* registroAuxiliar = this->bucketVotante->getRegistro(dni);
+	Votante* votanteActual = new Votante(dni,"","","","");
+	Registro* reg = new Registro(votanteActual);
+	Registro* registroAuxiliar = this->heVotante->obtenerRegistro(reg);
+	delete reg;
 	if (!registroAuxiliar) {
 		cout << "NO EXISTE EN EL PADRON" << endl;
 		log.insertarMensajeConEntero(dni);
 	}
 	else {
-		Registro* registro = this->bucketVotante->getRegistro(dni);
-		Votante* votante = (Votante*) registro->getContenido();
 		string mensaje= " Ingreso el votante: ";
-		log.insertarMensajeConEntidad(votante,mensaje);
-		cout << "Bienvenido " << votante->getNombre() << endl;
-		administrador.consultarEleccionesHabilitadasParaElVotante(votante);
+		log.insertarMensajeConEntidad(((Votante*)registroAuxiliar->getContenido()),mensaje);
+		cout << "Bienvenido " << ((Votante*)(registroAuxiliar->getContenido()))->getNombre() << endl;
+		administrador.consultarEleccionesHabilitadasParaElVotante((Votante*)(registroAuxiliar->getContenido()));
 		ok=false;
 		while (!ok){
 			cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
@@ -1214,7 +1271,7 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 			}
 			else cout << "Numero invalido" << endl;
 		}
-		//	me posiciono en la eleccion habilitada elegida para votar ahora
+//		hasheo la eleccion
 		list<Eleccion*> listaHabilitadas= (administrador.getListaDeEleccionesHabilitadas());
 		list<Eleccion*>::iterator itHabilitadas = listaHabilitadas.begin();
 		for (int i=0;i<numeroDeEleccion-1;i++) itHabilitadas++;
@@ -1222,7 +1279,7 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 		log.insertarMensajeConEntidad(*itHabilitadas,mensaje);
 		ok=false;
 		int boleta;
-		administrador.cargarListasDeEleccion(numeroDeEleccion,this->bucketLista);
+		administrador.cargarListasDeEleccion(*itHabilitadas,this->heLista);
 		while (!ok) {
 			while (!ok) {
 				boleta = administrador.elegirBoleta(numeroDeEleccion,this->bucketLista);
@@ -1234,11 +1291,12 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 		}
 		list<Lista*> listaBoletas = administrador.getListaDeBoletas();
 		list<Lista*>::iterator itBoletas = listaBoletas.begin();
-		if (boleta==listaBoletas.size()+1) {
+		int size = listaBoletas.size();
+		if ( boleta==size+1 ) {
 			string mensaje="El votante voto en blanco ";
 			log.insertarMensaje(mensaje);
 		}
-		else if (boleta==listaBoletas.size()+2){
+		else if ( boleta==size+2 ){
 			string mensaje="El votante voto impugnado, nulo, etc ";
 			log.insertarMensaje(mensaje);
 		}
@@ -1250,24 +1308,33 @@ void Pruebas::inicioDeSimulacion(Administrador administrador){
 		}
 
 //		INCREMENTAR CLASE CONTEO
-		delete registro;
-		delete votante;
+
 	}
 	log.cerrar();
+	delete eleccionAHabilitar1;
+	delete eleccionAHabilitar2;
+	delete eleccionAHabilitar3;
+	delete registroAHabilitar1;
+	delete registroAHabilitar2;
+	delete registroAHabilitar3;
 	delete registroAuxiliar;
+	delete votanteActual;
 }
 
 void Pruebas::pruebaDeSimulacionDePrograma () {
-	Administrador administrador ("undomiel","aragorn");
+	string nombreDePrograma = ".//doc//password";
+	Administrador administrador(nombreDePrograma);
+
 //	intenta acceder al sistema con usuario incorrecto pero contraseña correcta
 	if ((administrador.acceder("undomiel","1")) || (administrador.acceder("1","aragorn")) || (administrador.acceder("",""))) cout << "SEGURIDAD VIOLADA" << endl;
+
 	if (administrador.acceder("undomiel","aragorn")) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		this->cargarBaseDeDatos(administrador);
 		this->inicioDeSimulacion(administrador);
 	}
-	else cout << "Adios" << endl;
+	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	this->destruir();
 }
 

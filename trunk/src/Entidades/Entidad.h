@@ -12,6 +12,7 @@
 #include "Serializable.h"
 #include "Constantes.h"
 #include "NombreDeEntidad.h"
+#include "../Auxiliares/ResultadoComparacion.h"
 
 using std::string;
 using std::stringstream;
@@ -25,10 +26,22 @@ public:
 
 	virtual int getClave() = 0;
 
+	virtual void verEntidad() = 0;
+
 	/*
 	 * Instancia un nuevo objeto, copia de actual.
 	 */
 	virtual Entidad* duplicar() = 0;
+
+
+	/*
+	 * Devuelve el resultado de comparar la actual entidad con otra.
+	 * Los resultados posibles son mayor, menor, igual o comparacionInvalida.
+	 * El resultado es respecto del patrón.
+	 * Por ejemplo: sean A y B dos entidades, entonces
+	 * A->comparar(B) devuelve "mayor" si A es mayor a "B".
+	 */
+	virtual ResultadoComparacion comparar(Entidad* entidad) = 0;
 
 	/*
 	 * Devuelve el tipo de la entidad instanciada.

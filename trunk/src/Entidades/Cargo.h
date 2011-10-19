@@ -22,10 +22,20 @@ public:
 	bool eliminarCargo(string subCargo);
 	int getTamanio();
 	int getClave();
+	void verEntidad();
 	virtual ~Cargo();
 
 	string* serializar();
 	void deserializar(string * source);
+
+	/*
+	 * Devuelve el resultado de comparar la actual entidad con otra.
+	 * Los resultados posibles son mayor, menor, igual o comparacionInvalida.
+	 * El resultado es respecto del patrón.
+	 * Por ejemplo: sean A y B dos entidades, entonces
+	 * A->comparar(B) devuelve "mayor" si A es mayor a "B".
+	 */
+	ResultadoComparacion comparar(Entidad* entidad);
 
 	/*
 	 * Instancia un nuevo objeto, copia de actual.
