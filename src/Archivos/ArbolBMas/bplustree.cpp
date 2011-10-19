@@ -6,8 +6,8 @@ bplustree::bplustree(void)
 }
 
 
-bplustree::~bplustree(void)
-{
+bplustree::~bplustree(void){
+	delete (this->f);
 }
 
 int bplustree::del(string key)
@@ -23,7 +23,7 @@ int bplustree::del(string key)
 	bn=this->q.back();
 	this->q.pop_back();
 	status=this->n.del(key,this->bs);
-	this->f.setblock(this->n.serialize(),bn);
+	this->f->setblock(this->n.serialize(),bn);
 	return 0;
 }
 
@@ -37,7 +37,7 @@ std::pair<vector<char>,std::string> bplustree::getnext()
 	//this is to take into account that there might be empty blocks with a next pointer
 	while(rretval.first.second.size() == 0 && rretval.second !=0)
 	{
-		block = this->f.getblock(rretval.second);
+		block = this->f->getblock(rretval.second);
 		tmp.deserialize(block);
 		this->n=tmp;
 		rretval=this->n.nextelem();
@@ -53,7 +53,7 @@ std::pair<vector<char>,std::string> bplustree::getnext()
 		return rretval.first;
 	}
 	//this was the last element of the node, we need to get a new one
-	block = this->f.getblock(rretval.second);
+	block = this->f->getblock(rretval.second);
 	tmp.deserialize(block);
 	this->n=tmp;
 	return rretval.first;
@@ -64,10 +64,10 @@ void bplustree::newtree(string p, int bs)
 {
 	int rootblock=this->getrootblock();
 	leaf_node root;
-	this->f.newfile(p,bs);
+	this->f = new ffile(p,bs);
 	this->bs = bs; //this will be used as max size of the tree nodes
-	rootblock=this->f.newblock();
-	this->f.setblock(root.serialize(),rootblock);
+	rootblock=this->f->newblock();
+	this->f->setblock(root.serialize(),rootblock);
 }
 
 void bplustree::initialize()
@@ -91,14 +91,14 @@ vector<char> bplustree::search(string key)
 
 	q.clear();
 	bn=this->getrootblock();
-	block=this->f.getblock(bn);
+	block=this->f->getblock(bn);
 	this->q.push_back(bn);
 	while(i.peek(block)=='I')
 	{
 		i=empty; //if we dont do this, we'll add in the previous i.
 		i.deserialize(block);
 		bn=i.search(key);
-		block=this->f.getblock(bn);
+		block=this->f->getblock(bn);
 		q.push_back(bn);
 	}
 	//up to this point, I have a block that is not an inner node
@@ -110,8 +110,8 @@ vector<char> bplustree::search(string key)
 	return retval;
 }
 
-int bplustree::add(string key, vector<char> data)
-{
+int bplustree::add(string key, vector<char> data){
+
 	if(key.size() + data.size() > this->bs-12) //just to make sure i am not inserting something larger than a block
 		return -1;
 	vector<char> tmp;
@@ -154,7 +154,7 @@ int bplustree::add(string key, vector<char> data)
 	if(status == 0)
 	{
 		//there was no overflow, so we just write and return
-		this->f.setblock(this->n.serialize(),bn);
+		this->f->setblock(this->n.serialize(),bn);
 		//we need to get rid of the last search crap because after an insert, 
 		//it might not be consistent
 		this->clear();
@@ -170,12 +170,12 @@ int bplustree::add(string key, vector<char> data)
 		if(bn==this->getrootblock() && blocktype == 'L')
 		{
 			//we inserted a block in the root which was full and overflowed
-			left = this->f.newblock();
-			right = this->f.newblock();
+			left = this->f->newblock();
+			right = this->f->newblock();
 			pairifleaf=tmpleaf.split_root(this->bs,left,right);
-			this->f.setblock(pairifleaf.first.serialize(),this->getrootblock());
-			this->f.setblock(tmpleaf.serialize(),left);
-			this->f.setblock(pairifleaf.second.serialize(),right);
+			this->f->setblock(pairifleaf.first.serialize(),this->getrootblock());
+			this->f->setblock(tmpleaf.serialize(),left);
+			this->f->setblock(pairifleaf.second.serialize(),right);
 			//there is nothing else to do, clean up and leave
 			this->clear();
 			return 0;
@@ -183,12 +183,12 @@ int bplustree::add(string key, vector<char> data)
 		if(bn==this->getrootblock() && blocktype == 'I')
 		{
 			//we inserted a block and it split till the root
-			left = this->f.newblock();
-			right = this->f.newblock();
+			left = this->f->newblock();
+			right = this->f->newblock();
 			pairifnode = tmpinner.split_root(this->bs,left,right);
-			this->f.setblock(tmpinner.serialize(),this->getrootblock());
-			this->f.setblock(pairifnode.first.serialize(),left);
-			this->f.setblock(pairifnode.second.serialize(),right);
+			this->f->setblock(tmpinner.serialize(),this->getrootblock());
+			this->f->setblock(pairifnode.first.serialize(),left);
+			this->f->setblock(pairifnode.second.serialize(),right);
 			//there is nothing else to split, clean up and leave
 			this->clear();
 			return 0;
@@ -204,18 +204,18 @@ int bplustree::add(string key, vector<char> data)
 			inner_node ftr;
 			int rlt;
 			//we need to get a new block
-			right = this->f.newblock();
+			right = this->f->newblock();
 			splitrst = tmpinner.split(this->bs,right);
-			this->f.setblock(tmpinner.serialize(),bn); //write my data
-			this->f.setblock(splitrst.first.serialize(),right); //write my data
+			this->f->setblock(tmpinner.serialize(),bn); //write my data
+			this->f->setblock(splitrst.first.serialize(),right); //write my data
 			bn=this->q.back(); //get node in which to write stuff
-			strg=this->f.getblock(bn); //get block
+			strg=this->f->getblock(bn); //get block
 			ftr.deserialize(strg); //get node
 			rlt=ftr.add(splitrst.second,this->bs);
 			if(rlt==0)
 			{
 				status=0;
-				this->f.setblock(ftr.serialize(),bn);
+				this->f->setblock(ftr.serialize(),bn);
 
 			}
 			if(rlt==-1)
@@ -239,18 +239,18 @@ int bplustree::add(string key, vector<char> data)
 			inner_node father;
 			int reslt; //storage for the addition to the father
 
-			right = this->f.newblock(); //i will definitely need a new block
+			right = this->f->newblock(); //i will definitely need a new block
 			splitres=tmpleaf.split(this->bs,right);
-			this->f.setblock(tmpleaf.serialize(),bn); //write my data
-			this->f.setblock(splitres.first.serialize(),right); //write my data
+			this->f->setblock(tmpleaf.serialize(),bn); //write my data
+			this->f->setblock(splitres.first.serialize(),right); //write my data
 			bn=this->q.back(); //get node in which to write stuff
-			stg=this->f.getblock(bn); //get block
+			stg=this->f->getblock(bn); //get block
 			father.deserialize(stg); //get node
 			reslt=father.add(splitres.second,this->bs);
 			if(reslt==0)
 			{
 				status=0;
-				this->f.setblock(father.serialize(),bn);
+				this->f->setblock(father.serialize(),bn);
 
 			}
 			if(reslt==-1)
@@ -269,12 +269,12 @@ int bplustree::add(string key, vector<char> data)
 
 		/*bn=this->q.back();
 		q.pop_back();
-		block=this->f.getblock(bn);
+		block=this->f->getblock(bn);
 		status=tmpinner.peek(block);
 		if(blocktype == 'I')
 			tmpinner.deserialize(block);
 		if(blocktype == 'L')
-			tmpleaf.deserialize(block);
+			tmpleaf->deserialize(block);
 			*/
 	}
 	return 0;
@@ -325,7 +325,7 @@ int bplustree::modify(string key, vector<char> data)
 	if(status == 0)
 	{
 		//there was no overflow, so we just write and return
-		this->f.setblock(this->n.serialize(),bn);
+		this->f->setblock(this->n.serialize(),bn);
 		//we need to get rid of the last search crap because after an insert, 
 		//it might not be consistent
 		this->clear();
@@ -341,12 +341,12 @@ int bplustree::modify(string key, vector<char> data)
 		if(bn==this->getrootblock() && blocktype == 'L')
 		{
 			//we inserted a block in the root which was full and overflowed
-			left = this->f.newblock();
-			right = this->f.newblock();
+			left = this->f->newblock();
+			right = this->f->newblock();
 			pairifleaf=tmpleaf.split_root(this->bs,left,right);
-			this->f.setblock(pairifleaf.first.serialize(),this->getrootblock());
-			this->f.setblock(tmpleaf.serialize(),left);
-			this->f.setblock(pairifleaf.second.serialize(),right);
+			this->f->setblock(pairifleaf.first.serialize(),this->getrootblock());
+			this->f->setblock(tmpleaf.serialize(),left);
+			this->f->setblock(pairifleaf.second.serialize(),right);
 			//there is nothing else to do, clean up and leave
 			this->clear();
 			return 0;
@@ -354,12 +354,12 @@ int bplustree::modify(string key, vector<char> data)
 		if(bn==this->getrootblock() && blocktype == 'I')
 		{
 			//we inserted a block and it split till the root
-			left = this->f.newblock();
-			right = this->f.newblock();
+			left = this->f->newblock();
+			right = this->f->newblock();
 			pairifnode = tmpinner.split_root(this->bs,left,right);
-			this->f.setblock(tmpinner.serialize(),this->getrootblock());
-			this->f.setblock(pairifnode.first.serialize(),left);
-			this->f.setblock(pairifnode.second.serialize(),right);
+			this->f->setblock(tmpinner.serialize(),this->getrootblock());
+			this->f->setblock(pairifnode.first.serialize(),left);
+			this->f->setblock(pairifnode.second.serialize(),right);
 			//there is nothing else to split, clean up and leave
 			this->clear();
 			return 0;
@@ -375,18 +375,18 @@ int bplustree::modify(string key, vector<char> data)
 			inner_node ftr;
 			int rlt;
 			//we need to get a new block
-			right = this->f.newblock();
+			right = this->f->newblock();
 			splitrst = tmpinner.split(this->bs,right);
-			this->f.setblock(tmpinner.serialize(),bn); //write my data
-			this->f.setblock(splitrst.first.serialize(),right); //write my data
+			this->f->setblock(tmpinner.serialize(),bn); //write my data
+			this->f->setblock(splitrst.first.serialize(),right); //write my data
 			bn=this->q.back(); //get node in which to write stuff
-			strg=this->f.getblock(bn); //get block
+			strg=this->f->getblock(bn); //get block
 			ftr.deserialize(strg); //get node
 			rlt=ftr.add(splitrst.second,this->bs);
 			if(rlt==0)
 			{
 				status=0;
-				this->f.setblock(ftr.serialize(),bn);
+				this->f->setblock(ftr.serialize(),bn);
 
 			}
 			if(rlt==-1)
@@ -410,18 +410,18 @@ int bplustree::modify(string key, vector<char> data)
 			inner_node father;
 			int reslt; //storage for the addition to the father
 
-			right = this->f.newblock(); //i will definitely need a new block
+			right = this->f->newblock(); //i will definitely need a new block
 			splitres=tmpleaf.split(this->bs,right);
-			this->f.setblock(tmpleaf.serialize(),bn); //write my data
-			this->f.setblock(splitres.first.serialize(),right); //write my data
+			this->f->setblock(tmpleaf.serialize(),bn); //write my data
+			this->f->setblock(splitres.first.serialize(),right); //write my data
 			bn=this->q.back(); //get node in which to write stuff
-			stg=this->f.getblock(bn); //get block
+			stg=this->f->getblock(bn); //get block
 			father.deserialize(stg); //get node
 			reslt=father.add(splitres.second,this->bs);
 			if(reslt==0)
 			{
 				status=0;
-				this->f.setblock(father.serialize(),bn);
+				this->f->setblock(father.serialize(),bn);
 
 			}
 			if(reslt==-1)
@@ -440,12 +440,12 @@ int bplustree::modify(string key, vector<char> data)
 
 		/*bn=this->q.back();
 		q.pop_back();
-		block=this->f.getblock(bn);
+		block=this->f->getblock(bn);
 		status=tmpinner.peek(block);
 		if(blocktype == 'I')
 			tmpinner.deserialize(block);
 		if(blocktype == 'L')
-			tmpleaf.deserialize(block);
+			tmpleaf->deserialize(block);
 			*/
 	}
 	return 0;
