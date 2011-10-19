@@ -16,7 +16,12 @@
 
 #include "../Archivos/Hashing/Bucket.h"
 #include "../Archivos/Hashing/HashingExtensible.h"
+#include "../Archivos/ArbolBMas/bplustree.h"
 #include "Eleccion.h"
+#include <stdio.h>
+#include <fstream>
+#include <sstream>
+
 
 using namespace std;
 
@@ -25,8 +30,6 @@ class Administrador {
 private:
 	string nombre;		// Identificador
 	string password;
-//	FILE* archivo;
-	// archivo al estilo c++
 	fstream*	archivo;
 	list <Eleccion*> listaDeEleccionesHabilitadas;
 	list<Lista*> listaDeBoletas;
@@ -38,12 +41,13 @@ private:
 public:
 	Administrador(string pathArchivo);
 	bool acceder(string nombre,string password);
-	Resultados alta (HashingExtensible*,Registro*);
+	Resultados altaHash (HashingExtensible*,Registro*);
+	int altaArbol (bplustree*,Registro*);
 	bool habilitarEleccion (Eleccion*);
 	void consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
 	char sufragar(int);
-	void cargarListasDeEleccion(Eleccion*,HashingExtensible*);
+	int cargarListasDeEleccion(Eleccion*,bplustree*);
 	int elegirBoleta(int, Bucket*);
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
 	list <Lista*> getListaDeBoletas();

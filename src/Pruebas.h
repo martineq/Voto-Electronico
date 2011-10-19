@@ -89,6 +89,8 @@ private:
 	Bucket* bucketCargo;
 	Bucket* bucketLista;
 	Bucket* bucketConteo;
+	bplustree* arbolB;
+	void agregarBoletaAlArbol(Registro*);
 	void iniciarRegistrosDePrueba();
 	void iniciarRegistrosDistrito();
 	void iniciarEleccionesParaIntegracion();
@@ -103,6 +105,7 @@ private:
 	void verContenidoBucketCandidato(Bucket*);
 	void verContenidoBucketLista(Bucket*);
 	void verContenidoBucketCargo(Bucket*);
+	void verContenidoArbolListas();
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
