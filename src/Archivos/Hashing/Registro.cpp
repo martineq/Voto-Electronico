@@ -125,7 +125,10 @@ ResultadoComparacion Registro::comparar(Registro *registroMuestra)
 
 void Registro::verContenido()
 {
-	contenido->verEntidad();
+	if (contenido != NULL)
+		contenido->verEntidad();
+	else
+		cout << "Contenido vacio" << endl;
 }
 
 Registro::~Registro()
