@@ -22,7 +22,7 @@ public:
 	std::pair<vector<char>,std::string> getnext();
 private:
 	void clear(){leaf_node l; this->n=l; };
-	ffile f;
+	ffile* f;
 	vector<int> q;
 	leaf_node n; //for the last search, its used in the nextnode logic
 	int bs;
