@@ -68,7 +68,8 @@ int Distrito::getTamanio(){
 int Distrito::getClave(){
 
 	int c = 0;
-	for (int i=0; i<this->distrito.length(); i++) {
+	int size = this->distrito.length();
+	for (int i=0; i< size; i++) {
 		c += (int)this->distrito[i];
 	}
 	return c;
@@ -82,7 +83,7 @@ ResultadoComparacion Distrito::comparar(Entidad *entidad)
 
 		int r = distrito.compare(((Distrito*)entidad)->distrito);
 
-		resultado == mayor;
+		resultado = mayor;
 
 		if ( r == 0 )
 			resultado = igual;
