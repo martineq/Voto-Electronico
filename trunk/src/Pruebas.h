@@ -90,6 +90,7 @@ private:
 	Bucket* bucketLista;
 	Bucket* bucketConteo;
 	bplustree* arbolB;
+	string* getString(vector<char>);
 	void agregarBoletaAlArbol(Registro*);
 	void iniciarRegistrosDePrueba();
 	void iniciarRegistrosDistrito();
