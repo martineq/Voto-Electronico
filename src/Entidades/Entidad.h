@@ -9,6 +9,7 @@
 #define ENTIDAD_H_
 
 #include <string>
+#include <locale>
 #include "Serializable.h"
 #include "Constantes.h"
 #include "NombreDeEntidad.h"
@@ -24,7 +25,7 @@ public:
 
 	virtual int getTamanio() = 0;
 
-	virtual int getClave() = 0;
+	virtual unsigned long getClave() = 0;
 
 	virtual void verEntidad() = 0;
 

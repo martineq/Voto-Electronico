@@ -20,7 +20,7 @@ public:
 	string getFecha ();
 	string getCargo ();
 	int getTamanio();
-	int getClave();
+	unsigned long getClave();
 	virtual ~Lista();
 	string* serializar();
 	void deserializar (string*);

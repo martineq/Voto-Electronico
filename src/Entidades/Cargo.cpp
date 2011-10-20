@@ -62,13 +62,22 @@ int Cargo::getTamanio(){
 	return (tamanioCargo + tamanioLista);
 }
 
-int Cargo::getClave(){
-	int size = cargo.length();
-	int c = 0;
-	for (int i=0; i < size; i++) {
-		c += (int)this->cargo[i];
-	}
-	return c;
+unsigned long Cargo::getClave(){
+//	int size = cargo.length();
+//	int c = 0;
+//	for (int i=0; i < size; i++) {
+//		c += (int)this->cargo[i];
+//	}
+//	return c;
+
+	locale loc;                 // the "C" locale
+
+    const collate<char>& coll = use_facet<collate<char> >(loc);
+
+	unsigned long myhash = coll.hash(this->cargo.data(),this->cargo.data()+this->cargo.length());
+
+	return myhash;
+
 }
 
 

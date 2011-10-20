@@ -32,7 +32,7 @@ public:
 	 */
 	int getTamanio();
 
-	int getClave();
+	unsigned long getClave();
 
 	void verEntidad();
 

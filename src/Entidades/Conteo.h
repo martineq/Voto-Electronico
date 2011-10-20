@@ -29,7 +29,7 @@ public:
 
 	int getTamanio();
 
-	int getClave();
+	unsigned long getClave();
 
 	string getFechaEleccion();
 

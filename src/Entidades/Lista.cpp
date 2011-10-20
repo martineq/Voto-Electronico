@@ -42,22 +42,32 @@ int Lista::getTamanio(){
 	return (tamanioNombre + tamanioFecha + tamanioCargo);
 }
 
-int Lista::getClave(){
-	int c = 0;
+unsigned long Lista::getClave(){
+//	int c = 0;
+//
+//	int size = fecha.length();
+//	for (int i=0; i< size; i++)
+//		c += (int)this->fecha[i];
+//
+//	size = cargo.length();
+//	for (int i=0; i< size ; i++)
+//		c += (int)this->cargo[i];
+//
+//	size = nombre.length();
+//	for (int i=0; i< size ; i++)
+//		c += (int)this->nombre[i];
+//
+//	return c;
 
-	int size = fecha.length();
-	for (int i=0; i< size; i++)
-		c += (int)this->fecha[i];
+	  string stringClave = this->fecha + this->cargo + this->nombre;
+	  locale loc;                 // the "C" locale
 
-	size = cargo.length();
-	for (int i=0; i< size ; i++)
-		c += (int)this->cargo[i];
+	  const collate<char>& coll = use_facet<collate<char> >(loc);
 
-	size = nombre.length();
-	for (int i=0; i< size ; i++)
-		c += (int)this->nombre[i];
+	  unsigned long myhash = coll.hash(stringClave.data(),stringClave.data()+stringClave.length());
 
-	return c;
+	  return myhash;
+
 }
 
 string Lista::getCargo () {

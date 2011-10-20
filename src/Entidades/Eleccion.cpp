@@ -42,17 +42,27 @@ int Eleccion::getTamanio(){
 	return (tamanioFecha + tamanioCargoPrincipal + tamanioListaDistritos);
 }
 
-int Eleccion::getClave(){
-	int c = 0;
-	int size = fecha.length();
-	for (int i=0; i<size; i++) {
-		c += (int)this->fecha[i];
-	}
-	size = cargoPrincipal.length();
-	for (int i=0; i<size; i++) {
-		c += (int)this->cargoPrincipal[i];
-	}
-	return c;
+unsigned long Eleccion::getClave(){
+//	int c = 0;
+//	int size = fecha.length();
+//	for (int i=0; i<size; i++) {
+//		c += (int)this->fecha[i];
+//	}
+//	size = cargoPrincipal.length();
+//	for (int i=0; i<size; i++) {
+//		c += (int)this->cargoPrincipal[i];
+//	}
+//	return c;
+	  string stringClave = this->fecha + this->cargoPrincipal;
+	  locale loc;                 // the "C" locale
+
+	  const collate<char>& coll = use_facet<collate<char> >(loc);
+
+	  unsigned long myhash = coll.hash(stringClave.data(),stringClave.data()+stringClave.length());
+
+	  return myhash;
+
+
 }
 
 string Eleccion::getFecha(){

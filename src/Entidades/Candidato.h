@@ -31,7 +31,7 @@ public:
 	void verEntidad();
 	void verCandidato ();
 	int getTamanio();
-	int getClave();
+	unsigned long getClave();
 	string* serializar();
 	void deserializar(string*);
 	virtual ~Candidato();

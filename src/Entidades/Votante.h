@@ -30,7 +30,7 @@ public:
 	void setDistrito (string);
 	bool agregarEleccion (string,string);
 	int  getTamanio();
-	int getClave();
+	unsigned long getClave();
 	void deserializar (string* source);
 	void verVotante ();
 	void verEntidad();
