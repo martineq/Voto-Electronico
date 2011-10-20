@@ -40,6 +40,7 @@ public:
 	string getDomicilio ();
 	string getDistrito ();
 	string* serializar();
+	list <EleccionAnterior*>* getListaDeEleccionesAnteriores ();
 
 	/*
 	 * Devuelve el resultado de comparar la actual entidad con otra.

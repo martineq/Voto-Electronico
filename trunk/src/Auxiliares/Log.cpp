@@ -17,7 +17,7 @@ Log::~Log() {
 }
 
 void Log::abrir(){
-	this->archivo = fopen("texto","w+");
+	this->archivo = fopen("texto","a+");
 }
 
 void Log::cerrar(){

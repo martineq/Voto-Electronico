@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include "../tests/Pruebas.h"
+#include "../tests/SimulacionSistema.h"
 #include "../tests/TestHashingExtensible.h"
 
 
@@ -13,8 +14,6 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
-
-	Pruebas* prueba = new Pruebas();
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
@@ -38,13 +37,10 @@ int main(int argc,char* argv[]) {
 //	prueba->pruebaBMas();
 //	prueba->pruebaBMasAuto();
 
-//	Pruebas de integracion
-	prueba->pruebaDeSimulacionDePrograma();
-
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
 
-	delete (prueba);
+//	delete (prueba);
 
 //	Test test;
 //	test.testStringstream();
@@ -78,6 +74,10 @@ int main(int argc,char* argv[]) {
 //	the.testModificarRegistroExistente();
 //	the.testModificarRegistroConRedispersion();
 //	the.testSimple();
+
+//	Pruebas de simulacion de sistema
+	SimulacionSistema sistema;
+	sistema.main();
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
