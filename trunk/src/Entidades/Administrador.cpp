@@ -12,7 +12,7 @@ Administrador::Administrador(string pathArchivo) {
 	archivo = new fstream(pathArchivo.c_str());
 
 	char cadena[1024];
-	archivo->getline(cadena,1024);
+	archivo->getline(cadena,LONGITUD_BLOQUE);
 	string str(cadena);
 
 	int espacio  = str.find(" ");
@@ -31,14 +31,23 @@ bool Administrador::acceder(string nomb,string pass){
 	else return false;
 }
 
+string* Administrador::getString(vector<char> vect){
+	string* s = new string();
+	vector<char>::iterator it = vect.begin();
+	while( it != vect.end() ){
+		s->push_back(*it);
+		it++;
+	}
+	return s;
+}
+
 Resultados Administrador::altaHash (HashingExtensible* he,Registro* unRegistro){
 	return he->agregarRegistro(unRegistro);
 }
 
 int Administrador::altaArbol (bplustree* arbolB,Registro* registro){
 	string* registroSerializado = registro->serializar();
-	vector<char> data;
-	for (int i=0;i<registroSerializado->length();i++) data.push_back(registroSerializado->at(i));
+	vector<char> data(registroSerializado->begin(),registroSerializado->end());
 	int claveInt = registro->obtenerClave();
 	stringstream claveIntAString;//create a stringstream
 	claveIntAString << claveInt;//add number to the stream
@@ -165,50 +174,48 @@ int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
 	return c;
 }
 
-int Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
-	#warning "INTEGRAR CON ARBOL B+, 4 = CANTIDAD DE REGISTROS"
-	pair<vector<char>,std::string> siguienteRegistro;
-	vector <char> registroSerializadoChar = arbol->search(eleccion->getFecha());
-	string registroSerializadoString;
-	cout << "registro serializador char " << registroSerializadoChar.size() << endl;
-	for (int i=0; i < registroSerializadoChar.size(); i++){
-		cout << "for" << endl;
-		registroSerializadoString.push_back(registroSerializadoChar[i]);
-	}
-	Registro* registro;
-	cout << "Estoy en la linea 187 de Administrador.cpp" << endl;
-//	========================================================
-	registro->deserializar(&registroSerializadoString);
-//	========================================================
+void Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
+
+	// Busco la clave en arbol B+
+	string clave;
+	clave  = eleccion->getFecha();
+	clave += eleccion->getCargo();
+
+	arbol->search(clave);
+
+	// Obtengo el contenido.
+	pair<vector<char>,std::string> registroVectorizado = arbol->getnext();
+
+	string* registroSerializado = getString(registroVectorizado.first);
+
+	Registro* registro = new Registro();
+	registro->deserializar(registroSerializado);
+	delete registroSerializado;
+
 	Lista* boletaDelArbol = (Lista*)registro->getContenido();
-	if (boletaDelArbol->getFecha()==eleccion->getFecha()){
-		if (boletaDelArbol->getCargo()==eleccion->getCargo()){
-			Lista* lista = (Lista*)lista->duplicar();
+	while (boletaDelArbol->getFecha() == eleccion->getFecha()){
+
+		if (boletaDelArbol->getCargo() == eleccion->getCargo()){
+			Lista* lista = (Lista*)boletaDelArbol->duplicar();
 			this->listaDeBoletas.push_back(lista);
-			delete boletaDelArbol;
+			cout << "Encontre a Marina corriendo desnuda en la playa." << endl;
 		}
-	}
-	else return 0;
-	delete boletaDelArbol;
-	siguienteRegistro=arbol->getnext();
-	while(siguienteRegistro.second.size()!=0) {
-		registroSerializadoChar = siguienteRegistro.first;
-		for (int i=0; i < registroSerializadoChar.size(); i++){
-			registroSerializadoString.push_back(registroSerializadoChar[i]);
-		}
-		registro->deserializar(&registroSerializadoString);
-		Lista* boletaDelArbol = (Lista*)registro->getContenido();
-		if (boletaDelArbol->getFecha()==eleccion->getFecha()){
-			if (boletaDelArbol->getCargo()==eleccion->getCargo()){
-				Lista* lista = (Lista*)lista->duplicar();
-				this->listaDeBoletas.push_back(lista);
-				delete boletaDelArbol;
-			}
-		}
-		else return 0;
+
+		delete registro;
+		registroVectorizado = arbol->getnext();
+		registroSerializado = getString(registroVectorizado.first);
+
+		registro = new Registro();
+		registro->deserializar(registroSerializado);
+		delete registroSerializado;
+
 		delete boletaDelArbol;
-		siguienteRegistro=arbol->getnext();
+		boletaDelArbol = (Lista*)registro->getContenido();
 	}
+	delete registro;
+	cout << "acabe sobre marina" << endl;
+	delete boletaDelArbol;
+
 }
 
 char Administrador::sufragar (int numeroDeBoleta){
@@ -256,5 +263,5 @@ Administrador::~Administrador() {
 		delete *it2;
 		it2++;
 	}
-	delete archivo;
+//	delete archivo;
 }

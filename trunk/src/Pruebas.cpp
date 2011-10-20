@@ -4,7 +4,7 @@ Pruebas::Pruebas() {
 }
 
 Pruebas::~Pruebas() {
-//	delete this->heVotante;
+	delete this->heVotante;
 	delete this->heDistrito;
 	delete this->heEleccion;
 	delete this->heCandidato;
@@ -994,21 +994,26 @@ void Pruebas::verContenidoArbolListas (){
 	}
 }
 
+/*
+ * Agrega una lista al arbol, siendo la clave un string
+ * donde primero va la fecha, luego el cargo y finalmente el nombre de la lista.
+ */
 void Pruebas::agregarBoletaAlArbol(Registro* registro){
+	string clave;
+
+	Lista* lista = (Lista*)registro->getContenido();
+
+	clave  = lista->getFecha();
+	clave += lista->getCargo();
+	clave += lista->getNombre();
+
+	delete lista;
+
 	string* registroSerializado = registro->serializar();
-
-	vector<char> data;
-	int size = registroSerializado->length();
-	for (int i=0;i<size;i++)
-		data.push_back( registroSerializado->at(i) );
-
-	int claveInt = registro->obtenerClave();
-	stringstream claveIntAString;//create a stringstream
-	claveIntAString << claveInt;//add number to the stream
-	string claveString = claveIntAString.str();
-	this->arbolB->add(claveString,data);
-
+	vector<char> data(registroSerializado->begin(),registroSerializado->end());
 	delete registroSerializado;
+
+	this->arbolB->add(clave,data);
 }
 
 void Pruebas::iniciarListasParaIntegracion(){
@@ -1021,21 +1026,13 @@ void Pruebas::iniciarListasParaIntegracion(){
 	delete this->lista1;
 	delete this->lista2;
 	delete this->lista3;
+
 	arbolB = new bplustree();
 	arbolB->newtree("arbolDeListas",LONGITUD_BLOQUE);
+
 	this->agregarBoletaAlArbol(registroLista1);
 	this->agregarBoletaAlArbol(registroLista2);
 	this->agregarBoletaAlArbol(registroLista3);
-
-	stringstream clave;
-	clave << registroLista3->obtenerClave();
-	vector<char> c = arbolB->search(clave.str());
-	string* s = getString(c);
-	Registro* r = new Registro();
-	r->deserializar(s);
-	delete s;
-	r->verContenido();
-
 
 	this->verContenidoArbolListas();
 }
