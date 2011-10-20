@@ -38,6 +38,7 @@ private:
 	bool verificarEleccion(Eleccion*);
 	void mostrarEleccionesDelVotante (list<Eleccion*>);
 	void abrirArchivoDePassword ();
+	string* getString(vector<char> vect);
 public:
 	Administrador(string pathArchivo);
 	bool acceder(string nombre,string password);
@@ -47,7 +48,7 @@ public:
 	void consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
 	char sufragar(int);
-	int cargarListasDeEleccion(Eleccion*,bplustree*);
+	void cargarListasDeEleccion(Eleccion*,bplustree*);
 	int elegirBoleta(int, Bucket*);
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
 	list <Lista*> getListaDeBoletas();
