@@ -144,7 +144,15 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 		bool fin=false;
 		while ((itDistritos!=listaDeDistritos.end()) && (!fin)){
 			if (votante->getDistrito()==itDistritos->getDistrito()){
-				listaDeEleccionesDelVotante.push_back(*it);
+				list<EleccionAnterior*>* listaDeEleccionesAnterioresDelVotante = votante->getListaDeEleccionesAnteriores();
+				list<EleccionAnterior*>::iterator itEleccionesAnteriores = listaDeEleccionesAnterioresDelVotante->begin();
+				while ((itEleccionesAnteriores!=listaDeEleccionesAnterioresDelVotante->end()) && (!fin)){
+					if (((*it)->getFecha()==(*itEleccionesAnteriores)->getFecha()) && ((*it)->getCargo()==(*itEleccionesAnteriores)->getCargo())){
+						fin=true;
+					}
+					else itEleccionesAnteriores++;
+				}
+				if (!fin) listaDeEleccionesDelVotante.push_back(*it);
 				fin=true;
 			}
 			else itDistritos++;
@@ -154,7 +162,8 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 	this->mostrarEleccionesDelVotante(listaDeEleccionesDelVotante);
 }
 
-int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
+//int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
+int Administrador::elegirBoleta(){
 	if (this->listaDeBoletas.size()==0) {
 		cout << "NO HAY BOLETAS PARA ESTA ELECCION" << endl;
 		return 0;

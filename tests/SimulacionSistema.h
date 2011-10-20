@@ -1,12 +1,12 @@
 /*
- * Pruebas.h
+ * SimulacionSistema.h
  *
- *  Created on: 17/09/2011
- *      Author: mart
+ *  Created on: 20/10/2011
+ *      Author: daniel
  */
 
-#ifndef PRUEBAS_H_
-#define PRUEBAS_H_
+#ifndef SIMULACIONSISTEMA_H_
+#define SIMULACIONSISTEMA_H_
 
 #include "../src/Entidades/Cargo.h"
 #include "../src/Entidades/Votante.h"
@@ -33,7 +33,7 @@
 using namespace std;
 
 
-class Pruebas {
+class SimulacionSistema {
 private:
 	Votante* votante1;
 	Votante* votante2;
@@ -79,51 +79,30 @@ private:
 	Registro* registroLista4;
 	Registro* registroCargo1;
 	Registro* registroCargo2;
-	Bucket* bucketVotante;
 	HashingExtensible* heVotante;
 	HashingExtensible* heDistrito;
 	HashingExtensible* heEleccion;
 	HashingExtensible* heCandidato;
 	HashingExtensible* heLista;
 	HashingExtensible* heCargo;
-	Bucket* bucketDistrito;
-	Bucket* bucketEleccion;
-	Bucket* bucketCandidato;
-	Bucket* bucketCargo;
-	Bucket* bucketLista;
-	Bucket* bucketConteo;
-	void iniciarRegistrosDePrueba();
-	void iniciarRegistrosDistrito();
-	void verContenidoBucketDistrito(Bucket*);
-	void verContenidoBucketVotante(Bucket*);
-	void verContenidoBucketEleccion(Bucket*);
-	void verContenidoBucketCandidato(Bucket*);
-	void verContenidoBucketLista(Bucket*);
-	void verContenidoBucketCargo(Bucket*);
+	bplustree* arbolB;
+	string* getString(vector<char>);
+	void agregarBoletaAlArbol(Registro*);
+	void habilitarElecciones(Administrador* administrador);
+	void iniciarEleccionesParaIntegracion();
+	void iniciarVotantesParaIntegracion();
+	void iniciarDistritosParaIntegracion();
+	void iniciarCandidatosParaIntegracion();
+	void iniciarListasParaIntegracion();
+	void iniciarCargosParaIntegracion();
+	void verContenidoArbolListas();
 public:
-	Pruebas();
-//	pruebas para el Archivo en Bloques
-	void pruebaArchivoBloques();
-	void SerializarGuardarEnBloqueHidratar();
-//	pruebas para el Árbol B+
-	void pruebaBMas();
-//	pruebas para serializar y deserializar
-	void pruebaAgregarRegistrosAlBucket();
-	void pruebaEliminarRegistrosDelBucket();
-	void pruebaReemplazarRegistroEnBucket();
-	void serializarDeserializarBucket();
-//	pruebas para serializar y deserializar entidades
-	int serializarDeserializarCargo();
-	void serializarDeserializarVotante();
-	void serializarDeserializarDistrito();
-	void serializarDeserializarLista();
-	void serializarDeserializarCandidato();
-	void serializarDeserializarEleccion();
-//	pruebas de integracion
-	void pruebaLog();
-//	pruebas para ver si anda el compilador
-	int holaMundo();
-	virtual ~Pruebas();
+	SimulacionSistema();
+	~SimulacionSistema();
+	void cargarBaseDeDatos(Administrador*);
+	bool inicioDeSimulacion(Administrador*);
+	void destruir();
+	void main ();
 };
 
-#endif /* PRUEBAS_H_ */
+#endif /* SIMULACIONSISTEMA_H_ */

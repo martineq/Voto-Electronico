@@ -48,7 +48,8 @@ public:
 	void getEleccionesHabilitadas();
 	char sufragar(int);
 	bool cargarListasDeEleccion(Eleccion*,bplustree*);
-	int elegirBoleta(int, Bucket*);
+//	int elegirBoleta(int, Bucket*);
+	int elegirBoleta();
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
 	list <Lista*> getListaDeBoletas();
 	virtual ~Administrador();

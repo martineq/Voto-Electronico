@@ -84,6 +84,10 @@ unsigned long Votante::getClave(){
 	return this->dni;
 }
 
+list <EleccionAnterior*>* Votante::getListaDeEleccionesAnteriores () {
+	return this->listaDeEleccionesAnteriores;
+}
+
 int Votante::getDNI () {
 	return this->dni;
 }
