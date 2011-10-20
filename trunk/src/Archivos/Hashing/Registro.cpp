@@ -134,7 +134,7 @@ void Registro::verContenido()
 Registro::~Registro()
 {
 //	cout << "destruyo Registro" << endl;
-	if (this->contenido == NULL ){
+	if (this->contenido != NULL ){
 		delete(this->contenido);
 		this->contenido = NULL;
 	}

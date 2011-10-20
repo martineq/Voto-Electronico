@@ -48,12 +48,14 @@ bool Votante::agregarEleccion (string fecha, string cargo) {
 	EleccionAnterior* unaEleccionAnterior = new EleccionAnterior (fecha,cargo);
 	list <EleccionAnterior*>::iterator it = listaDeEleccionesAnteriores->begin();
 	while (it!=listaDeEleccionesAnteriores->end()) {
-		EleccionAnterior* unaEleccionAnterior= new EleccionAnterior((*it)->getFecha(),(*it)->getCargo());
-		if ((unaEleccionAnterior->getFecha()==fecha)&&(unaEleccionAnterior->getCargo()==cargo)){
+		EleccionAnterior* eleccionAnterior= new EleccionAnterior((*it)->getFecha(),(*it)->getCargo());
+		if ((unaEleccionAnterior->getFecha()==eleccionAnterior->getFecha())&&(unaEleccionAnterior->getCargo()==eleccionAnterior->getCargo())){
 			cout << "ERROR: EL VOTANTE YA PARTICIPO EN ESTA ELECCION" << endl;
+			delete unaEleccionAnterior;
+			delete eleccionAnterior;
 			return false;
 		}
-		delete unaEleccionAnterior;
+		delete eleccionAnterior;
 		it++;
 	}
 	listaDeEleccionesAnteriores->push_back(unaEleccionAnterior);
