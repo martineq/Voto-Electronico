@@ -3,17 +3,18 @@
 ################################
 
 # Subdirectorios
-ENTIDAD = ./Entidades/*.cpp
+ABM = ./Archivos/ArbolBMas/*.cpp
+ABQ = ./Archivos/EnBloques/*.cpp
+HSH = ./Archivos/Hashing/*.cpp
 AUX = ./Auxiliares/*.cpp
-ARCHBLOQ = ./Archivos/EnBloques/*.cpp
-HASH = ./Archivos/Hashing/*.cpp
+ENT = ./Entidades/*.cpp
 
 
 # Variables
-NOMBRE_EJECUTABLE = voto				# Nombre del ejecutable
-FUENTES = *.cpp $(ENTIDAD) $(AUX) $(ARCHBLOQ) $(HASH)	# Enumero los *.cpp existentes
-SUBCARPETAS = auxiliares				# Subcarpetas donde existan archivos "*.h" que no sean de clases tipo <head.h>
-FLAGS = -I $(SUBCARPETAS) -o $(NOMBRE_EJECUTABLE)	# Preparo todos los flags para el comando g++
+NOMBRE_EJECUTABLE = voto								# Nombre del ejecutable
+FUENTES = *.cpp $(ABM) $(ABQ) $(HSH) $(AUX) $(ENT)		# Enumero los *.cpp existentes
+SUBCARPETAS = Auxiliares								# Subcarpetas donde existan archivos "*.h" que no sean de clases tipo <head.h>
+FLAGS = -I $(SUBCARPETAS) -o $(NOMBRE_EJECUTABLE)		# Preparo todos los flags para el comando g++
 
 
 #Objetivo Inicio: Aquí se enumeran todos los objetivos que quiero correr
