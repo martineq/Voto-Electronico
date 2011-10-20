@@ -130,6 +130,14 @@ list<Distrito>::iterator Eleccion::obtenerIterador(){
 	return iterador;
 }
 
+int Eleccion::hasNext(list<Distrito>::iterator it){
+	it++;
+	if (it != distritos.end())
+		return 1;
+	else
+		return 0;
+}
+
 
 Entidad *Eleccion::duplicar(){
 	Eleccion* copia = new Eleccion();
