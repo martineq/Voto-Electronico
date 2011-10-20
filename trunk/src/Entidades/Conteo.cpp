@@ -40,22 +40,32 @@ int Conteo::getTamanio(){
 	return (tamFecha + tamCargo + tamLista + tamDistrito + tamVotos);
 }
 
-int Conteo::getClave(){
-	int c = 0;
+unsigned long Conteo::getClave(){
+//	int c = 0;
+//
+//	int size = fechaEleccion.length();
+//	for (int i=0; i< size; i++)
+//		c += (int)fechaEleccion[i];
+//
+//	size = cargoEleccion.length();
+//	for (int i=0; i< size ; i++)
+//		c += (int)cargoEleccion[i];
+//
+//	size = nombreLista.length();
+//	for (int i=0; i< size ; i++)
+//		c += (int)nombreLista[i];
+//
+//	return c;
 
-	int size = fechaEleccion.length();
-	for (int i=0; i< size; i++)
-		c += (int)fechaEleccion[i];
+	  string stringClave = this->fechaEleccion + this->cargoEleccion + this->nombreLista;
+	  locale loc;                 // the "C" locale
 
-	size = cargoEleccion.length();
-	for (int i=0; i< size ; i++)
-		c += (int)cargoEleccion[i];
+	  const collate<char>& coll = use_facet<collate<char> >(loc);
 
-	size = nombreLista.length();
-	for (int i=0; i< size ; i++)
-		c += (int)nombreLista[i];
+	  unsigned long myhash = coll.hash(stringClave.data(),stringClave.data()+stringClave.length());
 
-	return c;
+	  return myhash;
+
 }
 
 string Conteo::getFechaEleccion(){

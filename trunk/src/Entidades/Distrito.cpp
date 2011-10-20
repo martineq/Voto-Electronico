@@ -1,8 +1,13 @@
 #include "Distrito.h"
 
+
 using std::string;
 using std::stringstream;
 using std::istringstream;
+using std::locale;
+using std::collate;
+using std::use_facet;
+//using namespace std;
 
 Distrito::Distrito(){
 	this->distrito = "";
@@ -65,14 +70,25 @@ int Distrito::getTamanio(){
 	return tamanio;
 }
 
-int Distrito::getClave(){
+unsigned long Distrito::getClave(){
 
-	int c = 0;
-	int size = this->distrito.length();
-	for (int i=0; i< size; i++) {
-		c += (int)this->distrito[i];
-	}
-	return c;
+//	int c = 0;
+//	int size = this->distrito.length();
+//	for (int i=0; i< size; i++) {
+//		c += (int)this->distrito[i];
+//	}
+//	return c;
+//	locale loc;                 //
+//	const collate<char>& coll = use_facet<collate<char> >(loc);
+//	unsigned long strHash = coll.hash(this->distrito.data(),this->distrito.data()+this->distrito.length());
+
+	  locale loc;                 // the "C" locale
+
+	  const collate<char>& coll = use_facet<collate<char> >(loc);
+
+	  unsigned long myhash = coll.hash(this->distrito.data(),this->distrito.data()+this->distrito.length());
+
+	  return myhash;
 }
 
 ResultadoComparacion Distrito::comparar(Entidad *entidad)

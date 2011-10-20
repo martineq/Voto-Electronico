@@ -78,7 +78,7 @@ int  Votante::getTamanio(){
 
 }
 
-int Votante::getClave(){
+unsigned long Votante::getClave(){
 	return this->dni;
 }
 

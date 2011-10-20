@@ -21,7 +21,7 @@ public:
 	list<string> devolverSubCargos();
 	bool eliminarCargo(string subCargo);
 	int getTamanio();
-	int getClave();
+	unsigned long getClave();
 	void verEntidad();
 	virtual ~Cargo();
 
