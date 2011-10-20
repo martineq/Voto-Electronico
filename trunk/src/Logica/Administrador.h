@@ -17,7 +17,6 @@
 #include "../Archivos/Hashing/Bucket.h"
 #include "../Archivos/Hashing/HashingExtensible.h"
 #include "../Archivos/ArbolBMas/bplustree.h"
-#include "Eleccion.h"
 #include <stdio.h>
 #include <fstream>
 #include <sstream>

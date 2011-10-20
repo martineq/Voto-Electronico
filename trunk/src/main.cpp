@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
-#include "Pruebas.h"
+#include "../tests/Pruebas.h"
+#include "../tests/TestHashingExtensible.h"
 
 
 
@@ -77,7 +78,6 @@ int main(int argc,char* argv[]) {
 //	the.testModificarRegistroExistente();
 //	the.testModificarRegistroConRedispersion();
 //	the.testSimple();
-
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;

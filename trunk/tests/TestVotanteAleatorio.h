@@ -11,7 +11,7 @@
 #include <iostream>
 #include "../src/Archivos/Hashing/HashingExtensible.h"
 #include "../src/Archivos/Hashing/Registro.h"
-#include "../src/CreadorVotante.h"
+#include "../src/Auxiliares/CreadorVotante.h"
 
 
 class TestVotanteAleatorio {

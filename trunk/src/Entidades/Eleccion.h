@@ -46,6 +46,8 @@ public:
 
 	bool eliminarDistrito(Distrito distrito);
 
+	int hasNext(list<Distrito>::iterator it);
+
 	list<Distrito>::iterator obtenerIterador();
 
 	list<Distrito> getLista();
