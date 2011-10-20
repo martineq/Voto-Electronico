@@ -227,7 +227,7 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 
 	for(int i = 0;i< cantidadDeRegistros;i++){
 
-		int clave = (*iterador)->obtenerClave();
+		unsigned long clave = (*iterador)->obtenerClave();
 
 		if ( agregarRegistroInt(*iterador,clave) != operacionOK )
 			resultado = operacionFALLO;
@@ -267,7 +267,7 @@ Registro* HashingExtensible::obtenerRegistro(Registro* registro){
 
 Resultados HashingExtensible::cargarRegistro(Registro *registro){
 
-	int clave = registro->obtenerClave();
+	unsigned long clave = registro->obtenerClave();
 	cout << "clave: " << clave << endl;
 
 	return agregarRegistroInt(registro,clave);
@@ -278,7 +278,7 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 	Resultados resultado = claveRepetida;
 
 	// Verficacion de unicidad de clave.
-	int clave = registro->obtenerClave();
+	unsigned long clave = registro->obtenerClave();
 //	cout << "clave: " << clave << endl;
 	Registro* registroDuplicado = obtenerRegistro(registro);
 
@@ -430,7 +430,7 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 
 	if ( !tablaDeHash.empty() ){
 
-		int clave = registro->obtenerClave();
+		unsigned long clave = registro->obtenerClave();
 		int posicionEnTablaDeHash = obtenerPosicion(clave);
 		int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
@@ -473,7 +473,7 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 	Resultados resultado = operacionOK;
 
 	// Obtengo el Bucket a partir de la clave.
-	int clave = registro->obtenerClave();
+	unsigned long clave = registro->obtenerClave();
 	cout << "clave: " << clave << endl;
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
 	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];

@@ -11,7 +11,7 @@ class Registro : public Serializable {
 
 protected:
 
-	int			clave;
+	unsigned long clave;
 	Entidad* 	contenido;
 
 	/*
@@ -61,7 +61,7 @@ public:
 	 * Devuelve una clave obtenida tras aplicar una función de Hash al ID de la Entidad
 	 * Si el registro no tiene contenido, y por lo tanto la clave no existe devuelve -1.
 	 */
-	int obtenerClave();
+	unsigned long obtenerClave();
 
 	/*
 	 * Compara el registro actual contra otro registro para verificar si se
