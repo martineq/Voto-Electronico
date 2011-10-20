@@ -167,16 +167,6 @@ int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
 
 int Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
 	#warning "INTEGRAR CON ARBOL B+, 4 = CANTIDAD DE REGISTROS"
-//	list <Lista*> listaChamuyo;
-//	Lista* lista1 = new Lista("UCR","19970701","Presidente");
-//	Lista* lista2 = new Lista("UCR","19970701","Gobernador");
-//	Lista* lista3 = new Lista("PJ","19970702","Presidente");
-//	Lista* lista4 = new Lista("Socialista","19970702","Gobernador");
-//	listaChamuyo.push_back(lista1);
-//	listaChamuyo.push_back(lista2);
-//	listaChamuyo.push_back(lista3);
-//	listaChamuyo.push_back(lista4);
-//	list<Lista*>::iterator it = listaChamuyo.begin();
 	pair<vector<char>,std::string> siguienteRegistro;
 	vector <char> registroSerializadoChar = arbol->search(eleccion->getFecha());
 	string registroSerializadoString;

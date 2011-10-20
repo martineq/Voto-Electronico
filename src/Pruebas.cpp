@@ -960,42 +960,55 @@ void Pruebas::iniciarCandidatosParaIntegracion(){
 //	this->bucketCandidato->agregarRegistro(registroCandidato3);
 }
 
-void Pruebas::verContenidoArbolListas (){
-//	se posiciona en el primer registro
-	this->arbolB->search("");
-	pair<vector<char>,string> par=this->arbolB->getnext();
-	vector<char> registroObtenidoDelArbol=par.first;
-	string* registroSerializado;
-	for (int i=0;i<registroObtenidoDelArbol.size();i++) {
-		cout << "registroObtenidoDelArbol[i]: " << registroObtenidoDelArbol[i] << endl;
-		registroSerializado->at(i) = registroObtenidoDelArbol[i];
+string* Pruebas::getString(vector<char> vect){
+	string* s = new string();
+	vector<char>::iterator it = vect.begin();
+	while( it != vect.end() ){
+		s->push_back(*it);
+		it++;
 	}
-	Registro* unRegistro;
+	return s;
+}
+
+void Pruebas::verContenidoArbolListas (){
+	//	se posiciona en el primer registro
+
+	string* registroSerializado = getString( arbolB-> search("") );
+
+	Registro* unRegistro = new Registro();
 	unRegistro->deserializar(registroSerializado);
+	delete registroSerializado;
+
 	unRegistro->verContenido();
-	par=this->arbolB->getnext();
+
+	pair<vector<char>,string> par=this->arbolB->getnext();
 	while(par.second.size()!=0) {
-		registroObtenidoDelArbol=par.first;
-		for (int i=0;i<registroObtenidoDelArbol.size();i++)
-			registroSerializado->at(i) = registroObtenidoDelArbol[i];
+
+		registroSerializado = getString( par.first );
 		unRegistro->deserializar(registroSerializado);
+		delete registroSerializado;
+
 		unRegistro->verContenido();
+		cout << endl;
 		par=this->arbolB->getnext();
 	}
 }
 
 void Pruebas::agregarBoletaAlArbol(Registro* registro){
 	string* registroSerializado = registro->serializar();
+
 	vector<char> data;
-	for (int i=0;i<registroSerializado->length();i++) {
-		char c = registroSerializado->at(i);
-		data.push_back(c);
-	}
+	int size = registroSerializado->length();
+	for (int i=0;i<size;i++)
+		data.push_back( registroSerializado->at(i) );
+
 	int claveInt = registro->obtenerClave();
 	stringstream claveIntAString;//create a stringstream
 	claveIntAString << claveInt;//add number to the stream
 	string claveString = claveIntAString.str();
 	this->arbolB->add(claveString,data);
+
+	delete registroSerializado;
 }
 
 void Pruebas::iniciarListasParaIntegracion(){
@@ -1013,95 +1026,20 @@ void Pruebas::iniciarListasParaIntegracion(){
 	this->agregarBoletaAlArbol(registroLista1);
 	this->agregarBoletaAlArbol(registroLista2);
 	this->agregarBoletaAlArbol(registroLista3);
-	this->verContenidoArbolListas();
 
-//	this->lista1 = new Lista("UCR","19970701","Presidente");
-//	this->lista2 = new Lista("UCR","19970701","Gobernador");
-//	this->lista3 = new Lista("PJ","19970702","Presidente");
-//	this->registroLista1 = new Registro(lista1);
-//	this->registroLista2 = new Registro(lista2);
-//	this->registroLista3 = new Registro(lista3);
-//	delete this->lista1;
-//	delete this->lista2;
-//	delete this->lista3;
-//	cout << "WHY" << endl;
-//
-//	string* s_1 = lista1->serializar();
-//
-//	Lista* lw1 = new Lista("","","");
-//	lw1->deserializar(s_1);
-//	lw1->verEntidad();
-//	delete s_1;
-//
-//	cout << endl << endl;
-//
-//	string* s2 = registroLista1->serializar();
-//
-//	Registro* reg = new Registro();
-//	reg->deserializar(s2);
-//	reg->verContenido();
-//
-//	bplustree arbolB;
-//	remove("arbolDeListas");
-//	arbolB.newtree("arbolDeListas",LONGITUD_BLOQUE);
-//
-//	stringstream clave1;
-//	clave1 << registroLista1->obtenerClave();
-//	cout << "clave1 " << registroLista1->obtenerClave() << endl;
-//	cout << "clave1 comparada " << clave1.str() << endl;
-//
-//
-//	string* registroSerializado = registroLista1->serializar();
-//	vector<char> data1(registroSerializado->begin(), registroSerializado->end());
-//	cout << registroSerializado->size() << endl;
-//
-//
-//	arbolB.add(clave1.str(),data1);
-//
-//	vector<char> vector1;
-//
-//	vector1 = arbolB.search(clave1.str());
-//
-//	if(data1.size() != vector1.size())
-//	{
-//		cout << "crap" << endl;
-//		return;
-//	}
-//	int sizeData1 = data1.size();
-//	for(int p=0; p< sizeData1; p++)
-//		if(data1[p]!=vector1[p])
-//		{
-//			cout << "more crap" << endl;
-//			return;
-//		}
-//
-//	int sizeVector1 = vector1.size();
-//
-//	string stringVector;
-//	for (int i= 0 ; i < sizeVector1;i++)
-//		stringVector.push_back(vector1[i]);
-//
-//	if(stringVector.size() != registroSerializado->size())
-//	{
-//		cout << "crap" << endl;
-//		return;
-//	}
-//	int size2 = registroSerializado->size();
-//	for(int p=0 ; p < size2 ; p++)
-//		if(registroSerializado->at(p)!=stringVector.at(p))
-//		{
-//			cout << "more crap" << endl;
-//			return;
-//		}
-//
-//
-//	Registro* r1 = new Registro();
-//	r1->deserializar(&stringVector);
-//	r1->verContenido();
-//
-//	delete r1;
-//	delete registroSerializado;
+	stringstream clave;
+	clave << registroLista3->obtenerClave();
+	vector<char> c = arbolB->search(clave.str());
+	string* s = getString(c);
+	Registro* r = new Registro();
+	r->deserializar(s);
+	delete s;
+	r->verContenido();
+
+
+	this->verContenidoArbolListas();
 }
+
 
 void Pruebas::iniciarCargosParaIntegracion() {
 	this->cargo1 = new Cargo("Presidente");
@@ -1367,7 +1305,7 @@ void Pruebas::pruebaDeSimulacionDePrograma () {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		this->cargarBaseDeDatos(administrador);
-//		this->inicioDeSimulacion(administrador);
+		this->inicioDeSimulacion(administrador);
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	this->destruir();
