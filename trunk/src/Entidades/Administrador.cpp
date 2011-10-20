@@ -11,8 +11,9 @@
 Administrador::Administrador(string pathArchivo) {
 	archivo = new fstream(pathArchivo.c_str());
 
-	char cadena[1024];
+	char cadena[LONGITUD_BLOQUE];
 	archivo->getline(cadena,LONGITUD_BLOQUE);
+
 	string str(cadena);
 
 	int espacio  = str.find(" ");
