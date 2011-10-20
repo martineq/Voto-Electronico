@@ -25,6 +25,7 @@ Administrador::Administrador(string pathArchivo) {
 	cout << password;
 
 	archivo->close();
+	delete archivo;
 }
 
 bool Administrador::acceder(string nomb,string pass){
@@ -47,13 +48,20 @@ Resultados Administrador::altaHash (HashingExtensible* he,Registro* unRegistro){
 }
 
 int Administrador::altaArbol (bplustree* arbolB,Registro* registro){
+	string clave;
+
+	Lista* lista = (Lista*)registro->getContenido();
+
+	clave  = lista->getFecha();
+	clave += lista->getCargo();
+	clave += lista->getNombre();
+
+	delete lista;
 	string* registroSerializado = registro->serializar();
 	vector<char> data(registroSerializado->begin(),registroSerializado->end());
-	int claveInt = registro->obtenerClave();
-	stringstream claveIntAString;//create a stringstream
-	claveIntAString << claveInt;//add number to the stream
-	string claveString = claveIntAString.str();
-	return  arbolB->add(claveString,data);
+	delete registroSerializado;
+
+	return arbolB->add(clave,data);
 }
 
 bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
@@ -65,19 +73,16 @@ bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
 			if ((unaEleccion->getCargo()==eleccion->getCargo()) && (unaEleccion->getFecha()==eleccion->getFecha())) {
 				cout << "LA ELECCION YA ESTA HABILITADA" << endl;
 				delete eleccion;
-				delete unaEleccion;
 				return false;
 			}
-			delete eleccion;
-			it++;
+			else {delete eleccion;
+			it++;}
 		}
 		Eleccion* eleccion = (Eleccion*) unaEleccion->duplicar();
 		this->listaDeEleccionesHabilitadas.push_back(eleccion);
-		delete unaEleccion;
 		return true;
 	}
 	else cout << "NO EXISTE ELECCION. CREE LA ELECCION PRIMERO" << endl;
-	delete unaEleccion;
 	return false;
 
 }
@@ -150,6 +155,10 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 }
 
 int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
+	if (this->listaDeBoletas.size()==0) {
+		cout << "NO HAY BOLETAS PARA ESTA ELECCION" << endl;
+		return 0;
+	}
 	cout << endl;
 	cout << "Estas son sus boletas a elegir" << endl;
 	int j=1;
@@ -175,7 +184,7 @@ int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
 	return c;
 }
 
-void Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
+bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
 
 	// Busco la clave en arbol B+
 	string clave;
@@ -186,7 +195,7 @@ void Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 
 	// Obtengo el contenido.
 	pair<vector<char>,std::string> registroVectorizado = arbol->getnext();
-
+	if (registroVectorizado.second.size()==0) return false;
 	string* registroSerializado = getString(registroVectorizado.first);
 
 	Registro* registro = new Registro();
@@ -194,16 +203,22 @@ void Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	delete registroSerializado;
 
 	Lista* boletaDelArbol = (Lista*)registro->getContenido();
+	cout << "Estoy viendo la lista: " << endl;
+	cout << "Nombre: " << boletaDelArbol->getNombre() << endl;
+	cout << "Fecha: " << boletaDelArbol->getFecha() << endl;
 	while (boletaDelArbol->getFecha() == eleccion->getFecha()){
 
 		if (boletaDelArbol->getCargo() == eleccion->getCargo()){
 			Lista* lista = (Lista*)boletaDelArbol->duplicar();
 			this->listaDeBoletas.push_back(lista);
-			cout << "Encontre a Marina corriendo desnuda en la playa." << endl;
+			cout << "Estoy cargando listas para una elccion" << endl;
 		}
 
 		delete registro;
 		registroVectorizado = arbol->getnext();
+		if (registroVectorizado.second.size()==0) {
+			delete boletaDelArbol; return false;
+		}
 		registroSerializado = getString(registroVectorizado.first);
 
 		registro = new Registro();
@@ -212,11 +227,13 @@ void Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 
 		delete boletaDelArbol;
 		boletaDelArbol = (Lista*)registro->getContenido();
+		cout << "Estoy viendo la lista: " << endl;
+		cout << "Nombre: " << boletaDelArbol->getNombre() << endl;
+		cout << "Fecha: " << boletaDelArbol->getFecha() << endl;
+		cout << "Cargo: " << boletaDelArbol->getCargo() << endl;
 	}
 	delete registro;
-	cout << "acabe sobre marina" << endl;
 	delete boletaDelArbol;
-
 }
 
 char Administrador::sufragar (int numeroDeBoleta){
@@ -264,5 +281,4 @@ Administrador::~Administrador() {
 		delete *it2;
 		it2++;
 	}
-//	delete archivo;
 }

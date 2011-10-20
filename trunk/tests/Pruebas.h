@@ -7,6 +7,7 @@
 
 #ifndef PRUEBAS_H_
 #define PRUEBAS_H_
+
 #include "../src/Entidades/Cargo.h"
 #include "../src/Entidades/Votante.h"
 #include "../src/Entidades/Distrito.h"
@@ -30,6 +31,7 @@
 #include <iostream>
 
 using namespace std;
+
 
 class Pruebas {
 private:
@@ -93,6 +95,7 @@ private:
 	bplustree* arbolB;
 	string* getString(vector<char>);
 	void agregarBoletaAlArbol(Registro*);
+	void habilitarElecciones(Administrador* administrador);
 	void iniciarRegistrosDePrueba();
 	void iniciarRegistrosDistrito();
 	void iniciarEleccionesParaIntegracion();
@@ -128,8 +131,8 @@ public:
 	void serializarDeserializarCandidato();
 	void serializarDeserializarEleccion();
 //	pruebas de integracion
-	void cargarBaseDeDatos(Administrador);
-	void inicioDeSimulacion(Administrador,AdministradorDeVotaciones*);
+	void cargarBaseDeDatos(Administrador*);
+	bool inicioDeSimulacion(Administrador*);
 	void destruir();
 	void pruebaDeSimulacionDePrograma ();
 	void pruebaLog();

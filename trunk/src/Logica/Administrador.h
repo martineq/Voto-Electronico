@@ -47,7 +47,7 @@ public:
 	void consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
 	char sufragar(int);
-	void cargarListasDeEleccion(Eleccion*,bplustree*);
+	bool cargarListasDeEleccion(Eleccion*,bplustree*);
 	int elegirBoleta(int, Bucket*);
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
 	list <Lista*> getListaDeBoletas();
