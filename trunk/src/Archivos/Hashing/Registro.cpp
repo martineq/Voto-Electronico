@@ -53,7 +53,7 @@ Entidad *Registro::getContenido(){
 	return entidad;
 }
 
-int Registro::obtenerClave(){
+unsigned long Registro::obtenerClave(){
 	return this->clave;
 }
 
