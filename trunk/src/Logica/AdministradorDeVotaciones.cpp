@@ -1,66 +1,37 @@
-/*
- * AdministradorDeVotaciones.cpp
- *
- *  Created on: 20/10/2011
- *      Author: martin
- */
-
 #include "AdministradorDeVotaciones.h"
 
 AdministradorDeVotaciones::AdministradorDeVotaciones() {
+
 }
 
-void AdministradorDeVotaciones::nuevoArchivoDeConteo(string pathArchivo, int dimensionBloque)
+string AdministradorDeVotaciones::obtenerClavePrincipal(Conteo *conteo)
 {
-	archivoDeConteo.newtree(pathArchivo,dimensionBloque);
+	string clave = "";
 
-	string indiceDistrito = pathArchivo;
-	indiceDistrito += "_distrito";
+	clave  = conteo->getFechaEleccion();
+	clave += conteo->getCargoEleccion();
+	clave += conteo->getLista();
+	clave += conteo->getDistrito();
 
-	cout << "indice secundario: " << indiceDistrito << endl;
-
-	indiceSecundarioDistrito.newtree(indiceDistrito,dimensionBloque);
+	return clave;
 }
 
-int AdministradorDeVotaciones::agregarConteoAlIndicePorDistrito(Conteo* conteo){
+string AdministradorDeVotaciones::obtenerClaveSecundaria(Conteo *conteo)
+{
 	string clave = "";
 
 	clave += conteo->getDistrito();
 	clave += conteo->getFechaEleccion();
-	clave += conteo->getLista();
 	clave += conteo->getCargoEleccion();
+	clave += conteo->getLista();
 
-	conteo->verEntidad();
-	string* conteoSerializado = conteo->serializar();
-
-	vector<char> resultado = archivoDeConteo.search(clave);
-	if ( resultado.size() == 0 ){
-		cout << "size: " << conteoSerializado->size() << endl;
-
-		vector<char> data(conteoSerializado->begin(),conteoSerializado->end());
-		delete conteoSerializado;
-
-		archivoDeConteo.add(clave,data);
-
-		// agrego el contenido al indice secundario distrito
-
-		return 0;
-	}else{
-		cout << "******* agregado fallo ***************" << endl;
-		return 1;
-	}
-
-}
-
-void AdministradorDeVotaciones::abrirArchivoDeConteo(string pathArchivo)
-{
-//	archivoDeConteo.opentree(pathArchivo);
-//	indiceSecundarioDistrito();
+	return clave;
 }
 
 string* AdministradorDeVotaciones::getString(vector<char> vect){
 	string* s = new string();
 	vector<char>::iterator it = vect.begin();
+
 	while( it != vect.end() ){
 		s->push_back(*it);
 		it++;
@@ -68,18 +39,46 @@ string* AdministradorDeVotaciones::getString(vector<char> vect){
 	return s;
 }
 
+int AdministradorDeVotaciones::agregarConteoAlIndicePorDistrito(Conteo* conteo){
+
+	string clave = obtenerClaveSecundaria(conteo);
+	vector<char> resultado = indiceSecundario.search(clave);
+
+	if ( resultado.size() == 0 ){
+
+		string clavePrincipal = obtenerClavePrincipal(conteo);
+		vector<char> data(clavePrincipal.begin(),clavePrincipal.end());
+
+		indiceSecundario.add(clave,data);
+
+		return 0;
+	}else{
+		return 1;
+	}
+
+}
+
+/* METODOS PUBLICOS **********************************************************/
+
+void AdministradorDeVotaciones::nuevoArchivoDeConteo(string pathArchivo, string pathIndiceSecundario,int dimensionBloque)
+{
+	archivoDeConteo.newtree(pathArchivo,dimensionBloque);
+	indiceSecundario.newtree(pathIndiceSecundario,dimensionBloque);
+}
+
+void AdministradorDeVotaciones::abrirArchivoDeConteo(string pathArchivo,string pathIndiceSecundario,int dimensionBloque){
+
+//	archivoDeConteo.opentree(pathArchivo);
+//	indiceSecundario.opentree(pathIndiceSecundario);
+}
+
 int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 {
-	string clave = "";
-
-	clave  = conteo->getFechaEleccion();
-	clave += conteo->getDistrito();
-	clave += conteo->getLista();
-	clave += conteo->getCargoEleccion();
-
 	conteo->verEntidad();
+
 	string* conteoSerializado = conteo->serializar();
 
+	string clave = obtenerClavePrincipal(conteo);
 	vector<char> resultado = archivoDeConteo.search(clave);
 	if ( resultado.size() == 0 ){
 		cout << "size: " << conteoSerializado->size() << endl;
@@ -90,22 +89,19 @@ int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 		archivoDeConteo.add(clave,data);
 
 		// agrego el contenido al indice secundario distrito
+		agregarConteoAlIndicePorDistrito(conteo);
 
 		return 0;
 	}else{
-		cout << "******* agregado fallo ***************" << endl;
 		return 1;
 	}
 }
 
 void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nombreLista, string *distrito)
 {
-	string clave;
-
-	clave  = eleccion->getFecha();
-	clave += *distrito;
-	clave += *nombreLista;
-	clave += eleccion->getCargo();
+	Conteo* conteo = new Conteo(eleccion->getFecha(),eleccion->getCargo(),*nombreLista,*distrito);
+	string clave = obtenerClavePrincipal(conteo);
+	delete conteo;
 
 	vector<char> result = archivoDeConteo.search(clave);
 
@@ -113,9 +109,11 @@ void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nomb
 
 		string* conteoSerializado = getString(result);
 
-		Conteo* conteo = new Conteo("","","","");
+		conteo = new Conteo("","","","");
 		conteo->deserializar(conteoSerializado);
+
 		conteo->verEntidad();
+
 		conteo->incrementarVotos();
 		delete conteoSerializado;
 
@@ -130,7 +128,7 @@ void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nomb
 		cout << "size==0" << endl;
 }
 
-void AdministradorDeVotaciones::mostrarArchivo(){
+void AdministradorDeVotaciones::mostrarArchivoPrincipal(){
 	string* conteoSerializado = getString( archivoDeConteo.search("") );
 
 	pair<vector<char>,string> par=archivoDeConteo.getnext();
@@ -148,7 +146,129 @@ void AdministradorDeVotaciones::mostrarArchivo(){
 	}
 }
 
+void AdministradorDeVotaciones::mostrarArchivoSecundario(){
+	string* conteoSerializado = getString( indiceSecundario.search("") );
+
+	pair<vector<char>,string> par=indiceSecundario.getnext();
+	while( par.second.size() != 0 ) {
+
+		conteoSerializado = getString( par.first );
+
+		cout << *conteoSerializado << endl;
+		par=indiceSecundario.getnext();
+	}
+}
+
+void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
+{
+	string clave = eleccion->getFecha();
+	clave += eleccion->getCargo();
+
+	archivoDeConteo.search(clave);
+
+	pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+
+	if ( resultado.second.size() != 0 ){
+
+		string* conteoSerializado = getString( resultado.first );
+
+		Conteo* conteo = new Conteo();
+		conteo->deserializar(conteoSerializado);
+		delete conteoSerializado;
+
+		cout << "Fecha de eleccion \tCargo \t\tLista \t\tCantidad de votos" << endl;
+
+		while( conteo->getFechaEleccion() == eleccion->getFecha() && conteo->getCargoEleccion() == eleccion->getCargo() ){
+
+			int cantidadDeVotos = 0;
+
+			string nombreDeListaActual = conteo->getLista();
+
+			while ( conteo->getLista() == nombreDeListaActual ){
+
+				cantidadDeVotos += conteo->getCantidadVotos();
+
+				pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+				string* conteoSerializado = getString( resultado.first );
+
+				delete conteo;
+
+				conteo = new Conteo();
+				conteo->deserializar(conteoSerializado);
+				delete conteoSerializado;
+			}
+			cout << eleccion->getFecha() << "\t\t" << eleccion->getCargo() << "\t" << nombreDeListaActual << "\t\t" << cantidadDeVotos << endl;
+
+		}
+		delete conteo;
+	}
+}
+
+void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExtensible* heCargo)
+{
+	string clave = lista->getFecha();
+	clave += lista->getCargo();
+	clave += lista->getNombre();
+
+	vector<char> resultadoBusqueda = archivoDeConteo.search(clave);
+
+	if ( resultadoBusqueda.size() != 0 )
+	{
+		string* contenidoSerializado = getString( resultadoBusqueda );
+		Conteo* conteo = new Conteo();
+		conteo->deserializar(contenidoSerializado);
+		delete contenidoSerializado;
+
+		cout << "Fecha de eleccion \tLista \t\tCantidad de votos" << endl;
+
+		int cantidadDeVotos = 0;
+
+		while( conteo->getFechaEleccion() == lista->getFecha() && conteo->getCargoEleccion() == lista->getCargo() && conteo->getLista() == lista->getNombre()){
+
+			cantidadDeVotos += conteo->getCantidadVotos();
+
+			pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+			string* conteoSerializado = getString( resultado.first );
+
+			delete conteo;
+
+			conteo = new Conteo();
+			conteo->deserializar(conteoSerializado);
+			delete conteoSerializado;
+		}
+
+		cout << lista->getFecha() << "\t\t" << "\t" << lista->getNombre() << "\t\t" << cantidadDeVotos << endl;
+
+		cout << "Cargo principal:\t" << lista->getCargo() << endl;
+
+		Cargo* cargo 		= new Cargo(lista->getCargo());
+		Registro* registro	= new Registro(cargo);
+		delete cargo;
+
+		Registro* registroEncontrado = heCargo->obtenerRegistro(registro);
+
+		if ( registroEncontrado != NULL ){
+			Cargo* cargo = (Cargo*)registroEncontrado->getContenido();
+
+			list<string> listaCargos = cargo->devolverSubCargos();
+			int cantidadSubcargos = listaCargos.size();
+			list<string>::iterator it = listaCargos.begin();
+			for(int i=0; i < cantidadSubcargos ; i++){
+				cout << "Subcargo:\t" << *it << endl;
+				it++;
+			}
+		}
+
+		delete cargo;
+		delete registroEncontrado;
+		delete conteo;
+	}
+}
+
+void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrio)
+{
+}
+
 AdministradorDeVotaciones::~AdministradorDeVotaciones() {
-	// TODO Auto-generated destructor stub
 }
 
