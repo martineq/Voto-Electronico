@@ -6,6 +6,7 @@
 #include "../Entidades/Eleccion.h"
 #include "../Entidades/Conteo.h"
 #include "../Archivos/Hashing/Registro.h"
+#include "../Archivos/Hashing/HashingExtensible.h"
 
 using std::string;
 
@@ -13,7 +14,7 @@ class AdministradorDeVotaciones {
 private:
 	bplustree			archivoDeConteo;
 
-	bplustree			indiceSecundarioDistrito;
+	bplustree			indiceSecundario;
 
 	/*
 	 * Devuelve un string a partir de un string.
@@ -26,6 +27,15 @@ private:
 	 */
 	int agregarConteoAlIndicePorDistrito(Conteo* conteo);
 
+	/*
+	 * Obtiene la clave del ínfice pricipal.
+	 */
+	string obtenerClavePrincipal(Conteo* conteo);
+
+	/*
+	 * Obtiene la clave del índice secundario.
+	 */
+	string obtenerClaveSecundaria(Conteo* conteo);
 
 
 public:
@@ -34,12 +44,12 @@ public:
 	/*
 	 * Crea un nuevo archivo de conteo.
 	 */
-	void nuevoArchivoDeConteo(string pathArchivo,int dimensionBloque);
+	void nuevoArchivoDeConteo(string pathArchivo,string pathArchivoSecundario,int dimensionBloque);
 
 	/*
 	 * Abre un archivo de conteo.
 	 */
-	void abrirArchivoDeConteo(string pathArchivo);
+	void abrirArchivoDeConteo(string pathArchivo,string pathArchivoSecundario,int dimensionBloque);
 
 	/*
 	 * Devuelve 0 si lo agregó correctamente.
@@ -52,11 +62,35 @@ public:
 	void incrementarVoto(Eleccion* eleccion,string* nombreLista,string* distrito);
 
 	/*
+	 * Genera un informe mostrando el resultado de resultados de
+	 * cada lista de esa eleccion.
+	 */
+
+	void generarInformePorEleccion(Eleccion* eleccion);
+
+	/*
+	 * Genera un informe mostrando los cargos y el resultado
+	 * de una lista particular.
+	 */
+	void generarInformePorLista(Lista* lista,HashingExtensible* heCargo);
+
+	/*
+	 * Genera un informe mostrando el resultado del ganador
+	 * de una eleccion.
+	 */
+	void generarInformePorDistrito(Distrito* distrio);
+	/*
 	 * Ver Archivo de conteo.
 	 */
-	void mostrarArchivo();
+	void mostrarArchivoPrincipal();
 
-	virtual ~AdministradorDeVotaciones();
+	/*
+	 * Ver el archivo secundario.
+	 */
+	void mostrarArchivoSecundario();
+
+	~AdministradorDeVotaciones();
+
 };
 
 #endif /* ADMINISTRADORDEVOTACIONES_H_ */
