@@ -128,7 +128,7 @@ ResultadoComparacion Cargo::comparar(Entidad *entidad)
 
 		int r = cargo.compare(((Cargo*)entidad)->cargo);
 
-		resultado == mayor;
+		resultado = mayor;
 
 		if ( r == 0 )
 			resultado = igual;

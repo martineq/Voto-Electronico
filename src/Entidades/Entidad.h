@@ -49,7 +49,7 @@ public:
 	 */
 	virtual NombreDeEntidad getNombreDeEntidad() = 0;
 
-	virtual ~Entidad () = 0;
+	virtual ~Entidad(){};
 };
 
 #endif /* ENTIDAD_H_ */

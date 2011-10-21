@@ -87,7 +87,7 @@ void Log::insertarLista(Lista* lista,string mensaje){
 }
 
 void Log::insertarMensajeConEntidad(Entidad* entidad,string mensaje){
-	NombreDeEntidad nombre = entidad->getNombreDeEntidad();
+	int nombre = entidad->getNombreDeEntidad();
 	switch(nombre){
 	case tVotante:
 		this->insertarVotante((Votante*)entidad,mensaje);

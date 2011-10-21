@@ -96,12 +96,13 @@ private:
 	void iniciarListasParaIntegracion();
 	void iniciarCargosParaIntegracion();
 	void verContenidoArbolListas();
+	void cargarArchivoDeConteo(Administrador*,AdministradorDeVotaciones*);
 public:
 	SimulacionSistema();
 	~SimulacionSistema();
 	void cargarBaseDeDatos(Administrador*);
 	void levantarBaseDeDatos(Administrador*);
-	bool inicioDeSimulacion(Administrador*);
+	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*);
 	void destruir();
 	void main ();
 };

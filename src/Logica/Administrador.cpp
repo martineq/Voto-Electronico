@@ -243,6 +243,8 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	}
 	delete registro;
 	delete boletaDelArbol;
+	#warning "hay que devolver algo"
+	return 0;
 }
 
 char Administrador::sufragar (int numeroDeBoleta){
@@ -275,7 +277,7 @@ char Administrador::sufragar (int numeroDeBoleta){
 }
 
 bool Administrador::verificarEleccion(Eleccion* unaEleccion) {
-#warning "verificar que la eleccion exista en el archivo de elecciones"
+	#warning "verificar que la eleccion exista en el archivo de elecciones"
 	return true;
 }
 
