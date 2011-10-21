@@ -15,8 +15,7 @@ int ffile::newblock(){
 	if(q.size()==0){
 		int nrr;
 		this->arch->crearNuevoBloque(&nrr);
-		this->ind.push_back(nrr);			// Agrego el nrr del nuevo bloque al índice
-		return this->ind.size()-1;			// Devuelvo el numero de bloque "normalizado"
+		return nrr;							// Devuelvo el numero de bloque "normalizado"
 	}
 	bn = this->q.back();
 	this->q.pop_back();
@@ -44,10 +43,11 @@ void ffile::setblock(std::vector<char> vec, int bn){
 		}
 	}
 
-	cadena = vec.get_allocator().allocate(cant);	// Aloco cadena
+	cadena = vec.get_allocator().allocate(this->blocksize);	// Aloco cadena
 	for (i=0; i<cant; i++) cadena[i]=vec[i];		// Copio los valores de vec en cadena
-	this->arch->guardarBloque(this->ind[bn],cadena);
-	vec.get_allocator().deallocate(cadena,cant);	// Dealoco cadena
+	for (i=cant; i<this->blocksize; i++) cadena[i]='\0';// Relleno con ceros el bloque, si es necesario
+	this->arch->guardarBloque(bn,cadena);
+	vec.get_allocator().deallocate(cadena,this->blocksize);	// Dealoco cadena
 }
 
 
@@ -60,7 +60,7 @@ std::vector<char> ffile::getblock(int bn){
 	int cant = this->blocksize;
 
 	cadena = vec.get_allocator().allocate(cant);		// Aloco cadena
-	this->arch->obtenerBloque(this->ind[bn],cadena);
+	this->arch->obtenerBloque(bn,cadena);
 	for (i=0; i<cant; i++) vec.push_back(cadena[i]);	// Copio los valores de cadena en vec
 	vec.get_allocator().deallocate(cadena,cant);		// Dealoco cadena y me quedo con el vec
 
@@ -84,7 +84,7 @@ ffile::~ffile(){
 	if(q.size()>0){
 		int bn = this->q.back();
 		this->q.pop_back();
-		this->arch->borrarBloque(this->ind[bn]);
+		this->arch->borrarBloque(bn);
 	}
 	delete this->arch;
 }

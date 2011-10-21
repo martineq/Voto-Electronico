@@ -100,6 +100,7 @@ public:
 	SimulacionSistema();
 	~SimulacionSistema();
 	void cargarBaseDeDatos(Administrador*);
+	void levantarBaseDeDatos(Administrador*);
 	bool inicioDeSimulacion(Administrador*);
 	void destruir();
 	void main ();
