@@ -1,0 +1,48 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class ffile</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class ffile</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass134658"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class ffile </li></ul><p>Artifact : <a href="index.html#refartifact134658"><b>ffile</b></a></p>
+<div class="sub">
+<a name="refrelation134786"></a>
+<table><tr><td><div class="element">Relation <b>arch (&lt;unidirectional association&gt;)</b></div></td></tr></table><p> Archivo de bloques (en disco)<br /></p><p>Declaration :</p><ul><li>Uml : - arch : <a href="class134914.html#refclass134914"><b>ArchivoBloques</b></a></li><li>C++ : private: <a href="class134914.html#refclass134914"><b>ArchivoBloques</b></a> * arch</li></ul><a name="refattribute134786"></a>
+<table><tr><td><div class="element">Attribute <b>path</b></div></td></tr></table>
+<p> Ruta del archivo.<br /></p><p>Declaration :</p><ul><li>Uml : - path : string</li><li>C++ : private: string path</li></ul><a name="refattribute134914"></a>
+<table><tr><td><div class="element">Attribute <b>blocksize</b></div></td></tr></table>
+<p> Tamaño de bloque.<br /></p><p>Declaration :</p><ul><li>Uml : - blocksize : int</li><li>C++ : private: int blocksize</li></ul><a name="refattribute135042"></a>
+<table><tr><td><div class="element">Attribute <b>v</b></div></td></tr></table>
+<p> Simula un archivo con un vector y cada "vector&lt;char&gt;" es un bloque.<br /></p><p>Declaration :</p><ul><li>Uml : - v : std::vector&lt;char&gt; </li><li>C++ : private: vector&lt;std::vector&lt;char&gt; &gt; v</li></ul><p>Stereotype: vector</p>
+<a name="refattribute135170"></a>
+<table><tr><td><div class="element">Attribute <b>q</b></div></td></tr></table>
+<p> Lista de elementos borrados.<br /></p><p>Declaration :</p><ul><li>Uml : - q : int</li><li>C++ : private: vector&lt;int&gt; q</li></ul><p>Stereotype: vector</p>
+<a name="refattribute135298"></a>
+<table><tr><td><div class="element">Attribute <b>ind</b></div></td></tr></table>
+<p> Índice para el árbol. De esta forma los bloques se numeran 0,1,2,3...n.<br /></p><p>Declaration :</p><ul><li>Uml : - ind : int</li><li>C++ : private: vector&lt;int&gt; ind</li></ul><p>Stereotype: vector</p>
+<a name="refoperation136066"></a>
+<table><tr><td><div class="element">Operation <b>newfile</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - newfile(in p : string, in bs : int) : void</li><li>C++ : private: void newfile(string p, int bs)</li></ul><a name="refoperation136194"></a>
+<table><tr><td><div class="element">Operation <b>ffile</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ffile(in p : string, in bs : int) : </li><li>C++ : public: ffile(string p, int bs)</li></ul><a name="refoperation136322"></a>
+<table><tr><td><div class="element">Operation <b>~ffile</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~ffile() : </li><li>C++ : public: ~ffile()</li></ul><a name="refoperation136450"></a>
+<table><tr><td><div class="element">Operation <b>newblock</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + newblock() : int</li><li>C++ : public: int newblock()</li></ul><a name="refoperation136578"></a>
+<table><tr><td><div class="element">Operation <b>getblocksize</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getblocksize() : int</li><li>C++ : public: int getblocksize()</li></ul><a name="refoperation136706"></a>
+<table><tr><td><div class="element">Operation <b>getblock</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getblock(in bn : int) : std::vector&lt;char&gt;</li><li>C++ : public: std::vector&lt;char&gt; getblock(int bn)</li></ul><a name="refoperation136834"></a>
+<table><tr><td><div class="element">Operation <b>setblock</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setblock(in vec : std::vector&lt;char&gt;, in bn : int) : void</li><li>C++ : public: void setblock(std::vector&lt;char&gt; vec, int bn)</li></ul><a name="refoperation136962"></a>
+<table><tr><td><div class="element">Operation <b>delblock</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + delblock(in bn : int) : void</li><li>C++ : public: void delblock(int bn)</li></ul><a name="refrelation144898"></a>
+<table><tr><td><div class="element">Relation <b>&lt;composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class134530.html#refclass134530"><b>bplustree</b></a></li><li>C++ : private: <a href="class134530.html#refclass134530"><b>bplustree</b></a> </li></ul></div>
+<p>All public operations : <a href="class134658.html#refoperation136962"><b>delblock</b></a> , <a href="class134658.html#refoperation136706"><b>getblock</b></a> , <a href="class134658.html#refoperation136578"><b>getblocksize</b></a> , <a href="class134658.html#refoperation136450"><b>newblock</b></a> , <a href="class134658.html#refoperation136834"><b>setblock</b></a> </p>
+</body>
+</html>

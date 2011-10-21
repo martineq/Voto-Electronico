@@ -1,0 +1,41 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Distrito</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Distrito</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass137986"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Distrito : public <a href="class136194.html#refclass136194"><b>Entidad</b></a> </li></ul><p>Artifact : <a href="index.html#refartifact137218"><b>Distrito</b></a></p>
+<div class="sub">
+<a name="refattribute142210"></a>
+<table><tr><td><div class="element">Attribute <b>distrito</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - distrito : std::string</li><li>C++ : private: std::string distrito</li></ul><a name="refoperation166146"></a>
+<table><tr><td><div class="element">Operation <b>Distrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Distrito() : </li><li>C++ : public: Distrito()</li></ul><a name="refoperation166274"></a>
+<table><tr><td><div class="element">Operation <b>Distrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Distrito(in distrito : std::string) : </li><li>C++ : public: Distrito(std::string distrito)</li></ul><a name="refoperation166402"></a>
+<table><tr><td><div class="element">Operation <b>getDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getDistrito() : std::string</li><li>C++ : public: std::string getDistrito()</li></ul><a name="refoperation166530"></a>
+<table><tr><td><div class="element">Operation <b>setDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setDistrito(in distrito : std::string) : void</li><li>C++ : public: void setDistrito(std::string distrito)</li></ul><a name="refoperation166658"></a>
+<table><tr><td><div class="element">Operation <b>serializar</b></div></td></tr></table><p>	 * Devuelve el objeto serializado, si no tiene contenido, devuelve un string<br />	 * de dimension 0.<br /></p><p>Declaration :</p><ul><li>Uml : + serializar() : std::string</li><li>C++ : public: std::string * serializar()</li></ul><a name="refoperation166786"></a>
+<table><tr><td><div class="element">Operation <b>getTamanio</b></div></td></tr></table><p>	 * Devuelve la dimension del objeto serializado, si no tiene distrito asignado,<br />	 * devuelve 0.<br /></p><p>Declaration :</p><ul><li>Uml : + getTamanio() : int</li><li>C++ : public: int getTamanio()</li></ul><a name="refoperation166914"></a>
+<table><tr><td><div class="element">Operation <b>getClave</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getClave() : ulong</li><li>C++ : public: unsigned long getClave()</li></ul><a name="refoperation167042"></a>
+<table><tr><td><div class="element">Operation <b>verEntidad</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + verEntidad() : void</li><li>C++ : public: void verEntidad()</li></ul><a name="refoperation167170"></a>
+<table><tr><td><div class="element">Operation <b>deserializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + deserializar(inout source : std::string) : void</li><li>C++ : public: void deserializar(std::string * source)</li></ul><a name="refoperation167298"></a>
+<table><tr><td><div class="element">Operation <b>getNombreDeEntidad</b></div></td></tr></table><p>	 * Devuelve el nombre que identifica al objeto.<br /></p><p>Declaration :</p><ul><li>Uml : + getNombreDeEntidad() : <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a></li><li>C++ : public: <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a> getNombreDeEntidad()</li></ul><a name="refoperation167426"></a>
+<table><tr><td><div class="element">Operation <b>duplicar</b></div></td></tr></table><p>	 * Realiza una copia del objeto de tipo Distrito.<br /></p><p>Declaration :</p><ul><li>Uml : + duplicar() : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: <a href="class136194.html#refclass136194"><b>Entidad</b></a> * duplicar()</li></ul><a name="refoperation167554"></a>
+<table><tr><td><div class="element">Operation <b>comparar</b></div></td></tr></table><p>	 * Devuelve el resultado de comparar la actual entidad con otra.<br />	 * Los resultados posibles son mayor, menor, igual o comparacionInvalida.<br />	 * El resultado es respecto del patrón.<br />	 * Por ejemplo: sean A y B dos entidades, entonces<br />	 * A-&gt;comparar(B) devuelve "mayor" si A es mayor a "B".<br /></p><p>Declaration :</p><ul><li>Uml : + comparar(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a></li><li>C++ : public: <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a> comparar(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)</li></ul><a name="refoperation167682"></a>
+<table><tr><td><div class="element">Operation <b>hidratar</b></div></td></tr></table><p>	 * Instancia un Distrito a partir de un objeto serializado.<br /></p><p>Declaration :</p><ul><li>Uml : static, + hidratar(inout source : std::string) : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: static <a href="class136194.html#refclass136194"><b>Entidad</b></a> * hidratar(std::string * source)</li></ul><a name="refoperation167810"></a>
+<table><tr><td><div class="element">Operation <b>~Distrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Distrito() : </li><li>C++ : public: virtual ~Distrito()</li></ul></div>
+<p>All public operations : <a href="class137986.html#refoperation167554"><b>comparar</b></a> , <a href="class136194.html#refoperation172162"><b>comparar</b></a> , <a href="class137986.html#refoperation167170"><b>deserializar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class137986.html#refoperation167426"><b>duplicar</b></a> , <a href="class136194.html#refoperation172034"><b>duplicar</b></a> , <a href="class137986.html#refoperation166914"><b>getClave</b></a> , <a href="class136194.html#refoperation171778"><b>getClave</b></a> , <a href="class137986.html#refoperation166402"><b>getDistrito</b></a> , <a href="class137986.html#refoperation167298"><b>getNombreDeEntidad</b></a> , <a href="class136194.html#refoperation172290"><b>getNombreDeEntidad</b></a> , <a href="class137986.html#refoperation166786"><b>getTamanio</b></a> , <a href="class136194.html#refoperation171650"><b>getTamanio</b></a> , <a href="class137986.html#refoperation167682"><b>hidratar</b></a> , <a href="class137986.html#refoperation166658"><b>serializar</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class137986.html#refoperation166530"><b>setDistrito</b></a> , <a href="class137986.html#refoperation167042"><b>verEntidad</b></a> , <a href="class136194.html#refoperation171906"><b>verEntidad</b></a> </p>
+</body>
+</html>

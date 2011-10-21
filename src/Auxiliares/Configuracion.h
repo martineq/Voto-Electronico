@@ -22,6 +22,8 @@ private:
 	string rutaConfig;
 	string rutaHash;
 	string rutaArbol;
+	int tamanioNodo;
+	int tamanioBucket;
 	bool vAuto;
 	bool vManual;
 	void cargarArgumentos(int argc, const char** argv);
@@ -35,6 +37,8 @@ public:
 	string pathArbol();
 	bool isAuto();
 	bool isManual();
+	int darTamanioNodo();
+	int darTamanioBucket();
 	virtual ~Configuracion();
 };
 

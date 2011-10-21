@@ -1,0 +1,42 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Registro</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Registro</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass135938"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Registro : public <a href="class135810.html#refclass135810"><b>Serializable</b></a> </li></ul><p>Artifact : <a href="index.html#refartifact135938"><b>Registro</b></a></p>
+<div class="sub">
+<a name="refattribute138114"></a>
+<table><tr><td><div class="element">Attribute <b>clave</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : # clave : ulong</li><li>C++ : protected: unsigned long clave</li></ul><a name="refrelation136450"></a>
+<table><tr><td><div class="element">Relation <b>contenido (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : # contenido : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : protected: <a href="class136194.html#refclass136194"><b>Entidad</b></a> * contenido</li></ul><a name="refoperation152962"></a>
+<table><tr><td><div class="element">Operation <b>determinarClave</b></div></td></tr></table><p><br />	 * Realiza el cálculo para obtener la clave a partir del ID de la Entidad.<br /></p><p>Declaration :</p><ul><li>Uml : # determinarClave() : void</li><li>C++ : protected: void determinarClave()</li></ul><a name="refoperation153090"></a>
+<table><tr><td><div class="element">Operation <b>Registro</b></div></td></tr></table><p><br />	 * Instancia un registro.<br /></p><p>Declaration :</p><ul><li>Uml : + Registro() : </li><li>C++ : public: Registro()</li></ul><a name="refoperation153218"></a>
+<table><tr><td><div class="element">Operation <b>Registro</b></div></td></tr></table><p><br />	 * Crea un registro asignándole la entidad pasada por parámetro.<br /></p><p>Declaration :</p><ul><li>Uml : + Registro(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : </li><li>C++ : public: Registro(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)</li></ul><a name="refoperation153346"></a>
+<table><tr><td><div class="element">Operation <b>Registro</b></div></td></tr></table><p><br />	 * Crea un registro con una instancia de una entidad particular.<br /></p><p>Declaration :</p><ul><li>Uml : + Registro(in nombreDeEntidad : <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a>) : </li><li>C++ : public: Registro(<a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a> nombreDeEntidad)</li></ul><a name="refoperation153474"></a>
+<table><tr><td><div class="element">Operation <b>deserializar</b></div></td></tr></table><p><br />	 * Deserializa una tira de bytes sobre el actual objeto.<br /></p><p>Declaration :</p><ul><li>Uml : + deserializar(inout source : std::string) : void</li><li>C++ : public: void deserializar(std::string * source)</li></ul><a name="refoperation153602"></a>
+<table><tr><td><div class="element">Operation <b>setContenido</b></div></td></tr></table><p><br />	 * Agrega o sobreescribe el contenido del registro,<br />	 * crea una copia interna de la entidad para establecer el contenido.<br /></p><p>Declaration :</p><ul><li>Uml : + setContenido(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : void</li><li>C++ : public: void setContenido(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)</li></ul><a name="refoperation153730"></a>
+<table><tr><td><div class="element">Operation <b>duplicar</b></div></td></tr></table><p><br />	 * Instancia una de si mismo.<br /></p><p>Declaration :</p><ul><li>Uml : + duplicar() : <a href="class135938.html#refclass135938"><b>Registro</b></a></li><li>C++ : public: <a href="class135938.html#refclass135938"><b>Registro</b></a> * duplicar()</li></ul><a name="refoperation153858"></a>
+<table><tr><td><div class="element">Operation <b>getTamanio</b></div></td></tr></table><p><br />	 * Obtiene el tamanio del registro luego de ser serializado.<br /></p><p>Declaration :</p><ul><li>Uml : + getTamanio() : int</li><li>C++ : public: int getTamanio()</li></ul><a name="refoperation153986"></a>
+<table><tr><td><div class="element">Operation <b>obtenerClave</b></div></td></tr></table><p><br />	 * Devuelve una clave obtenida tras aplicar una función de Hash al ID de la Entidad<br />	 * Si el registro no tiene contenido, y por lo tanto la clave no existe devuelve -1.<br /></p><p>Declaration :</p><ul><li>Uml : + obtenerClave() : ulong</li><li>C++ : public: unsigned long obtenerClave()</li></ul><a name="refoperation154114"></a>
+<table><tr><td><div class="element">Operation <b>comparar</b></div></td></tr></table><p><br />	 * Compara el registro actual contra otro registro para verificar si se<br />	 * trata del mismo elemento.<br />	 * Devuelve mayor, menor, igual o comparacionInvalida si no se pueden<br />	 * comparar.<br />	 * Si el elemento que se está comparando es mayor al pasado por parámetro<br />	 * entonces devuelve mayor.<br /></p><p>Declaration :</p><ul><li>Uml : + comparar(inout registroMuestra : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a></li><li>C++ : public: <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a> comparar(<a href="class135938.html#refclass135938"><b>Registro</b></a> * registroMuestra)</li></ul><a name="refoperation154242"></a>
+<table><tr><td><div class="element">Operation <b>serializar</b></div></td></tr></table><p><br />	 * Devuelve el objeto serializado como un string.<br />	 * Si el registro no tiene contenido, devuelve un string de longitud 0.<br /></p><p>Declaration :</p><ul><li>Uml : + serializar() : std::string</li><li>C++ : public: std::string * serializar()</li></ul><a name="refoperation154370"></a>
+<table><tr><td><div class="element">Operation <b>verContenido</b></div></td></tr></table><p><br />	 * Muestra el contenido del registro.<br /></p><p>Declaration :</p><ul><li>Uml : + verContenido() : void</li><li>C++ : public: void verContenido()</li></ul><a name="refoperation154498"></a>
+<table><tr><td><div class="element">Operation <b>getContenido</b></div></td></tr></table><p><br />	 * Devuelve el contenido del registro, NULL si no lo tiene.<br />	 * Este resulta ser una copia del verdadero contenido.<br /></p><p>Declaration :</p><ul><li>Uml : + getContenido() : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: <a href="class136194.html#refclass136194"><b>Entidad</b></a> * getContenido()</li></ul><a name="refoperation154626"></a>
+<table><tr><td><div class="element">Operation <b>~Registro</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Registro() : </li><li>C++ : public: virtual ~Registro()</li></ul></div>
+<p>All public operations : <a href="class135938.html#refoperation154114"><b>comparar</b></a> , <a href="class135938.html#refoperation153474"><b>deserializar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class135938.html#refoperation153730"><b>duplicar</b></a> , <a href="class135938.html#refoperation154498"><b>getContenido</b></a> , <a href="class135938.html#refoperation153858"><b>getTamanio</b></a> , <a href="class135938.html#refoperation153986"><b>obtenerClave</b></a> , <a href="class135938.html#refoperation154242"><b>serializar</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class135938.html#refoperation153602"><b>setContenido</b></a> , <a href="class135938.html#refoperation154370"><b>verContenido</b></a> </p>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class bplustree</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class bplustree</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass134530"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class bplustree </li></ul><p>Artifact : <a href="index.html#refartifact134530"><b>bplustree</b></a></p>
+<div class="sub">
+<a name="refoperation134530"></a>
+<table><tr><td><div class="element">Operation <b>bplustree</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + bplustree(in  : void) : </li><li>C++ : public: bplustree(void )</li></ul><a name="refoperation134658"></a>
+<table><tr><td><div class="element">Operation <b>~bplustree</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~bplustree(in  : void) : </li><li>C++ : public: ~bplustree(void )</li></ul><a name="refoperation134786"></a>
+<table><tr><td><div class="element">Operation <b>initialize</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + initialize() : void</li><li>C++ : public: void initialize()</li></ul><a name="refoperation134914"></a>
+<table><tr><td><div class="element">Operation <b>newtree</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + newtree(in p : string, in bs : int) : void</li><li>C++ : public: void newtree(string p, int bs)</li></ul><a name="refoperation135042"></a>
+<table><tr><td><div class="element">Operation <b>opentree</b></div></td></tr></table><p>bs is the blocksize, p is the path to the data of the new tree<br /></p><p>Declaration :</p><ul><li>Uml : + opentree(in p : string) : void</li><li>C++ : public: void opentree(string p)</li></ul><a name="refoperation135170"></a>
+<table><tr><td><div class="element">Operation <b>add</b></div></td></tr></table><p>bs is the blocksize, p is the path to the data of the new tree<br /></p><p>Declaration :</p><ul><li>Uml : + add(in key : string, in data : vector&lt;char&gt;) : int</li><li>C++ : public: int add(string key, vector&lt;char&gt; data)</li></ul><a name="refoperation135298"></a>
+<table><tr><td><div class="element">Operation <b>modify</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + modify(in key : string, in data : vector&lt;char&gt;) : int</li><li>C++ : public: int modify(string key, vector&lt;char&gt; data)</li></ul><a name="refoperation135426"></a>
+<table><tr><td><div class="element">Operation <b>del</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + del(in key : string) : int</li><li>C++ : public: int del(string key)</li></ul><a name="refoperation135554"></a>
+<table><tr><td><div class="element">Operation <b>search</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + search(in key : string) : vector&lt;char&gt;</li><li>C++ : public: vector&lt;char&gt; search(string key)</li></ul><a name="refoperation135682"></a>
+<table><tr><td><div class="element">Operation <b>getrootblock</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getrootblock() : int</li><li>C++ : public: inline int getrootblock()</li></ul><a name="refoperation135810"></a>
+<table><tr><td><div class="element">Operation <b>getnext</b></div></td></tr></table><p>i need this to be deterministic from the backend<br /></p><p>Declaration :</p><ul><li>Uml : + getnext() : std::pair&lt;vector&lt;char&gt;,std::string&gt;</li><li>C++ : public: std::pair&lt;vector&lt;char&gt;,std::string&gt; getnext()</li></ul><a name="refoperation135938"></a>
+<table><tr><td><div class="element">Operation <b>clear</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - clear() : void</li><li>C++ : private: inline void clear()</li></ul><a name="refrelation134530"></a>
+<table><tr><td><div class="element">Relation <b>f (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - f : <a href="class134658.html#refclass134658"><b>ffile</b></a></li><li>C++ : private: <a href="class134658.html#refclass134658"><b>ffile</b></a> * f</li></ul><a name="refattribute134530"></a>
+<table><tr><td><div class="element">Attribute <b>q</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - q : int</li><li>C++ : private: vector&lt;int&gt; q</li></ul><p>Stereotype: vector</p>
+<a name="refrelation134658"></a>
+<table><tr><td><div class="element">Relation <b>n (&lt;directional composition&gt;)</b></div></td></tr></table><p>for the last search, its used in the nextnode logic<br /></p><p>Declaration :</p><ul><li>Uml : - n : <a href="class134786.html#refclass134786"><b>leaf_node</b></a></li><li>C++ : private: <a href="class134786.html#refclass134786"><b>leaf_node</b></a> n</li></ul><a name="refattribute134658"></a>
+<table><tr><td><div class="element">Attribute <b>bs</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - bs : int</li><li>C++ : private: int bs</li></ul><a name="refrelation144514"></a>
+<table><tr><td><div class="element">Relation <b>&lt;unidirectional association&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class134658.html#refclass134658"><b>ffile</b></a></li><li>C++ : private: <a href="class134658.html#refclass134658"><b>ffile</b></a> * </li></ul><a name="refrelation144770"></a>
+<table><tr><td><div class="element">Relation <b>&lt;composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class134658.html#refclass134658"><b>ffile</b></a></li><li>C++ : private: <a href="class134658.html#refclass134658"><b>ffile</b></a> </li></ul><a name="refrelation145026"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class134658.html#refclass134658"><b>ffile</b></a></li><li>C++ : private: <a href="class134658.html#refclass134658"><b>ffile</b></a> </li></ul></div>
+<p>All public operations : <a href="class134530.html#refoperation135170"><b>add</b></a> , <a href="class134530.html#refoperation135426"><b>del</b></a> , <a href="class134530.html#refoperation135810"><b>getnext</b></a> , <a href="class134530.html#refoperation135682"><b>getrootblock</b></a> , <a href="class134530.html#refoperation134786"><b>initialize</b></a> , <a href="class134530.html#refoperation135298"><b>modify</b></a> , <a href="class134530.html#refoperation134914"><b>newtree</b></a> , <a href="class134530.html#refoperation135042"><b>opentree</b></a> , <a href="class134530.html#refoperation135554"><b>search</b></a> </p>
+</body>
+</html>

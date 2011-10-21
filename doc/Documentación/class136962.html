@@ -1,0 +1,62 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Votante</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Votante</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass136962"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Votante : public <a href="class136194.html#refclass136194"><b>Entidad</b></a> </li></ul><p>Artifact : <a href="index.html#refartifact138114"><b>Votante</b></a></p>
+<div class="sub">
+<a name="refattribute144130"></a>
+<table><tr><td><div class="element">Attribute <b>dni</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - dni : int</li><li>C++ : private: int dni</li></ul><a name="refattribute144258"></a>
+<table><tr><td><div class="element">Attribute <b>nombre</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - nombre : string</li><li>C++ : private: string nombre</li></ul><a name="refattribute144386"></a>
+<table><tr><td><div class="element">Attribute <b>password</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - password : string</li><li>C++ : private: string password</li></ul><a name="refattribute144514"></a>
+<table><tr><td><div class="element">Attribute <b>domicilio</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - domicilio : string</li><li>C++ : private: string domicilio</li></ul><a name="refattribute144642"></a>
+<table><tr><td><div class="element">Attribute <b>distrito</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - distrito : string</li><li>C++ : private: string distrito</li></ul><a name="refattribute144770"></a>
+<table><tr><td><div class="element">Attribute <b>listaDeEleccionesAnteriores</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - listaDeEleccionesAnteriores : EleccionAnterior*</li><li>C++ : private: list&lt;EleccionAnterior*&gt; * listaDeEleccionesAnteriores</li></ul><p>Stereotype: list</p>
+<a name="refoperation174722"></a>
+<table><tr><td><div class="element">Operation <b>verEleccionesAnteriores</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - verEleccionesAnteriores() : void</li><li>C++ : private: void verEleccionesAnteriores()</li></ul><a name="refoperation174850"></a>
+<table><tr><td><div class="element">Operation <b>verificarDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - verificarDistrito(in distrito : string) : bool</li><li>C++ : private: bool verificarDistrito(string distrito)</li></ul><a name="refoperation174978"></a>
+<table><tr><td><div class="element">Operation <b>Votante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Votante() : </li><li>C++ : public: Votante()</li></ul><a name="refoperation175106"></a>
+<table><tr><td><div class="element">Operation <b>Votante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Votante(in dni : int, in nombre : string, in password : string, in domicilio : string, in distrito : string) : </li><li>C++ : public: Votante(int dni, string nombre, string password, string domicilio, string distrito)</li></ul><a name="refoperation175234"></a>
+<table><tr><td><div class="element">Operation <b>~Votante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Votante() : </li><li>C++ : public: virtual ~Votante()</li></ul><a name="refoperation175362"></a>
+<table><tr><td><div class="element">Operation <b>setNombre</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setNombre(in nombre : string) : void</li><li>C++ : public: void setNombre(string nombre)</li></ul><a name="refoperation175490"></a>
+<table><tr><td><div class="element">Operation <b>setPassword</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setPassword(in password : string) : void</li><li>C++ : public: void setPassword(string password)</li></ul><a name="refoperation175618"></a>
+<table><tr><td><div class="element">Operation <b>setDomicilio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setDomicilio(in domicilio : string) : void</li><li>C++ : public: void setDomicilio(string domicilio)</li></ul><a name="refoperation175746"></a>
+<table><tr><td><div class="element">Operation <b>setDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setDistrito(in distrito : string) : void</li><li>C++ : public: void setDistrito(string distrito)</li></ul><a name="refoperation175874"></a>
+<table><tr><td><div class="element">Operation <b>agregarEleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + agregarEleccion(in fecha : string, in cargo : string) : bool</li><li>C++ : public: bool agregarEleccion(string fecha, string cargo)</li></ul><a name="refoperation176002"></a>
+<table><tr><td><div class="element">Operation <b>getTamanio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getTamanio() : int</li><li>C++ : public: int getTamanio()</li></ul><a name="refoperation176130"></a>
+<table><tr><td><div class="element">Operation <b>getClave</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getClave() : ulong</li><li>C++ : public: unsigned long getClave()</li></ul><a name="refoperation176258"></a>
+<table><tr><td><div class="element">Operation <b>deserializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + deserializar(inout source : string) : void</li><li>C++ : public: void deserializar(string * source)</li></ul><a name="refoperation176386"></a>
+<table><tr><td><div class="element">Operation <b>verVotante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + verVotante() : void</li><li>C++ : public: void verVotante()</li></ul><a name="refoperation176514"></a>
+<table><tr><td><div class="element">Operation <b>verEntidad</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + verEntidad() : void</li><li>C++ : public: void verEntidad()</li></ul><a name="refoperation176642"></a>
+<table><tr><td><div class="element">Operation <b>getDNI</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getDNI() : int</li><li>C++ : public: int getDNI()</li></ul><a name="refoperation176770"></a>
+<table><tr><td><div class="element">Operation <b>getNombre</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getNombre() : string</li><li>C++ : public: string getNombre()</li></ul><a name="refoperation176898"></a>
+<table><tr><td><div class="element">Operation <b>getPassword</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getPassword() : string</li><li>C++ : public: string getPassword()</li></ul><a name="refoperation177026"></a>
+<table><tr><td><div class="element">Operation <b>getDomicilio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getDomicilio() : string</li><li>C++ : public: string getDomicilio()</li></ul><a name="refoperation177154"></a>
+<table><tr><td><div class="element">Operation <b>getDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getDistrito() : string</li><li>C++ : public: string getDistrito()</li></ul><a name="refoperation177282"></a>
+<table><tr><td><div class="element">Operation <b>serializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + serializar() : string</li><li>C++ : public: string * serializar()</li></ul><a name="refoperation177410"></a>
+<table><tr><td><div class="element">Operation <b>comparar</b></div></td></tr></table><p><br />	 * Devuelve el resultado de comparar la actual entidad con otra.<br />	 * Los resultados posibles son mayor, menor, igual o comparacionInvalida.<br />	 * El resultado es respecto del patrón.<br />	 * Por ejemplo: sean A y B dos entidades, entonces<br />	 * A-&gt;comparar(B) devuelve "mayor" si A es mayor a "B".<br /></p><p>Declaration :</p><ul><li>Uml : + comparar(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a></li><li>C++ : public: <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a> comparar(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)</li></ul><a name="refoperation177538"></a>
+<table><tr><td><div class="element">Operation <b>duplicar</b></div></td></tr></table><p><br />	 * Instancia un nuevo objeto, copia de actual.<br /></p><p>Declaration :</p><ul><li>Uml : + duplicar() : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: <a href="class136194.html#refclass136194"><b>Entidad</b></a> * duplicar()</li></ul><a name="refoperation177666"></a>
+<table><tr><td><div class="element">Operation <b>getNombreDeEntidad</b></div></td></tr></table><p><br />	 * Devuelve el tipo de la entidad instanciada.<br /></p><p>Declaration :</p><ul><li>Uml : + getNombreDeEntidad() : <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a></li><li>C++ : public: <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a> getNombreDeEntidad()</li></ul></div>
+<p>All public operations : <a href="class136962.html#refoperation175874"><b>agregarEleccion</b></a> , <a href="class136194.html#refoperation172162"><b>comparar</b></a> , <a href="class136962.html#refoperation177410"><b>comparar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class136962.html#refoperation176258"><b>deserializar</b></a> , <a href="class136194.html#refoperation172034"><b>duplicar</b></a> , <a href="class136962.html#refoperation177538"><b>duplicar</b></a> , <a href="class136194.html#refoperation171778"><b>getClave</b></a> , <a href="class136962.html#refoperation176130"><b>getClave</b></a> , <a href="class136962.html#refoperation177154"><b>getDistrito</b></a> , <a href="class136962.html#refoperation176642"><b>getDNI</b></a> , <a href="class136962.html#refoperation177026"><b>getDomicilio</b></a> , <a href="class136962.html#refoperation176770"><b>getNombre</b></a> , <a href="class136194.html#refoperation172290"><b>getNombreDeEntidad</b></a> , <a href="class136962.html#refoperation177666"><b>getNombreDeEntidad</b></a> , <a href="class136962.html#refoperation176898"><b>getPassword</b></a> , <a href="class136194.html#refoperation171650"><b>getTamanio</b></a> , <a href="class136962.html#refoperation176002"><b>getTamanio</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class136962.html#refoperation177282"><b>serializar</b></a> , <a href="class136962.html#refoperation175746"><b>setDistrito</b></a> , <a href="class136962.html#refoperation175618"><b>setDomicilio</b></a> , <a href="class136962.html#refoperation175362"><b>setNombre</b></a> , <a href="class136962.html#refoperation175490"><b>setPassword</b></a> , <a href="class136194.html#refoperation171906"><b>verEntidad</b></a> , <a href="class136962.html#refoperation176514"><b>verEntidad</b></a> , <a href="class136962.html#refoperation176386"><b>verVotante</b></a> </p>
+</body>
+</html>

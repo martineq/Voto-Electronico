@@ -1,0 +1,56 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class ArchivoBloques</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class ArchivoBloques</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass134914"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class ArchivoBloques </li></ul><p>Artifact : <a href="index.html#refartifact135042"><b>ArchivoBloques</b></a></p>
+<div class="sub">
+<a name="refrelation135170"></a>
+<table><tr><td><div class="element">Relation <b>archivo (&lt;unidirectional association&gt;)</b></div></td></tr></table><p> Maneja lo respectivo al acceso a disco.-<br /></p><p>Declaration :</p><ul><li>Uml : - archivo : <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a></li><li>C++ : private: <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a> * archivo</li></ul><a name="refattribute136066"></a>
+<table><tr><td><div class="element">Attribute <b>maxblocknum</b></div></td></tr></table>
+<p>this is the number of blocks in my file, it counts everything, deleted blocks, metadata blocks, head<br /></p><p>Declaration :</p><ul><li>Uml : - maxblocknum : int</li><li>C++ : private: int maxblocknum</li></ul><a name="refattribute136194"></a>
+<table><tr><td><div class="element">Attribute <b>blocksize</b></div></td></tr></table>
+<p>this is the block size of the file (in bytes), incluye todos los campos de control<br /></p><p>Declaration :</p><ul><li>Uml : - blocksize : int</li><li>C++ : private: int blocksize</li></ul><a name="refattribute136322"></a>
+<table><tr><td><div class="element">Attribute <b>currmetadata</b></div></td></tr></table>
+<p>this points to the current metadata block in use<br /></p><p>Declaration :</p><ul><li>Uml : - currmetadata : int</li><li>C++ : private: int currmetadata</li></ul><a name="refattribute136450"></a>
+<table><tr><td><div class="element">Attribute <b>currpos</b></div></td></tr></table>
+<p>this points to the current position in the metadata block<br /></p><p>Declaration :</p><ul><li>Uml : - currpos : int</li><li>C++ : private: int currpos</li></ul><a name="refoperation141186"></a>
+<table><tr><td><div class="element">Operation <b>getblocksize</b></div></td></tr></table><p>getblocksize() returns the block size of the file, this should be a public function<br /></p><p>Declaration :</p><ul><li>Uml : - getblocksize() : int</li><li>C++ : private: int getblocksize()</li></ul><a name="refoperation141314"></a>
+<table><tr><td><div class="element">Operation <b>getblock</b></div></td></tr></table><p>getblock() returns a nrr to the block, or 0 if there is an error<br /></p><p>Declaration :</p><ul><li>Uml : - getblock(in nrr : int) : int</li><li>C++ : private: int getblock(int nrr)</li></ul><a name="refoperation141442"></a>
+<table><tr><td><div class="element">Operation <b>newblock</b></div></td></tr></table><p>newblock() returns a new blockhandle which can either be obtained by growing the<br />file or by reusing an old but deleted block<br /></p><p>Declaration :</p><ul><li>Uml : - newblock() : int</li><li>C++ : private: int newblock()</li></ul><a name="refoperation141570"></a>
+<table><tr><td><div class="element">Operation <b>delblock</b></div></td></tr></table><p>delblock() marks a block as deleted, by adding it to the current metadata file<br />in the current position + 1 or in the first block of a new metadata file if position*4 + 1<br />is larger than blocksize (blocksize is in chars and an int ocupies 4 chars)<br /></p><p>Declaration :</p><ul><li>Uml : - delblock(in nrrBorrado : int) : int</li><li>C++ : private: int delblock(int nrrBorrado)</li></ul><a name="refoperation141698"></a>
+<table><tr><td><div class="element">Operation <b>retlastdeleted</b></div></td></tr></table><p> retlastdeleted() Busca en metadata el último bloque borrado<br /></p><p>Declaration :</p><ul><li>Uml : - retlastdeleted() : int</li><li>C++ : private: int retlastdeleted()</li></ul><a name="refoperation141826"></a>
+<table><tr><td><div class="element">Operation <b>growfile</b></div></td></tr></table><p>growfile() grows the file by 1 blocksize<br /></p><p>Declaration :</p><ul><li>Uml : - growfile() : int</li><li>C++ : private: int growfile()</li></ul><a name="refoperation141954"></a>
+<table><tr><td><div class="element">Operation <b>serializehead</b></div></td></tr></table><p>serializehead() saves the head of a block file, basically metadata<br /></p><p>Declaration :</p><ul><li>Uml : - serializehead() : void</li><li>C++ : private: void serializehead()</li></ul><a name="refoperation142082"></a>
+<table><tr><td><div class="element">Operation <b>deserializehead</b></div></td></tr></table><p>deserializehead() populates a filehandle struct from the metadata in the first block of a file<br /></p><p>Declaration :</p><ul><li>Uml : - deserializehead() : void</li><li>C++ : private: void deserializehead()</li></ul><a name="refoperation142210"></a>
+<table><tr><td><div class="element">Operation <b>truncarUltimoBolque</b></div></td></tr></table><p>truncarUltimoBolque() truncates a file by 1 blocksize<br /></p><p>Declaration :</p><ul><li>Uml : - truncarUltimoBolque() : void</li><li>C++ : private: void truncarUltimoBolque()</li></ul><a name="refoperation142338"></a>
+<table><tr><td><div class="element">Operation <b>obtenerCurrPos</b></div></td></tr></table><p> obtenerCurrPos() Obtiene la posición actual dentro del metadata actual<br /></p><p>Declaration :</p><ul><li>Uml : - obtenerCurrPos() : int</li><li>C++ : private: int obtenerCurrPos()</li></ul><a name="refoperation142466"></a>
+<table><tr><td><div class="element">Operation <b>leerTipoInt</b></div></td></tr></table><p> Lee un sector del archivo de tamaño int, desde la posición &lt;pos&gt;<br /> y lo guarda donde apunta &lt;dest&gt;<br /></p><p>Declaration :</p><ul><li>Uml : - leerTipoInt(in pos : int, inout dest : int) : void</li><li>C++ : private: void leerTipoInt(int pos, int * dest)</li></ul><a name="refoperation142594"></a>
+<table><tr><td><div class="element">Operation <b>guardarTipoInt</b></div></td></tr></table><p> Guarda en un sector del archivo de tamaño int, desde la posición &lt;pos&gt;<br /> lo apuntado por &lt;dest&gt;<br /></p><p>Declaration :</p><ul><li>Uml : - guardarTipoInt(in pos : int, inout dest : int) : void</li><li>C++ : private: void guardarTipoInt(int pos, int * dest)</li></ul><a name="refoperation142722"></a>
+<table><tr><td><div class="element">Operation <b>ArchivoBloques</b></div></td></tr></table><p>Constructor<br /></p><p>Declaration :</p><ul><li>Uml : + ArchivoBloques(inout path : char, in blocksize : int) : </li><li>C++ : public: ArchivoBloques(char * path, int blocksize)</li></ul><a name="refoperation142850"></a>
+<table><tr><td><div class="element">Operation <b>obtenerBloque</b></div></td></tr></table><p> Devuelve un bloque (de datos), según la posición &lt;nrr&gt; dada<br /></p><p>Declaration :</p><ul><li>Uml : + obtenerBloque(in nrr : int, inout datos : char) : void</li><li>C++ : public: void obtenerBloque(int nrr, char * datos)</li></ul><a name="refoperation142978"></a>
+<table><tr><td><div class="element">Operation <b>crearNuevoBloque</b></div></td></tr></table><p> Creo un nuevo bloque y devuelvo su posición relativa en archivo<br /></p><p>Declaration :</p><ul><li>Uml : + crearNuevoBloque(inout pos : int) : void</li><li>C++ : public: void crearNuevoBloque(int * pos)</li></ul><a name="refoperation143106"></a>
+<table><tr><td><div class="element">Operation <b>borrarBloque</b></div></td></tr></table><p> Borro un bloque, identificado por su posición en el archivo<br /></p><p>Declaration :</p><ul><li>Uml : + borrarBloque(in nrr : int) : void</li><li>C++ : public: void borrarBloque(int nrr)</li></ul><a name="refoperation143234"></a>
+<table><tr><td><div class="element">Operation <b>guardarBloque</b></div></td></tr></table><p> Guarda un bloque de datos, en la posición &lt;numeroBloque&gt;<br /></p><p>Declaration :</p><ul><li>Uml : + guardarBloque(in nrr : int, inout datos : char) : void</li><li>C++ : public: void guardarBloque(int nrr, char * datos)</li></ul><a name="refoperation143362"></a>
+<table><tr><td><div class="element">Operation <b>infoInts</b></div></td></tr></table><p>Muestra TODO_ el contenido del archivo en intervalos de Ints (en paquetes de a 4 Bytes)<br /> Una vez usada, bórrese! =D<br /></p><p>Declaration :</p><ul><li>Uml : + infoInts() : void</li><li>C++ : public: void infoInts()</li></ul><a name="refoperation143490"></a>
+<table><tr><td><div class="element">Operation <b>~ArchivoBloques</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~ArchivoBloques() : </li><li>C++ : public: virtual ~ArchivoBloques()</li></ul><a name="refrelation144642"></a>
+<table><tr><td><div class="element">Relation <b>&lt;unidirectional association&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a></li><li>C++ : private: <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a> * </li></ul><a name="refrelation145154"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a></li><li>C++ : private: <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a> </li></ul><a name="refrelation145282"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a></li><li>C++ : private: <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a> </li></ul></div>
+<p>All public operations : <a href="class134914.html#refoperation143106"><b>borrarBloque</b></a> , <a href="class134914.html#refoperation142978"><b>crearNuevoBloque</b></a> , <a href="class134914.html#refoperation143234"><b>guardarBloque</b></a> , <a href="class134914.html#refoperation143362"><b>infoInts</b></a> , <a href="class134914.html#refoperation142850"><b>obtenerBloque</b></a> </p>
+</body>
+</html>

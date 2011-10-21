@@ -1,0 +1,49 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class leaf_node</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class leaf_node</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass134786"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class leaf_node </li></ul><p>Artifact : <a href="index.html#refartifact134914"><b>leaf_node</b></a></p>
+<div class="sub">
+<a name="refoperation139010"></a>
+<table><tr><td><div class="element">Operation <b>initialization</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + initialization() : void</li><li>C++ : public: void initialization()</li></ul><a name="refoperation139138"></a>
+<table><tr><td><div class="element">Operation <b>getsize</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getsize() : int</li><li>C++ : public: int getsize()</li></ul><a name="refoperation139266"></a>
+<table><tr><td><div class="element">Operation <b>operator =</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + operator =(in rhs : <a href="class134786.html#refclass134786"><b>leaf_node</b></a>) : <a href="class134786.html#refclass134786"><b>leaf_node</b></a></li><li>C++ : public: <a href="class134786.html#refclass134786"><b>leaf_node</b></a> &amp; operator =(const <a href="class134786.html#refclass134786"><b>leaf_node</b></a> &amp; rhs)</li></ul><a name="refoperation139394"></a>
+<table><tr><td><div class="element">Operation <b>setnext</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setnext(in n : int) : void</li><li>C++ : public: void setnext(int n)</li></ul><a name="refoperation139522"></a>
+<table><tr><td><div class="element">Operation <b>nextelem</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + nextelem() : std::pair&lt;std::pair&lt;vector&lt;char&gt;,std::string&gt;,int&gt;</li><li>C++ : public: std::pair&lt;std::pair&lt;vector&lt;char&gt;,std::string&gt;,int&gt; nextelem()</li></ul><a name="refoperation139650"></a>
+<table><tr><td><div class="element">Operation <b>deserialize</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + deserialize(in v : std::vector&lt;char&gt;) : void</li><li>C++ : public: void deserialize(std::vector&lt;char&gt; v)</li></ul><a name="refoperation139778"></a>
+<table><tr><td><div class="element">Operation <b>leaf_node</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + leaf_node() : </li><li>C++ : public: leaf_node()</li></ul><a name="refoperation139906"></a>
+<table><tr><td><div class="element">Operation <b>~leaf_node</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~leaf_node() : </li><li>C++ : public: ~leaf_node()</li></ul><a name="refoperation140034"></a>
+<table><tr><td><div class="element">Operation <b>serialize</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + serialize() : std::vector&lt;char&gt;</li><li>C++ : public: std::vector&lt;char&gt; serialize()</li></ul><a name="refoperation140162"></a>
+<table><tr><td><div class="element">Operation <b>peek</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + peek(in node : vector&lt;char&gt;) : char</li><li>C++ : public: char peek(vector&lt;char&gt; node)</li></ul><a name="refoperation140290"></a>
+<table><tr><td><div class="element">Operation <b>search</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + search(in str : string) : std::vector&lt;char&gt;</li><li>C++ : public: std::vector&lt;char&gt; search(string str)</li></ul><a name="refoperation140418"></a>
+<table><tr><td><div class="element">Operation <b>split_root</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + split_root(in maxsize : int, in rightblock : int, in leftblock : int) : std::pair&lt;inner_node,leaf_node&gt;</li><li>C++ : public: std::pair&lt;inner_node,leaf_node&gt; split_root(int maxsize, int rightblock, int leftblock)</li></ul><a name="refoperation140546"></a>
+<table><tr><td><div class="element">Operation <b>del</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + del(in elem : string, in maxsize : int) : int</li><li>C++ : public: int del(string elem, int maxsize)</li></ul><a name="refoperation140674"></a>
+<table><tr><td><div class="element">Operation <b>add</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + add(in newelem : std::pair&lt;vector&lt;char&gt;,std::string&gt;, in maxsize : int) : int</li><li>C++ : public: int add(std::pair&lt;vector&lt;char&gt;,std::string&gt; newelem, int maxsize)</li></ul><a name="refoperation140802"></a>
+<table><tr><td><div class="element">Operation <b>modify</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + modify(in newelem : std::pair&lt;vector&lt;char&gt;,std::string&gt;, in maxsize : int) : int</li><li>C++ : public: int modify(std::pair&lt;vector&lt;char&gt;,std::string&gt; newelem, int maxsize)</li></ul><a name="refoperation140930"></a>
+<table><tr><td><div class="element">Operation <b>split</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + split(in maxsize : int, in rightblock : int) : std::pair&lt;leaf_node,std::pair&lt;int,std::string&gt; &gt;</li><li>C++ : public: std::pair&lt;leaf_node,std::pair&lt;int,std::string&gt; &gt; split(int maxsize, int rightblock)</li></ul><a name="refoperation141058"></a>
+<table><tr><td><div class="element">Operation <b>compare</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : static, - compare(in l : std::pair&lt;vector&lt;char&gt;, std::string&gt;, in r : std::pair&lt;vector&lt;char&gt;, std::string&gt;) : int</li><li>C++ : private: static int compare(std::pair&lt;vector&lt;char&gt;, std::string&gt; l, std::pair&lt;vector&lt;char&gt;, std::string&gt; r)</li></ul><a name="refattribute135682"></a>
+<table><tr><td><div class="element">Attribute <b>next</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - next : int</li><li>C++ : private: int next</li></ul><a name="refattribute135810"></a>
+<table><tr><td><div class="element">Attribute <b>currentpos</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - currentpos : int</li><li>C++ : private: int currentpos</li></ul><a name="refattribute135938"></a>
+<table><tr><td><div class="element">Attribute <b>l</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - l : std::pair&lt;vector&lt;char&gt;,std::string&gt; </li><li>C++ : private: std::vector&lt;std::pair&lt;vector&lt;char&gt;,std::string&gt; &gt; l</li></ul><p>Stereotype: std::vector</p>
+</div>
+<p>All public operations : <a href="class134786.html#refoperation140674"><b>add</b></a> , <a href="class134786.html#refoperation140546"><b>del</b></a> , <a href="class134786.html#refoperation139650"><b>deserialize</b></a> , <a href="class134786.html#refoperation139138"><b>getsize</b></a> , <a href="class134786.html#refoperation139010"><b>initialization</b></a> , <a href="class134786.html#refoperation140802"><b>modify</b></a> , <a href="class134786.html#refoperation139522"><b>nextelem</b></a> , <a href="class134786.html#refoperation139266"><b>operator =</b></a> , <a href="class134786.html#refoperation140162"><b>peek</b></a> , <a href="class134786.html#refoperation140290"><b>search</b></a> , <a href="class134786.html#refoperation140034"><b>serialize</b></a> , <a href="class134786.html#refoperation139394"><b>setnext</b></a> , <a href="class134786.html#refoperation140930"><b>split</b></a> , <a href="class134786.html#refoperation140418"><b>split_root</b></a> </p>
+</body>
+</html>

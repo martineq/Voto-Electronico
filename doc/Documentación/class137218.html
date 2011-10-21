@@ -1,0 +1,53 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Eleccion</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Eleccion</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass137218"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Eleccion : public <a href="class136194.html#refclass136194"><b>Entidad</b></a> </li></ul><p>Artifact : <a href="index.html#refartifact137346"><b>Eleccion</b></a></p>
+<div class="sub">
+<a name="refattribute142338"></a>
+<table><tr><td><div class="element">Attribute <b>fecha</b></div></td></tr></table>
+<p> identificador<br /></p><p>Declaration :</p><ul><li>Uml : - fecha : string</li><li>C++ : private: string fecha</li></ul><a name="refattribute142466"></a>
+<table><tr><td><div class="element">Attribute <b>cargoPrincipal</b></div></td></tr></table>
+<p> identificador<br /></p><p>Declaration :</p><ul><li>Uml : - cargoPrincipal : string</li><li>C++ : private: string cargoPrincipal</li></ul><a name="refrelation137218"></a>
+<table><tr><td><div class="element">Relation <b>distritos (&lt;directional composition&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - distritos : <a href="class137986.html#refclass137986"><b>Distrito</b></a></li><li>C++ : private: list&lt;<a href="class137986.html#refclass137986"><b>Distrito</b></a>&gt; distritos</li></ul><p>Stereotype: list</p>
+<a name="refoperation167938"></a>
+<table><tr><td><div class="element">Operation <b>verificarDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - verificarDistrito(in cargo : string) : bool</li><li>C++ : private: bool verificarDistrito(string cargo)</li></ul><a name="refoperation168066"></a>
+<table><tr><td><div class="element">Operation <b>verificarCargo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - verificarCargo(in cargo : string) : bool</li><li>C++ : private: bool verificarCargo(string cargo)</li></ul><a name="refoperation168194"></a>
+<table><tr><td><div class="element">Operation <b>Eleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Eleccion() : </li><li>C++ : public: Eleccion()</li></ul><a name="refoperation168322"></a>
+<table><tr><td><div class="element">Operation <b>Eleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Eleccion(in fecha : string, in cargoPrincipal : string) : </li><li>C++ : public: Eleccion(string fecha, string cargoPrincipal)</li></ul><a name="refoperation168450"></a>
+<table><tr><td><div class="element">Operation <b>getTamanio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getTamanio() : int</li><li>C++ : public: int getTamanio()</li></ul><a name="refoperation168578"></a>
+<table><tr><td><div class="element">Operation <b>getClave</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getClave() : ulong</li><li>C++ : public: unsigned long getClave()</li></ul><a name="refoperation168706"></a>
+<table><tr><td><div class="element">Operation <b>getFecha</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getFecha() : string</li><li>C++ : public: string getFecha()</li></ul><a name="refoperation168834"></a>
+<table><tr><td><div class="element">Operation <b>setFecha</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setFecha(in fecha : string) : void</li><li>C++ : public: void setFecha(string fecha)</li></ul><a name="refoperation168962"></a>
+<table><tr><td><div class="element">Operation <b>getCargo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getCargo() : string</li><li>C++ : public: string getCargo()</li></ul><a name="refoperation169090"></a>
+<table><tr><td><div class="element">Operation <b>setCargo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setCargo(in cargoPrincipal : string) : void</li><li>C++ : public: void setCargo(string cargoPrincipal)</li></ul><a name="refoperation169218"></a>
+<table><tr><td><div class="element">Operation <b>agregarDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + agregarDistrito(in nombre : string) : bool</li><li>C++ : public: bool agregarDistrito(string nombre)</li></ul><a name="refoperation169346"></a>
+<table><tr><td><div class="element">Operation <b>eliminarDistrito</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + eliminarDistrito(in distrito : <a href="class137986.html#refclass137986"><b>Distrito</b></a>) : bool</li><li>C++ : public: bool eliminarDistrito(<a href="class137986.html#refclass137986"><b>Distrito</b></a> distrito)</li></ul><a name="refoperation169474"></a>
+<table><tr><td><div class="element">Operation <b>hasNext</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + hasNext(in it : list&lt;Distrito&gt;::iterator) : int</li><li>C++ : public: int hasNext(list&lt;Distrito&gt;::iterator it)</li></ul><a name="refoperation169602"></a>
+<table><tr><td><div class="element">Operation <b>obtenerIterador</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + obtenerIterador() : list&lt;Distrito&gt;::iterator</li><li>C++ : public: list&lt;Distrito&gt;::iterator obtenerIterador()</li></ul><a name="refoperation169730"></a>
+<table><tr><td><div class="element">Operation <b>getLista</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getLista() : list&lt;Distrito&gt;</li><li>C++ : public: list&lt;Distrito&gt; getLista()</li></ul><a name="refoperation169858"></a>
+<table><tr><td><div class="element">Operation <b>serializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + serializar() : string</li><li>C++ : public: string * serializar()</li></ul><a name="refoperation169986"></a>
+<table><tr><td><div class="element">Operation <b>deserializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + deserializar(inout source : string) : void</li><li>C++ : public: void deserializar(string * source)</li></ul><a name="refoperation170114"></a>
+<table><tr><td><div class="element">Operation <b>verEntidad</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + verEntidad() : void</li><li>C++ : public: void verEntidad()</li></ul><a name="refoperation170242"></a>
+<table><tr><td><div class="element">Operation <b>duplicar</b></div></td></tr></table><p>	 * Instancia un nuevo objeto, copia de actual.<br /></p><p>Declaration :</p><ul><li>Uml : + duplicar() : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: <a href="class136194.html#refclass136194"><b>Entidad</b></a> * duplicar()</li></ul><a name="refoperation170370"></a>
+<table><tr><td><div class="element">Operation <b>getNombreDeEntidad</b></div></td></tr></table><p>	 * Devuelve el tipo de la entidad instanciada.<br /></p><p>Declaration :</p><ul><li>Uml : + getNombreDeEntidad() : <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a></li><li>C++ : public: <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a> getNombreDeEntidad()</li></ul><a name="refoperation170498"></a>
+<table><tr><td><div class="element">Operation <b>comparar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + comparar(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a></li><li>C++ : public: <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a> comparar(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)</li></ul><a name="refoperation170626"></a>
+<table><tr><td><div class="element">Operation <b>~Eleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Eleccion() : </li><li>C++ : public: virtual ~Eleccion()</li></ul></div>
+<p>All public operations : <a href="class137218.html#refoperation169218"><b>agregarDistrito</b></a> , <a href="class137218.html#refoperation170498"><b>comparar</b></a> , <a href="class136194.html#refoperation172162"><b>comparar</b></a> , <a href="class137218.html#refoperation169986"><b>deserializar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class137218.html#refoperation170242"><b>duplicar</b></a> , <a href="class136194.html#refoperation172034"><b>duplicar</b></a> , <a href="class137218.html#refoperation169346"><b>eliminarDistrito</b></a> , <a href="class137218.html#refoperation168962"><b>getCargo</b></a> , <a href="class137218.html#refoperation168578"><b>getClave</b></a> , <a href="class136194.html#refoperation171778"><b>getClave</b></a> , <a href="class137218.html#refoperation168706"><b>getFecha</b></a> , <a href="class137218.html#refoperation169730"><b>getLista</b></a> , <a href="class137218.html#refoperation170370"><b>getNombreDeEntidad</b></a> , <a href="class136194.html#refoperation172290"><b>getNombreDeEntidad</b></a> , <a href="class137218.html#refoperation168450"><b>getTamanio</b></a> , <a href="class136194.html#refoperation171650"><b>getTamanio</b></a> , <a href="class137218.html#refoperation169474"><b>hasNext</b></a> , <a href="class137218.html#refoperation169602"><b>obtenerIterador</b></a> , <a href="class137218.html#refoperation169858"><b>serializar</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class137218.html#refoperation169090"><b>setCargo</b></a> , <a href="class137218.html#refoperation168834"><b>setFecha</b></a> , <a href="class137218.html#refoperation170114"><b>verEntidad</b></a> , <a href="class136194.html#refoperation171906"><b>verEntidad</b></a> </p>
+</body>
+</html>

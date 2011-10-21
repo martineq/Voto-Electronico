@@ -1,0 +1,32 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class AdministradorDeVotaciones</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class AdministradorDeVotaciones</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass138370"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class AdministradorDeVotaciones </li></ul><p>Artifact : <a href="index.html#refartifact138370"><b>AdministradorDeVotaciones</b></a></p>
+<div class="sub">
+<a name="refrelation137986"></a>
+<table><tr><td><div class="element">Relation <b>archivoDeConteo (&lt;directional composition&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - archivoDeConteo : <a href="class134530.html#refclass134530"><b>bplustree</b></a></li><li>C++ : private: <a href="class134530.html#refclass134530"><b>bplustree</b></a> archivoDeConteo</li></ul><a name="refoperation179970"></a>
+<table><tr><td><div class="element">Operation <b>AdministradorDeVotaciones</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + AdministradorDeVotaciones() : </li><li>C++ : public: AdministradorDeVotaciones()</li></ul><a name="refoperation180098"></a>
+<table><tr><td><div class="element">Operation <b>nuevoArchivoDeConteo</b></div></td></tr></table><p>	 * Crea un nuevo archivo de conteo.<br /></p><p>Declaration :</p><ul><li>Uml : + nuevoArchivoDeConteo(in pathArchivo : string, in dimensionBloque : int) : void</li><li>C++ : public: void nuevoArchivoDeConteo(string pathArchivo, int dimensionBloque)</li></ul><a name="refoperation180226"></a>
+<table><tr><td><div class="element">Operation <b>abrirArchivoDeConteo</b></div></td></tr></table><p>	 * Abre un archivo de conteo.<br /></p><p>Declaration :</p><ul><li>Uml : + abrirArchivoDeConteo(in pathArchivo : string) : void</li><li>C++ : public: void abrirArchivoDeConteo(string pathArchivo)</li></ul><a name="refoperation180354"></a>
+<table><tr><td><div class="element">Operation <b>agregarConteo</b></div></td></tr></table><p>	 * Devuelve 0 si lo agregó correctamente.<br /></p><p>Declaration :</p><ul><li>Uml : + agregarConteo(inout conteo : <a href="class137858.html#refclass137858"><b>Conteo</b></a>) : void</li><li>C++ : public: void agregarConteo(<a href="class137858.html#refclass137858"><b>Conteo</b></a> * conteo)</li></ul><a name="refoperation180482"></a>
+<table><tr><td><div class="element">Operation <b>incrementarVoto</b></div></td></tr></table><p>	 * Devuelve 0 si se persistió el voto y 1 en caso contrario.<br /></p><p>Declaration :</p><ul><li>Uml : + incrementarVoto(inout eleccion : <a href="class137218.html#refclass137218"><b>Eleccion</b></a>, inout nombreLista : string, inout distrito : string) : void</li><li>C++ : public: void incrementarVoto(<a href="class137218.html#refclass137218"><b>Eleccion</b></a> * eleccion, string * nombreLista, string * distrito)</li></ul><a name="refoperation180610"></a>
+<table><tr><td><div class="element">Operation <b>~AdministradorDeVotaciones</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~AdministradorDeVotaciones() : </li><li>C++ : public: virtual ~AdministradorDeVotaciones()</li></ul></div>
+<p>All public operations : <a href="class138370.html#refoperation180226"><b>abrirArchivoDeConteo</b></a> , <a href="class138370.html#refoperation180354"><b>agregarConteo</b></a> , <a href="class138370.html#refoperation180482"><b>incrementarVoto</b></a> , <a href="class138370.html#refoperation180098"><b>nuevoArchivoDeConteo</b></a> </p>
+</body>
+</html>

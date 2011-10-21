@@ -12,7 +12,7 @@ using namespace std;
 	 * en una función nueva dentro de la clase "Pruebas", para
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
-int main(int argc,char* argv[]) {
+int main(int argc,const char* argv[]) {
 
 //	Pruebas* prueba = new Pruebas();
 
@@ -39,7 +39,8 @@ int main(int argc,char* argv[]) {
 //	prueba->pruebaBMasCarga(); // No usar esta por ahora.
 //	prueba->pruebaBMasAuto();
 
-
+//	pruebas para argumentos y archivo de configuración
+//	prueba->pruebaConfiguracion(argc,argv);
 
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();

@@ -1,0 +1,46 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class ArchivoDeBuckets</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class ArchivoDeBuckets</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass135298"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class ArchivoDeBuckets </li></ul><p>Artifact : <a href="index.html#refartifact135298"><b>ArchivoDeBuckets</b></a></p>
+<div class="sub">
+<a name="refrelation135298"></a>
+<table><tr><td><div class="element">Relation <b>archivo (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - archivo : <a href="class134914.html#refclass134914"><b>ArchivoBloques</b></a></li><li>C++ : private: <a href="class134914.html#refclass134914"><b>ArchivoBloques</b></a> * archivo</li></ul><a name="refrelation135426"></a>
+<table><tr><td><div class="element">Relation <b>ultimoBucket (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - ultimoBucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : private: <a href="class135426.html#refclass135426"><b>Bucket</b></a> * ultimoBucket</li></ul><a name="refattribute136834"></a>
+<table><tr><td><div class="element">Attribute <b>numeroUltimoBucket</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - numeroUltimoBucket : int</li><li>C++ : private: int numeroUltimoBucket</li></ul><a name="refattribute136962"></a>
+<table><tr><td><div class="element">Attribute <b>dimensionBucket</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - dimensionBucket : int</li><li>C++ : private: int dimensionBucket</li></ul><a name="refoperation145538"></a>
+<table><tr><td><div class="element">Operation <b>duplicarBucket</b></div></td></tr></table><p><br />	 *	Duplica el bucket.<br /></p><p>Declaration :</p><ul><li>Uml : - duplicarBucket(inout bucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a>) : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : private: <a href="class135426.html#refclass135426"><b>Bucket</b></a> * duplicarBucket(<a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucket)</li></ul><a name="refoperation145666"></a>
+<table><tr><td><div class="element">Operation <b>modificarBucketInterno</b></div></td></tr></table><p><br />	 *	Modifica el bucket interno por uno nuevo.<br /></p><p>Declaration :</p><ul><li>Uml : - modificarBucketInterno(inout bucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a>, in numeroDeBucket : int) : void</li><li>C++ : private: void modificarBucketInterno(<a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucket, int numeroDeBucket)</li></ul><a name="refoperation145794"></a>
+<table><tr><td><div class="element">Operation <b>deserializarBucket</b></div></td></tr></table><p><br />	 * Devuelve un bucket a partir de un char*.<br /></p><p>Declaration :</p><ul><li>Uml : - deserializarBucket(inout cadena : char) : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : private: <a href="class135426.html#refclass135426"><b>Bucket</b></a> * deserializarBucket(char * cadena)</li></ul><a name="refoperation145922"></a>
+<table><tr><td><div class="element">Operation <b>serializarBucket</b></div></td></tr></table><p><br />	 * Devuelve un puntero a un char* con memoria reservada.<br /></p><p>Declaration :</p><ul><li>Uml : - serializarBucket(inout bucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a>) : char</li><li>C++ : private: char * serializarBucket(<a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucket)</li></ul><a name="refoperation146050"></a>
+<table><tr><td><div class="element">Operation <b>guardarBukcetEnBloque</b></div></td></tr></table><p><br />	 * Guardar el Bucket en bloque.<br /></p><p>Declaration :</p><ul><li>Uml : - guardarBukcetEnBloque(in nrr : int) : void</li><li>C++ : private: void guardarBukcetEnBloque(int nrr)</li></ul><a name="refoperation146178"></a>
+<table><tr><td><div class="element">Operation <b>ArchivoDeBuckets</b></div></td></tr></table><p><br />	 * Crea un archivo de buckets.<br /></p><p>Declaration :</p><ul><li>Uml : + ArchivoDeBuckets(inout path : char, in tamanioBucket : int) : </li><li>C++ : public: ArchivoDeBuckets(char * path, int tamanioBucket)</li></ul><a name="refoperation146306"></a>
+<table><tr><td><div class="element">Operation <b>guardarBucket</b></div></td></tr></table><p><br />	 * Almacena el bloque en el archivo, devuelve el valor del nuevo bucket<br /></p><p>Declaration :</p><ul><li>Uml : + guardarBucket(inout bucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a>) : int</li><li>C++ : public: int guardarBucket(<a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucket)</li></ul><a name="refoperation146434"></a>
+<table><tr><td><div class="element">Operation <b>obtenerBucket</b></div></td></tr></table><p><br />	 * Devuelve el numero de bucket solicitado, si no lo encuentra devuelve NULL.<br />	 * El elemento es una copia del bucket almacenado por lo que debe ser liberado,<br />	 * luego de ser utilizado.<br /></p><p>Declaration :</p><ul><li>Uml : + obtenerBucket(in numeroDeBucket : int) : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : public: <a href="class135426.html#refclass135426"><b>Bucket</b></a> * obtenerBucket(int numeroDeBucket)</li></ul><a name="refoperation146562"></a>
+<table><tr><td><div class="element">Operation <b>modificarBucket</b></div></td></tr></table><p><br />	 * Modifica el bucket almacenado.<br /></p><p>Declaration :</p><ul><li>Uml : + modificarBucket(in nrr : int, inout bucket : <a href="class135426.html#refclass135426"><b>Bucket</b></a>) : void</li><li>C++ : public: void modificarBucket(int nrr, <a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucket)</li></ul><a name="refoperation146690"></a>
+<table><tr><td><div class="element">Operation <b>liberarBucket</b></div></td></tr></table><p><br />	 * Elimina el bucket del archivo.<br /></p><p>Declaration :</p><ul><li>Uml : + liberarBucket(in numeroDeBucket : int) : void</li><li>C++ : public: void liberarBucket(int numeroDeBucket)</li></ul><a name="refoperation146818"></a>
+<table><tr><td><div class="element">Operation <b>bucketDisponible</b></div></td></tr></table><p><br />	 *	Determina si el bucket que se desea obtener tiene contenido valido.<br /></p><p>Declaration :</p><ul><li>Uml : + bucketDisponible(in numeroDeBucket : int) : <a href="class135554.html#refclass135554"><b>Resultados</b></a></li><li>C++ : public: <a href="class135554.html#refclass135554"><b>Resultados</b></a> bucketDisponible(int numeroDeBucket)</li></ul><a name="refoperation146946"></a>
+<table><tr><td><div class="element">Operation <b>getDimensionDelBucket</b></div></td></tr></table><p><br />	 * Devuelve el tamaño del bucket.<br /></p><p>Declaration :</p><ul><li>Uml : + getDimensionDelBucket() : int</li><li>C++ : public: int getDimensionDelBucket()</li></ul><a name="refoperation147074"></a>
+<table><tr><td><div class="element">Operation <b>~ArchivoDeBuckets</b></div></td></tr></table><p><br />	 *	Cierra el archivo de buckets.<br /></p><p>Declaration :</p><ul><li>Uml : + ~ArchivoDeBuckets() : </li><li>C++ : public: ~ArchivoDeBuckets()</li></ul><a name="refrelation145410"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : private: <a href="class135426.html#refclass135426"><b>Bucket</b></a> </li></ul><a name="refrelation145794"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135426.html#refclass135426"><b>Bucket</b></a></li><li>C++ : private: <a href="class135426.html#refclass135426"><b>Bucket</b></a> </li></ul></div>
+<p>All public operations : <a href="class135298.html#refoperation146818"><b>bucketDisponible</b></a> , <a href="class135298.html#refoperation146946"><b>getDimensionDelBucket</b></a> , <a href="class135298.html#refoperation146306"><b>guardarBucket</b></a> , <a href="class135298.html#refoperation146690"><b>liberarBucket</b></a> , <a href="class135298.html#refoperation146562"><b>modificarBucket</b></a> , <a href="class135298.html#refoperation146434"><b>obtenerBucket</b></a> </p>
+</body>
+</html>

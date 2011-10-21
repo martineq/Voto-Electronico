@@ -17,6 +17,7 @@
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
 #include "../src/Auxiliares/Log.h"
+#include "../src/Auxiliares/Configuracion.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
 #include "../src/Archivos/Hashing/HashingExtensible.h"
@@ -124,6 +125,8 @@ public:
 	void serializarDeserializarLista();
 	void serializarDeserializarCandidato();
 	void serializarDeserializarEleccion();
+//	pruebas para argumentos y archivo de configuración
+	void pruebaConfiguracion(int argc, const char* argv[]);
 //	pruebas de integracion
 	void pruebaLog();
 //	pruebas para ver si anda el compilador

@@ -97,39 +97,48 @@ void Configuracion::cargarArchivoConfig(){
 		argv[i+1] = new char[size+1](); // El "+1" es por el caracter de fin de string al hacer strcpy
 		strcpy (argv[i+1], dato.c_str());
 	}
-	cout << "argc: " <<argc << endl;
-	for(i=0; i<argc ; i++ ){ cout<<"|" << argv[i]<<"|" << endl; }
 
 	// Ahora cargo los parámetros que se obtuvieron del archivo de configuración
 	this->rutaArbol = "";
 	this->rutaHash = "";
+	this->tamanioNodo = 0;
+	this->tamanioBucket = 0;
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "T:H:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:")) != -1)
     	switch (c){
-    	case 'H':
+    	case 'D':
     		this->rutaHash = optarg;
     		break;
-        case 'T':
+        case 'A':
         	this->rutaArbol = optarg;
         	break;
+        case 'N':
+        	this->tamanioNodo = atoi(optarg);
+        	break;
+        case 'B':
+        	this->tamanioBucket = atoi(optarg);
+        	break;
         case '?':
-          if (optopt == 'H')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
-          else if (optopt == 'T')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'N')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'B')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
             fprintf (stderr,"Arch. Config. > Caracter de opción desconocida `\\x%x'.\n",optopt);
         default:
-        	cerr << "Arch. Config. > Corregir archivo."<<endl;
+        	cerr << "Arch. Config. > Corregir archivo. "<<endl;
+        	cerr << "Para ayuda consulte con: -h"<<endl;
         }
     for (index = optind; index < argc; index++)
     	cerr << "Arch. Config. > Opción inválida: " << argv[index] << endl;
 
-    cout << "Rutas: |" << this->rutaArbol<<"|  |"<<this->rutaHash<<"|"<<endl;
     if( (this->rutaArbol == "") || (this->rutaHash == "") ){
-    	cerr << "Arch. Config. > Falta la ruta de archivo de Árbol y/o Hash. \nPrograma terminado."<<endl;
+    	cerr << "Arch. Config. > Falta la ruta de archivo de Árbol y/o Hash."<<endl;
+    	cerr << "Para ayuda consulte con: -h\nPrograma terminado."<<endl;
     	exit(1);
     }
 	// Libero la memoria que yo instancié
@@ -154,6 +163,14 @@ bool Configuracion::isManual(){
 	return this->vManual;
 }
 
+int Configuracion::darTamanioNodo(){
+	return this->tamanioNodo;
+}
+
+int Configuracion::darTamanioBucket(){
+	return this->tamanioBucket;
+}
+
 void Configuracion::mostrarAyuda(){
 	cout << "Argumentos válidos pasados por parámetro: "<<endl;
 	cout << "	-a		Votación en modo automático."<<endl;
@@ -167,8 +184,10 @@ void Configuracion::mostrarAyuda(){
 	cout << "Todo texto anterior al delimitador será tomado como comentario."<<endl;
 	cout << "Si el mismo no existe, todo el archivo será tomado como comentario."<<endl<<endl;
 	cout << "Archivo de configuración. Opciones válidas (cada una debe estar separada con un espacio):"<<endl;
-	cout << "	-H +<ruta>		Agrega la ruta del archivo de Hash."<<endl;
-	cout << "	-T +<ruta>		Agrega la ruta del archivo de Arbol B+."<<endl;
+	cout << "	-A +<ruta>		Asigna la ruta del archivo de árbol B+."<<endl;
+	cout << "	-D +<ruta>		Asigna la ruta del archivo de dispersión."<<endl;
+	cout << "	-N +<valor>		Asigna el tamaño del Nodo del árbol B+."<<endl;
+	cout << "	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión."<<endl;
 	cout << ""<<endl;
 }
 
