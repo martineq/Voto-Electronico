@@ -78,7 +78,7 @@ public:
 
 	//Muestra TODO_ el contenido del archivo en intervalos de Ints (en paquetes de a 4 Bytes)
 	// Una vez usada, bórrese! =D
-	void infoInts();
+	//void infoInts();
 
 	virtual ~ArchivoBloques();
 

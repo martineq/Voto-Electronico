@@ -231,19 +231,19 @@ void ArchivoBloques::guardarBloque(int nrr, char *datos){
 }
 
 
-// Función temporal: Depués se borra
-void ArchivoBloques::infoInts(){
-	cout <<"*********INFO INTS**************"<<endl;
-	this->archivo->posicionarse(0);
-	int i = 0;
-	char* buf= new char[TAM_CAMPOS_CTRL];
-	cout << "Tamaño del archivo: " << this->blocksize *this->maxblocknum << " bytes."<<endl;
-	for(i=0; i<(this->blocksize *this->maxblocknum) ;i+=(TAM_CAMPOS_CTRL)){
-		this->leerTipoInt(i,(int*)buf);
-		cout << "Int["<<i/4<<"]-NRR["<< i << "]: "<< *(int*)buf << endl;
-	}
-	delete[] buf;
-}
+//// Función temporal: Depués se borra
+//void ArchivoBloques::infoInts(){
+//	cout <<"*********INFO INTS**************"<<endl;
+//	this->archivo->posicionarse(0);
+//	int i = 0;
+//	char* buf= new char[TAM_CAMPOS_CTRL];
+//	cout << "Tamaño del archivo: " << this->blocksize *this->maxblocknum << " bytes."<<endl;
+//	for(i=0; i<(this->blocksize *this->maxblocknum) ;i+=(TAM_CAMPOS_CTRL)){
+//		this->leerTipoInt(i,(int*)buf);
+//		cout << "Int["<<i/4<<"]-NRR["<< i << "]: "<< *(int*)buf << endl;
+//	}
+//	delete[] buf;
+//}
 
 
 ArchivoBloques::~ArchivoBloques() {

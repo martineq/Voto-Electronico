@@ -5,7 +5,6 @@
 #include "../tests/TestHashingExtensible.h"
 
 
-
 using namespace std;
 
 	/*
@@ -14,6 +13,8 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,char* argv[]) {
+
+//	Pruebas* prueba = new Pruebas();
 
 //	Pruebas de Bucket!
 //	prueba->pruebaAgregarRegistrosAlBucket();
@@ -35,7 +36,10 @@ int main(int argc,char* argv[]) {
 
 //	Pruebas para el Árbol B+:
 //	prueba->pruebaBMas();
+//	prueba->pruebaBMasCarga(); // No usar esta por ahora.
 //	prueba->pruebaBMasAuto();
+
+
 
 //  Prueba que funciona el eclipse!
 //	prueba->holaMundo();
@@ -76,8 +80,8 @@ int main(int argc,char* argv[]) {
 //	the.testSimple();
 
 //	Pruebas de simulacion de sistema
-	SimulacionSistema sistema;
-	sistema.main();
+//	SimulacionSistema sistema;
+//	sistema.main();
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
