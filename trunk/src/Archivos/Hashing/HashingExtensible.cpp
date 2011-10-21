@@ -445,6 +445,7 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 			if ( registroReemplazado ){
 
 				archivo->modificarBucket(nrr,bucket);
+				resultado = operacionOK;
 
 			}else{
 
