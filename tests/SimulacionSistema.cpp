@@ -54,7 +54,7 @@ SimulacionSistema::~SimulacionSistema(){
 	remove ("archivoDeDatosCandidato.txt");
 	remove ("archivoDeControlCargo.txt");
 	remove ("archivoDeDatosCargo.txt");
-	remove("arbolDeListas");
+	remove ("arbolDeListas");
 }
 
 void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo)
@@ -116,7 +116,6 @@ void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,Admin
 		itEleccion++;
 	}
 }
-
 
 void SimulacionSistema::iniciarVotantesParaIntegracion() {
 	this->votante1 = new Votante(1,"Martin","m","","Recoleta");
@@ -325,19 +324,42 @@ void SimulacionSistema::iniciarCargosParaIntegracion() {
 		cout << "Se agrego un cargo1" << endl;
 }
 
-void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador) {
+void SimulacionSistema::crearArchivoDeVotantes(){
+	int dimensionBucket = LONGITUD_BLOQUE;
+	char nombreDeArchivo[] = "votantesAleatorios.bin";
+	char archivoConfiguracion[] = "conf.bin";
+	this->heVotante = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
+	remove(nombreDeArchivo);
+	remove(archivoConfiguracion);
+	 for (int i = 0; i < 1000; i++){
+	        CreadorVotante * creador = new CreadorVotante(time(NULL) * (i+1));
+	        Votante* votante = creador->crearVotante();
+	        Registro* registro = new Registro(votante);
+       		heVotante->agregarRegistro(registro);
+//        	he->mostrarArchivoDeHash();
+//	        votante->verVotante();
+	        delete (registro);
+	        delete (votante);
+	        delete (creador);
+	    }
+}
+
+void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador, char modo) {
 	cout << "Inicio de carga de padron electoral" << endl;
-	this->iniciarVotantesParaIntegracion();
-	cout << "Se cargo el padron electoral" << endl;
-	cout << "Se carga un votante nuevo" << endl;
-	this->votante4 = new Votante(4,"Ignacio","i","","Recoleta");
-	this->votante4->agregarEleccion ("19970701","Presidente");
-	this->votante4->agregarEleccion ("19970701","Gobernador");
-	this->registroVotante4 = new Registro(votante4);
-	if (administrador->altaHash(this->heVotante,this->registroVotante4)==operacionOK )
-		cout << "Se agrego un votante" << endl;
-	else cout << "Error agregando votante4" << endl;
-	heVotante->mostrarArchivoDeHash();
+	if (modo=='a') this->crearArchivoDeVotantes();
+	else {
+		this->iniciarVotantesParaIntegracion();
+		cout << "Se cargo el padron electoral" << endl;
+		cout << "Se carga un votante nuevo" << endl;
+		this->votante4 = new Votante(4,"Ignacio","i","","Recoleta");
+		this->votante4->agregarEleccion ("19970701","Presidente");
+		this->votante4->agregarEleccion ("19970701","Gobernador");
+		this->registroVotante4 = new Registro(votante4);
+		if (administrador->altaHash(this->heVotante,this->registroVotante4)==operacionOK )
+			cout << "Se agrego un votante" << endl;
+		else cout << "Error agregando votante4" << endl;
+		heVotante->mostrarArchivoDeHash();
+	}
 
 	cout << "Inicio de carga de distritos" << endl;
 	this->iniciarDistritosParaIntegracion();
@@ -395,49 +417,6 @@ void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador) {
 	this->verContenidoArbolListas();
 }
 
-
-
-void SimulacionSistema::levantarBaseDeDatos(Administrador* administrador) {
-
-//	NUEVO
-	cout << "Inicio de Levante de padron electoral" << endl;
-	char archivoDeControl1[]="archivoDeControlVotante.txt";
-	char archivoDeDatos1[]="archivoDeDatosVotante.txt";
-	this->heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos1,archivoDeControl1);
-	heVotante->mostrarArchivoDeHash();
-
-	cout << "Inicio de Levante de distritos" << endl;
-	char archivoDeControl2[]="archivoDeControlDistrito.txt";
-	char archivoDeDatos2[]="archivoDeDatosDistrito.txt";
-	this->heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos2,archivoDeControl2);
-	heDistrito->mostrarArchivoDeHash();
-
-	cout << "Inicio de Levante de Cargos posibles" << endl;
-	char archivoDeControl3[]="archivoDeControlCargo.txt";
-	char archivoDeDatos3[]="archivoDeDatosCargo.txt";
-	this->heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos3,archivoDeControl3);
-	heCargo->mostrarArchivoDeHash();
-
-	cout << "Inicio de Levante de Elecciones pasadas" << endl;
-	char archivoDeControl4[]="archivoDeControlEleccion.txt";
-	char archivoDeDatos4[]="archivoDeDatosEleccion.txt";
-	this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos4,archivoDeControl4);
-	heEleccion->mostrarArchivoDeHash();
-
-	cout << "Inicio de Levante de Candidatos pasados" << endl;
-	char archivoDeControl5[]="archivoDeControlCandidato.txt";
-	char archivoDeDatos5[]="archivoDeDatosCandidato.txt";
-	this->heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos5,archivoDeControl5);
-	heCandidato->mostrarArchivoDeHash();
-
-	cout << "Inicio de Levante de Listas de elecciones pasadas" << endl;
-	arbolB = new bplustree();
-	arbolB->opentree("arbolDeListas",LONGITUD_BLOQUE);
-}
-
-
-
-
 void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 	//	El administrador habilita una eleccion valida que esta en el archivo de elecciones
 	//	creacion auxiliar de 3 registros para que el obtenerRegistro del bucket pueda obtener la clave del registro que busco
@@ -470,151 +449,179 @@ void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 	delete registroAHabilitar3;
 }
 
-bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo){
-	//	Se abre el Log
+//bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo,char modo, Votante* votanteAutomatico){
+bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador, char modo, int cantidadDeSimulaciones){
 	Log log;
 	log.abrir();
-	//	Inicio del sistema
-	this->habilitarElecciones(administrador);
-	administrador->getEleccionesHabilitadas();
-
-	// Se carga el archivoDeConteo con las listas que participan en la actual eleccion.
-	cargarArchivoDeConteo(administrador,administradorDeConteo);
-
-	//	ingresa el votante1
-	int numeroDeEleccion;
-	int dni;
-	char c;
 	cout << endl;
 	cout << "Bienvenido al sistema de voto electronico de los Gutierrez" << endl;
 	cout << endl;
-	bool ok=false;
-	while (!ok) {
-		cout << "Ingrese su DNI: " << endl;
-//		cin >> dni;
-		dni=1;
-		cout << "Su dni es: " << dni << endl;
-		while (!ok) {
-			cout << "Presione ""S"" para confirmar, ""N"" para cancelar" << endl;
-//			cin >> c;
-			c='s';
-			if ((c=='s')||(c=='n')) ok=true;
-			else cout << "Tecla no reconocida" << endl;
-		}
-		if (c=='n') ok=false;
-	}
-	Votante* votanteActual = new Votante(dni,"","","","");
-	Registro* reg = new Registro(votanteActual);
-	delete votanteActual;
-	Registro* registroAuxiliar = this->heVotante->obtenerRegistro(reg);
-	delete reg;
-	if (!registroAuxiliar) {
-		cout << "NO EXISTE EN EL PADRON" << endl;
-		log.insertarMensajeConEntero(dni);
-		delete registroAuxiliar;
-	}
-	else {
-		string mensaje= " Ingreso el votante: ";
-		votanteActual = (Votante*)registroAuxiliar->getContenido();
-		log.insertarMensajeConEntidad(votanteActual,mensaje);
-		cout << "Bienvenido " << votanteActual->getNombre() << endl;
-		string password;
-		cout << "Ingrese su Password" << endl;
-//		cin >> password;
-		password = 'm';
-		if (password.compare(votanteActual->getPassword()) == 0) {
-			cout << "INGRESO AUTORIZADO" << endl;
-			cout << endl;
-			administrador->consultarEleccionesHabilitadasParaElVotante(votanteActual);
-			ok=false;
-			while (!ok){
-				cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
-				int n;
-//				cin >> n;
-				n = 1;
-				if (((n)<=((int)((administrador->getListaDeEleccionesHabilitadas()).size()))) && (n>0)) {
-					while (!ok) {
-						cout << "Usted eligio la eleccion " << n << endl;
-						cout << "Si es correcto presione s sino n" << endl;
-						numeroDeEleccion=n;
-//						cin >> c;
-						c='s';
-						if ((c=='s')||(c=='n')) ok=true;
-						else cout << "Tecla incorrecta" << endl;
-					}
-					if (c=='s') ok=true;
-					else ok=false;
-				}
-				else cout << "Numero invalido" << endl;
+	// Cargar archivoDeConteo con las listas que participan en la actual eleccion.
+	//	cargarArchivoDeConteo(administrador,administradorDeConteo);
+
+	//	ingresa el votante1
+	for (int k=0; k< cantidadDeSimulaciones;k++) {
+		int numeroDeEleccion;
+		int dni;
+		char c;
+		bool ok=false;
+		bool seguir = true;
+		Registro* registroAuxiliar;
+		Votante* votanteActual = new Votante (k,"","","","");
+		if (modo=='a') {
+			Registro* reg = new Registro(votanteActual);
+			delete votanteActual;
+			registroAuxiliar = this->heVotante->obtenerRegistro(reg);
+			delete reg;
+			if (!registroAuxiliar) {
+				cout << "NO EXISTE EN EL PADRON" << endl;
+				log.insertarMensajeConEntero(dni);
+				delete registroAuxiliar;
+				seguir=false;
 			}
-			//		hasheo la eleccion
-			list<Eleccion*> listaHabilitadas= (administrador->getListaDeEleccionesHabilitadas());
-			list<Eleccion*>::iterator itHabilitadas = listaHabilitadas.begin();
-			for (int i=0;i<numeroDeEleccion-1;i++) itHabilitadas++;
-
-			votanteActual->verEntidad();
-
-
-			votanteActual->agregarEleccion((*itHabilitadas)->getFecha(),(*itHabilitadas)->getCargo());
-			mensaje = "El votante participara en la eleccion: ";
-			log.insertarMensajeConEntidad(*itHabilitadas,mensaje);
-			ok=false;
-			int boleta;
-			administrador->cargarListasDeEleccion(*itHabilitadas,this->arbolB);
+		}
+		else{
 			while (!ok) {
+				cout << "Ingrese su DNI: " << endl;
+				cin >> dni;
+				cout << "Su dni es: " << dni << endl;
 				while (!ok) {
-//					boleta = administrador->elegirBoleta(numeroDeEleccion,this->bucketLista);
-					boleta = administrador->elegirBoleta();
-					if (!boleta) return 0;
-					c=administrador->sufragar(boleta);
+					cout << "Presione ""S"" para confirmar, ""N"" para cancelar" << endl;
+					cin >> c;
 					if ((c=='s')||(c=='n')) ok=true;
 					else cout << "Tecla no reconocida" << endl;
 				}
 				if (c=='n') ok=false;
 			}
-			list<Lista*> listaBoletas = administrador->getListaDeBoletas();
-			list<Lista*>::iterator itBoletas = listaBoletas.begin();
-			int size = listaBoletas.size();
-			if ( boleta==size+1 ) {
-				string mensaje="El votante voto en blanco ";
-				log.insertarMensaje(mensaje);
+			delete votanteActual;
+			votanteActual = new Votante (dni,"","","","");
+			Registro* reg = new Registro(votanteActual);
+			delete votanteActual;
+			registroAuxiliar = this->heVotante->obtenerRegistro(reg);
+			delete reg;
+			if (!registroAuxiliar) {
+				cout << "NO EXISTE EN EL PADRON" << endl;
+				log.insertarMensajeConEntero(dni);
+				seguir=false;
+				delete registroAuxiliar;
 			}
-			else if ( boleta==size+2 ){
-				string mensaje="El votante voto impugnado, nulo, etc ";
-				log.insertarMensaje(mensaje);
+		}
+		if (seguir) {
+			votanteActual = (Votante*) registroAuxiliar->getContenido();
+			delete registroAuxiliar;
+
+			votanteActual->verEntidad();
+
+			string mensaje= " Ingreso el votante: ";
+			log.insertarMensajeConEntidad(votanteActual,mensaje);
+			cout << "Bienvenido " << votanteActual->getNombre() << endl;
+			string password;
+			cout << "Ingrese su Password" << endl;
+			if (modo=='a') password = votanteActual->getPassword();
+			else cin >> password;
+			if (password == votanteActual->getPassword()) {
+				cout << "INGRESO AUTORIZADO" << endl;
+				cout << endl;
+				//			carga listaDeEleccionesDelVotante, de las habilitadas solo las de su distrito que no haya votado anteriormente
+				administrador->consultarEleccionesHabilitadasParaElVotante(votanteActual);
+				ok=false;
+				while (!ok){
+					cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
+					int n;
+					//				srand(time(NULL));
+					//				if (modo=='a') n = rand()%((administrador->getListaDeEleccionesDelVotante()).size());
+					if (modo=='a') n=1;
+					else cin >> n;
+					if (((n)<=((int)((administrador->getListaDeEleccionesDelVotante()).size()))) && (n>0)) {
+						while (!ok) {
+							cout << "Usted eligio la eleccion " << n << endl;
+							cout << "Si es correcto presione s sino n" << endl;
+							numeroDeEleccion=n;
+							if (modo=='a') c='s';
+							else cin >> c;
+							if ((c=='s')||(c=='n')) ok=true;
+							else cout << "Tecla incorrecta" << endl;
+						}
+						if (c=='s') ok=true;
+						else ok=false;
+					}
+					else cout << "Numero invalido" << endl;
+				}
+				//			me posiciono en la eleccion elegida dentro de la lista del votante
+				list<Eleccion*> listaDelVotante = administrador->getListaDeEleccionesDelVotante();
+				list<Eleccion*>::iterator itListaDelVotante = listaDelVotante.begin();
+				for (int i=0;i<numeroDeEleccion-1;i++) itListaDelVotante++;
+				//			agrego la eleccion elegida a elecciones anteriores del votante
+				votanteActual->agregarEleccion((*itListaDelVotante)->getFecha(),(*itListaDelVotante)->getCargo());
+				//			actualizo el registro en el hash de votante
+				registroAuxiliar = new Registro (votanteActual);
+				if (this->heVotante->modificarRegistro(registroAuxiliar)== operacionOK) cout << "Registro Modificado" << endl;
+				else cout << "ERROR ACTUALIZANDO VOTANTE" << endl;
+				delete registroAuxiliar;
+				mensaje = "El votante participara en la eleccion: ";
+				log.insertarMensajeConEntidad(*itListaDelVotante,mensaje);
+				ok=false;
+				int boleta;
+				//			cargo las listas que puede elegir el votante en esta eleccion
+				administrador->cargarListasDeEleccion(*itListaDelVotante,this->arbolB);
+				while (!ok) {
+					while (!ok) {
+						boleta = administrador->elegirBoleta(modo);
+						if (!boleta) return 0;
+						c=administrador->sufragar(boleta,modo);
+						if ((c=='s')||(c=='n')) ok=true;
+						else cout << "Tecla no reconocida" << endl;
+					}
+					if (c=='n') ok=false;
+				}
+				list<Lista*> listaBoletas = administrador->getListaDeBoletas();
+				list<Lista*>::iterator itBoletas = listaBoletas.begin();
+				int size = listaBoletas.size();
+				if ( boleta==size+1 ) {
+					string mensaje="El votante voto en blanco ";
+					log.insertarMensaje(mensaje);
+				}
+				else if ( boleta==size+2 ){
+					string mensaje="El votante voto impugnado, nulo, etc ";
+					log.insertarMensaje(mensaje);
+				}
+				else {
+					//	me posiciono en la lista elegida de las opciones dadas
+					for (int i=0; i< boleta-1;i++) itBoletas++;
+					string mensaje="El votante voto lista: ";
+					log.insertarMensajeConEntidad(*itBoletas,mensaje);
+				}
+
+				//		INCREMENTAR CLASE CONTEO
+				//			string nombreDeLista = (*itBoletas)->getNombre();
+				//			string nombreDelDistrito = votanteActual->getDistrito();
+				//			cout << nombreDeLista << endl;
+				//			cout << nombreDelDistrito << endl;
+				//			(*itHabilitadas)->verEntidad();
+				//			administradorDeConteo->incrementarVoto(*itHabilitadas,&nombreDeLista,&nombreDelDistrito);
+				//			administradorDeConteo->mostrarArchivo();
 			}
 			else {
-				//	me posiciono en la lista elegida de las opciones dadas
-				for (int i=0; i< boleta-1;i++) itBoletas++;
-				string mensaje="El votante voto lista: ";
-				log.insertarMensajeConEntidad(*itBoletas,mensaje);
+				cout << "PASSWORD INVALIDO" << endl;
+				string mensaje="Intento de ingreso con password invalido";
+				log.insertarMensaje(mensaje);
 			}
-			//		INCREMENTAR CLASE CONTEO
-			string nombreDeLista = (*itBoletas)->getNombre();
-			string nombreDelDistrito = votanteActual->getDistrito();
-			administradorDeConteo->incrementarVoto(*itHabilitadas,&nombreDeLista,&nombreDelDistrito);
-			administradorDeConteo->mostrarArchivo();
-
-			delete votanteActual;
-			delete registroAuxiliar;
-		}
-		else {
-			cout << "PASSWORD INVALIDO" << endl;
-			string mensaje="Intento de ingreso con password invalido";
+			mensaje="======================================================";
 			log.insertarMensaje(mensaje);
+			delete votanteActual;
+			administrador->destruir();
 		}
-		log.cerrar();
 	}
-	#warning "revisa que tendría que devolver la función sino no me compila"
+	log.cerrar();
 	return 1;
 }
 
 void SimulacionSistema::main () {
-	string nombreDePrograma = ".//trunk//doc//password";
+	string nombreDePrograma = ".//doc//password";
 	Administrador* administrador = new Administrador (nombreDePrograma);
 
-	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
-	administradorDeConteo->nuevoArchivoDeConteo(".//trunk//doc//ArchivoDeConteo.bin",1024);
+//	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
+//	administradorDeConteo->nuevoArchivoDeConteo(".//doc//ArchivoDeConteo.bin",LONGITUD_BLOQUE);
 
 //	intenta acceder al sistema con usuario incorrecto pero contraseña correcta
 	if ((administrador->acceder("undomiel","1")) || (administrador->acceder("1","aragorn")) || (administrador->acceder("",""))) cout << "SEGURIDAD VIOLADA" << endl;
@@ -622,11 +629,16 @@ void SimulacionSistema::main () {
 	if (administrador->acceder("undomiel","aragorn")) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
-		this->cargarBaseDeDatos(administrador); // Esto se corre una sola vez, luego se usan los archivos bin
-//		this->levantarBaseDeDatos(administrador); // Con esto se carga lo que llenó po unica vez el "cargarBaseDeDatos"
-		this->inicioDeSimulacion(administrador,administradorDeConteo);
+		this->cargarBaseDeDatos(administrador,'m');
+		//	habilita ciertas elecciones del archivo de elecciones
+		this->habilitarElecciones(administrador);
+		administrador->getEleccionesHabilitadas();
+		this->inicioDeSimulacion(administrador,'m',3);
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
+//	delete (administradorDeConteo);
+//	remove (".//doc//ArchivoDeConteo.bin");
 }
+
 

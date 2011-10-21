@@ -31,6 +31,7 @@ private:
 	string password;
 	fstream*	archivo;
 	list <Eleccion*> listaDeEleccionesHabilitadas;
+	list <Eleccion*> listaDeEleccionesDelVotante;
 	list<Lista*> listaDeBoletas;
 	int blancos;
 	int novalidos;
@@ -46,13 +47,14 @@ public:
 	bool habilitarEleccion (Eleccion*);
 	void consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
-	char sufragar(int);
+	char sufragar(int,char);
 	bool cargarListasDeEleccion(Eleccion*,bplustree*);
-//	int elegirBoleta(int, Bucket*);
-	int elegirBoleta();
+	int elegirBoleta(char);
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
+	list <Eleccion*> getListaDeEleccionesDelVotante();
 	list <Lista*> getListaDeBoletas();
 	virtual ~Administrador();
+	void destruir();
 };
 
 
