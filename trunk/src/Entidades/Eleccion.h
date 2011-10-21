@@ -46,7 +46,7 @@ public:
 
 	bool eliminarDistrito(Distrito distrito);
 
-	int hasNext(list<Distrito>::iterator it);
+	int ultimo(list<Distrito>::iterator it);
 
 	list<Distrito>::iterator obtenerIterador();
 

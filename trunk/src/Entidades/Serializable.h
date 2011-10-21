@@ -19,6 +19,8 @@ public:
 
 	virtual void deserializar(std::string* source) = 0;
 
+	virtual ~Serializable(){};
+
 };
 
 #endif /* SERIALIZABLE_H_ */

@@ -57,6 +57,67 @@ SimulacionSistema::~SimulacionSistema(){
 	remove("arbolDeListas");
 }
 
+void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo)
+{
+	//Busco en la lista de elecciones habilitadas
+
+	list<Eleccion*> eleccionesHabilitadas = (administrador->getListaDeEleccionesHabilitadas());
+	list<Eleccion*>::iterator itEleccion = eleccionesHabilitadas.begin();
+	while( itEleccion != eleccionesHabilitadas.end()){
+
+		Conteo* conteo;
+
+		string clave;
+		clave  = (*itEleccion)->getFecha();
+		clave += (*itEleccion)->getCargo();
+
+		vector<char> result = arbolB->search(clave);
+
+		bool buscarSiguienteLista = true;
+		while ( buscarSiguienteLista == true ){
+
+			pair<vector<char>,string> map = arbolB->getnext();
+
+			if ( map.first.size() != 0 ){
+
+				string* registroSerializado = getString(map.first);
+
+				Registro* registro = new Registro();
+				registro->deserializar(registroSerializado);
+				delete registroSerializado;
+
+				Lista* lista = (Lista*)registro->getContenido();
+				//lista->verEntidad();
+
+				if ( lista != NULL ){
+
+					if ( lista->getFecha() == (*itEleccion)->getFecha() &&
+						 lista->getCargo() == (*itEleccion)->getCargo() ){
+
+						// Recorro los distritos de la eleccion habilitada
+						list<Distrito>::iterator itDistrito = (*itEleccion)->obtenerIterador();
+						while( !(*itEleccion)->ultimo(itDistrito) ){
+							conteo = new Conteo(lista->getFecha(),lista->getCargo(),lista->getNombre(),(*itDistrito).getDistrito());
+
+							cout << endl <<"Se agrega un registro al archivo de conteo" << endl;
+							conteo->verEntidad();
+
+							administradorDeConteo->agregarConteo(conteo);
+							delete conteo;
+
+							itDistrito++;
+						}
+
+					}else
+						buscarSiguienteLista = false;
+				}
+			}
+		}
+		itEleccion++;
+	}
+}
+
+
 void SimulacionSistema::iniciarVotantesParaIntegracion() {
 	this->votante1 = new Votante(1,"Martin","m","","Recoleta");
 	this->votante1->agregarEleccion ("19970701","Presidente");
@@ -409,13 +470,17 @@ void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 	delete registroAHabilitar3;
 }
 
-bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador){
+bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo){
 	//	Se abre el Log
 	Log log;
 	log.abrir();
 	//	Inicio del sistema
 	this->habilitarElecciones(administrador);
 	administrador->getEleccionesHabilitadas();
+
+	// Se carga el archivoDeConteo con las listas que participan en la actual eleccion.
+	cargarArchivoDeConteo(administrador,administradorDeConteo);
+
 	//	ingresa el votante1
 	int numeroDeEleccion;
 	int dni;
@@ -515,6 +580,11 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador){
 				log.insertarMensajeConEntidad(*itBoletas,mensaje);
 			}
 			//		INCREMENTAR CLASE CONTEO
+			string nombreDeLista = (*itBoletas)->getNombre();
+			string nombreDelDistrito = votanteActual->getDistrito();
+			administradorDeConteo->incrementarVoto(*itHabilitadas,&nombreDeLista,&nombreDelDistrito);
+			administradorDeConteo->mostrarArchivo();
+
 			delete votanteActual;
 			delete registroAuxiliar;
 		}
@@ -525,11 +595,16 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador){
 		}
 		log.cerrar();
 	}
+	#warning "revisa que tendría que devolver la función sino no me compila"
+	return 1;
 }
 
 void SimulacionSistema::main () {
 	string nombreDePrograma = ".//doc//password";
 	Administrador* administrador = new Administrador (nombreDePrograma);
+
+	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
+	administradorDeConteo->nuevoArchivoDeConteo(".//doc//ArchivoDeConteo.bin",1024);
 
 //	intenta acceder al sistema con usuario incorrecto pero contraseña correcta
 	if ((administrador->acceder("undomiel","1")) || (administrador->acceder("1","aragorn")) || (administrador->acceder("",""))) cout << "SEGURIDAD VIOLADA" << endl;
@@ -539,6 +614,7 @@ void SimulacionSistema::main () {
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		this->cargarBaseDeDatos(administrador); // Esto se corre una sola vez, luego se usan los archivos bin
 //		this->levantarBaseDeDatos(administrador); // Con esto se carga lo que llenó po unica vez el "cargarBaseDeDatos"
+		this->inicioDeSimulacion(administrador,administradorDeConteo);
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;

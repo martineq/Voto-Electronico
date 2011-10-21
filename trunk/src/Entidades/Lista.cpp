@@ -25,7 +25,6 @@ bool Lista::verificarCargo(string cargo) {
 }
 
 Lista::~Lista() {
-	// TODO Auto-generated destructor stub
 }
 
 string Lista::getNombre () {

@@ -11,7 +11,7 @@ using std::use_facet;
 
 Distrito::Distrito(){
 	this->distrito = "";
-};
+}
 
 
 Distrito::Distrito(string distrito){
