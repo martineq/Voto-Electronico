@@ -447,6 +447,7 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 				archivo->modificarBucket(nrr,bucket);
 				resultado = operacionOK;
 
+
 			}else{
 
 				Registro* registroObtenido = bucket->getRegistro(registro);
