@@ -1,0 +1,56 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Administrador</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Administrador</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass138242"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Administrador </li></ul><p>Artifact : <a href="index.html#refartifact138242"><b>Administrador</b></a></p>
+<div class="sub">
+<a name="refattribute144898"></a>
+<table><tr><td><div class="element">Attribute <b>nombre</b></div></td></tr></table>
+<p> Identificador<br /></p><p>Declaration :</p><ul><li>Uml : - nombre : string</li><li>C++ : private: string nombre</li></ul><a name="refattribute145026"></a>
+<table><tr><td><div class="element">Attribute <b>password</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - password : string</li><li>C++ : private: string password</li></ul><a name="refattribute145154"></a>
+<table><tr><td><div class="element">Attribute <b>archivo</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - archivo : fstream</li><li>C++ : private: fstream * archivo</li></ul><a name="refrelation137730"></a>
+<table><tr><td><div class="element">Relation <b>listaDeEleccionesHabilitadas (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - listaDeEleccionesHabilitadas : <a href="class137218.html#refclass137218"><b>Eleccion</b></a></li><li>C++ : private: list&lt;<a href="class137218.html#refclass137218"><b>Eleccion</b></a>*&gt; listaDeEleccionesHabilitadas</li></ul><p>Stereotype: list</p>
+<a name="refrelation137858"></a>
+<table><tr><td><div class="element">Relation <b>listaDeBoletas (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - listaDeBoletas : <a href="class137346.html#refclass137346"><b>Lista</b></a></li><li>C++ : private: list&lt;<a href="class137346.html#refclass137346"><b>Lista</b></a>*&gt; listaDeBoletas</li></ul><p>Stereotype: list</p>
+<a name="refattribute145282"></a>
+<table><tr><td><div class="element">Attribute <b>blancos</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - blancos : int</li><li>C++ : private: int blancos</li></ul><a name="refattribute145410"></a>
+<table><tr><td><div class="element">Attribute <b>novalidos</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - novalidos : int</li><li>C++ : private: int novalidos</li></ul><a name="refoperation177794"></a>
+<table><tr><td><div class="element">Operation <b>verificarEleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - verificarEleccion(inout unaEleccion : <a href="class137218.html#refclass137218"><b>Eleccion</b></a>) : bool</li><li>C++ : private: bool verificarEleccion(<a href="class137218.html#refclass137218"><b>Eleccion</b></a> * unaEleccion)</li></ul><a name="refoperation177922"></a>
+<table><tr><td><div class="element">Operation <b>mostrarEleccionesDelVotante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - mostrarEleccionesDelVotante(in listaDeEleccionesDelVotante : list&lt;Eleccion*&gt;) : void</li><li>C++ : private: void mostrarEleccionesDelVotante(list&lt;Eleccion*&gt; listaDeEleccionesDelVotante)</li></ul><a name="refoperation178050"></a>
+<table><tr><td><div class="element">Operation <b>abrirArchivoDePassword</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - abrirArchivoDePassword() : void</li><li>C++ : private: void abrirArchivoDePassword()</li></ul><a name="refoperation178178"></a>
+<table><tr><td><div class="element">Operation <b>getString</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - getString(in vect : vector&lt;char&gt;) : string</li><li>C++ : private: string * getString(vector&lt;char&gt; vect)</li></ul><a name="refoperation178306"></a>
+<table><tr><td><div class="element">Operation <b>Administrador</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Administrador(in pathArchivo : string) : </li><li>C++ : public: Administrador(string pathArchivo)</li></ul><a name="refoperation178434"></a>
+<table><tr><td><div class="element">Operation <b>acceder</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + acceder(in nomb : string, in pass : string) : bool</li><li>C++ : public: bool acceder(string nomb, string pass)</li></ul><a name="refoperation178562"></a>
+<table><tr><td><div class="element">Operation <b>altaHash</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + altaHash(inout he : <a href="class136450.html#refclass136450"><b>HashingExtensible</b></a>, inout unRegistro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : <a href="class135554.html#refclass135554"><b>Resultados</b></a></li><li>C++ : public: <a href="class135554.html#refclass135554"><b>Resultados</b></a> altaHash(<a href="class136450.html#refclass136450"><b>HashingExtensible</b></a> * he, <a href="class135938.html#refclass135938"><b>Registro</b></a> * unRegistro)</li></ul><a name="refoperation178690"></a>
+<table><tr><td><div class="element">Operation <b>altaArbol</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + altaArbol(inout arbolB : <a href="class134530.html#refclass134530"><b>bplustree</b></a>, inout registro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : int</li><li>C++ : public: int altaArbol(<a href="class134530.html#refclass134530"><b>bplustree</b></a> * arbolB, <a href="class135938.html#refclass135938"><b>Registro</b></a> * registro)</li></ul><a name="refoperation178818"></a>
+<table><tr><td><div class="element">Operation <b>habilitarEleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + habilitarEleccion(inout unaEleccion : <a href="class137218.html#refclass137218"><b>Eleccion</b></a>) : bool</li><li>C++ : public: bool habilitarEleccion(<a href="class137218.html#refclass137218"><b>Eleccion</b></a> * unaEleccion)</li></ul><a name="refoperation178946"></a>
+<table><tr><td><div class="element">Operation <b>consultarEleccionesHabilitadasParaElVotante</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + consultarEleccionesHabilitadasParaElVotante(inout votante : <a href="class136962.html#refclass136962"><b>Votante</b></a>) : void</li><li>C++ : public: void consultarEleccionesHabilitadasParaElVotante(<a href="class136962.html#refclass136962"><b>Votante</b></a> * votante)</li></ul><a name="refoperation179074"></a>
+<table><tr><td><div class="element">Operation <b>getEleccionesHabilitadas</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getEleccionesHabilitadas() : void</li><li>C++ : public: void getEleccionesHabilitadas()</li></ul><a name="refoperation179202"></a>
+<table><tr><td><div class="element">Operation <b>sufragar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + sufragar(in numeroDeBoleta : int) : char</li><li>C++ : public: char sufragar(int numeroDeBoleta)</li></ul><a name="refoperation179330"></a>
+<table><tr><td><div class="element">Operation <b>cargarListasDeEleccion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + cargarListasDeEleccion(inout eleccion : <a href="class137218.html#refclass137218"><b>Eleccion</b></a>, inout arbol : <a href="class134530.html#refclass134530"><b>bplustree</b></a>) : void</li><li>C++ : public: void cargarListasDeEleccion(<a href="class137218.html#refclass137218"><b>Eleccion</b></a> * eleccion, <a href="class134530.html#refclass134530"><b>bplustree</b></a> * arbol)</li></ul><a name="refoperation179458"></a>
+<table><tr><td><div class="element">Operation <b>elegirBoleta</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + elegirBoleta(in numeroDeEleccion : int, inout bucketLista : <a href="class135426.html#refclass135426"><b>Bucket</b></a>) : int</li><li>C++ : public: int elegirBoleta(int numeroDeEleccion, <a href="class135426.html#refclass135426"><b>Bucket</b></a> * bucketLista)</li></ul><a name="refoperation179586"></a>
+<table><tr><td><div class="element">Operation <b>getListaDeEleccionesHabilitadas</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getListaDeEleccionesHabilitadas() : list&lt;Eleccion*&gt;</li><li>C++ : public: list&lt;Eleccion*&gt; getListaDeEleccionesHabilitadas()</li></ul><a name="refoperation179714"></a>
+<table><tr><td><div class="element">Operation <b>getListaDeBoletas</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getListaDeBoletas() : list&lt;Lista*&gt;</li><li>C++ : public: list&lt;Lista*&gt; getListaDeBoletas()</li></ul><a name="refoperation179842"></a>
+<table><tr><td><div class="element">Operation <b>~Administrador</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Administrador() : </li><li>C++ : public: virtual ~Administrador()</li></ul></div>
+<p>All public operations : <a href="class138242.html#refoperation178434"><b>acceder</b></a> , <a href="class138242.html#refoperation178690"><b>altaArbol</b></a> , <a href="class138242.html#refoperation178562"><b>altaHash</b></a> , <a href="class138242.html#refoperation179330"><b>cargarListasDeEleccion</b></a> , <a href="class138242.html#refoperation178946"><b>consultarEleccionesHabilitadasParaElVotante</b></a> , <a href="class138242.html#refoperation179458"><b>elegirBoleta</b></a> , <a href="class138242.html#refoperation179074"><b>getEleccionesHabilitadas</b></a> , <a href="class138242.html#refoperation179714"><b>getListaDeBoletas</b></a> , <a href="class138242.html#refoperation179586"><b>getListaDeEleccionesHabilitadas</b></a> , <a href="class138242.html#refoperation178818"><b>habilitarEleccion</b></a> , <a href="class138242.html#refoperation179202"><b>sufragar</b></a> </p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Entidad</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Entidad</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass136194"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Entidad : public <a href="class135810.html#refclass135810"><b>Serializable</b></a> </li></ul><p>Directly inherited by : <a href="class137602.html#refclass137602"><b>Candidato</b></a> <a href="class137730.html#refclass137730"><b>Cargo</b></a> <a href="class137858.html#refclass137858"><b>Conteo</b></a> <a href="class137986.html#refclass137986"><b>Distrito</b></a> <a href="class137218.html#refclass137218"><b>Eleccion</b></a> <a href="class137346.html#refclass137346"><b>Lista</b></a> <a href="class136962.html#refclass136962"><b>Votante</b></a> </p>
+<p>Artifact : <a href="index.html#refartifact137602"><b>Entidad</b></a></p>
+<div class="sub">
+<a name="refoperation171650"></a>
+<table><tr><td><div class="element">Operation <b>getTamanio</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : abstract, + getTamanio() : int</li><li>C++ : public: virtual int getTamanio()= 0 </li></ul><a name="refoperation171778"></a>
+<table><tr><td><div class="element">Operation <b>getClave</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : abstract, + getClave() : ulong</li><li>C++ : public: virtual unsigned long getClave()= 0 </li></ul><a name="refoperation171906"></a>
+<table><tr><td><div class="element">Operation <b>verEntidad</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : abstract, + verEntidad() : void</li><li>C++ : public: virtual void verEntidad()= 0 </li></ul><a name="refoperation172034"></a>
+<table><tr><td><div class="element">Operation <b>duplicar</b></div></td></tr></table><p>	 * Instancia un nuevo objeto, copia de actual.<br /></p><p>Declaration :</p><ul><li>Uml : abstract, + duplicar() : <a href="class136194.html#refclass136194"><b>Entidad</b></a></li><li>C++ : public: virtual <a href="class136194.html#refclass136194"><b>Entidad</b></a> * duplicar()= 0 </li></ul><a name="refoperation172162"></a>
+<table><tr><td><div class="element">Operation <b>comparar</b></div></td></tr></table><p>	 * Devuelve el resultado de comparar la actual entidad con otra.<br />	 * Los resultados posibles son mayor, menor, igual o comparacionInvalida.<br />	 * El resultado es respecto del patrón.<br />	 * Por ejemplo: sean A y B dos entidades, entonces<br />	 * A-&gt;comparar(B) devuelve "mayor" si A es mayor a "B".<br /></p><p>Declaration :</p><ul><li>Uml : abstract, + comparar(inout entidad : <a href="class136194.html#refclass136194"><b>Entidad</b></a>) : <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a></li><li>C++ : public: virtual <a href="class136578.html#refclass136578"><b>ResultadoComparacion</b></a> comparar(<a href="class136194.html#refclass136194"><b>Entidad</b></a> * entidad)= 0 </li></ul><a name="refoperation172290"></a>
+<table><tr><td><div class="element">Operation <b>getNombreDeEntidad</b></div></td></tr></table><p>	 * Devuelve el tipo de la entidad instanciada.<br /></p><p>Declaration :</p><ul><li>Uml : abstract, + getNombreDeEntidad() : <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a></li><li>C++ : public: virtual <a href="class136322.html#refclass136322"><b>NombreDeEntidad</b></a> getNombreDeEntidad()= 0 </li></ul><a name="refoperation172418"></a>
+<table><tr><td><div class="element">Operation <b>~Entidad</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : abstract, + ~Entidad() : </li><li>C++ : public: virtual ~Entidad()</li></ul></div>
+<p>All public operations : <a href="class136194.html#refoperation172162"><b>comparar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class136194.html#refoperation172034"><b>duplicar</b></a> , <a href="class136194.html#refoperation171778"><b>getClave</b></a> , <a href="class136194.html#refoperation172290"><b>getNombreDeEntidad</b></a> , <a href="class136194.html#refoperation171650"><b>getTamanio</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class136194.html#refoperation171906"><b>verEntidad</b></a> </p>
+</body>
+</html>

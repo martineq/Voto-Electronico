@@ -1,0 +1,44 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class ManejadorDeArchivo</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class ManejadorDeArchivo</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass135170"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class ManejadorDeArchivo </li></ul><p>Artifact : <a href="index.html#refartifact135170"><b>ManejadorDeArchivo</b></a></p>
+<div class="sub">
+<a name="refattribute136578"></a>
+<table><tr><td><div class="element">Attribute <b>archivo</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - archivo : fstream</li><li>C++ : private: fstream archivo</li></ul><a name="refattribute136706"></a>
+<table><tr><td><div class="element">Attribute <b>nombre</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - nombre : string</li><li>C++ : private: string nombre</li></ul><a name="refoperation143618"></a>
+<table><tr><td><div class="element">Operation <b>abrir</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - abrir(in nombre : string) : void</li><li>C++ : private: void abrir(string nombre)</li></ul><a name="refoperation143746"></a>
+<table><tr><td><div class="element">Operation <b>obtenerNombreArchivo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - obtenerNombreArchivo() : string</li><li>C++ : private: string obtenerNombreArchivo()</li></ul><a name="refoperation143874"></a>
+<table><tr><td><div class="element">Operation <b>obtenerNombreArchivoTmp</b></div></td></tr></table><p> Por ahora no se usa<br /></p><p>Declaration :</p><ul><li>Uml : - obtenerNombreArchivoTmp() : string</li><li>C++ : private: string obtenerNombreArchivoTmp()</li></ul><a name="refoperation144002"></a>
+<table><tr><td><div class="element">Operation <b>renombrar</b></div></td></tr></table><p> Por ahora no se usa<br /></p><p>Declaration :</p><ul><li>Uml : - renombrar(in nombreNuevo : string) : void</li><li>C++ : private: void renombrar(string nombreNuevo)</li></ul><a name="refoperation144130"></a>
+<table><tr><td><div class="element">Operation <b>ManejadorDeArchivo</b></div></td></tr></table><p> Por ahora no se usa<br /></p><p>Declaration :</p><ul><li>Uml : + ManejadorDeArchivo(in nombre : string) : </li><li>C++ : public: ManejadorDeArchivo(string nombre)</li></ul><a name="refoperation144258"></a>
+<table><tr><td><div class="element">Operation <b>leer</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + leer(inout registro : char, in cantBytes : size_t) : void</li><li>C++ : public: void leer(char * registro, size_t cantBytes)</li></ul><a name="refoperation144386"></a>
+<table><tr><td><div class="element">Operation <b>escribir</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + escribir(in registro : char, in cantBytes : size_t) : void</li><li>C++ : public: void escribir(const char * registro, size_t cantBytes)</li></ul><a name="refoperation144514"></a>
+<table><tr><td><div class="element">Operation <b>posicionarse</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + posicionarse(in pos : ios::pos_type) : void</li><li>C++ : public: void posicionarse(ios::pos_type pos)</li></ul><a name="refoperation144642"></a>
+<table><tr><td><div class="element">Operation <b>posicionarseEnFin</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + posicionarseEnFin() : void</li><li>C++ : public: void posicionarseEnFin()</li></ul><a name="refoperation144770"></a>
+<table><tr><td><div class="element">Operation <b>guardarBuffer</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + guardarBuffer() : void</li><li>C++ : public: void guardarBuffer()</li></ul><a name="refoperation144898"></a>
+<table><tr><td><div class="element">Operation <b>fin</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + fin() : bool</li><li>C++ : public: bool fin()</li></ul><a name="refoperation145026"></a>
+<table><tr><td><div class="element">Operation <b>obtenerPosicionDeLectura</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + obtenerPosicionDeLectura() : ios::pos_type</li><li>C++ : public: ios::pos_type obtenerPosicionDeLectura()</li></ul><a name="refoperation145154"></a>
+<table><tr><td><div class="element">Operation <b>obtenerTamArchivo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + obtenerTamArchivo() : ios::pos_type</li><li>C++ : public: ios::pos_type obtenerTamArchivo()</li></ul><a name="refoperation145282"></a>
+<table><tr><td><div class="element">Operation <b>borrar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + borrar() : void</li><li>C++ : public: void borrar()</li></ul><a name="refoperation145410"></a>
+<table><tr><td><div class="element">Operation <b>~ManejadorDeArchivo</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~ManejadorDeArchivo() : </li><li>C++ : public: virtual ~ManejadorDeArchivo()</li></ul></div>
+<p>All public operations : <a href="class135170.html#refoperation145282"><b>borrar</b></a> , <a href="class135170.html#refoperation144386"><b>escribir</b></a> , <a href="class135170.html#refoperation144898"><b>fin</b></a> , <a href="class135170.html#refoperation144770"><b>guardarBuffer</b></a> , <a href="class135170.html#refoperation144258"><b>leer</b></a> , <a href="class135170.html#refoperation145026"><b>obtenerPosicionDeLectura</b></a> , <a href="class135170.html#refoperation145154"><b>obtenerTamArchivo</b></a> , <a href="class135170.html#refoperation144514"><b>posicionarse</b></a> , <a href="class135170.html#refoperation144642"><b>posicionarseEnFin</b></a> </p>
+</body>
+</html>

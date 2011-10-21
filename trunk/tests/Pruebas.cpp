@@ -959,6 +959,26 @@ void Pruebas::verContenidoBucketCargo(Bucket* unBucket){
 }
 
 
+void Pruebas::pruebaConfiguracion(int argc, const char* argv[]){
+	cout << "Para correr esta prueba hay que pasar por parámetro: " << endl;
+	cout << "-m -c ./config.txt"  << endl;
+	cout << "y poner el archivo config.txt en la carpeta raiz (donde se corre el programa)..."  << endl;
+	Configuracion c(argc,argv);
+	cout << "-----------------------------------" << endl;
+	cout << "Inicio del programa. Configuración:" << endl;
+	cout << "-----------------------------------" << endl;
+	if (c.isAuto()) cout << "Es auto" << endl; else cout << "No es auto" << endl;
+	if (c.isManual() == true) cout << "Es manual" << endl; else cout << "No es manual" << endl;
+	cout << "Ruta del Árbol: " << c.pathArbol() << endl;
+	cout << "Ruta del Hash: " << c.pathHash() << endl;
+	cout << "Tamanio Árbol: " << c.darTamanioNodo() << endl;
+	cout << "Tamanio Hash: " << c.darTamanioBucket() << endl;;
+	cout << "-------------------- " << endl;
+	cout << "Configuración terminada. " << endl;
+	cout << "-------------------- " << endl;
+}
+
+
 int Pruebas::holaMundo(){
 
     cout<<"||TP 1||\n--------\n\nHola Mundo!!!\n";

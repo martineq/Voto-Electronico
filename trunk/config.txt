@@ -1,0 +1,20 @@
+------------------------
+Archivo de configuración
+------------------------
+
+Para su uso:
+ + La lectura de las opciones se relizará a partir del delimitador "doble barra" (dos veces segidas el caracter "/")
+ + La lectura se realizará hasta el final del archivo
+ + Todo texto anterior al delimitador será tomado como comentario
+ + Si el delimitador no existe, todo el archivo será tomado como comentario.
+ 
+ 
+Opciones válidas (cada una debe estar separada con un espacio):
+	-A +<ruta>		Asigna la ruta del archivo de Arbol B+.
+	-D +<ruta>		Asigna la ruta del archivo de Dispersión.
+	-N +<valor>		Asigna el tamaño del Nodo del árbol B+.
+	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión.
+	
+Fin de los comentarios-> //	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-D +archivoHash.bin -A +archivoArbol.bin -N +128 -B +256

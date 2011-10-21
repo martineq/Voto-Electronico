@@ -1,0 +1,49 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class Bucket</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class Bucket</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass135426"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class Bucket : public <a href="class135810.html#refclass135810"><b>Serializable</b></a> </li></ul><p>Artifact : <a href="index.html#refartifact135554"><b>Bucket</b></a></p>
+<div class="sub">
+<a name="refattribute137218"></a>
+<table><tr><td><div class="element">Attribute <b>espacioLibre</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - espacioLibre : int</li><li>C++ : private: int espacioLibre</li></ul><a name="refattribute137346"></a>
+<table><tr><td><div class="element">Attribute <b>tamanioDeDispersion</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - tamanioDeDispersion : int</li><li>C++ : private: int tamanioDeDispersion</li></ul><a name="refrelation135810"></a>
+<table><tr><td><div class="element">Relation <b>listaDeRegistros (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - listaDeRegistros : <a href="class135938.html#refclass135938"><b>Registro</b></a></li><li>C++ : private: list&lt;<a href="class135938.html#refclass135938"><b>Registro</b></a>*&gt; listaDeRegistros</li></ul><p>Stereotype: list</p>
+<a name="refoperation148098"></a>
+<table><tr><td><div class="element">Operation <b>consultarRegistro</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - consultarRegistro(inout registro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : <a href="class135938.html#refclass135938"><b>Registro</b></a></li><li>C++ : private: <a href="class135938.html#refclass135938"><b>Registro</b></a> * consultarRegistro(<a href="class135938.html#refclass135938"><b>Registro</b></a> * registro)</li></ul><a name="refoperation148226"></a>
+<table><tr><td><div class="element">Operation <b>Bucket</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + Bucket(in tamanioDispersion : int, in tamanioDeBucket : int) : </li><li>C++ : public: Bucket(int tamanioDispersion, int tamanioDeBucket)</li></ul><a name="refoperation148354"></a>
+<table><tr><td><div class="element">Operation <b>agregarRegistro</b></div></td></tr></table><p>devuelve el resultado de la operacion<br /></p><p>Declaration :</p><ul><li>Uml : + agregarRegistro(inout unRegistro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : bool</li><li>C++ : public: bool agregarRegistro(<a href="class135938.html#refclass135938"><b>Registro</b></a> * unRegistro)</li></ul><a name="refoperation148482"></a>
+<table><tr><td><div class="element">Operation <b>eliminarRegistro</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + eliminarRegistro(inout registro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : bool</li><li>C++ : public: bool eliminarRegistro(<a href="class135938.html#refclass135938"><b>Registro</b></a> * registro)</li></ul><a name="refoperation148610"></a>
+<table><tr><td><div class="element">Operation <b>reemplazarRegistro</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + reemplazarRegistro(inout unRegistro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : bool</li><li>C++ : public: bool reemplazarRegistro(<a href="class135938.html#refclass135938"><b>Registro</b></a> * unRegistro)</li></ul><a name="refoperation148738"></a>
+<table><tr><td><div class="element">Operation <b>getRegistro</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getRegistro(inout registro : <a href="class135938.html#refclass135938"><b>Registro</b></a>) : <a href="class135938.html#refclass135938"><b>Registro</b></a></li><li>C++ : public: <a href="class135938.html#refclass135938"><b>Registro</b></a> * getRegistro(<a href="class135938.html#refclass135938"><b>Registro</b></a> * registro)</li></ul><a name="refoperation148866"></a>
+<table><tr><td><div class="element">Operation <b>getEspacioLibre</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getEspacioLibre() : int</li><li>C++ : public: int getEspacioLibre()</li></ul><a name="refoperation148994"></a>
+<table><tr><td><div class="element">Operation <b>getTamanioDeDispersion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getTamanioDeDispersion() : int</li><li>C++ : public: int getTamanioDeDispersion()</li></ul><a name="refoperation149122"></a>
+<table><tr><td><div class="element">Operation <b>getCantidadDeRegistros</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + getCantidadDeRegistros() : int</li><li>C++ : public: int getCantidadDeRegistros()</li></ul><a name="refoperation149250"></a>
+<table><tr><td><div class="element">Operation <b>setTamanioDeDispersion</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + setTamanioDeDispersion(in tamanio : int) : void</li><li>C++ : public: void setTamanioDeDispersion(int tamanio)</li></ul><a name="refoperation149378"></a>
+<table><tr><td><div class="element">Operation <b>mostarClavesDeBucket</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + mostarClavesDeBucket() : void</li><li>C++ : public: void mostarClavesDeBucket()</li></ul><a name="refoperation149506"></a>
+<table><tr><td><div class="element">Operation <b>ubicarPrimero</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ubicarPrimero() : list&lt;Registro*&gt;::iterator</li><li>C++ : public: list&lt;Registro*&gt;::iterator ubicarPrimero()</li></ul><a name="refoperation149634"></a>
+<table><tr><td><div class="element">Operation <b>serializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + serializar() : string</li><li>C++ : public: string * serializar()</li></ul><a name="refoperation149762"></a>
+<table><tr><td><div class="element">Operation <b>deserializar</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + deserializar(inout bufferSerializado : string) : void</li><li>C++ : public: void deserializar(string * bufferSerializado)</li></ul><a name="refoperation149890"></a>
+<table><tr><td><div class="element">Operation <b>mostarBucket</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + mostarBucket() : void</li><li>C++ : public: void mostarBucket()</li></ul><a name="refoperation150018"></a>
+<table><tr><td><div class="element">Operation <b>verInfoBucket</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + verInfoBucket() : void</li><li>C++ : public: void verInfoBucket()</li></ul><a name="refoperation150146"></a>
+<table><tr><td><div class="element">Operation <b>~Bucket</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~Bucket() : </li><li>C++ : public: ~Bucket()</li></ul><a name="refrelation145538"></a>
+<table><tr><td><div class="element">Relation <b>&lt;directional composition&gt;</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : -  : <a href="class135938.html#refclass135938"><b>Registro</b></a></li><li>C++ : private: <a href="class135938.html#refclass135938"><b>Registro</b></a> </li></ul></div>
+<p>All public operations : <a href="class135426.html#refoperation148354"><b>agregarRegistro</b></a> , <a href="class135426.html#refoperation149762"><b>deserializar</b></a> , <a href="class135810.html#refoperation174594"><b>deserializar</b></a> , <a href="class135426.html#refoperation148482"><b>eliminarRegistro</b></a> , <a href="class135426.html#refoperation149122"><b>getCantidadDeRegistros</b></a> , <a href="class135426.html#refoperation148866"><b>getEspacioLibre</b></a> , <a href="class135426.html#refoperation148738"><b>getRegistro</b></a> , <a href="class135426.html#refoperation148994"><b>getTamanioDeDispersion</b></a> , <a href="class135426.html#refoperation149890"><b>mostarBucket</b></a> , <a href="class135426.html#refoperation149378"><b>mostarClavesDeBucket</b></a> , <a href="class135426.html#refoperation148610"><b>reemplazarRegistro</b></a> , <a href="class135426.html#refoperation149634"><b>serializar</b></a> , <a href="class135810.html#refoperation174466"><b>serializar</b></a> , <a href="class135426.html#refoperation149250"><b>setTamanioDeDispersion</b></a> , <a href="class135426.html#refoperation149506"><b>ubicarPrimero</b></a> , <a href="class135426.html#refoperation150018"><b>verInfoBucket</b></a> </p>
+</body>
+</html>

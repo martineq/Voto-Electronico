@@ -1,0 +1,35 @@
+<!-- Documentation produced by the Html generator of Bouml (http://bouml.free.fr) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Class ArchivoDeControl</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<div class = "title">Class ArchivoDeControl</div>
+<p></p>
+
+<!-- ============================================================= -->
+
+<a name="refclass135682"></a>
+<p>Declaration :</p><ul>
+<li>C++ : class ArchivoDeControl </li></ul><p>Artifact : <a href="index.html#refartifact135426"><b>ArchivoDeControl</b></a></p>
+<div class="sub">
+<a name="refrelation135554"></a>
+<table><tr><td><div class="element">Relation <b>archivo (&lt;unidirectional association&gt;)</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : - archivo : <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a></li><li>C++ : private: <a href="class135170.html#refclass135170"><b>ManejadorDeArchivo</b></a> * archivo</li></ul><a name="refattribute137090"></a>
+<table><tr><td><div class="element">Attribute <b>nombreArchivo</b></div></td></tr></table>
+<p>Declaration :</p><ul><li>Uml : - nombreArchivo : string</li><li>C++ : private: string nombreArchivo</li></ul><a name="refoperation147202"></a>
+<table><tr><td><div class="element">Operation <b>ArchivoDeControl</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ArchivoDeControl(inout pathArchivo : char) : </li><li>C++ : public: ArchivoDeControl(char * pathArchivo)</li></ul><a name="refoperation147330"></a>
+<table><tr><td><div class="element">Operation <b>persistirVector</b></div></td></tr></table><p>	 * Serializa la tabla de Hash y la almacena en el archivo de registros<br />	 * variable.<br /></p><p>Declaration :</p><ul><li>Uml : + persistirVector(inout tabla : vector&lt;int&gt;) : void</li><li>C++ : public: void persistirVector(vector&lt;int&gt; * tabla)</li></ul><a name="refoperation147458"></a>
+<table><tr><td><div class="element">Operation <b>hidratarVector</b></div></td></tr></table><p>	 * Hidrata un vector desde el archivo de control.<br /></p><p>Declaration :</p><ul><li>Uml : + hidratarVector() : vector&lt;int&gt;</li><li>C++ : public: vector&lt;int&gt; hidratarVector()</li></ul><a name="refoperation147586"></a>
+<table><tr><td><div class="element">Operation <b>persistirLista</b></div></td></tr></table><p>	 * Serializa la lista de libres y la almacena en un archivo de registros<br />	 * variable.<br /></p><p>Declaration :</p><ul><li>Uml : + persistirLista(inout lista : list&lt;int&gt;) : void</li><li>C++ : public: void persistirLista(list&lt;int&gt; * lista)</li></ul><a name="refoperation147714"></a>
+<table><tr><td><div class="element">Operation <b>hidratarLista</b></div></td></tr></table><p>	 * Hidrata una lista desde el archivo de configuracion.<br /></p><p>Declaration :</p><ul><li>Uml : + hidratarLista() : list&lt;int&gt;</li><li>C++ : public: list&lt;int&gt; hidratarLista()</li></ul><a name="refoperation147842"></a>
+<table><tr><td><div class="element">Operation <b>vacio</b></div></td></tr></table><p>	 * Informa si el archivo está vacío.<br /></p><p>Declaration :</p><ul><li>Uml : + vacio() : bool</li><li>C++ : public: bool vacio()</li></ul><a name="refoperation147970"></a>
+<table><tr><td><div class="element">Operation <b>~ArchivoDeControl</b></div></td></tr></table><p>Declaration :</p><ul><li>Uml : + ~ArchivoDeControl() : </li><li>C++ : public: virtual ~ArchivoDeControl()</li></ul></div>
+<p>All public operations : <a href="class135682.html#refoperation147714"><b>hidratarLista</b></a> , <a href="class135682.html#refoperation147458"><b>hidratarVector</b></a> , <a href="class135682.html#refoperation147586"><b>persistirLista</b></a> , <a href="class135682.html#refoperation147330"><b>persistirVector</b></a> , <a href="class135682.html#refoperation147842"><b>vacio</b></a> </p>
+</body>
+</html>
