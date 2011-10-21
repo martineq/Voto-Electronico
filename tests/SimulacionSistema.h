@@ -103,6 +103,7 @@ public:
 	SimulacionSistema();
 	~SimulacionSistema();
 	void cargarBaseDeDatos(Administrador*, char);
+	void levantarBaseDeDatos(Administrador*);
 //	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*,char, Votante*);
 	bool inicioDeSimulacion(Administrador*,char, int);
 	void destruir();
