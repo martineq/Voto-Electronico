@@ -94,6 +94,8 @@ void Administrador::getEleccionesHabilitadas(){
 	else{
 		list<Eleccion*>::iterator it=this->listaDeEleccionesHabilitadas.begin();
 		int i=1;
+		cout << "ELECCIONES ACTIVAS" << endl;
+		cout << "------------------" << endl;
 		while (it!=this->listaDeEleccionesHabilitadas.end()){
 			Eleccion* eleccion = *it;
 			cout << "Eleccion " << i << endl;
@@ -109,6 +111,10 @@ void Administrador::getEleccionesHabilitadas(){
 
 list <Eleccion*> Administrador::getListaDeEleccionesHabilitadas(){
 	return this->listaDeEleccionesHabilitadas;
+}
+
+list <Eleccion*> Administrador::getListaDeEleccionesDelVotante(){
+	return this->listaDeEleccionesDelVotante;;
 }
 
 list <Lista*> Administrador::getListaDeBoletas(){
@@ -135,35 +141,39 @@ void Administrador::mostrarEleccionesDelVotante(list<Eleccion*>listaDeElecciones
 }
 
 void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante){
-	list<Eleccion*> listaDeEleccionesDelVotante;
 	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
 	if (this->listaDeEleccionesHabilitadas.size()==0) cout << "El administrador no ha habilitado ninguna eleccion aun" << endl;
-	while (it!=this->listaDeEleccionesHabilitadas.end()){
-		list<Distrito> listaDeDistritos = (*it)->getLista();
-		list<Distrito>::iterator itDistritos = listaDeDistritos.begin();
-		bool fin=false;
-		while ((itDistritos!=listaDeDistritos.end()) && (!fin)){
-			if (votante->getDistrito()==itDistritos->getDistrito()){
-				list<EleccionAnterior*>* listaDeEleccionesAnterioresDelVotante = votante->getListaDeEleccionesAnteriores();
-				list<EleccionAnterior*>::iterator itEleccionesAnteriores = listaDeEleccionesAnterioresDelVotante->begin();
-				while ((itEleccionesAnteriores!=listaDeEleccionesAnterioresDelVotante->end()) && (!fin)){
-					if (((*it)->getFecha()==(*itEleccionesAnteriores)->getFecha()) && ((*it)->getCargo()==(*itEleccionesAnteriores)->getCargo())){
-						fin=true;
+	else {
+		while (it!=this->listaDeEleccionesHabilitadas.end()){
+			list<Distrito> listaDeDistritos = (*it)->getLista();
+			list<Distrito>::iterator itDistritos = listaDeDistritos.begin();
+			bool fin=false;
+			while ((itDistritos!=listaDeDistritos.end()) && (!fin)){
+				if (votante->getDistrito()==itDistritos->getDistrito()){
+					list<EleccionAnterior*>* listaDeEleccionesAnterioresDelVotante = votante->getListaDeEleccionesAnteriores();
+					list<EleccionAnterior*>::iterator itEleccionesAnteriores = listaDeEleccionesAnterioresDelVotante->begin();
+					while ((itEleccionesAnteriores!=listaDeEleccionesAnterioresDelVotante->end()) && (!fin)){
+						if (((*it)->getFecha()==(*itEleccionesAnteriores)->getFecha()) && ((*it)->getCargo()==(*itEleccionesAnteriores)->getCargo())){
+							fin=true;
+						}
+						else itEleccionesAnteriores++;
 					}
-					else itEleccionesAnteriores++;
+					if (!fin) {
+						Eleccion* eleccion = (Eleccion*)(*it)->duplicar();
+						cout << "Cargo las elecciones para el votante" << endl;					;
+						this->listaDeEleccionesDelVotante.push_back(eleccion);
+					}
+					fin=true;
 				}
-				if (!fin) listaDeEleccionesDelVotante.push_back(*it);
-				fin=true;
+				else itDistritos++;
 			}
-			else itDistritos++;
+			it++;
 		}
-		it++;
 	}
 	this->mostrarEleccionesDelVotante(listaDeEleccionesDelVotante);
 }
 
-//int Administrador::elegirBoleta(int numeroDeEleccion, Bucket* bucketLista){
-int Administrador::elegirBoleta(){
+int Administrador::elegirBoleta(char modo){
 	if (this->listaDeBoletas.size()==0) {
 		cout << "NO HAY BOLETAS PARA ESTA ELECCION" << endl;
 		return 0;
@@ -186,7 +196,10 @@ int Administrador::elegirBoleta(){
 	int c;
 	while (!ok) {
 		cout << "Elija su boleta en base al numero de opcion indicado" << endl;
-		cin >> c;
+//		srand (time(NULL));
+//		if (modo=='a') c= rand () % this->listaDeBoletas.size()+2;
+		if (modo=='a') c=1;
+		else cin >> c;
 		if ((((c)<=(((int)(this->listaDeBoletas.size()))+2)))&&(c>0)) ok=true;
 		else cout << "Numero de boleta invalido" << endl;
 	}
@@ -215,12 +228,13 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	cout << "Estoy viendo la lista: " << endl;
 	cout << "Nombre: " << boletaDelArbol->getNombre() << endl;
 	cout << "Fecha: " << boletaDelArbol->getFecha() << endl;
+	cout << "Cargo: " << boletaDelArbol->getCargo() << endl;
 	while (boletaDelArbol->getFecha() == eleccion->getFecha()){
 
 		if (boletaDelArbol->getCargo() == eleccion->getCargo()){
 			Lista* lista = (Lista*)boletaDelArbol->duplicar();
 			this->listaDeBoletas.push_back(lista);
-			cout << "Estoy cargando listas para una elccion" << endl;
+			cout << "Estoy cargando listas para una eleccion" << endl;
 		}
 
 		delete registro;
@@ -243,11 +257,9 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	}
 	delete registro;
 	delete boletaDelArbol;
-	#warning "hay que devolver algo"
-	return 0;
 }
 
-char Administrador::sufragar (int numeroDeBoleta){
+char Administrador::sufragar (int numeroDeBoleta, char modo){
 	char c;
 	int size;
 	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
@@ -255,14 +267,16 @@ char Administrador::sufragar (int numeroDeBoleta){
 	if (numeroDeBoleta==size+1) {
 		cout << "La opcion elegida es: VOTO EN BLANCO" << endl;
 		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
-		cin >> c;
+		if (modo=='a') c='s';
+		else cin >> c;
 		if (c=='s') this->blancos++;
 		return c;
 	}
 	if (numeroDeBoleta==size+2) {
 		cout << "La opcion elegida es: VOTO NULO, IMPUGNADO, ETC" << endl;
 		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
-		cin >> c;
+		if (modo=='a') c='s';
+		else cin >> c;
 		if (c=='s') this->novalidos++;
 		return c;
 	}
@@ -271,25 +285,30 @@ char Administrador::sufragar (int numeroDeBoleta){
 	cout << "La opcion elegida es: " <<  numeroDeBoleta << endl;
 	cout << "LISTA: " << (*itListas)->getNombre() << endl;
 	cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
-	cin >> c;
-	//if (c=='s') (*itListas)->incrementarVotos();
+	if (modo=='a') c='s';
+	else cin >> c;
 	return c;
 }
 
 bool Administrador::verificarEleccion(Eleccion* unaEleccion) {
-	#warning "verificar que la eleccion exista en el archivo de elecciones"
+#warning "verificar que la eleccion exista en el archivo de elecciones"
 	return true;
 }
 
-Administrador::~Administrador() {
-	list<Eleccion*>::iterator it = listaDeEleccionesHabilitadas.begin();
-	while (it!=this->listaDeEleccionesHabilitadas.end()) {
-		delete *it;
-		it++;
+void Administrador::destruir(){
+	while(!this->listaDeBoletas.empty()){
+		delete this->listaDeBoletas.back();
+		this->listaDeBoletas.pop_back();
 	}
-	list<Lista*>::iterator it2 = this->listaDeBoletas.begin();
-	while (it2!=this->listaDeBoletas.end()) {
-		delete *it2;
-		it2++;
+	while(!this->listaDeEleccionesDelVotante.empty()) {
+		delete this->listaDeEleccionesDelVotante.back();
+		this->listaDeEleccionesDelVotante.pop_back();
+	}
+}
+
+Administrador::~Administrador() {
+	while(!this->listaDeEleccionesHabilitadas.empty()) {
+		delete this->listaDeEleccionesHabilitadas.back();
+		this->listaDeEleccionesHabilitadas.pop_back();
 	}
 }

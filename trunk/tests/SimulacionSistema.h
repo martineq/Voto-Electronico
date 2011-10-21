@@ -17,6 +17,7 @@
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
 #include "../src/Auxiliares/Log.h"
+#include "../src/Auxiliares/CreadorVotante.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
 #include "../src/Archivos/Hashing/HashingExtensible.h"
@@ -97,13 +98,13 @@ private:
 	void iniciarCargosParaIntegracion();
 	void verContenidoArbolListas();
 	void cargarArchivoDeConteo(Administrador*,AdministradorDeVotaciones*);
-	bool validarDni(int dni);
+	void crearArchivoDeVotantes();
 public:
 	SimulacionSistema();
 	~SimulacionSistema();
-	void cargarBaseDeDatos(Administrador*);
-	void levantarBaseDeDatos(Administrador*);
-	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*);
+	void cargarBaseDeDatos(Administrador*, char);
+//	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*,char, Votante*);
+	bool inicioDeSimulacion(Administrador*,char, int);
 	void destruir();
 	void main ();
 };
