@@ -17,7 +17,6 @@
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
 #include "../src/Auxiliares/Log.h"
-#include "../src/Auxiliares/Configuracion.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
 #include "../src/Archivos/Hashing/HashingExtensible.h"
@@ -101,9 +100,6 @@ private:
 	void verContenidoBucketCandidato(Bucket*);
 	void verContenidoBucketLista(Bucket*);
 	void verContenidoBucketCargo(Bucket*);
-	void cadenaAlfaNumAlAzar(char *s, const int len);
-	void cadenaNumericaAlAzar(char *s, const int len);
-
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
@@ -111,8 +107,6 @@ public:
 	void SerializarGuardarEnBloqueHidratar();
 //	pruebas para el Árbol B+
 	void pruebaBMas();
-	void pruebaBMasAuto();
-	void pruebaBMasCarga();
 //	pruebas para serializar y deserializar
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();
@@ -125,8 +119,6 @@ public:
 	void serializarDeserializarLista();
 	void serializarDeserializarCandidato();
 	void serializarDeserializarEleccion();
-//	pruebas para argumentos y archivo de configuración
-	void pruebaConfiguracion(int argc, const char* argv[]);
 //	pruebas de integracion
 	void pruebaLog();
 //	pruebas para ver si anda el compilador
