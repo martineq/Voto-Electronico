@@ -14,7 +14,6 @@ private:
 	int blocksize;					// Tamaño de bloque.
 	vector<std::vector<char> > v;	// Simula un archivo con un vector y cada "vector<char>" es un bloque.
 	vector<int> q;					// Lista de elementos borrados.
-//	vector<int> ind;				// Índice para el árbol. De esta forma los bloques se numeran 0,1,2,3...n.
 
 	void newfile(string p, int bs);
 

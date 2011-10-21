@@ -62,15 +62,11 @@ std::pair<vector<char>,std::string> bplustree::getnext()
 
 void bplustree::newtree(string p, int bs)
 {
-//	int rootblock=this->getrootblock();
 	leaf_node root;
 	this->f = new ffile(p,bs);
 	this->bs = bs; //this will be used as max size of the tree nodes
-//	cout << "root: "<<rootblock <<endl;
-	this->bs = this->f->newblock();
-//	cout << "root: "<<rootblock <<endl;
-//	cout << "size: "<<bs <<endl;
-	this->f->setblock(root.serialize(),this->getrootblock());
+	int punteroRaiz = this->f->newblock();	// Creo la raiz del árbol
+	this->f->setblock(root.serialize(),punteroRaiz); // Escribo sobre la raiz del árbol
 }
 
 
@@ -78,6 +74,12 @@ void bplustree::opentree(string p, int bs){
 	this->f = new ffile(p,bs);
 	this->bs = bs;
 }
+
+int bplustree::getrootblock(){
+	return (this->bs);
+}
+
+
 
 void bplustree::initialize()
 {

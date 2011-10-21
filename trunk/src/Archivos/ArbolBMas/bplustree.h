@@ -18,7 +18,7 @@ public:
 	int modify(string key, vector<char> data);
 	int del(string);
 	vector<char> search(string key);
-	int getrootblock(){return (this->bs); }; //i need this to be deterministic from the backend
+	int getrootblock(); //i need this to be deterministic from the backend
 	std::pair<vector<char>,std::string> getnext();
 private:
 	void clear(){leaf_node l; this->n=l; };
