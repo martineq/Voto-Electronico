@@ -100,6 +100,8 @@ private:
 	void verContenidoBucketCandidato(Bucket*);
 	void verContenidoBucketLista(Bucket*);
 	void verContenidoBucketCargo(Bucket*);
+	void cadenaAlfaNumAlAzar(char *s, const int len);
+	void cadenaNumericaAlAzar(char *s, const int len);
 public:
 	Pruebas();
 //	pruebas para el Archivo en Bloques
@@ -107,6 +109,8 @@ public:
 	void SerializarGuardarEnBloqueHidratar();
 //	pruebas para el Árbol B+
 	void pruebaBMas();
+	void pruebaBMasAuto();
+	void pruebaBMasCarga();
 //	pruebas para serializar y deserializar
 	void pruebaAgregarRegistrosAlBucket();
 	void pruebaEliminarRegistrosDelBucket();

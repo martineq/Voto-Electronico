@@ -417,6 +417,48 @@ void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador, char mod
 	this->verContenidoArbolListas();
 }
 
+
+
+
+void SimulacionSistema::levantarBaseDeDatos(Administrador* administrador) {
+
+//      NUEVO
+        cout << "Inicio de Levante de padron electoral" << endl;
+        char archivoDeControl1[]="archivoDeControlVotante.txt";
+        char archivoDeDatos1[]="archivoDeDatosVotante.txt";
+        this->heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos1,archivoDeControl1);
+        heVotante->mostrarArchivoDeHash();
+
+        cout << "Inicio de Levante de distritos" << endl;
+        char archivoDeControl2[]="archivoDeControlDistrito.txt";
+        char archivoDeDatos2[]="archivoDeDatosDistrito.txt";
+        this->heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos2,archivoDeControl2);
+        heDistrito->mostrarArchivoDeHash();
+
+        cout << "Inicio de Levante de Cargos posibles" << endl;
+        char archivoDeControl3[]="archivoDeControlCargo.txt";
+        char archivoDeDatos3[]="archivoDeDatosCargo.txt";
+        this->heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos3,archivoDeControl3);
+        heCargo->mostrarArchivoDeHash();
+
+        cout << "Inicio de Levante de Elecciones pasadas" << endl;
+        char archivoDeControl4[]="archivoDeControlEleccion.txt";
+        char archivoDeDatos4[]="archivoDeDatosEleccion.txt";
+        this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos4,archivoDeControl4);
+        heEleccion->mostrarArchivoDeHash();
+
+        cout << "Inicio de Levante de Candidatos pasados" << endl;
+        char archivoDeControl5[]="archivoDeControlCandidato.txt";
+        char archivoDeDatos5[]="archivoDeDatosCandidato.txt";
+        this->heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos5,archivoDeControl5);
+        heCandidato->mostrarArchivoDeHash();
+
+        cout << "Inicio de Levante de Listas de elecciones pasadas" << endl;
+        arbolB = new bplustree();
+        arbolB->opentree("arbolDeListas",LONGITUD_BLOQUE);
+}
+
+
 void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 	//	El administrador habilita una eleccion valida que esta en el archivo de elecciones
 	//	creacion auxiliar de 3 registros para que el obtenerRegistro del bucket pueda obtener la clave del registro que busco

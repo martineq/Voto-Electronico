@@ -552,7 +552,7 @@ void Pruebas::pruebaArchivoBloques(){
 	arch->crearNuevoBloque(&nrr4);
 	cout << "El bloque del nrr9 es: "<< nrr4 <<endl;
 
-	arch->infoInts();
+//	arch->infoInts();
 	delete[] buf;
 	delete arch;
 	cout << "\n------------\nSe acabó =D"<< endl;
@@ -672,6 +672,158 @@ void Pruebas::pruebaBMas(){
 	 for(int c=0;c< (int)tmp.size();c++)
 		 cout << (int)tmp[c];
 	 cout << endl;
+}
+
+void Pruebas::pruebaBMasCarga(){
+
+        std::pair<vector<char>,std::string> gn;
+        vector<char> tmp;
+        bplustree b;
+        b.opentree("BMas.bin",64);
+
+        cout << "despues de abrir=D" <<endl;
+        tmp=b.search("dddd");
+        for(int c=0;c< (int)tmp.size();c++)
+         cout << (int)tmp[c];
+        cout << endl;
+
+}
+
+
+
+void Pruebas::pruebaBMasAuto(){
+        string rutaArbol("ArbolBMas_B.bin");    // Ruta del archivo de Árbol B+
+        int tamanioNodo = 64;           // Tamaño del nodo.
+        string id;                                      // Identificador del registro.
+        vector<char> datos;                     // Vector con valores "aleatorios". Simula los datos de un registro
+        vector<char> resultado;         // Vector que recibe datos de un registro, producto de una búsqueda
+        std::pair<vector<char>,std::string> registro;   // Recibe el ID y los datos de un registro
+        bplustree b;                            // Árbol B+
+
+        b.newtree(rutaArbol,tamanioNodo);
+
+
+        ///////////////////
+        // Carga manual: //
+        ///////////////////
+        cout << "Carga manual de varios registros... " <<endl;
+        datos.push_back(1);
+        id = "deloitte";
+        b.add(id.c_str(),datos);
+        datos.push_back(2);
+        id = "nacho";
+        b.add(id.c_str(),datos);
+        datos.push_back(5);
+        b.add("this",datos);
+        datos.push_back(4);
+        b.add("vbbb",datos);
+        datos.push_back(5);
+        b.add("mama",datos);
+        datos.push_back(6);
+        b.add("eeee",datos);
+        b.add("oiuy",datos);
+        b.add("faffs",datos);
+        b.add("fgfd",datos);
+        b.add("faghgd",datos);
+        b.add("ytytefe",datos);
+        b.add("fsfsgfsff",datos);
+        b.add("ytrefc",datos);
+        b.add("rtyu",datos);
+        b.add("aaaa",datos);
+        b.add("bbbb",datos);
+        b.add("cccc",datos);
+        b.add("jjjj",datos);
+        b.add("kkkkk",datos);
+        b.add("llll",datos);
+        b.add("mmmm",datos);
+        b.add("nnnnn",datos);
+        b.add("ooooo",datos);
+        b.add("ppppppp",datos);
+        b.add("rrrrrrr",datos);
+        b.add("ssssssss",datos);
+        b.add("tttttt",datos);
+        b.add("uuuuuuu",datos);
+        id = "kkkkk";
+        b.add(id.c_str(),datos);
+
+
+        ///////////////////////
+        // Carga automática: //
+        ///////////////////////
+        cout << "Carga automática: " <<endl;
+        char* ID = new char[5];
+        for (int i=1; i<=5 ; i++){              // Creo cadenas de longitud entre 1 y 10 caracteres
+                char* cad = new char[i+1];
+                for (int j=1; j<=2 ; j++){      // Creo varias cadenas de cada longitud, con contenido al azar
+                        datos.clear();
+                        this->cadenaAlfaNumAlAzar(cad,i);
+                        this->cadenaNumericaAlAzar(ID,4);
+                        id = cad;
+                        for(int k=0 ; k < 4 ; k++){ datos.push_back((char)ID[k]);}
+                        cout << "agrego: "<< id << " dato: " ;
+                        for(int k=0;k<(int)datos.size();k++) cout << (int)datos[k];
+                        cout << endl;
+                        b.add(id.c_str(),datos);
+                }
+                delete[] cad;
+        }
+        delete[] ID;
+        datos.clear();
+
+
+        ////////////////////////
+        // Otras operaciones: //
+        ////////////////////////
+        cout << "Otras operaciones... " <<endl;
+        datos.push_back(3);
+        datos.push_back(9);
+        b.add("dddd",datos);
+        datos.push_back(5);
+        b.modify("dddd",datos);
+        resultado=b.search("aaaa");
+        b.del("faffs");
+        b.del("fgfd");
+        b.del("faghgd");
+        resultado=b.search("0000000");
+        registro=b.getnext();
+
+        cout <<"\nRecorro secuencialmente el árbol:";
+        int cant = 0;
+        while(registro.second.size()!=0){
+                cant++;
+                cout << "\nID: " << registro.second <<"\t Datos: ";
+         resultado = registro.first;
+         for(int c=0;c<(int)resultado.size();c++){ cout << (int)resultado[c];}
+         registro=b.getnext();
+        }
+        cout << "\n-----------------\nCantidad de registros: "<<cant<<endl;
+
+        id = "dddd";
+        cout <<"\n\nBusco el contenido del registro con ID '"<< id << "' y obtengo: "<<endl;
+        resultado=b.search(id.c_str());
+        for(int c=0;c<(int)resultado.size();c++) cout << (int)resultado[c];
+        cout << endl;
+
+}
+
+void Pruebas::cadenaNumericaAlAzar(char *s, const int len) {
+    static const char alphanum[] = "0123456789";
+    for (int i = 0; i < len; ++i) {s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];}
+    s[len] = '\0';
+}
+
+void Pruebas::cadenaAlfaNumAlAzar(char *s, const int len) {
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i = 0; i < len; ++i) {
+        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    s[len] = 0;
+
 }
 
 
