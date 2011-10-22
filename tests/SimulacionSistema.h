@@ -107,6 +107,7 @@ public:
 	void levantarBaseDeDatos(Administrador*);
 	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*,char, int);
 	void destruir();
+	void destruirManual();
 	void main (int argc,const char* argv[]);
 };
 

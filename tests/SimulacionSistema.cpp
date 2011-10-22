@@ -10,11 +10,31 @@
 SimulacionSistema::SimulacionSistema(){}
 
 SimulacionSistema::~SimulacionSistema(){
-	//		delete votante4;
-	//			delete registroVotante1;
-	//			delete registroVotante2;
-	//			delete registroVotante3;
-	//			delete registroVotante4;
+	delete this->heVotante;
+	delete this->heDistrito;
+	delete this->heEleccion;
+	delete this->heCandidato;
+	delete this->heCargo;
+	delete this->arbolB;
+//	remove ("archivoDeControlVotante.txt");
+//	remove ("archivoDeDatosVotante.txt");
+//	remove ("archivoDeControlDistrito.txt");
+//	remove ("archivoDeDatosDistrito.txt");
+//	remove ("archivoDeControlEleccion.txt");
+//	remove ("archivoDeDatosEleccion.txt");
+//	remove ("archivoDeControlCandidato.txt");
+//	remove ("archivoDeDatosCandidato.txt");
+//	remove ("archivoDeControlCargo.txt");
+//	remove ("archivoDeDatosCargo.txt");
+//	remove ("arbolDeListas");
+}
+
+void SimulacionSistema::destruirManual(){
+	delete votante4;
+	delete registroVotante1;
+	delete registroVotante2;
+	delete registroVotante3;
+	delete registroVotante4;
 	delete distrito4;
 	delete eleccion4;
 	delete candidato4;
@@ -38,25 +58,7 @@ SimulacionSistema::~SimulacionSistema(){
 	delete registroLista4;
 	delete registroCargo1;
 	delete registroCargo2;
-	delete this->heVotante;
-	delete this->heDistrito;
-	delete this->heEleccion;
-	delete this->heCandidato;
-	delete this->heCargo;
-	delete this->arbolB;
-//	remove ("archivoDeControlVotante.txt");
-//	remove ("archivoDeDatosVotante.txt");
-//	remove ("archivoDeControlDistrito.txt");
-//	remove ("archivoDeDatosDistrito.txt");
-//	remove ("archivoDeControlEleccion.txt");
-//	remove ("archivoDeDatosEleccion.txt");
-//	remove ("archivoDeControlCandidato.txt");
-//	remove ("archivoDeDatosCandidato.txt");
-//	remove ("archivoDeControlCargo.txt");
-//	remove ("archivoDeDatosCargo.txt");
-	remove ("arbolDeListas");
 }
-
 void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo)
 {
 	//Busco en la lista de elecciones habilitadas
@@ -772,7 +774,7 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 
 void SimulacionSistema::main (int argc,const char* argv[]) {
 
-	Configuracion conf(argc,argv);
+//	Configuracion conf(argc,argv);
 
 	string nombreDePrograma = ".//ArchivosAuxiliares//password";
 	string pathArchivoConteo = ".//ArchivosAuxiliares//ArchivoDeConteo.bin";
@@ -790,12 +792,14 @@ void SimulacionSistema::main (int argc,const char* argv[]) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		char modo = 'm';
-		this->cargarBaseDeDatos(administrador,'m');
+		int cantidadDeVotantes;
+		this->cargarBaseDeDatos(administrador,modo);
 //		this->levantarBaseDeDatos(administrador);
 		//	habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
-		this->inicioDeSimulacion(administrador,administradorDeConteo,'a',4);
+		this->inicioDeSimulacion(administrador,administradorDeConteo,modo,cantidadDeVotantes);
+		if (modo!='a') this->destruirManual();
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
