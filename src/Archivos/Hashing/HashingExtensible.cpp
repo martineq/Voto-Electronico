@@ -110,13 +110,23 @@ Resultados HashingExtensible::agregarRegistroInt(Registro *registro,int clave){
 		tablaDeDispersion.push_back(dispersion);
 	}
 
-	// Se intenta agregar el registro al bucket, si no se pude se redispersa.
-	bool registroAgregado = bucket->agregarRegistro(registro);
+
+	int espacioLibre = bucket->getEspacioLibre();
+
+	bool registroAgregado = false;
+
+	if ( espacioLibre > 0.2 * archivo->getDimensionDelBucket() ){
+
+		// Se intenta agregar el registro al bucket, si no se pude se redispersa.
+		registroAgregado = bucket->agregarRegistro(registro);
+	}
 
 	if (registroAgregado)
 		archivo->modificarBucket(nrr,bucket);
 
 	else{
+
+		cout << "No se puede agregar al bucket, inicio de redispersion." << endl << endl;
 		resultado = redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
 
 		// Reintento agregar el registro que generó la redispersion
