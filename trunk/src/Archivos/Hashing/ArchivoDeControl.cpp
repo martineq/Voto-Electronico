@@ -46,7 +46,7 @@ vector<int> ArchivoDeControl::hidratarVector()
 
 	stringstream* stream = new stringstream();
 	stream->write(numero,sizeof(int));
-	delete numero;
+	delete[] numero;
 
 	int cantidadDeElementos = stream->get();
 	delete stream;
@@ -57,7 +57,7 @@ vector<int> ArchivoDeControl::hidratarVector()
 
 	stream =  new stringstream();
 	stream->write(vector,sizeBuffer);
-	delete vector;
+	delete[] vector;
 
 	for(int i = 0; i < cantidadDeElementos; i++){
 		int valor;
@@ -107,7 +107,7 @@ list<int> ArchivoDeControl::hidratarLista()
 
 	stringstream* stream = new stringstream();
 	stream->write(numero,sizeof(int));
-	delete numero;
+	delete[] numero;
 
 	int cantidadDeElementos = stream->get();
 	delete stream;
@@ -118,7 +118,7 @@ list<int> ArchivoDeControl::hidratarLista()
 
 	stream =  new stringstream();
 	stream->write(vector,sizeBuffer);
-	delete vector;
+	delete[] vector;
 
 	for(int i = 0; i < cantidadDeElementos; i++){
 		int valor;

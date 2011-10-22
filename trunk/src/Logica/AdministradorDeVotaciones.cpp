@@ -257,7 +257,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 		int cantidadDeVotos = 0;
 
-		while( conteo->getFechaEleccion() == lista->getFecha() && conteo->getCargoEleccion() == lista->getCargo() && conteo->getLista() == lista->getNombre()){
+		while( conteo->getFechaEleccion() == lista->getFecha() && conteo->getCargoEleccion() == lista->getCargo() && conteo->getLista() == lista->getNombre() ){
 
 			cantidadDeVotos += conteo->getCantidadVotos();
 
@@ -283,6 +283,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 		delete cargo;
 
 		Registro* registroEncontrado = heCargo->obtenerRegistro(registro);
+		delete registro;
 
 		if ( registroEncontrado != NULL ){
 			Cargo* cargo = (Cargo*)registroEncontrado->getContenido();

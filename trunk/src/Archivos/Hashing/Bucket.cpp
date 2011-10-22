@@ -201,7 +201,6 @@ void Bucket::mostarBucket(){
 }
 
 Bucket::~Bucket() {
-	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++){
+	for (list<Registro*>:: iterator it = this->listaDeRegistros.begin(); it != listaDeRegistros.end(); it++)
 		delete *it;
-	}
 }
