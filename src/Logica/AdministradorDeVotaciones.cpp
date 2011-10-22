@@ -161,6 +161,7 @@ void AdministradorDeVotaciones::mostrarArchivoSecundario(){
 
 void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 {
+	cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 	string clave = eleccion->getFecha();
 	clave += eleccion->getCargo();
 
@@ -206,6 +207,7 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 
 void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExtensible* heCargo)
 {
+	cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
 	string clave = lista->getFecha();
 	clave += lista->getCargo();
 	clave += lista->getNombre();
@@ -267,8 +269,96 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 	}
 }
 
-void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrio)
+void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 {
+	cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
+
+	string clave = distrito->getDistrito();
+
+	indiceSecundario.search(clave);
+
+	pair<vector<char>,string> resultadoBusquedaSecundario = indiceSecundario.getnext();
+
+	if ( resultadoBusquedaSecundario.first.size() != 0 )
+	{
+
+		// Obtengo el contenido del indice secundario, que es la clave del primario.
+		string* clavePrincipal = getString( resultadoBusquedaSecundario.first );
+		vector<char> resultadoBusquedaPrimario = archivoDeConteo.search( *clavePrincipal );
+		delete clavePrincipal;
+
+		if ( resultadoBusquedaPrimario.size() != 0 )
+		{
+			string* contenidoSerializado = getString( resultadoBusquedaPrimario );
+			Conteo* conteo = new Conteo();
+			conteo->deserializar(contenidoSerializado);
+			delete contenidoSerializado;
+
+			cout << "Fecha de eleccion \tCargo \t\tLista ganadora \t\tCantidad de votos" << endl;
+
+			unsigned int cantidadDeVotos = 0;
+
+			string distritoAinformar = distrito->getDistrito();
+
+			while( distritoAinformar == conteo->getDistrito() )
+			{
+
+				string fechaEleccion = conteo->getFechaEleccion();
+				string cargoEleccion = conteo->getCargoEleccion();
+
+				unsigned int maximo = conteo->getCantidadVotos();
+
+				bool empate;
+				unsigned int votosempate;
+				string nombreDelGanador = conteo->getLista();
+
+				empate = false;
+				votosempate = 0;
+
+				while( conteo->getFechaEleccion() == fechaEleccion && conteo->getCargoEleccion() == cargoEleccion)
+				{
+
+					if ( conteo->getCantidadVotos() > maximo ){
+						maximo = conteo->getCantidadVotos();
+						nombreDelGanador = conteo->getLista();
+					}
+					else if ( conteo->getCantidadVotos() == maximo ){
+						empate = true;
+						votosempate = maximo;
+					}
+
+					pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+					string* conteoSerializado = getString( resultado.first );
+
+					delete conteo;
+
+					conteo = new Conteo();
+					conteo->deserializar(conteoSerializado);
+					delete conteoSerializado;
+				}
+
+				if ( empate != true)
+				cout << fechaEleccion << "\t\t" << cargoEleccion << "\t" << nombreDelGanador << "\t\t\t" << cantidadDeVotos << endl;
+				else
+				cout << fechaEleccion << "\t\t" << cargoEleccion << "\t" << "empate"<< "\t\t\t" << cantidadDeVotos << endl;
+
+				delete conteo;
+
+				resultadoBusquedaSecundario = indiceSecundario.getnext();
+
+				clavePrincipal = getString( resultadoBusquedaSecundario.first );
+				resultadoBusquedaPrimario = archivoDeConteo.search( *clavePrincipal );
+				delete clavePrincipal;
+
+				contenidoSerializado = getString( resultadoBusquedaPrimario );
+				conteo = new Conteo();
+				conteo->deserializar(contenidoSerializado);
+				delete contenidoSerializado;
+
+			}
+			delete conteo;
+		}
+	}
 }
 
 AdministradorDeVotaciones::~AdministradorDeVotaciones() {
