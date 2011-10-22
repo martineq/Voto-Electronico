@@ -13,6 +13,7 @@ HashingExtensible::HashingExtensible(int dimensionDelBucket,char* pathArchivoDeD
 
 		// Elimina el archivo actual y espera a que el programa termine
 		// para almacenar la nueva configuracion.
+		delete archivoDeControl;
 		remove(pathArchivoDeControl);
 		archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
 	}
