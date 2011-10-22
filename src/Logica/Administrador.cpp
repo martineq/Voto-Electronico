@@ -121,6 +121,14 @@ list <Lista*> Administrador::getListaDeBoletas(){
 	return this->listaDeBoletas;
 }
 
+Resultados Administrador::bajaHash(HashingExtensible* he,Registro* unRegistro){
+	return he->eliminarRegistro(unRegistro);
+}
+
+Resultados Administrador::modificaHash(HashingExtensible* he,Registro* unRegistro){
+	return he->modificarRegistro(unRegistro);
+}
+
 void Administrador::mostrarEleccionesDelVotante(list<Eleccion*>listaDeEleccionesDelVotante){
 	list<Eleccion*>::iterator it = listaDeEleccionesDelVotante.begin();
 	cout << "Las elecciones activas en las que usted emitir su voto son las siguientes" << endl;

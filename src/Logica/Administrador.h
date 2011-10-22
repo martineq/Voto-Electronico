@@ -43,6 +43,8 @@ public:
 	Administrador(string pathArchivo);
 	bool acceder(string nombre,string password);
 	Resultados altaHash (HashingExtensible*,Registro*);
+	Resultados bajaHash(HashingExtensible* he,Registro* unRegistro);
+	Resultados modificaHash(HashingExtensible* he,Registro* unRegistro);
 	int altaArbol (bplustree*,Registro*);
 	bool habilitarEleccion (Eleccion*);
 	bool consultarEleccionesHabilitadasParaElVotante(Votante*);
