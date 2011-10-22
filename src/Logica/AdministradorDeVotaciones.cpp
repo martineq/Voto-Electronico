@@ -246,7 +246,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 	pair<vector<char>,string> resultadoBusqueda = archivoDeConteo.getnext();
 
-	if ( resultadoBusqueda.first.size() != 0 )
+	if ( resultadoBusqueda.second.size() != 0 )
 	{
 		string* contenidoSerializado = getString( resultadoBusqueda.first );
 		Conteo* conteo = new Conteo();
@@ -262,6 +262,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 			cantidadDeVotos += conteo->getCantidadVotos();
 
 			pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+
 			string* conteoSerializado = getString( resultado.first );
 
 			delete conteo;
@@ -270,6 +271,8 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 			conteo->deserializar(conteoSerializado);
 			delete conteoSerializado;
 		}
+
+		delete conteo;
 
 		cout << lista->getFecha() << "\t\t" << lista->getNombre() << "\t\t" << cantidadDeVotos << endl;
 
@@ -283,6 +286,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 		if ( registroEncontrado != NULL ){
 			Cargo* cargo = (Cargo*)registroEncontrado->getContenido();
+			delete registroEncontrado;
 
 			list<string> listaCargos = cargo->devolverSubCargos();
 			int cantidadSubcargos = listaCargos.size();
@@ -291,13 +295,10 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 				cout << "Subcargo " << i+1 << "\t" << *it << endl;
 				it++;
 			}
+
+			delete cargo;
 		}
-
 		cout << endl;
-
-		delete cargo;
-		delete registroEncontrado;
-		delete conteo;
 	}
 }
 
@@ -329,8 +330,6 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 			delete contenidoSerializado;
 
 			cout << "Fecha de eleccion \tCargo \t\tLista ganadora \t\tCantidad de votos" << endl;
-
-			unsigned int cantidadDeVotos = 0;
 
 			string distritoAinformar = distrito->getDistrito();
 
