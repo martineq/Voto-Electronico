@@ -3,7 +3,7 @@
 #define REGISTRO_H_
 
 #include "../../Entidades/Entidad.h"
-#include "../../Auxiliares/ResultadoComparacion.h"
+#include "../../ClasesAuxiliares/ResultadoComparacion.h"
 #include "FabricaDeEntidades.h"
 #include <string>
 
