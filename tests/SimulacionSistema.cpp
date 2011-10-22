@@ -575,8 +575,7 @@ void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 	delete registroAHabilitar3;
 }
 
-//bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo,char modo, Votante* votanteAutomatico){
-bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador, char modo, int cantidadDeSimulaciones){
+bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo, char modo, int cantidadDeSimulaciones){
 	Log log;
 	log.abrir();
 	cout << endl;
@@ -722,13 +721,11 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador, char mo
 					}
 
 					//		INCREMENTAR CLASE CONTEO
-					//			string nombreDeLista = (*itBoletas)->getNombre();
-					//			string nombreDelDistrito = votanteActual->getDistrito();
-					//			cout << nombreDeLista << endl;
-					//			cout << nombreDelDistrito << endl;
-					//			(*itHabilitadas)->verEntidad();
-					//			administradorDeConteo->incrementarVoto(*itHabilitadas,&nombreDeLista,&nombreDelDistrito);
-					//			administradorDeConteo->mostrarArchivo();
+					string nombreDeLista = (*itBoletas)->getNombre();
+					string nombreDelDistrito = votanteActual->getDistrito();
+					cout << nombreDeLista << endl;
+					cout << nombreDelDistrito << endl;
+					administradorDeConteo->incrementarVoto(*itListaDelVotante,&nombreDeLista,&nombreDelDistrito);
 				}
 			}
 			else {
@@ -747,10 +744,13 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador, char mo
 
 void SimulacionSistema::main () {
 	string nombreDePrograma = ".//doc//password";
+	string pathArchivoConteo = ".//doc//ArchivoDeConteo.bin";
+	string pathIndiceSecundario = ".//doc//IndiceSecundario.bin";
+
 	Administrador* administrador = new Administrador (nombreDePrograma);
 
-//	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
-//	administradorDeConteo->nuevoArchivoDeConteo(".//doc//ArchivoDeConteo.bin",LONGITUD_BLOQUE);
+	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,LONGITUD_BLOQUE);
 
 //	intenta acceder al sistema con usuario incorrecto pero contraseña correcta
 	if ((administrador->acceder("undomiel","1")) || (administrador->acceder("1","aragorn")) || (administrador->acceder("",""))) cout << "SEGURIDAD VIOLADA" << endl;
@@ -762,12 +762,28 @@ void SimulacionSistema::main () {
 		//	habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
-		this->inicioDeSimulacion(administrador,'m',3);
+		this->inicioDeSimulacion(administrador,administradorDeConteo,'m',3);
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
-//	delete (administradorDeConteo);
-//	remove (".//doc//ArchivoDeConteo.bin");
+
+	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
+	Eleccion* eleccion = new Eleccion("19970701","Presidente");
+	administradorDeConteo->generarInformePorEleccion(eleccion);
+	delete eleccion;
+
+	//cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
+	Lista* lista = new Lista("UCR","19970701","Presidente");
+	administradorDeConteo->generarInformePorLista(lista,heCargo);
+	delete lista;
+
+	//cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
+	Distrito* distrito = new Distrito("Recoleta");
+	administradorDeConteo->generarInformePorDistrito(distrito);
+	delete distrito;
+
+	remove(pathArchivoConteo.c_str());
+	remove(pathIndiceSecundario.c_str());
 }
 
 
