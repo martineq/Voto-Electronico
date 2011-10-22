@@ -48,7 +48,7 @@ string *Serializadora::obtenerStringPointer()
 	stringstream abc;
 	abc.write(aux,size);
 	string* cadena = new string(abc.str());
-	delete aux;
+	delete[] aux;
 	return cadena;
 }
 
@@ -59,7 +59,7 @@ string Serializadora::obtenerString()
 	stream->read(aux,size);
 	stringstream abc;
 	abc.write(aux,size);
-	delete aux;
+	delete[] aux;
 	return abc.str();
 }
 
