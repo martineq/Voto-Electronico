@@ -45,7 +45,7 @@ public:
 	Resultados altaHash (HashingExtensible*,Registro*);
 	int altaArbol (bplustree*,Registro*);
 	bool habilitarEleccion (Eleccion*);
-	void consultarEleccionesHabilitadasParaElVotante(Votante*);
+	bool consultarEleccionesHabilitadasParaElVotante(Votante*);
 	void getEleccionesHabilitadas();
 	char sufragar(int,char);
 	bool cargarListasDeEleccion(Eleccion*,bplustree*);

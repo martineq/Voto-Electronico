@@ -122,25 +122,19 @@ list <Lista*> Administrador::getListaDeBoletas(){
 }
 
 void Administrador::mostrarEleccionesDelVotante(list<Eleccion*>listaDeEleccionesDelVotante){
-	if (listaDeEleccionesDelVotante.size()==0) {
-		cout << "USTED NO TIENE ELECCIONES HABILITADAS" << endl;
-		cout << "Si piensa que este mensaje es un error comuniquese con el administrador" << endl;
-	}
-	else {
-		list<Eleccion*>::iterator it = listaDeEleccionesDelVotante.begin();
-		cout << "Las elecciones activas en las que usted emitir su voto son las siguientes" << endl;
-		int i=1;
-		while (it!=listaDeEleccionesDelVotante.end()){
-			cout << "Eleccion " << i << ":" << endl;
-			cout << "Fecha: " << (*it)->getFecha() << endl;
-			cout << "Cargo Principal: " << (*it)->getCargo() << endl;
-			cout << "---------------" << endl;
-			it++; i++;
-		}
+	list<Eleccion*>::iterator it = listaDeEleccionesDelVotante.begin();
+	cout << "Las elecciones activas en las que usted emitir su voto son las siguientes" << endl;
+	int i=1;
+	while (it!=listaDeEleccionesDelVotante.end()){
+		cout << "Eleccion " << i << ":" << endl;
+		cout << "Fecha: " << (*it)->getFecha() << endl;
+		cout << "Cargo Principal: " << (*it)->getCargo() << endl;
+		cout << "---------------" << endl;
+		it++; i++;
 	}
 }
 
-void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante){
+bool Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante){
 	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
 	if (this->listaDeEleccionesHabilitadas.size()==0) cout << "El administrador no ha habilitado ninguna eleccion aun" << endl;
 	else {
@@ -160,7 +154,6 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 					}
 					if (!fin) {
 						Eleccion* eleccion = (Eleccion*)(*it)->duplicar();
-						cout << "Cargo las elecciones para el votante" << endl;					;
 						this->listaDeEleccionesDelVotante.push_back(eleccion);
 					}
 					fin=true;
@@ -170,7 +163,15 @@ void Administrador::consultarEleccionesHabilitadasParaElVotante(Votante* votante
 			it++;
 		}
 	}
-	this->mostrarEleccionesDelVotante(listaDeEleccionesDelVotante);
+	if (listaDeEleccionesDelVotante.size()==0) {
+		cout << "USTED NO TIENE ELECCIONES HABILITADAS" << endl;
+		cout << "Si piensa que este mensaje es un error comuniquese con el administrador" << endl;
+		return false;
+	}
+	else {
+		this->mostrarEleccionesDelVotante(listaDeEleccionesDelVotante);
+		return true;
+	}
 }
 
 int Administrador::elegirBoleta(char modo){
@@ -196,9 +197,8 @@ int Administrador::elegirBoleta(char modo){
 	int c;
 	while (!ok) {
 		cout << "Elija su boleta en base al numero de opcion indicado" << endl;
-//		srand (time(NULL));
-//		if (modo=='a') c= rand () % this->listaDeBoletas.size()+2;
-		if (modo=='a') c=1;
+		if (modo=='a') c= (rand () % (this->listaDeBoletas.size()+2))+1;
+//		if (modo=='a') c=1;
 		else cin >> c;
 		if ((((c)<=(((int)(this->listaDeBoletas.size()))+2)))&&(c>0)) ok=true;
 		else cout << "Numero de boleta invalido" << endl;
@@ -225,16 +225,11 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	delete registroSerializado;
 
 	Lista* boletaDelArbol = (Lista*)registro->getContenido();
-	cout << "Estoy viendo la lista: " << endl;
-	cout << "Nombre: " << boletaDelArbol->getNombre() << endl;
-	cout << "Fecha: " << boletaDelArbol->getFecha() << endl;
-	cout << "Cargo: " << boletaDelArbol->getCargo() << endl;
 	while (boletaDelArbol->getFecha() == eleccion->getFecha()){
 
 		if (boletaDelArbol->getCargo() == eleccion->getCargo()){
 			Lista* lista = (Lista*)boletaDelArbol->duplicar();
 			this->listaDeBoletas.push_back(lista);
-			cout << "Estoy cargando listas para una eleccion" << endl;
 		}
 
 		delete registro;
@@ -250,10 +245,6 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 
 		delete boletaDelArbol;
 		boletaDelArbol = (Lista*)registro->getContenido();
-		cout << "Estoy viendo la lista: " << endl;
-		cout << "Nombre: " << boletaDelArbol->getNombre() << endl;
-		cout << "Fecha: " << boletaDelArbol->getFecha() << endl;
-		cout << "Cargo: " << boletaDelArbol->getCargo() << endl;
 	}
 	delete registro;
 	delete boletaDelArbol;
