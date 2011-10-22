@@ -305,6 +305,36 @@ void Administrador::destruir(){
 	}
 }
 
+
+int Administrador::bajaArbol (bplustree* arbolB,Registro* registro){
+    string clave;
+    Lista* lista = (Lista*)registro->getContenido();
+
+    clave  = lista->getFecha();
+    clave += lista->getCargo();
+    clave += lista->getNombre();
+
+    delete lista;
+    return (arbolB->del(clave) == 0);
+}
+
+int Administrador::modificaArbol(bplustree* arbolB,Registro* registro){
+    string clave;
+    Lista* lista = (Lista*)registro->getContenido();
+
+    clave  = lista->getFecha();
+    clave += lista->getCargo();
+    clave += lista->getNombre();
+
+    delete lista;
+    string* registroSerializado = registro->serializar();
+    vector<char> data(registroSerializado->begin(),registroSerializado->end());
+    delete registroSerializado;
+
+    return (arbolB->modify(clave,data) == 0);
+
+}
+
 Administrador::~Administrador() {
 	while(!this->listaDeEleccionesHabilitadas.empty()) {
 		delete this->listaDeEleccionesHabilitadas.back();

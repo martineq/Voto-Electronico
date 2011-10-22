@@ -55,6 +55,8 @@ public:
 	list <Eleccion*> getListaDeEleccionesHabilitadas();
 	list <Eleccion*> getListaDeEleccionesDelVotante();
 	list <Lista*> getListaDeBoletas();
+	int modificaArbol(bplustree* arbolB,Registro* registro);
+	int bajaArbol (bplustree* arbolB,Registro* registro);
 	virtual ~Administrador();
 	void destruir();
 };
