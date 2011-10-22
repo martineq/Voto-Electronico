@@ -583,7 +583,7 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 	cout << endl;
 	srand (time(NULL));
 	// Cargar archivoDeConteo con las listas que participan en la actual eleccion.
-	//	cargarArchivoDeConteo(administrador,administradorDeConteo);
+		cargarArchivoDeConteo(administrador,administradorDeConteo);
 
 	//	ingresa el votante1
 	for (int k=1; k< cantidadDeSimulaciones;k++) {
