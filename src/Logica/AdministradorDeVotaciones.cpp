@@ -74,6 +74,8 @@ void AdministradorDeVotaciones::abrirArchivoDeConteo(string pathArchivo,string p
 
 int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 {
+	int resultadoFuncion = 1;
+
 	conteo->verEntidad();
 
 	string* conteoSerializado = conteo->serializar();
@@ -84,17 +86,17 @@ int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 		cout << "size: " << conteoSerializado->size() << endl;
 
 		vector<char> data(conteoSerializado->begin(),conteoSerializado->end());
-		delete conteoSerializado;
 
 		archivoDeConteo.add(clave,data);
 
 		// agrego el contenido al indice secundario distrito
 		agregarConteoAlIndicePorDistrito(conteo);
 
-		return 0;
-	}else{
-		return 1;
+		resultadoFuncion = 0;
 	}
+	delete conteoSerializado;
+
+	return resultadoFuncion;
 }
 
 void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nombreLista, string *distrito)
