@@ -520,9 +520,7 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 
 }
 
-void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 
-}
 
 void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador){
 
@@ -662,6 +660,125 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 
 }
+
+void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
+    char archivoDeControl[]="archivoDeControlLista.txt";
+    char archivoDeDatos[]="archivoDeDatosLista.txt";
+    bplustree * bLista = new bplustree();
+    bLista->opentree(archivoDeDatos,LONGITUD_BLOQUE);
+
+    string opcion = "0";
+    string fecha,cargo,nombreLista;
+
+    int i = 0;
+    Lista * lista = NULL;
+    Registro * registro = NULL;
+
+    while (true){
+        while ((i < 1) or (i > 4)){
+            cout << "Opciones: "<<endl<<endl;
+            cout << "1) Alta Lista"<<endl;
+            cout << "2) Baja Lista"<<endl;
+            cout << "3) Modificar Lista"<<endl;
+            cout << "4) Volver atrás"<<endl;
+            cout << "Opcion: ";
+            cin >> opcion;
+            cout <<endl;
+            if ( isANumber(opcion) == 1){
+                i = atoi(opcion.c_str());
+            }
+
+        }
+
+        if (i != 4){
+
+            bool fechaError = true;
+            while (fechaError) {
+                cout << "Ingrese la fecha de la elección: ";
+                cin >> fecha;
+                cout << endl;
+                if (fecha.size() == 8) {
+                    string anioStr = fecha.substr(0,4);
+                    cout << "anioStr: "<<anioStr<<endl;
+                    string mesStr = fecha.substr(4,2);
+                    cout << "mesStr: "<<mesStr<<endl;
+                    string diaStr = fecha.substr(6,2);
+                    cout << "diaStr: "<<diaStr<<endl;
+                    int dia = 0;
+                    int mes = 0;
+                    int anio = 0;
+                    if (isANumber(anioStr) == 1){
+                        anio = atoi(anioStr.c_str());
+                    }
+                    if (isANumber(mesStr) == 1){
+                        mes = atoi(mesStr.c_str());
+                    }
+                    if (isANumber(diaStr) == 1){
+                        dia = atoi(diaStr.c_str());
+                    }
+                    if ((anio >= 1980) and (anio <= 2020) and (mes > 0) and (mes <= 12)
+                        and (dia > 0) and (dia <= 30)){
+                        fechaError = false;
+                    }
+                }
+            }
+
+            cout << "Ingrese el cargo: ";
+            cin >> cargo;
+
+            cout << "Ingrese la lista: ";
+            cin >> nombreLista;
+
+
+            lista = new Lista(nombreLista,fecha,cargo);
+
+            registro = new Registro(lista);
+            delete (lista);
+        }
+        int rta;
+        switch (i)
+        {
+        case 1 : {
+             rta = administrador->altaArbol(bLista,registro);
+            if (rta == 1) {
+                cout << "Operación exitosa"<<endl;
+            }
+            else{
+                cout << "Operación fallida"<<endl;
+            }
+        }break;
+        case 2 : {
+            rta = administrador->bajaArbol(bLista,registro);
+            if (rta == 1) {
+                cout << "Operación exitosa"<<endl;
+            }
+            else{
+                cout << "Operación fallida"<<endl;
+            }
+
+        }break;
+        case 3 : {
+            rta = administrador->modificaArbol(bLista,registro);
+            if (rta == 1) {
+                cout << "Operación exitosa"<<endl;
+            }
+            else{
+                cout << "Operación fallida"<<endl;
+            }
+
+        }break;
+        case 4 : {
+            delete registro;
+            delete bLista;
+            return;
+        }
+        }
+        i = 0;
+
+    }
+
+}
+
 
 
 InterfazAdministrador::~InterfazAdministrador() {
