@@ -770,22 +770,26 @@ void SimulacionSistema::main () {
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
-	delete administradorDeConteo;
+
+	administradorDeConteo->mostrarArchivoPrincipal();
+	administradorDeConteo->mostrarArchivoSecundario();
 
 	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
-//	Eleccion* eleccion = new Eleccion("19970701","Presidente");
-//	administradorDeConteo->generarInformePorEleccion(eleccion);
-//	delete eleccion;
+	Eleccion* eleccion = new Eleccion("19970701","Presidente");
+	administradorDeConteo->generarInformePorEleccion(eleccion);
+	delete eleccion;
 
 	//cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
-//	Lista* lista = new Lista("UCR","19970701","Presidente");
-//	administradorDeConteo->generarInformePorLista(lista,heCargo);
-//	delete lista;
+	Lista* lista = new Lista("UCR","19970701","Presidente");
+	administradorDeConteo->generarInformePorLista(lista,heCargo);
+	delete lista;
 
 	//cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
-//	Distrito* distrito = new Distrito("Recoleta");
-//	administradorDeConteo->generarInformePorDistrito(distrito);
-//	delete distrito;
+	Distrito* distrito = new Distrito("Recoleta");
+	administradorDeConteo->generarInformePorDistrito(distrito);
+	delete distrito;
+
+	delete administradorDeConteo;
 
 	remove(pathArchivoConteo.c_str());
 	remove(pathIndiceSecundario.c_str());
