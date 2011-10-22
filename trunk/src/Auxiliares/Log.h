@@ -34,6 +34,7 @@ public:
 	void insertarMensajeConEntero(int);
 	void insertarMensajeConEntidad(Entidad*,string);
 	void insertarMensaje(string);
+	void insertarMensajeSeparador (int);
 	virtual ~Log();
 };
 

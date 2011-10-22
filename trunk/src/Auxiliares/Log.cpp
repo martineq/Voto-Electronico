@@ -48,6 +48,14 @@ void Log::insertarMensaje(string mensaje){
 	fputs (&mensaje[0],this->archivo);
 }
 
+void Log::insertarMensajeSeparador (int k) {
+	this->insertarTimestamp();
+	fputs ("====================Votante",this->archivo);
+	string s = this->convertIntToString(k);
+	fputs (&s[0],this->archivo);
+	fputs ("==================================",this->archivo);
+}
+
 void Log::insertarMensajeConEntero(int dni) {
 	this->insertarTimestamp();
 	fputs (" Intento ingresar el votante con DNI: ",this->archivo);

@@ -15,7 +15,7 @@ EleccionAnterior::~EleccionAnterior() {
 
 int EleccionAnterior::getTamanio(){
 	int tamanioCargo = this->cargo.size();
-	return (TAM_FECHA + TAM_INT + tamanioCargo);
+	return (TAM_FECHA + 2*TAM_INT + tamanioCargo);
 }
 
 string EleccionAnterior::getFecha () {

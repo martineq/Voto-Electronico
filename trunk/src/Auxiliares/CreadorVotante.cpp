@@ -17,8 +17,8 @@ CreadorVotante::CreadorVotante(int seed) {
 string CreadorVotante::getNombre(){
     string linea;
     fstream archivo;
-    archivo.open ("./trunk/doc/Nombres.txt", ios::in);
-    int cantLineas = this->getCantLineas("./trunk/doc/Nombres.txt");
+    archivo.open ("../TPDatos/doc/Nombres.txt", ios::in);
+    int cantLineas = this->getCantLineas("../TPDatos/doc/Nombres.txt");
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
@@ -40,8 +40,8 @@ string CreadorVotante::getNombre(){
 string CreadorVotante::getApellido(){
     string linea;
     fstream archivo;
-    int cantLineas = this->getCantLineas("./trunk/doc/Apellidos.txt");
-    archivo.open ("./trunk/doc/Apellidos.txt", ios::in);
+    int cantLineas = this->getCantLineas("../TPDatos/doc/Apellidos.txt");
+    archivo.open ("../TPDatos/doc/Apellidos.txt", ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
@@ -56,20 +56,19 @@ string CreadorVotante::getApellido(){
 }
 
 int CreadorVotante::getDNI(){
-    int pos = (rand() % 40000000)+1;
+//    int pos = (rand() % 40000000)+1;
+	int pos = semilla;
    return pos;
 }
 
 string CreadorVotante::getDistrito(){
     string linea;
     fstream archivo;
-    int cantLineas = this->getCantLineas("./trunk/doc/Distritos.txt");
-    cout <<"Cant Lineas: "<<cantLineas<<endl;
-    archivo.open ("./trunk/doc/Distritos.txt", ios::in);
+    int cantLineas = this->getCantLineas("../TPDatos/doc/Distritos.txt");
+    archivo.open ("../TPDatos/doc/Distritos.txt", ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
-       cout << "Pos: "<<pos<<endl;
        while ( archivo.good() and (cont < pos))
        {
            cont = cont + 1;
@@ -85,8 +84,8 @@ string CreadorVotante::getDomicilio(){
     string linea;
     fstream archivo;
     stringstream miString;
-    int cantLineas = this->getCantLineas("./trunk/doc/Domicilios.txt");
-    archivo.open ("./trunk/doc/Domicilios.txt", ios::in);
+    int cantLineas = this->getCantLineas("../TPDatos/doc/Domicilios.txt");
+    archivo.open ("../TPDatos/doc/Domicilios.txt", ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = ( rand() % cantLineas) + 1;
