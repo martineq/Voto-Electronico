@@ -13,7 +13,7 @@
 #include "Serializable.h"
 #include "Constantes.h"
 #include "NombreDeEntidad.h"
-#include "../Auxiliares/ResultadoComparacion.h"
+#include "../ClasesAuxiliares/ResultadoComparacion.h"
 
 using std::string;
 using std::stringstream;

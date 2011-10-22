@@ -3,7 +3,7 @@
 
 #include "Entidad.h"
 #include <iostream>
-#include "../Auxiliares/ResultadoComparacion.h"
+#include "../ClasesAuxiliares/ResultadoComparacion.h"
 
 class Distrito : public Entidad {
 

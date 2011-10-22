@@ -15,6 +15,13 @@ Opciones válidas (cada una debe estar separada con un espacio):
 	-N +<valor>		Asigna el tamaño del Nodo del árbol B+.
 	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión.
 	
+	-P +<ruta>		Asigna la ruta del archivo de Password del administrador.
+	-C +<ruta>		Asigna la ruta del archivo de Conteo.
+	
+	
 Fin de los comentarios-> //	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
--D +archivoHash -A +archivoArbol -N +2048 -B +2048
+-D +archivoHash -A +archivoArbol -N +2048 -B +2048 -P +.//doc//password 
+
+	string pathArchivoConteo = ".//doc//ArchivoDeConteo.bin";
+	string pathIndiceSecundario = ".//doc//IndiceSecundario.bin";

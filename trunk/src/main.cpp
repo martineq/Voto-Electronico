@@ -82,7 +82,7 @@ int main(int argc,const char* argv[]) {
 
 //	Pruebas de simulacion de sistema
 	SimulacionSistema sistema;
-	sistema.main();
+	sistema.main(argc,argv);
 
 
 	cout << "\n\n** EXITO! **" << endl;
