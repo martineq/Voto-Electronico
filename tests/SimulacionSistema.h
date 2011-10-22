@@ -17,6 +17,7 @@
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
 #include "../src/Auxiliares/Log.h"
+#include "../src/Auxiliares/Configuracion.h"
 #include "../src/Auxiliares/CreadorVotante.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
@@ -106,7 +107,7 @@ public:
 	void levantarBaseDeDatos(Administrador*);
 	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*,char, int);
 	void destruir();
-	void main ();
+	void main (int argc,const char* argv[]);
 };
 
 #endif /* SIMULACIONSISTEMA_H_ */

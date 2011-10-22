@@ -770,10 +770,13 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 	return 1;
 }
 
-void SimulacionSistema::main () {
-	string nombreDePrograma = ".//doc//password";
-	string pathArchivoConteo = ".//doc//ArchivoDeConteo.bin";
-	string pathIndiceSecundario = ".//doc//IndiceSecundario.bin";
+void SimulacionSistema::main (int argc,const char* argv[]) {
+
+	Configuracion conf(argc,argv);
+
+	string nombreDePrograma = ".//ArchivosAuxiliares//password";
+	string pathArchivoConteo = ".//ArchivosAuxiliares//ArchivoDeConteo.bin";
+	string pathIndiceSecundario = ".//ArchivosAuxiliares//IndiceSecundario.bin";
 
 	Administrador* administrador = new Administrador (nombreDePrograma);
 
