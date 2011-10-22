@@ -44,16 +44,16 @@ SimulacionSistema::~SimulacionSistema(){
 	delete this->heCandidato;
 	delete this->heCargo;
 	delete this->arbolB;
-	remove ("archivoDeControlVotante.txt");
-	remove ("archivoDeDatosVotante.txt");
-	remove ("archivoDeControlDistrito.txt");
-	remove ("archivoDeDatosDistrito.txt");
-	remove ("archivoDeControlEleccion.txt");
-	remove ("archivoDeDatosEleccion.txt");
-	remove ("archivoDeControlCandidato.txt");
-	remove ("archivoDeDatosCandidato.txt");
-	remove ("archivoDeControlCargo.txt");
-	remove ("archivoDeDatosCargo.txt");
+//	remove ("archivoDeControlVotante.txt");
+//	remove ("archivoDeDatosVotante.txt");
+//	remove ("archivoDeControlDistrito.txt");
+//	remove ("archivoDeDatosDistrito.txt");
+//	remove ("archivoDeControlEleccion.txt");
+//	remove ("archivoDeDatosEleccion.txt");
+//	remove ("archivoDeControlCandidato.txt");
+//	remove ("archivoDeDatosCandidato.txt");
+//	remove ("archivoDeControlCargo.txt");
+//	remove ("archivoDeDatosCargo.txt");
 	remove ("arbolDeListas");
 }
 
@@ -755,6 +755,7 @@ void SimulacionSistema::main () {
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		char modo = 'm';
 		this->cargarBaseDeDatos(administrador,'m');
+//		this->levantarBaseDeDatos(administrador);
 		//	habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
@@ -772,19 +773,19 @@ void SimulacionSistema::main () {
 	delete administradorDeConteo;
 
 	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
-	Eleccion* eleccion = new Eleccion("19970701","Presidente");
-	administradorDeConteo->generarInformePorEleccion(eleccion);
-	delete eleccion;
+//	Eleccion* eleccion = new Eleccion("19970701","Presidente");
+//	administradorDeConteo->generarInformePorEleccion(eleccion);
+//	delete eleccion;
 
 	//cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
-	Lista* lista = new Lista("UCR","19970701","Presidente");
-	administradorDeConteo->generarInformePorLista(lista,heCargo);
-	delete lista;
+//	Lista* lista = new Lista("UCR","19970701","Presidente");
+//	administradorDeConteo->generarInformePorLista(lista,heCargo);
+//	delete lista;
 
 	//cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
-	Distrito* distrito = new Distrito("Recoleta");
-	administradorDeConteo->generarInformePorDistrito(distrito);
-	delete distrito;
+//	Distrito* distrito = new Distrito("Recoleta");
+//	administradorDeConteo->generarInformePorDistrito(distrito);
+//	delete distrito;
 
 	remove(pathArchivoConteo.c_str());
 	remove(pathIndiceSecundario.c_str());
