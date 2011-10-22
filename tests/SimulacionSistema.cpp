@@ -174,6 +174,8 @@ void SimulacionSistema::iniciarDistritosParaIntegracion(){
 }
 
 void SimulacionSistema::iniciarEleccionesParaIntegracion(){
+	cout << "***************** INICIO CARGA DE ELECCIONES *****************"<<endl;
+
 	this->eleccion1 = new Eleccion("19970701","Presidente");
 	this->eleccion1->agregarDistrito("Chaco");
 	this->eleccion1->agregarDistrito("Misiones");
@@ -200,6 +202,7 @@ void SimulacionSistema::iniciarEleccionesParaIntegracion(){
 	this->eleccion1->agregarDistrito("Santiago del Estero");
 	this->eleccion1->agregarDistrito("Tucuman");
 	this->eleccion1->agregarDistrito("Tierra del Fuego");
+
 	this->eleccion2 = new Eleccion("19970701","Gobernador");
 	this->eleccion2->agregarDistrito("Chaco");
 	this->eleccion2->agregarDistrito("Misiones");
@@ -226,6 +229,7 @@ void SimulacionSistema::iniciarEleccionesParaIntegracion(){
 	this->eleccion2->agregarDistrito("Santiago del Estero");
 	this->eleccion2->agregarDistrito("Tucuman");
 	this->eleccion2->agregarDistrito("Tierra del Fuego");
+
 	this->eleccion3 = new Eleccion("19970702","Presidente");
 	this->eleccion3->agregarDistrito("Chaco");
 	this->eleccion3->agregarDistrito("Misiones");
@@ -270,6 +274,21 @@ void SimulacionSistema::iniciarEleccionesParaIntegracion(){
 	if ( this->heEleccion->agregarRegistro(registroEleccion3) == operacionOK )
 		cout << "Se agrego un eleccion3" << endl;
 	else cout << "Error agregando eleccion3" << endl;
+
+	string fechasDeElecciones[] = {"20080901","20040901","20000901","19960901"};
+	for (int i = 0; i < 4; i++){
+		Eleccion* eleccion = new Eleccion(fechasDeElecciones[i],"Jefe De Gobierno");
+		eleccion->agregarDistrito("Buenos Aires");
+		Registro* registro = new Registro(eleccion);
+		delete eleccion;
+		heEleccion->agregarRegistro(registro);
+		delete registro;
+	}
+
+	heEleccion->mostrarArchivoDeHash();
+
+	cout << "***************** FIN CARGA DE ELECCIONES *****************"<<endl;
+
 }
 
 void SimulacionSistema::iniciarCandidatosParaIntegracion(){
@@ -585,8 +604,8 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 	// Cargar archivoDeConteo con las listas que participan en la actual eleccion.
 		cargarArchivoDeConteo(administrador,administradorDeConteo);
 
-	//	ingresa el votante1
-	for (int k=1; k< cantidadDeSimulaciones;k++) {
+	//	ingresa el votante
+	for (int k=1; k <= cantidadDeSimulaciones;k++) {
 		int numeroDeEleccion;
 		int dni;
 		char c;
@@ -759,7 +778,7 @@ void SimulacionSistema::main () {
 		//	habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
-		this->inicioDeSimulacion(administrador,administradorDeConteo,'m',3);
+		this->inicioDeSimulacion(administrador,administradorDeConteo,'a',4);
 		if (modo!='m') {
 			delete votante4;
 			delete registroVotante1;
@@ -771,21 +790,21 @@ void SimulacionSistema::main () {
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
 
-	administradorDeConteo->mostrarArchivoPrincipal();
+	administradorDeConteo->mostrarArchivoPrincipalEnFormatoTabla();
 	administradorDeConteo->mostrarArchivoSecundario();
 
 	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
-	Eleccion* eleccion = new Eleccion("19970701","Presidente");
+	Eleccion* eleccion = new Eleccion("19970702","Gobernador");
 	administradorDeConteo->generarInformePorEleccion(eleccion);
 	delete eleccion;
 
 	//cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
-	Lista* lista = new Lista("UCR","19970701","Presidente");
+	Lista* lista = new Lista("Socialista","19970702","Gobernador");
 	administradorDeConteo->generarInformePorLista(lista,heCargo);
 	delete lista;
 
 	//cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
-	Distrito* distrito = new Distrito("Recoleta");
+	Distrito* distrito = new Distrito("Misiones");
 	administradorDeConteo->generarInformePorDistrito(distrito);
 	delete distrito;
 
