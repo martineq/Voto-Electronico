@@ -16,7 +16,7 @@
 #include "../src/Entidades/Eleccion.h"
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
-#include "../src/Auxiliares/Log.h"
+#include "../src/ClasesAuxiliares/Log.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
 #include "../src/Archivos/Hashing/HashingExtensible.h"

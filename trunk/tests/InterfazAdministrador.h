@@ -16,22 +16,22 @@
 #include "../src/Entidades/Eleccion.h"
 #include "../src/Entidades/Conteo.h"
 #include "../src/Entidades/Constantes.h"
-#include "../src/Auxiliares/Log.h"
-#include "../src/Auxiliares/CreadorVotante.h"
+#include "../src/ClasesAuxiliares/Log.h"
+#include "../src/ClasesAuxiliares/CreadorVotante.h"
 #include "../src/Logica/Administrador.h"
 #include "../src/Archivos/Hashing/Bucket.h"
 #include "../src/Archivos/Hashing/HashingExtensible.h"
 #include "../src/Archivos/EnBloques/ArchivoBloques.h"
 #include "../src/Archivos/ArbolBMas/bplustree.h"
 #include "../src/Logica/AdministradorDeVotaciones.h"
-#include "../src/Auxiliares/Configuracion.h"
+#include "../src/ClasesAuxiliares/Configuracion.h"
 #include <list>
 #include <time.h>
 #include <stdio.h>
 #include "../src/Archivos/ArbolBMas/bplustree.h"
 #include <string>
 #include <iostream>
-#include "../src/Auxiliares/Configuracion.h"
+#include "../src/ClasesAuxiliares/Configuracion.h"
 
 using namespace std;
 
