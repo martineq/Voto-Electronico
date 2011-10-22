@@ -89,6 +89,11 @@ public:
 	 */
 	void mostrarArchivoSecundario();
 
+	/*
+	 * Muestra el archivo de conteo en formato tabla.
+	 */
+	void mostrarArchivoPrincipalEnFormatoTabla();
+
 	~AdministradorDeVotaciones();
 
 };
