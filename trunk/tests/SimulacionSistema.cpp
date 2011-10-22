@@ -10,16 +10,16 @@
 SimulacionSistema::SimulacionSistema(){}
 
 SimulacionSistema::~SimulacionSistema(){
-	delete votante4;
+	//		delete votante4;
+	//			delete registroVotante1;
+	//			delete registroVotante2;
+	//			delete registroVotante3;
+	//			delete registroVotante4;
 	delete distrito4;
 	delete eleccion4;
 	delete candidato4;
 	delete lista4;
 	delete cargo2;
-	delete registroVotante1;
-	delete registroVotante2;
-	delete registroVotante3;
-	delete registroVotante4;
 	delete registroDistrito1;
 	delete registroDistrito2;
 	delete registroDistrito3;
@@ -388,23 +388,23 @@ void SimulacionSistema::iniciarCargosParaIntegracion() {
 }
 
 void SimulacionSistema::crearArchivoDeVotantes(){
-//	int dimensionBucket = LONGITUD_BLOQUE;
-//	char nombreDeArchivo[] = "votantesAleatorios.bin";
-//	char archivoConfiguracion[] = "conf.bin";
-//	this->heVotante = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
-//	remove(nombreDeArchivo);
-//	remove(archivoConfiguracion);
-//	 for (int i = 0; i < 1000; i++){
-//	        CreadorVotante * creador = new CreadorVotante(i+1);
-//	        Votante* votante = creador->crearVotante();
-//	        Registro* registro = new Registro(votante);
-//       		heVotante->agregarRegistro(registro);
-////        	he->mostrarArchivoDeHash();
-////	        votante->verVotante();
-//	        delete (registro);
-//	        delete (votante);
-//	        delete (creador);
-//	    }
+	int dimensionBucket = LONGITUD_BLOQUE;
+	char nombreDeArchivo[] = "votantesAleatorios.bin";
+	char archivoConfiguracion[] = "conf.bin";
+	this->heVotante = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
+	remove(nombreDeArchivo);
+	remove(archivoConfiguracion);
+	 for (int i = 0; i < 10; i++){
+	        CreadorVotante * creador = new CreadorVotante(i+1);
+	        Votante* votante = creador->crearVotante();
+	        Registro* registro = new Registro(votante);
+       		this->heVotante->agregarRegistro(registro);
+//        	he->mostrarArchivoDeHash();
+//	        votante->verVotante();
+	        delete (registro);
+	        delete (votante);
+	        delete (creador);
+	    }
 }
 
 void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador, char modo) {
@@ -638,9 +638,6 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 		if (seguir) {
 			votanteActual = (Votante*) registroAuxiliar->getContenido();
 			delete registroAuxiliar;
-
-//			votanteActual->verEntidad();
-
 			string mensaje= " Ingreso el votante: ";
 			log.insertarMensajeConEntidad(votanteActual,mensaje);
 			cout << "Bienvenido " << votanteActual->getNombre() << endl;
@@ -657,7 +654,6 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 					while (!ok){
 						cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
 						int n;
-						/*srand(time(NULL));*/
 						if (modo=='a') n = (rand()%((administrador->getListaDeEleccionesDelVotante()).size()))+1;
 //						if (modo=='a') n=1;
 						else cin >> n;
@@ -719,7 +715,6 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 						string mensaje="El votante voto lista: ";
 						log.insertarMensajeConEntidad(*itBoletas,mensaje);
 					}
-
 					//		INCREMENTAR CLASE CONTEO
 					string nombreDeLista = (*itBoletas)->getNombre();
 					string nombreDelDistrito = votanteActual->getDistrito();
@@ -758,14 +753,23 @@ void SimulacionSistema::main () {
 	if (administrador->acceder("undomiel","aragorn")) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
+		char modo = 'm';
 		this->cargarBaseDeDatos(administrador,'m');
 		//	habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
 		this->inicioDeSimulacion(administrador,administradorDeConteo,'m',3);
+		if (modo!='m') {
+			delete votante4;
+			delete registroVotante1;
+			delete registroVotante2;
+			delete registroVotante3;
+			delete registroVotante4;
+		}
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
+	delete administradorDeConteo;
 
 	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 	Eleccion* eleccion = new Eleccion("19970701","Presidente");
