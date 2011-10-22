@@ -87,7 +87,7 @@ void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,Admin
 				delete registroSerializado;
 
 				Lista* lista = (Lista*)registro->getContenido();
-				//lista->verEntidad();
+				delete registro;
 
 				if ( lista != NULL ){
 
@@ -110,6 +110,8 @@ void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,Admin
 
 					}else
 						buscarSiguienteLista = false;
+
+					delete lista;
 				}
 			}
 		}
@@ -130,9 +132,7 @@ void SimulacionSistema::iniciarVotantesParaIntegracion() {
 	this->registroVotante1 = new Registro(votante1);
 	this->registroVotante2 = new Registro(votante2);
 	this->registroVotante3 = new Registro(votante3);
-	delete this->votante1;
-	delete this->votante2;
-	delete this->votante3;
+
 	char archivoDeControl[]="archivoDeControlVotante.txt";
 	char archivoDeDatos[]="archivoDeDatosVotante.txt";
 	remove(archivoDeControl);
@@ -147,6 +147,15 @@ void SimulacionSistema::iniciarVotantesParaIntegracion() {
 	if ( this->heVotante->agregarRegistro(registroVotante3) == operacionOK )
 			cout << "Se agrego un votante3" << endl;
 		else cout << "Error agregando votante3" << endl;
+
+
+	delete votante1;
+	delete votante2;
+	delete votante3;
+
+	delete registroVotante1;
+	delete registroVotante2;
+	delete registroVotante3;
 }
 
 void SimulacionSistema::iniciarDistritosParaIntegracion(){
@@ -171,6 +180,7 @@ void SimulacionSistema::iniciarDistritosParaIntegracion(){
 	if ( this->heDistrito->agregarRegistro(registroDistrito3) == operacionOK )
 		cout << "Se agrego un distrito3" << endl;
 	else cout << "Error agregando distrito3" << endl;
+
 }
 
 void SimulacionSistema::iniciarEleccionesParaIntegracion(){
@@ -440,6 +450,10 @@ void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador, char mod
 		if (administrador->altaHash(this->heVotante,this->registroVotante4)==operacionOK )
 			cout << "Se agrego un votante" << endl;
 		else cout << "Error agregando votante4" << endl;
+
+		delete votante4;
+		delete registroVotante4;
+
 		heVotante->mostrarArchivoDeHash();
 	}
 
@@ -779,13 +793,6 @@ void SimulacionSistema::main () {
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
 		this->inicioDeSimulacion(administrador,administradorDeConteo,'a',4);
-		if (modo!='m') {
-			delete votante4;
-			delete registroVotante1;
-			delete registroVotante2;
-			delete registroVotante3;
-			delete registroVotante4;
-		}
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;

@@ -147,19 +147,22 @@ void AdministradorDeVotaciones::mostrarArchivoPrincipal(){
 }
 
 void AdministradorDeVotaciones::mostrarArchivoSecundario(){
-	string* conteoSerializado = getString( indiceSecundario.search("") );
+	indiceSecundario.search("");
 
 	pair<vector<char>,string> par=indiceSecundario.getnext();
 	while( par.second.size() != 0 ) {
 
-		conteoSerializado = getString( par.first );
+		string* conteoSerializado = getString( par.first );
 
 		cout << *conteoSerializado << endl;
 		par=indiceSecundario.getnext();
+		delete conteoSerializado;
 	}
 }
 void AdministradorDeVotaciones::mostrarArchivoPrincipalEnFormatoTabla(){
-	string* conteoSerializado = getString( archivoDeConteo.search("") );
+	string* conteoSerializado;
+
+	archivoDeConteo.search("");
 
 	pair<vector<char>,string> par=archivoDeConteo.getnext();
 	while( par.second.size() != 0 ) {
@@ -237,10 +240,12 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 {
 	cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
 
-	cout << endl << "Lista a informar: "<< lista->getNombre() << endl << endl;
-	string clave = lista->getFecha();
-	clave += lista->getCargo();
-	clave += lista->getNombre();
+	string fecha = lista->getFecha();
+	string cargoPrincipal = lista->getCargo();
+	string nombreLista = lista->getNombre();
+
+	cout << endl << "Lista a informar: "<< nombreLista << endl << endl;
+	string clave = fecha + cargoPrincipal + nombreLista;
 
 	archivoDeConteo.search(clave);
 
@@ -257,7 +262,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 		int cantidadDeVotos = 0;
 
-		while( conteo->getFechaEleccion() == lista->getFecha() && conteo->getCargoEleccion() == lista->getCargo() && conteo->getLista() == lista->getNombre() ){
+		while( conteo->getFechaEleccion() == fecha && conteo->getCargoEleccion() == cargoPrincipal && conteo->getLista() == nombreLista ){
 
 			cantidadDeVotos += conteo->getCantidadVotos();
 
@@ -274,11 +279,11 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 		delete conteo;
 
-		cout << lista->getFecha() << "\t\t" << lista->getNombre() << "\t\t" << cantidadDeVotos << endl;
+		cout << fecha << "\t\t" << nombreLista << "\t\t" << cantidadDeVotos << endl;
 
-		cout << "Cargo principal\t" << lista->getCargo() << endl;
+		cout << "Cargo principal\t" << cargoPrincipal << endl;
 
-		Cargo* cargo 		= new Cargo(lista->getCargo());
+		Cargo* cargo 		= new Cargo(cargoPrincipal);
 		Registro* registro	= new Registro(cargo);
 		delete cargo;
 
@@ -286,7 +291,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 		delete registro;
 
 		if ( registroEncontrado != NULL ){
-			Cargo* cargo = (Cargo*)registroEncontrado->getContenido();
+			cargo = (Cargo*)registroEncontrado->getContenido();
 			delete registroEncontrado;
 
 			list<string> listaCargos = cargo->devolverSubCargos();
