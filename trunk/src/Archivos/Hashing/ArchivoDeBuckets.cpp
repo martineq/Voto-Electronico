@@ -70,7 +70,7 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 
 	Bucket* bucket = NULL;
 
-		//if ( numeroDeBucket != numeroUltimoBucket ){
+		if ( numeroDeBucket != numeroUltimoBucket ){
 
 			char* cadena = new char[dimensionBucket];
 			this->archivo->obtenerBloque(numeroDeBucket,cadena);
@@ -78,7 +78,7 @@ Bucket *ArchivoDeBuckets::obtenerBucket(int numeroDeBucket){
 			Bucket* nuevoBucket = deserializarBucket(cadena);
 			delete[] cadena;
 			modificarBucketInterno(nuevoBucket,numeroDeBucket);
-		//}
+		}
 
 		bucket = ultimoBucket;
 
