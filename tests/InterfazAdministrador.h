@@ -24,6 +24,7 @@
 #include "../src/Archivos/EnBloques/ArchivoBloques.h"
 #include "../src/Archivos/ArbolBMas/bplustree.h"
 #include "../src/Logica/AdministradorDeVotaciones.h"
+#include "../src/Auxiliares/Configuracion.h"
 #include <list>
 #include <time.h>
 #include <stdio.h>
@@ -36,6 +37,10 @@ using namespace std;
 
 class InterfazAdministrador {
 private:
+	Configuracion* config;
+	int longitud;
+	string rutaHash;
+	string rutaArbol;
 	bool mostrarMenuAdministrador(Administrador * administrador);
 	void mostrarMenuDistritos(Administrador * administrador);
 	void mostrarMenuVotantes(Administrador * administrador);
@@ -47,7 +52,7 @@ private:
 	int isANumber(string &cad);
 	void imprimirRespuesta(Resultados res);
 public:
-	InterfazAdministrador();
+	InterfazAdministrador(int argc, const char** argv );
 	void ingresoAdministrador();
 	virtual ~InterfazAdministrador();
 };

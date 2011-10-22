@@ -7,9 +7,11 @@
 
 #include "InterfazAdministrador.h"
 
-InterfazAdministrador::InterfazAdministrador() {
-	// TODO Auto-generated constructor stub
-
+InterfazAdministrador::InterfazAdministrador(int argc, const char** argv ) {
+	this->config = new Configuracion(argc,argv);
+	this->rutaArbol = config->pathArbol();
+	this->rutaHash = config->pathHash();
+	this->longitud = config->darTamanioBucket();
 }
 
 void InterfazAdministrador::ingresoAdministrador(){
@@ -140,9 +142,10 @@ void InterfazAdministrador::imprimirRespuesta(Resultados res){
 
 void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 
-	char archivoDeControl[]="archivoDeControlDistrito.txt";
-	char archivoDeDatos[]="archivoDeDatosDistrito.txt";
-	HashingExtensible * heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	string pathControl = this->rutaHash + "DeControlDistrito.txt";
+	string pathDatos = this->rutaHash + "DeDatosDistrito";
+
+	HashingExtensible * heDistrito = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	string nombreDistrito;
@@ -203,9 +206,10 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 
 void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 
-	char archivoDeControl[]="archivoDeControlVotante.txt";
-	char archivoDeDatos[]="archivoDeDatosVotante.txt";
-	HashingExtensible * heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	string pathControl = this->rutaHash + "DeControlVotante.txt";
+	string pathDatos = this->rutaHash + "DeDatosVotante";
+
+	HashingExtensible * heVotante = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	int dni = 0;
@@ -331,9 +335,10 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 
 void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador){
 
-	char archivoDeControl[]="archivoDeControlEleccion.txt";
-	char archivoDeDatos[]="archivoDeDatosEleccion.txt";
-	HashingExtensible * heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	string pathControl = this->rutaHash + "DeControlEleccion.txt";
+	string pathDatos = this->rutaHash + "DeDatosEleccion";
+
+	HashingExtensible * heEleccion = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	string masDistritos = "S";
@@ -433,9 +438,11 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 }
 
 void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
-	char archivoDeControl[]="archivoDeControlCargo.txt";
-	char archivoDeDatos[]="archivoDeDatosCargo.txt";
-	HashingExtensible * heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+
+	string pathControl = this->rutaHash + "DeControlCargo.txt";
+	string pathDatos = this->rutaHash + "DeDatosCargo";
+
+	HashingExtensible * heCargo = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	string cargoPpal,subCargo;
@@ -519,13 +526,16 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 
 void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador){
 
-	char archivoDeControl[]="archivoDeControlCandidato.txt";
-	char archivoDeDatos[]="archivoDeDatosCandidato.txt";
-	HashingExtensible * heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	string pathControl = this->rutaHash + "DeControlCandidato.txt";
+	string pathDatos = this->rutaHash + "DeDatosCandidato";
 
-	char archivoDeControlVot[]="archivoDeControlVotante.txt";
-	char archivoDeDatosVot[]="archivoDeDatosVotante.txt";
-	HashingExtensible * heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatosVot,archivoDeControlVot);
+	HashingExtensible * heCandidato = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
+
+	pathControl = this->rutaHash + "DeControlVotante.txt";
+	pathDatos = this->rutaHash + "DeDatosVotante";
+
+	HashingExtensible * heVotante = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 
 	string opcion = "0";
@@ -655,5 +665,5 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 
 
 InterfazAdministrador::~InterfazAdministrador() {
-	// TODO Auto-generated destructor stub
+	delete (this->config);
 }
