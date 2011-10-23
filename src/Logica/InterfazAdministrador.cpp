@@ -14,6 +14,13 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 	this->rutaHash = config->pathHash();
 	this->longitud = config->darTamanioBucket();
 	this->longitudNodo = config->darTamanioNodo();
+
+	administradorDeConteo = new AdministradorDeVotaciones();
+
+	string pathArchivoConteo 	= configuracion->pathArbol() + "DeConteo.bin";
+	string pathIndiceSecundario = configuracion->pathArbol() + "IndiceSecundario.bin";
+
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,configuracion->darTamanioNodo());
 }
 
 void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
@@ -336,7 +343,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 			cout << "Ingrese la cantidad de votantes a ingresar: ";
 			cin >> cantTotal;
 			while (cantIngr < cantTotal){
-				CreadorVotante * creador = new CreadorVotante(time(NULL) * cont);
+				CreadorVotante * creador = new CreadorVotante(cont);
 				votante = creador->crearVotante(config);
 				registro = new Registro(votante);
 				Resultados rta = administrador->altaHash(heVotante,registro);
@@ -700,6 +707,127 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 }
 
 void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
+	string opcion = "0";
+	string fecha,cargo,nombreLista,nombreDelDistrito;
+
+	int i = 0;
+	Lista * lista = NULL;
+	Eleccion* eleccion = NULL;
+	Distrito* distrito = NULL;
+
+	while (true){
+		while ((i < 1) or (i > 4)){
+			cout << "Opciones: "<<endl<<endl;
+			cout << "1) Informe por elección"<<endl;
+			cout << "2) Informe por lista"<<endl;
+			cout << "3) Informe por distrito"<<endl;
+			cout << "4) Volver atrás"<<endl;
+			cout << "Opcion: ";
+			cin >> opcion;
+			cout <<endl;
+			if ( isANumber(opcion) == 1){
+				i = atoi(opcion.c_str());
+			}
+
+		}
+
+		if ((i == 1) or (i == 2)){
+
+			bool fechaError = true;
+			while (fechaError) {
+				cout << "Ingrese la fecha de la elección: ";
+				cin >> fecha;
+				cout << endl;
+				if (fecha.size() == 8) {
+					string anioStr = fecha.substr(0,4);
+					string mesStr = fecha.substr(4,2);
+					string diaStr = fecha.substr(6,2);
+					int dia = 0;
+					int mes = 0;
+					int anio = 0;
+					if (isANumber(anioStr) == 1){
+						anio = atoi(anioStr.c_str());
+					}
+					if (isANumber(mesStr) == 1){
+						mes = atoi(mesStr.c_str());
+					}
+					if (isANumber(diaStr) == 1){
+						dia = atoi(diaStr.c_str());
+					}
+					if ((anio >= 1980) and (anio <= 2020) and (mes > 0) and (mes <= 12)
+							and (dia > 0) and (dia <= 30)){
+						fechaError = false;
+					}
+				}
+			}
+
+			cout << "Ingrese el cargo: ";
+			cin >> cargo;
+
+			if (i == 1){
+				eleccion = new Eleccion(fecha,cargo);
+			}
+			else {
+				cout << "Ingrese la lista: ";
+				cin >> nombreLista;
+				lista = new Lista(nombreLista,fecha,cargo);
+			}
+
+
+		}else if ( i == 3 ){
+			cout << "Ingrese el nombre del distrito: ";
+
+			cin >> nombreDelDistrito;
+			distrito = new Distrito(nombreDelDistrito);
+		}
+
+		string enter;
+		switch (i)
+		{
+		case 1 :
+		{
+
+			administradorDeConteo->generarInformePorEleccion(eleccion);
+			cout << "Ingrese una tecla para continuar";
+
+			cin.ignore();
+			cin.get();
+			delete eleccion;
+			eleccion = NULL;
+			break;
+		}
+		case 2 :
+		{
+			string pathDatos	= this->rutaHash + "DeDatosCargo";
+			string pathControl	= this->rutaHash + "DeControlCargo.txt";
+			HashingExtensible* he = new HashingExtensible(config->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
+			administradorDeConteo->generarInformePorLista(lista,he);
+			delete he;
+			cout << "Ingrese una tecla para continuar";
+			cin.ignore();
+			cin.get();
+			delete lista;
+			lista  = NULL;
+			break;
+		}
+		case 3 :
+		{
+			administradorDeConteo->generarInformePorDistrito(distrito);
+			cout << "Ingrese una tecla para continuar";
+			cin.ignore();
+			cin.get();
+			delete distrito;
+			distrito = NULL;
+			break;
+		}
+		case 4 :
+		{
+			return;
+		}
+		}
+		i = 0;
+	}
 
 }
 
@@ -1172,5 +1300,5 @@ string* InterfazAdministrador::getString(vector<char> vect){
 
 
 InterfazAdministrador::~InterfazAdministrador() {
-
+	delete (this->administradorDeConteo);
 }
