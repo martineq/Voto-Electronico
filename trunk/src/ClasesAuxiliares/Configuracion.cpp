@@ -53,7 +53,7 @@ void Configuracion::cargarArgumentos(int argc, const char** argv){
     for (index = optind; index < argc; index++)
       printf ("Argumento inválido %s\n", argv[index]);
     if(this->rutaConfig == ""){
-    	cerr << "Falta la ruta de archivo de configuración. Programa terminado."<<endl;
+    	cerr << "Falta la ruta de archivo de configuración, Para ayuda consulte con: -h \nPrograma terminado."<<endl;
     	exit(1);
     }
 }
