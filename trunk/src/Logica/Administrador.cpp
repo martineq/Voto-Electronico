@@ -193,20 +193,25 @@ int Administrador::elegirBoleta(char modo){
 		cout << "Nombre: " << (*itListas)->getNombre() << endl;
 		itListas++;
 	}
-	cout << "Opcion " << j << endl; j++;
-	cout << "Voto En Blanco" << endl;
-	cout << "Opcion " << j << endl; j++;
-	cout << "Voto Nulo, Impugnado, etc " << endl;
+//	cout << "Opcion " << j << endl; j++;
+//	cout << "Voto En Blanco" << endl;
+//	cout << "Opcion " << j << endl; j++;
+//	cout << "Voto Nulo, Impugnado, etc " << endl;
 	cout << endl;
 	bool ok=false;
 	int c;
 	while (!ok) {
 		cout << "Elija su boleta en base al numero de opcion indicado" << endl;
-		if (modo=='a') c= (rand () % (this->listaDeBoletas.size()+2))+1;
-//		if (modo=='a') c=1;
+		if (modo=='a') c= rand () % this->listaDeBoletas.size()+1;
 		else cin >> c;
-		if ((((c)<=(((int)(this->listaDeBoletas.size()))+2)))&&(c>0)) ok=true;
+		if (((c)<=((int)(this->listaDeBoletas.size())))&&(c>0)) ok=true;
 		else cout << "Numero de boleta invalido" << endl;
+	}
+//	Posibilidad que el sistema asigne otra boleta al votante
+	int error = rand () % 10;
+	if (!error) {
+		if (c==(this->listaDeBoletas.size())) c=1;
+		else c++;
 	}
 	return c;
 }
@@ -257,26 +262,34 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 
 char Administrador::sufragar (int numeroDeBoleta, char modo){
 	char c;
-	int size;
-	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
-	size = listaDeBoletas.size();
-	if (numeroDeBoleta==size+1) {
-		cout << "La opcion elegida es: VOTO EN BLANCO" << endl;
-		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
-		if (modo=='a') c='s';
-		else cin >> c;
-		if (c=='s') this->blancos++;
-		return c;
-	}
-	if (numeroDeBoleta==size+2) {
-		cout << "La opcion elegida es: VOTO NULO, IMPUGNADO, ETC" << endl;
-		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
-		if (modo=='a') c='s';
-		else cin >> c;
-		if (c=='s') this->novalidos++;
-		return c;
-	}
+//	int size;
+//	size = listaDeBoletas.size();
+//	if (numeroDeBoleta==size+1) {
+//		cout << "La opcion elegida es: VOTO EN BLANCO" << endl;
+//		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
+//		if (modo=='a') c='s';
+//		else cin >> c;
+//		if (c=='s') this->blancos++;
+//		if (c=='n') {
+//			string mensaje="El votante cambio su eleccion";
+//			log.insertarMensaje(mensaje);
+//		}
+//		return c;
+//	}
+//	if (numeroDeBoleta==size+2) {
+//		cout << "La opcion elegida es: VOTO NULO, IMPUGNADO, ETC" << endl;
+//		cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
+//		if (modo=='a') c='s';
+//		else cin >> c;
+//		if (c=='s') this->novalidos++;
+//		if (c=='n') {
+//			string mensaje="El votante cambio su eleccion";
+//			log.insertarMensaje(mensaje);
+//		}
+//		return c;
+//	}
 //	me posiciono en la lista elegida de las opciones dadas
+	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
 	for (int i=0; i< numeroDeBoleta-1;i++) itListas++;
 	cout << "La opcion elegida es: " <<  numeroDeBoleta << endl;
 	cout << "LISTA: " << (*itListas)->getNombre() << endl;
