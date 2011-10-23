@@ -126,8 +126,6 @@ Resultados HashingExtensible::agregarRegistroInt(Registro *registro,int clave){
 		archivo->modificarBucket(nrr,bucket);
 
 	else{
-
-		cout << "No se puede agregar al bucket, inicio de redispersion." << endl << endl;
 		resultado = redispersarBucket(bucket,numeroDeBucket,posicionEnTablaDeHash);
 
 		// Reintento agregar el registro que generó la redispersion
