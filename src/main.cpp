@@ -100,7 +100,6 @@ int main(int argc,const char* argv[]) {
 	delete conf;
 	delete administrador;
 	delete interfaz;
-
 	return 0;
 }
 
