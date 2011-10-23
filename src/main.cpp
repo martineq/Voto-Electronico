@@ -91,20 +91,14 @@ int main(int argc,const char* argv[]) {
 	Configuracion* conf = new Configuracion(argc,argv);
 
 	string pathPassword 	= conf->pathPassword() + ".bin";
-	string pathArchivoConteo 	= conf->pathArbol() + "DeConteo.bin";
-	string pathIndiceSecundario = conf->pathArbol() + "IndiceSecundario.bin";
 
 	Administrador* administrador = new Administrador (pathPassword);
-
-	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
-	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,conf->darTamanioNodo());
 
 	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
 	interfaz->ingresoAdministrador(administrador);
 
 	delete conf;
 	delete administrador;
-	delete administradorDeConteo;
 	delete interfaz;
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
