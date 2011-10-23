@@ -618,7 +618,7 @@ void Pruebas::pruebaBMas(){
 	 vector<char> tmp;
 	 std::pair<vector<char>,std::string> gn;
 	 bplustree b;
-	 b.newtree("test",60);
+	 b.newtree("test.bin",60);
 	 v.push_back(1);
 	 b.add("deloitte",v);
 	 v.push_back(2);
@@ -679,7 +679,7 @@ void Pruebas::pruebaBMasCarga(){
         std::pair<vector<char>,std::string> gn;
         vector<char> tmp;
         bplustree b;
-        b.opentree("BMas.bin",64);
+        b.opentree("BMasTest.bin",64);
 
         cout << "despues de abrir=D" <<endl;
         tmp=b.search("dddd");
@@ -690,9 +690,8 @@ void Pruebas::pruebaBMasCarga(){
 }
 
 
-
 void Pruebas::pruebaBMasAuto(){
-        string rutaArbol("ArbolBMas_B.bin");    // Ruta del archivo de Árbol B+
+        string rutaArbol("ArbolBMas_B_Test.bin");    // Ruta del archivo de Árbol B+
         int tamanioNodo = 64;           // Tamaño del nodo.
         string id;                                      // Identificador del registro.
         vector<char> datos;                     // Vector con valores "aleatorios". Simula los datos de un registro
