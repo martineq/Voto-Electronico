@@ -597,7 +597,7 @@ void HashingExtensible::mostrarArchivoDeHash()
 			cout << " (cant: " << cantRegs << "): ";
 			list<Registro*>::iterator it = bucket->ubicarPrimero();
 			for(int i = 0; i < cantRegs; i++){
-				cout << " " << (*it)->obtenerClave();
+				(*it)->verContenido();
 				it++;
 			}
 			cout << endl;

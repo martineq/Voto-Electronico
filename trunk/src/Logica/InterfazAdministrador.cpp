@@ -9,18 +9,18 @@
 
 InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 	this->config = configuracion;
-
 	this->rutaArbol = config->pathArbol();
 	this->rutaHash = config->pathHash();
 	this->longitud = config->darTamanioBucket();
 	this->longitudNodo = config->darTamanioNodo();
-
+	
 	administradorDeConteo = new AdministradorDeVotaciones();
 
 	string pathArchivoConteo 	= configuracion->pathArbol() + "DeConteo.bin";
 	string pathIndiceSecundario = configuracion->pathArbol() + "IndiceSecundario.bin";
 
 	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,configuracion->darTamanioNodo());
+	
 }
 
 void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
@@ -183,12 +183,13 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 4)){
+		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Distrito"<<endl;
 			cout << "2) Baja Distrito"<<endl;
 			cout << "3) Modificar Distrito"<<endl;
 			cout << "4) Volver atrás"<<endl;
+			cout << "5) Ver Distritos"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
@@ -196,12 +197,12 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 				i = atoi(opcion.c_str());
 			}
 			else{
-				i = 5;
+				i = 6;
 			}
 
 		}
 
-		if (i != 4){
+		if ((i != 4) and (i != 5)){
 			cout << "Ingrese el nombre del distrito: "<<endl;
 			cin >> nombreDistrito;
 			cout << endl;
@@ -226,6 +227,9 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 			delete (heDistrito);
 			return;
 		}break;
+		case 5: {
+			heDistrito->mostrarArchivoDeHash();
+		}
 		}
 		i = 0;
 		delete (registro);
@@ -249,23 +253,27 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 5)){
+		while ((i < 1) or (i > 6)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Votante"<<endl;
 			cout << "2) Baja Votante"<<endl;
 			cout << "3) Modificar Votante"<<endl;
 			cout << "4) Volver atrás"<<endl;
 			cout << "5) Alta Automática"<<endl;
+			cout << "6) Ver votantes"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
 			if (isANumber(opcion) == 1){
 				i = atoi(opcion.c_str());
 			}
+			else {
+				i = 0;
+			}
 
 		}
 
-		if ((i != 4) and (i != 5)){
+		if ((i != 4) and (i != 5) and (i != 6)){
 
 			//Ingresar DNI Válido
 			while (dni < 1){
@@ -354,11 +362,15 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 					cantIngr++;
 				}
 				cont++;
+				delete creador;
 			}
 		}break;
+		case 6 : {
+			heVotante->mostrarArchivoDeHash();
+		}
 		}
 
-		if (i != 5) delete registro;
+		if ((i != 5) and (i != 6)) delete registro;
 		registro = NULL;
 		i = 0;
 		dni = 0;
@@ -387,22 +399,26 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 4)){
+		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Eleccion"<<endl;
 			cout << "2) Baja Eleccion"<<endl;
 			cout << "3) Modificar Eleccion"<<endl;
 			cout << "4) Volver atrás"<<endl;
+			cout << "5) Ver elecciones"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
 			if (isANumber(opcion) == 1){
 				i = atoi(opcion.c_str());
 			}
+			else {
+				i = 0;
+			}
 
 		}
 
-		if (i != 4){
+		if ((i != 4) and (i != 5)){
 			bool fechaError = true;
 			while (fechaError) {
 				cout << "Ingrese la fecha de la elección: ";
@@ -475,6 +491,9 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 			delete bLista;
 			return;
 		} break;
+		case 5 : {
+			heEleccion->mostrarArchivoDeHash();
+		}
 		}
 		delete registro;
 		registro = NULL;
@@ -498,12 +517,13 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 4)){
+		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Cargo"<<endl;
 			cout << "2) Baja Cargo"<<endl;
 			cout << "3) Modificar Cargo"<<endl;
 			cout << "4) Volver atrás"<<endl;
+			cout << "5) Ver cargos"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
@@ -513,7 +533,7 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 
 		}
 
-		if (i != 4){
+		if ((i != 4) and (i != 5)){
 			cout << "Ingrese el nombre del cargo principal: "<<endl;
 			cin >> cargoPpal;
 			cout << endl;
@@ -557,6 +577,9 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 			delete heCargo;
 			return;
 		}
+		case 5 : {
+			heCargo->mostrarArchivoDeHash();
+		}
 		}
 		masSubcargos = "S";
 		i = 0;
@@ -580,7 +603,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 	pathControl = this->rutaHash+"DeControlVotante.txt";
 	pathDatos = this->rutaHash+"DeDatosVotante.txt";
 
-	HashingExtensible * heVotante = new HashingExtensible (config->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heVotante = new HashingExtensible (longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 
 	string opcion = "0";
@@ -591,12 +614,13 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 4)){
+		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Candidato"<<endl;
 			cout << "2) Baja Candidato"<<endl;
 			cout << "3) Modificar Candidato"<<endl;
 			cout << "4) Volver atrás"<<endl;
+			cout << "5) Mostrar Candidatos"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
@@ -607,7 +631,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 		}
 
 		bool existe = true;
-		if ((i != 4) and (i != 3)){
+		if ((i != 4) and (i != 3) and (i != 5)){
 
 				while (dni == 0){
 					cout << "Ingrese el numero de DNI: ";
@@ -694,6 +718,9 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 				delete heCandidato;
 				delete heVotante;
 				return;
+			}
+			case 5 : {
+				heCandidato->mostrarArchivoDeHash();
 			}
 			}
 			dni = 0;
@@ -800,7 +827,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		{
 			string pathDatos	= this->rutaHash + "DeDatosCargo";
 			string pathControl	= this->rutaHash + "DeControlCargo.txt";
-			HashingExtensible* he = new HashingExtensible(config->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+			HashingExtensible* he = new HashingExtensible(longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 			administradorDeConteo->generarInformePorLista(lista,he);
 			delete he;
@@ -828,7 +855,6 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		}
 		i = 0;
 	}
-
 }
 
 void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
@@ -950,8 +976,8 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 
 void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 	string archivoDeControl=this->rutaHash+"DeControlEleccion.txt";
-	string archivoDeDatos = this->rutaHash+"DeDatosEleccion.txt";
-	HashingExtensible * heEleccion = new HashingExtensible (config->darTamanioBucket(),(char*)archivoDeDatos.c_str(),(char*)archivoDeControl.c_str());
+	string archivoDeDatos = this->rutaHash+"DeDatosEleccion";
+	HashingExtensible * heEleccion = new HashingExtensible (this->longitud,(char*)archivoDeDatos.c_str(),(char*)archivoDeControl.c_str());
 
 	string opcion = "0";
 	string fecha,cargo;
@@ -1227,6 +1253,8 @@ void InterfazAdministrador::comienzoVotacion(Administrador * administrador){
 		}
 	}
 	log.cerrar();
+	delete heVotante;
+	delete arbolB;
 	return;
 }
 
@@ -1300,5 +1328,5 @@ string* InterfazAdministrador::getString(vector<char> vect){
 
 
 InterfazAdministrador::~InterfazAdministrador() {
-	delete (this->administradorDeConteo);
+//	delete (this->config);
 }
