@@ -13,6 +13,13 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 	this->rutaHash = config->pathHash();
 	this->longitud = config->darTamanioBucket();
 	this->longitudNodo = config->darTamanioNodo();
+
+	administradorDeConteo = new AdministradorDeVotaciones();
+
+	string pathArchivoConteo 	= configuracion->pathArbol() + "DeConteo.bin";
+	string pathIndiceSecundario = configuracion->pathArbol() + "IndiceSecundario.bin";
+
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,configuracion->darTamanioNodo());
 }
 
 void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
@@ -898,4 +905,5 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 
 InterfazAdministrador::~InterfazAdministrador() {
 	delete (this->config);
+	delete (this->administradorDeConteo);
 }
