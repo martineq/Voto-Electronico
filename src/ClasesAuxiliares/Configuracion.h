@@ -23,6 +23,7 @@ private:
 	string rutaHash;
 	string rutaArbol;
 	string rutaPass;
+	string rutaVotanteAleatorio;
 	int tamanioNodo;
 	int tamanioBucket;
 	bool vAuto;
@@ -37,6 +38,7 @@ public:
 	string pathHash();
 	string pathArbol();
 	string pathPassword();
+	string pathVotante();
 	bool isAuto();
 	bool isManual();
 	int darTamanioNodo();

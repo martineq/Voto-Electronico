@@ -10,6 +10,7 @@
 #include <sstream>
 #include <string>
 #include <ctime>
+#include "Configuracion.h"
 #include "../Entidades/Votante.h"
 
 
@@ -20,20 +21,19 @@ using namespace std;
 
 class CreadorVotante {
 private:
-
 	int		semilla;
 
-	string getNombre();
-	string getApellido();
+	string getNombre(string path);
+	string getApellido(string path);
 	int getDNI();
 	string getClave();
-	string getDomicilio();
-	string getDistrito();
+	string getDomicilio(string path);
+	string getDistrito(string path);
 	int getCantLineas(string path);
 
 public:
 	CreadorVotante(int seed);
-	Votante* crearVotante();
+	Votante* crearVotante(Configuracion* configuracion);
 	virtual ~CreadorVotante();
 };
 

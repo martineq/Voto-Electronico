@@ -101,12 +101,13 @@ void Configuracion::cargarArchivoConfig(){
 	// Ahora cargo los parámetros que se obtuvieron del archivo de configuración
 	this->rutaArbol = "";
 	this->rutaHash = "";
+	this->rutaVotanteAleatorio = "";
 	this->tamanioNodo = 0;
 	this->tamanioBucket = 0;
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:V:")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
@@ -123,12 +124,16 @@ void Configuracion::cargarArchivoConfig(){
         case 'P':
         	this->rutaPass = optarg;
         	break;
+        case 'V':
+        	this->rutaVotanteAleatorio = optarg;
+        	break;
         case '?':
           if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'N')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'B')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'P')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'V')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
@@ -161,6 +166,10 @@ string Configuracion::pathHash(){
 
 string Configuracion::pathPassword(){
 	return this->rutaPass;
+}
+
+string Configuracion::pathVotante(){
+	return this->rutaVotanteAleatorio;
 }
 
 bool Configuracion::isAuto(){
@@ -197,6 +206,7 @@ void Configuracion::mostrarAyuda(){
 	cout << "	-N +<valor>		Asigna el tamaño del Nodo del árbol B+."<<endl;
 	cout << "	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión."<<endl;
 	cout << "	-P +<ruta>		Asigna la ruta del archivo de Password del administrador."<<endl;
+	cout << "	-V +<ruta>		Asigna la ruta de los archivos de alta automatica de votante." << endl;
 	cout << ""<<endl;
 }
 
