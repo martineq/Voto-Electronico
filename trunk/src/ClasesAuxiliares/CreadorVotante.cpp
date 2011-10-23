@@ -134,7 +134,6 @@ Votante* CreadorVotante::crearVotante(Configuracion* configuracion){
     string path;
 
     path = configuracion->pathVotante() + "Nombres.txt";
-    cout << path << endl;
     string nombre = this->getNombre(path);
 
     path = configuracion->pathVotante() + "Apellidos.txt";
