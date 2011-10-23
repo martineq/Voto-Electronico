@@ -3,6 +3,8 @@
 #include "../tests/Pruebas.h"
 #include "../tests/SimulacionSistema.h"
 #include "../tests/TestHashingExtensible.h"
+#include "./Logica/InterfazAdministrador.h"
+#include "./ClasesAuxiliares/Configuracion.h"
 
 
 using namespace std;
@@ -81,9 +83,29 @@ int main(int argc,const char* argv[]) {
 //	the.testSimple();
 
 //	Pruebas de simulacion de sistema
-	SimulacionSistema sistema(argc,argv);
-	sistema.main();
+//	SimulacionSistema sistema(argc,argv);
+//	sistema.main();
 
+//	Pruebas de interfaz
+
+	Configuracion* conf = new Configuracion(argc,argv);
+
+	string nombreDePrograma 	= conf->pathPassword() + ".bin";
+	string pathArchivoConteo 	= conf->pathArbol() + "DeConteo.bin";
+	string pathIndiceSecundario = conf->pathArbol() + "IndiceSecundario.bin";
+
+	Administrador* administrador = new Administrador (nombreDePrograma);
+
+	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,LONGITUD_BLOQUE);
+
+	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
+	interfaz->ingresoAdministrador(administrador);
+
+	delete conf;
+	delete administrador;
+	delete administradorDeConteo;
+	delete interfaz;
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }
