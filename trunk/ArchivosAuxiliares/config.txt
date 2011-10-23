@@ -15,8 +15,9 @@ Opciones válidas (cada una debe estar separada con un espacio):
 	-N +<valor>		Asigna el tamaño del Nodo del árbol B+.
 	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión.
 	-P +<ruta>		Asigna la ruta del archivo de Password del administrador.
+	-V +<ruta>		Asigna la ruta de los archivos de alta automatica de votante.
 
 	
 Fin de los comentarios-> //	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
--D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +1024 -B +1024 -P +./ArchivosAuxiliares/password 
+-D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +1024 -B +1024 -P +./ArchivosAuxiliares/password -V +./ArchivosAuxiliares/ 

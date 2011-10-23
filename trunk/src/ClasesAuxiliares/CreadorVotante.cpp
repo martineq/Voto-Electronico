@@ -14,11 +14,11 @@ CreadorVotante::CreadorVotante(int seed) {
     semilla = seed;
 }
 
-string CreadorVotante::getNombre(){
+string CreadorVotante::getNombre(string path){
     string linea;
     fstream archivo;
-    archivo.open ("../TPDatos/doc/Nombres.txt", ios::in);
-    int cantLineas = this->getCantLineas("../TPDatos/doc/Nombres.txt");
+    archivo.open (path.c_str(), ios::in);
+    int cantLineas = this->getCantLineas(path.c_str());
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
@@ -37,11 +37,11 @@ string CreadorVotante::getNombre(){
 }
 
 
-string CreadorVotante::getApellido(){
+string CreadorVotante::getApellido(string path){
     string linea;
     fstream archivo;
-    int cantLineas = this->getCantLineas("../TPDatos/doc/Apellidos.txt");
-    archivo.open ("../TPDatos/doc/Apellidos.txt", ios::in);
+    int cantLineas = this->getCantLineas(path.c_str());
+    archivo.open (path.c_str(), ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
@@ -61,11 +61,11 @@ int CreadorVotante::getDNI(){
    return pos;
 }
 
-string CreadorVotante::getDistrito(){
+string CreadorVotante::getDistrito(string path){
     string linea;
     fstream archivo;
-    int cantLineas = this->getCantLineas("../TPDatos/doc/Distritos.txt");
-    archivo.open ("../TPDatos/doc/Distritos.txt", ios::in);
+    int cantLineas = this->getCantLineas(path.c_str());
+    archivo.open (path.c_str(), ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = (rand() % cantLineas) + 1;
@@ -80,12 +80,12 @@ string CreadorVotante::getDistrito(){
 
 }
 
-string CreadorVotante::getDomicilio(){
+string CreadorVotante::getDomicilio(string path){
     string linea;
     fstream archivo;
     stringstream miString;
-    int cantLineas = this->getCantLineas("../TPDatos/doc/Domicilios.txt");
-    archivo.open ("../TPDatos/doc/Domicilios.txt", ios::in);
+    int cantLineas = this->getCantLineas(path.c_str());
+    archivo.open (path.c_str(), ios::in);
     if (archivo.is_open()) {
        int cont = 0;
        int pos = ( rand() % cantLineas) + 1;
@@ -129,13 +129,25 @@ int CreadorVotante::getCantLineas(string path){
     return cantLineas;
 }
 
-Votante* CreadorVotante::crearVotante(){
+Votante* CreadorVotante::crearVotante(Configuracion* configuracion){
     srand ( semilla );
-    string nombre = this->getNombre();
-    string apellido = this->getApellido();
+    string path;
+
+    path = configuracion->pathVotante() + "Nombres.txt";
+    cout << path << endl;
+    string nombre = this->getNombre(path);
+
+    path = configuracion->pathVotante() + "Apellidos.txt";
+    string apellido = this->getApellido(path);
+
     int dni = this->getDNI();
-    string distrito = this->getDistrito();
-    string domicilio = this->getDomicilio();
+
+    path = configuracion->pathVotante() + "Distritos.txt";
+    string distrito = this->getDistrito(path);
+
+    path = configuracion->pathVotante() + "Domicilios.txt";
+    string domicilio = this->getDomicilio(path);
+
     string password = this->getClave();
     Votante* votante = new Votante(dni, nombre+" "+apellido, password, domicilio, distrito);
     return votante;
