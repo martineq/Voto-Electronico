@@ -22,6 +22,7 @@ private:
 	string rutaConfig;
 	string rutaHash;
 	string rutaArbol;
+	string rutaPass;
 	int tamanioNodo;
 	int tamanioBucket;
 	bool vAuto;
@@ -35,6 +36,7 @@ public:
 	Configuracion(int argc, const char** argv);
 	string pathHash();
 	string pathArbol();
+	string pathPassword();
 	bool isAuto();
 	bool isManual();
 	int darTamanioNodo();

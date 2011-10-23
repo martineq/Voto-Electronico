@@ -106,7 +106,7 @@ void Configuracion::cargarArchivoConfig(){
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
@@ -120,11 +120,15 @@ void Configuracion::cargarArchivoConfig(){
         case 'B':
         	this->tamanioBucket = atoi(optarg);
         	break;
+        case 'P':
+        	this->rutaPass = optarg;
+        	break;
         case '?':
-          if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
-          else if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'N')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'B')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'P')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
@@ -155,6 +159,10 @@ string Configuracion::pathHash(){
 	return this->rutaHash;
 }
 
+string Configuracion::pathPassword(){
+	return this->rutaPass;
+}
+
 bool Configuracion::isAuto(){
 	return this->vAuto;
 }
@@ -170,6 +178,8 @@ int Configuracion::darTamanioNodo(){
 int Configuracion::darTamanioBucket(){
 	return this->tamanioBucket;
 }
+
+
 
 void Configuracion::mostrarAyuda(){
 	cout << "Argumentos válidos pasados por parámetro: "<<endl;
