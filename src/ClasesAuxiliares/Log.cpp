@@ -17,7 +17,7 @@ Log::~Log() {
 }
 
 void Log::abrir(){
-	this->archivo = fopen("texto","a+");
+	this->archivo = fopen("./ArchivosAuxiliares/texto","a+");
 }
 
 void Log::cerrar(){
