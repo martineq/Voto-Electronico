@@ -1329,4 +1329,5 @@ string* InterfazAdministrador::getString(vector<char> vect){
 
 InterfazAdministrador::~InterfazAdministrador() {
 //	delete (this->config);
+	delete (this->administradorDeConteo);
 }
