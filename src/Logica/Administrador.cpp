@@ -11,8 +11,8 @@
 Administrador::Administrador(string pathArchivo) {
 	archivo = new fstream(pathArchivo.c_str());
 
-	char cadena[LONGITUD_BLOQUE];
-	archivo->getline(cadena,LONGITUD_BLOQUE);
+	char cadena[LONGITUD_CADENA];
+	archivo->getline(cadena,LONGITUD_CADENA);
 
 	string str(cadena);
 

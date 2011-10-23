@@ -40,7 +40,7 @@ class InterfazAdministrador {
 private:
 	Configuracion* config;
 	AdministradorDeVotaciones*	administradorDeConteo;
-	int longitud;
+	int longitudBucket;
 	int longitudNodo;
 	string rutaHash;
 	string rutaArbol;
