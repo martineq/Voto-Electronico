@@ -32,12 +32,14 @@
 #include <string>
 #include <iostream>
 #include "../ClasesAuxiliares/Configuracion.h"
+#include "AdministradorDeVotaciones.h"
 
 using namespace std;
 
 class InterfazAdministrador {
 private:
 	Configuracion* config;
+	AdministradorDeVotaciones*	administradorDeConteo;
 	int longitud;
 	int longitudNodo;
 	string rutaHash;
