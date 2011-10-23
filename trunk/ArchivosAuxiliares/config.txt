@@ -21,4 +21,4 @@ Opciones válidas (cada una debe estar separada con un espacio):
 	
 Fin de los comentarios-> //	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
--D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +2048 -B +2048 -P +./ArchivosAuxiliares/password 
+-D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +1024 -B +1024 -P +./ArchivosAuxiliares/password 
