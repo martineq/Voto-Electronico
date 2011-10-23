@@ -275,7 +275,7 @@ Registro* HashingExtensible::obtenerRegistro(Registro* registro){
 Resultados HashingExtensible::cargarRegistro(Registro *registro){
 
 	unsigned long clave = registro->obtenerClave();
-	cout << "clave: " << clave << endl;
+	//cout << "clave: " << clave << endl;
 
 	return agregarRegistroInt(registro,clave);
 }
@@ -293,7 +293,7 @@ Resultados HashingExtensible::agregarRegistro(Registro* registro){
 		resultado = agregarRegistroInt(registro,clave);
 
 	else{
-		cout << "clave repetida "<<endl;
+		//cout << "clave repetida "<<endl;
 		delete registroDuplicado;
 	}
 
@@ -326,7 +326,7 @@ Resultados HashingExtensible::reducirTablaDeHash(){
 		tablaDeHash.resize(m);
 		resultado = operacionOK;
 
-		cout << "Se redujo la tabla de Hash ";
+		//cout << "Se redujo la tabla de Hash ";
 	}
 
 	return resultado;
@@ -335,7 +335,7 @@ Resultados HashingExtensible::reducirTablaDeHash(){
 
 Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 
-	cout << endl << "** SE inicia la liberacion del bucket " << endl;
+	//cout << endl << "Se inicia la liberacion del bucket " << endl;
 
 	Resultados resultado = operacionOK;
 
@@ -483,7 +483,6 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 
 	// Obtengo el Bucket a partir de la clave.
 	unsigned long clave = registro->obtenerClave();
-	cout << "clave: " << clave << endl;
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
 	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
@@ -493,7 +492,7 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 		Bucket* bucket = archivo->obtenerBucket(nrr);
 
 		// Obtengo el registro.
-		cout << "Registro a buscar en eliminar registro: " << registro->obtenerClave() << endl;
+		//cout << "Registro a buscar en eliminar registro: " << registro->obtenerClave() << endl;
 		Registro* registroObtenido = bucket->getRegistro(registro);
 
 		if ( registroObtenido !=NULL ){
