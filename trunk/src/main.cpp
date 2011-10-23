@@ -90,14 +90,14 @@ int main(int argc,const char* argv[]) {
 
 	Configuracion* conf = new Configuracion(argc,argv);
 
-	string nombreDePrograma 	= conf->pathPassword() + ".bin";
+	string pathPassword 	= conf->pathPassword() + ".bin";
 	string pathArchivoConteo 	= conf->pathArbol() + "DeConteo.bin";
 	string pathIndiceSecundario = conf->pathArbol() + "IndiceSecundario.bin";
 
-	Administrador* administrador = new Administrador (nombreDePrograma);
+	Administrador* administrador = new Administrador (pathPassword);
 
 	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
-	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,LONGITUD_BLOQUE);
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,conf->darTamanioNodo());
 
 	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
 	interfaz->ingresoAdministrador(administrador);
