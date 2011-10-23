@@ -10,15 +10,13 @@ Para su uso:
  
  
 Opciones válidas (cada una debe estar separada con un espacio):
-	-A +<ruta>		Asigna la ruta del archivo de Arbol B+.
-	-D +<ruta>		Asigna la ruta del archivo de Dispersión.
+	-A +<ruta>		Asigna la ruta del archivo de árbol B+.
+	-D +<ruta>		Asigna la ruta del archivo de dispersión.
 	-N +<valor>		Asigna el tamaño del Nodo del árbol B+.
 	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión.
-	
 	-P +<ruta>		Asigna la ruta del archivo de Password del administrador.
 
 	
-	
 Fin de los comentarios-> //	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
--D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +1024 -B +1024 -P +./ArchivosAuxiliares/password 
+-D +./ArchivosAuxiliares/archivoHash -A +./ArchivosAuxiliares/archivoArbol -N +2048 -B +2048 -P +./ArchivosAuxiliares/password 

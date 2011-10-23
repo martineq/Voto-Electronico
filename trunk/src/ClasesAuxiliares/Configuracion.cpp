@@ -183,8 +183,6 @@ int Configuracion::darTamanioBucket(){
 
 void Configuracion::mostrarAyuda(){
 	cout << "Argumentos válidos pasados por parámetro: "<<endl;
-	cout << "	-a		Votación en modo automático."<<endl;
-	cout << "	-m		Votación en modo manual."<<endl;
 	cout << "	-c <ruta>	Agrega la ruta del archivo de configuración (obligatorio)."<<endl;
 	cout << "	-v		Muestra la versión y sale del programa."<<endl;
 	cout << "	-h		Muestra esta ayuda y sale del programa."<<endl<<endl<<endl;
@@ -198,6 +196,7 @@ void Configuracion::mostrarAyuda(){
 	cout << "	-D +<ruta>		Asigna la ruta del archivo de dispersión."<<endl;
 	cout << "	-N +<valor>		Asigna el tamaño del Nodo del árbol B+."<<endl;
 	cout << "	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión."<<endl;
+	cout << "	-P +<ruta>		Asigna la ruta del archivo de Password del administrador."<<endl;
 	cout << ""<<endl;
 }
 
