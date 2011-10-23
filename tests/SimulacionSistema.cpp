@@ -736,7 +736,6 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 						cout << "Indique el numero de eleccion en la cual desea sufragar" << endl;
 						int n;
 						if (modo=='a') n = (rand()%((administrador->getListaDeEleccionesDelVotante()).size()))+1;
-//						if (modo=='a') n=1;
 						else cin >> n;
 						if (((n)<=((int)((administrador->getListaDeEleccionesDelVotante()).size()))) && (n>0)) {
 							while (!ok) {
@@ -777,25 +776,29 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 							if ((c=='s')||(c=='n')) ok=true;
 							else cout << "Tecla no reconocida" << endl;
 						}
-						if (c=='n') ok=false;
+						if (c=='n') {
+							ok=false;
+							string mensaje="El votante votante cambio su voto";
+							log.insertarMensaje(mensaje);
+						}
 					}
 					list<Lista*> listaBoletas = administrador->getListaDeBoletas();
 					list<Lista*>::iterator itBoletas = listaBoletas.begin();
-					int size = listaBoletas.size();
-					if ( boleta==size+1 ) {
-						string mensaje="El votante voto en blanco ";
-						log.insertarMensaje(mensaje);
-					}
-					else if ( boleta==size+2 ){
-						string mensaje="El votante voto impugnado, nulo, etc ";
-						log.insertarMensaje(mensaje);
-					}
-					else {
+//					int size = listaBoletas.size();
+//					if ( boleta==size+1 ) {
+//						string mensaje="El votante voto en blanco ";
+//						log.insertarMensaje(mensaje);
+//					}
+//					else if ( boleta==size+2 ){
+//						string mensaje="El votante voto impugnado, nulo, etc ";
+//						log.insertarMensaje(mensaje);
+//					}
+//					else {
 						//	me posiciono en la lista elegida de las opciones dadas
 						for (int i=0; i< boleta-1;i++) itBoletas++;
 						string mensaje="El votante voto lista: ";
 						log.insertarMensajeConEntidad(*itBoletas,mensaje);
-					}
+//					}
 					//		INCREMENTAR CLASE CONTEO
 					string nombreDeLista = (*itBoletas)->getNombre();
 					string nombreDelDistrito = votanteActual->getDistrito();
