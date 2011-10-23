@@ -138,10 +138,6 @@ void SimulacionSistema::cargarArchivoDeConteo(Administrador* administrador,Admin
 						list<Distrito>::iterator itDistrito = (*itEleccion)->obtenerIterador();
 						while( !(*itEleccion)->ultimo(itDistrito) ){
 							conteo = new Conteo(lista->getFecha(),lista->getCargo(),lista->getNombre(),(*itDistrito).getDistrito());
-
-							cout << endl <<"Se agrega un registro al archivo de conteo" << endl;
-							conteo->verEntidad();
-
 							administradorDeConteo->agregarConteo(conteo);
 							delete conteo;
 
@@ -578,6 +574,7 @@ void SimulacionSistema::cargarBaseDeDatos(Administrador* administrador, char mod
 	if (administrador->altaArbol(this->arbolB,this->registroLista4)==0)
 		cout << "Se agrego una Lista4" << endl;
 	else cout << "Error agregando lista4" << endl;
+
 	this->verContenidoArbolListas();
 }
 
@@ -860,8 +857,7 @@ void SimulacionSistema::main () {
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
 
-	administradorDeConteo->mostrarArchivoPrincipalEnFormatoTabla();
-	administradorDeConteo->mostrarArchivoSecundario();
+	//administradorDeConteo->mostrarArchivoPrincipalEnFormatoTabla();
 
 	//cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 	Eleccion* eleccion = new Eleccion("19970702","Gobernador");
