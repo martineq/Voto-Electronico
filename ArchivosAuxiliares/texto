@@ -42,3 +42,70 @@
 [Sat Oct 22 19:01:47 2011]El votante voto lista: 
  Nombre: Socialista
 [Sat Oct 22 19:01:47 2011]====================Votante4==================================
+[Sat Oct 22 21:55:22 2011] Ingreso el votante: 
+ Nombre: Martin
+ DNI: 1
+ Domicilio: 
+ Distrito: Chaco
+[Sat Oct 22 21:55:28 2011]El votante participara en la eleccion: 
+ Fecha: 19970702
+ Cargo Principal: Gobernador
+[Sat Oct 22 21:55:32 2011]El votante voto lista: 
+ Nombre: Socialista
+[Sat Oct 22 21:55:32 2011]====================Votante1==================================
+[Sat Oct 22 21:55:36 2011] Ingreso el votante: 
+ Nombre: Martin
+ DNI: 1
+ Domicilio: 
+ Distrito: Chaco
+[Sat Oct 22 21:55:40 2011]====================Votante2==================================
+[Sat Oct 22 21:55:43 2011] Ingreso el votante: 
+ Nombre: Martin
+ DNI: 1
+ Domicilio: 
+ Distrito: Chaco
+[Sat Oct 22 21:55:48 2011]====================Votante3==================================
+[Sat Oct 22 21:55:54 2011] Ingreso el votante: 
+ Nombre: Martin
+ DNI: 1
+ Domicilio: 
+ Distrito: Chaco
+[Sat Oct 22 21:55:56 2011]Intento de ingreso con password invalido
+[Sat Oct 22 21:55:56 2011]====================Votante4==================================
+[Sat Oct 22 21:58:07 2011] Ingreso el votante: 
+ Nombre: Martin
+ DNI: 1
+ Domicilio: 
+ Distrito: Chaco
+[Sat Oct 22 21:58:09 2011]====================Votante1==================================
+[Sat Oct 22 21:58:16 2011] Ingreso el votante: 
+ Nombre: Lucas
+ DNI: 2
+ Domicilio: 
+ Distrito: Misiones
+[Sat Oct 22 21:58:24 2011]El votante participara en la eleccion: 
+ Fecha: 19970702
+ Cargo Principal: Gobernador
+[Sat Oct 22 21:58:31 2011]El votante voto lista: 
+ Nombre: Socialista
+[Sat Oct 22 21:58:31 2011]====================Votante2==================================
+[Sat Oct 22 21:58:35 2011] Ingreso el votante: 
+ Nombre: Daniel
+ DNI: 3
+ Domicilio: 
+ Distrito: Formosa
+[Sat Oct 22 21:58:43 2011]El votante participara en la eleccion: 
+ Fecha: 19970702
+ Cargo Principal: Gobernador
+[Sat Oct 22 21:58:47 2011]El votante voto impugnado, nulo, etc 
+[Sat Oct 22 21:58:47 2011]====================Votante3==================================
+[Sat Oct 22 21:58:54 2011] Ingreso el votante: 
+ Nombre: Ignacio
+ DNI: 4
+ Domicilio: 
+ Distrito: Corrientes
+[Sat Oct 22 21:59:01 2011]El votante participara en la eleccion: 
+ Fecha: 19970702
+ Cargo Principal: Gobernador
+[Sat Oct 22 21:59:08 2011]El votante voto en blanco 
+[Sat Oct 22 21:59:08 2011]====================Votante4==================================

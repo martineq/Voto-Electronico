@@ -11,9 +11,40 @@ SimulacionSistema::SimulacionSistema(int argc,const char* argv[]){
 	this->conf = new Configuracion(argc,argv);
 }
 
+//
+//SimulacionSistema::SimulacionSistema(){}
+
 SimulacionSistema::~SimulacionSistema(){
 
 	delete (this->conf);
+//	delete votante4;
+//	delete registroVotante1;
+//	delete registroVotante2;
+//	delete registroVotante3;
+//	delete registroVotante4;
+    delete distrito4;
+	delete eleccion4;
+	delete candidato4;
+	delete lista4;
+	delete cargo2;
+	delete registroDistrito1;
+	delete registroDistrito2;
+	delete registroDistrito3;
+	delete registroDistrito4;
+	delete registroEleccion1;
+	delete registroEleccion2;
+	delete registroEleccion3;
+	delete registroEleccion4;
+	delete registroCandidato1;
+	delete registroCandidato2;
+	delete registroCandidato3;
+	delete registroCandidato4;
+	delete registroLista1;
+	delete registroLista2;
+	delete registroLista3;
+	delete registroLista4;
+	delete registroCargo1;
+	delete registroCargo2;
 	delete this->heVotante;
 	delete this->heDistrito;
 	delete this->heEleccion;
@@ -30,8 +61,11 @@ SimulacionSistema::~SimulacionSistema(){
 //	remove ("archivoDeDatosCandidato.txt");
 //	remove ("archivoDeControlCargo.txt");
 //	remove ("archivoDeDatosCargo.txt");
-//	remove ("arbolDeListas");
+
+//	remove ("arbolDeListas");  // VER si queda comentado o no...
 }
+
+
 
 void SimulacionSistema::destruirManual(){
 	delete votante4;
@@ -812,7 +846,16 @@ void SimulacionSistema::main () {
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
 		this->inicioDeSimulacion(administrador,administradorDeConteo,modo,cantidadDeVotantes);
-		if (modo!='a') this->destruirManual();
+
+		if (modo!='m') {
+		   delete votante4;
+		   delete registroVotante1;
+		   delete registroVotante2;
+		   delete registroVotante3;
+		   delete registroVotante4;
+		}
+//	    if (modo!='a') this->destruirManual();
+
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
 	delete administrador;
