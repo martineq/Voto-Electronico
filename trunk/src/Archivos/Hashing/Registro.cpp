@@ -92,12 +92,9 @@ void Registro::deserializar(std::string *source){
 		nuevoContenido->deserializar(entidadSerializada);
 
 		delete entidadSerializada;
-//		cout << "Deserializamos con exito" << endl;
 		this->setContenido(nuevoContenido);
 		delete nuevoContenido;
 
-	}else{
-		cout << "No se pudo deserealizar el registro pues el tamaño de la fuente es nula." << endl;
 	}
 }
 
@@ -127,13 +124,10 @@ void Registro::verContenido()
 {
 	if (contenido != NULL)
 		contenido->verEntidad();
-	else
-		cout << "Contenido vacio" << endl;
 }
 
 Registro::~Registro()
 {
-//	cout << "destruyo Registro" << endl;
 	if (this->contenido != NULL ){
 		delete(this->contenido);
 		this->contenido = NULL;
