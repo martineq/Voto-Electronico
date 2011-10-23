@@ -7,9 +7,13 @@
 
 #include "SimulacionSistema.h"
 
-SimulacionSistema::SimulacionSistema(){}
+SimulacionSistema::SimulacionSistema(int argc,const char* argv[]){
+	this->conf = new Configuracion(argc,argv);
+}
 
 SimulacionSistema::~SimulacionSistema(){
+
+	delete (this->conf);
 	delete this->heVotante;
 	delete this->heDistrito;
 	delete this->heEleccion;
@@ -135,11 +139,10 @@ void SimulacionSistema::iniciarVotantesParaIntegracion() {
 	this->registroVotante2 = new Registro(votante2);
 	this->registroVotante3 = new Registro(votante3);
 
-	char archivoDeControl[]="archivoDeControlVotante.txt";
-	char archivoDeDatos[]="archivoDeDatosVotante.txt";
-	remove(archivoDeControl);
-	remove(archivoDeDatos);
-	this->heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+	string pathControl = this->conf->pathHash() + "DeControlVotante.txt";
+	string pathDatos = this->conf->pathHash() + "DeDatosVotante";
+	this->heVotante =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	if ( this->heVotante->agregarRegistro(registroVotante1) == operacionOK )
 		cout << "Se agrego un votante1" << endl;
 	else cout << "Error agregando votante1" << endl;
@@ -170,9 +173,11 @@ void SimulacionSistema::iniciarDistritosParaIntegracion(){
 	delete this->distrito1;
 	delete this->distrito2;
 	delete this->distrito3;
-	char archivoDeControl[]="archivoDeControlDistrito.txt";
-	char archivoDeDatos[]="archivoDeDatosDistrito.txt";
-	this->heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+
+	string pathControl = this->conf->pathHash() + "DeControlDistrito.txt";
+	string pathDatos = this->conf->pathHash() + "DeDatosDistrito";
+	this->heDistrito =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	if ( this->heDistrito->agregarRegistro(registroDistrito1) == operacionOK )
 		cout << "Se agrego distrito1" << endl;
 	else cout << "Error agregando distrito1" << endl;
@@ -274,9 +279,11 @@ void SimulacionSistema::iniciarEleccionesParaIntegracion(){
 	delete this->eleccion1;
 	delete this->eleccion2;
 	delete this->eleccion3;
-	char archivoDeControl[]="archivoDeControlEleccion.txt";
-	char archivoDeDatos[]="archivoDeDatosEleccion.txt";
-	this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+
+	string pathControl = this->conf->pathHash() + "DeControlEleccion.txt";
+	string pathDatos = this->conf->pathHash() + "DeDatosEleccion";
+	this->heEleccion =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	if ( this->heEleccion->agregarRegistro(registroEleccion1) == operacionOK )
 		cout << "Se agrego una eleccion1" << endl;
 	else cout << "Error agregando eleccion1" << endl;
@@ -313,9 +320,11 @@ void SimulacionSistema::iniciarCandidatosParaIntegracion(){
 	delete this->candidato1;
 	delete this->candidato2;
 	delete this->candidato3;
-	char archivoDeControl[]="archivoDeControlCandidato.txt";
-	char archivoDeDatos[]="archivoDeDatosCandidato.txt";
-	this->heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+
+	string pathControl = this->conf->pathHash() + "DeControlCandidato.txt";
+	string pathDatos = this->conf->pathHash() + "DeDatosCandidato";
+	this->heCandidato =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	if ( this->heCandidato->agregarRegistro(registroCandidato1) == operacionOK )
 		cout << "Se agrego un candidato" << endl;
 	else cout << "Error agregando candidato1" << endl;
@@ -397,8 +406,9 @@ void SimulacionSistema::iniciarListasParaIntegracion(){
 	delete this->lista2;
 	delete this->lista3;
 
+	string pathDatos = this->conf->pathArbol() + "DeListas";
 	arbolB = new bplustree();
-	arbolB->newtree("arbolDeListas",LONGITUD_BLOQUE);
+	arbolB->newtree((char*)pathDatos.c_str(),this->conf->darTamanioNodo());
 
 	this->agregarBoletaAlArbol(registroLista1);
 	this->agregarBoletaAlArbol(registroLista2);
@@ -411,21 +421,22 @@ void SimulacionSistema::iniciarCargosParaIntegracion() {
 	this->cargo1->agregarCargo("Vice Presidente");
 	this->registroCargo1 = new Registro(cargo1);
 	delete this->cargo1;
-	char archivoDeControl[]="archivoDeControlCargo.txt";
-	char archivoDeDatos[]="archivoDeDatosCargo.txt";
-	this->heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos,archivoDeControl);
+
+	string pathControl = this->conf->pathHash() + "DeControlCargo.txt";
+	string pathDatos = this->conf->pathHash() + "DeDatosCargo";
+	this->heCargo =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	if ( this->heCargo->agregarRegistro(registroCargo1) == operacionOK )
 		cout << "Se agrego un cargo1" << endl;
 }
 
 void SimulacionSistema::crearArchivoDeVotantes(){
-	int dimensionBucket = LONGITUD_BLOQUE;
-	char nombreDeArchivo[] = "votantesAleatorios.bin";
-	char archivoConfiguracion[] = "conf.bin";
-	this->heVotante = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
-	remove(nombreDeArchivo);
-	remove(archivoConfiguracion);
-	 for (int i = 0; i < 10; i++){
+
+	string pathControl = this->conf->pathHash() + "AleatoriosControl.bin";
+	string pathDatos = this->conf->pathHash() + "votantesAleatorios.bin";
+	this->heVotante =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
+	for (int i = 0; i < 10; i++){
 	        CreadorVotante * creador = new CreadorVotante(i+1);
 	        Votante* votante = creador->crearVotante();
 	        Registro* registro = new Registro(votante);
@@ -543,38 +554,42 @@ void SimulacionSistema::levantarBaseDeDatos(Administrador* administrador) {
 
 //      NUEVO
         cout << "Inicio de Levante de padron electoral" << endl;
-        char archivoDeControl1[]="archivoDeControlVotante.txt";
-        char archivoDeDatos1[]="archivoDeDatosVotante.txt";
-        this->heVotante = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos1,archivoDeControl1);
+
+    	string pathControl = this->conf->pathHash() + "DeControlVotante.txt";
+    	string pathDatos = this->conf->pathHash() + "DeDatosVotante";
+    	this->heVotante =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
         heVotante->mostrarArchivoDeHash();
 
         cout << "Inicio de Levante de distritos" << endl;
-        char archivoDeControl2[]="archivoDeControlDistrito.txt";
-        char archivoDeDatos2[]="archivoDeDatosDistrito.txt";
-        this->heDistrito = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos2,archivoDeControl2);
+    	pathControl = this->conf->pathHash() + "DeControlDistrito.txt";
+    	pathDatos = this->conf->pathHash() + "DeDatosDistrito";
+        this->heDistrito =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
         heDistrito->mostrarArchivoDeHash();
 
         cout << "Inicio de Levante de Cargos posibles" << endl;
-        char archivoDeControl3[]="archivoDeControlCargo.txt";
-        char archivoDeDatos3[]="archivoDeDatosCargo.txt";
-        this->heCargo = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos3,archivoDeControl3);
+    	pathControl = this->conf->pathHash() + "DeControlCargo.txt";
+    	pathDatos = this->conf->pathHash() + "DeDatosCargo";
+    	this->heCargo =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
         heCargo->mostrarArchivoDeHash();
 
         cout << "Inicio de Levante de Elecciones pasadas" << endl;
-        char archivoDeControl4[]="archivoDeControlEleccion.txt";
-        char archivoDeDatos4[]="archivoDeDatosEleccion.txt";
-        this->heEleccion = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos4,archivoDeControl4);
+    	pathControl = this->conf->pathHash() + "DeControlEleccion.txt";
+    	pathDatos = this->conf->pathHash() + "DeDatosEleccion";
+    	this->heEleccion =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
         heEleccion->mostrarArchivoDeHash();
 
         cout << "Inicio de Levante de Candidatos pasados" << endl;
-        char archivoDeControl5[]="archivoDeControlCandidato.txt";
-        char archivoDeDatos5[]="archivoDeDatosCandidato.txt";
-        this->heCandidato = new HashingExtensible (LONGITUD_BLOQUE,archivoDeDatos5,archivoDeControl5);
+    	pathControl = this->conf->pathHash() + "DeControlCandidato.txt";
+    	pathDatos = this->conf->pathHash() + "DeDatosCandidato";
+    	this->heCandidato =  new HashingExtensible (this->conf->darTamanioBucket(),(char*)pathDatos.c_str(),(char*)pathControl.c_str());
         heCandidato->mostrarArchivoDeHash();
 
         cout << "Inicio de Levante de Listas de elecciones pasadas" << endl;
-        arbolB = new bplustree();
-        arbolB->opentree("arbolDeListas",LONGITUD_BLOQUE);
+
+
+    	pathDatos = this->conf->pathArbol() + "DeListas";
+    	arbolB = new bplustree();
+    	arbolB->newtree((char*)pathDatos.c_str(),this->conf->darTamanioNodo());
 }
 
 
@@ -772,13 +787,11 @@ bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,Administ
 	return 1;
 }
 
-void SimulacionSistema::main (int argc,const char* argv[]) {
+void SimulacionSistema::main () {
 
-//	Configuracion conf(argc,argv);
-
-	string nombreDePrograma = ".//ArchivosAuxiliares//password";
-	string pathArchivoConteo = ".//ArchivosAuxiliares//ArchivoDeConteo.bin";
-	string pathIndiceSecundario = ".//ArchivosAuxiliares//IndiceSecundario.bin";
+	string nombreDePrograma = this->conf->pathPassword() + ".bin";
+	string pathArchivoConteo =this->conf->pathArbol() + "DeConteo.bin";
+	string pathIndiceSecundario = this->conf->pathArbol() + "IndiceSecundario.bin";
 
 	Administrador* administrador = new Administrador (nombreDePrograma);
 
@@ -792,7 +805,7 @@ void SimulacionSistema::main (int argc,const char* argv[]) {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		char modo = 'm';
-		int cantidadDeVotantes;
+		int cantidadDeVotantes = 4; // No se que número va acá.... le puse un 4
 		this->cargarBaseDeDatos(administrador,modo);
 //		this->levantarBaseDeDatos(administrador);
 		//	habilita ciertas elecciones del archivo de elecciones

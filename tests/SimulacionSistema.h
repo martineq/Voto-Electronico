@@ -37,6 +37,7 @@ using namespace std;
 
 class SimulacionSistema {
 private:
+	Configuracion* conf;
 	Votante* votante1;
 	Votante* votante2;
 	Votante* votante3;
@@ -101,14 +102,14 @@ private:
 	void cargarArchivoDeConteo(Administrador*,AdministradorDeVotaciones*);
 	void crearArchivoDeVotantes();
 public:
-	SimulacionSistema();
+	SimulacionSistema(int argc,const char* argv[]);
 	~SimulacionSistema();
 	void cargarBaseDeDatos(Administrador*, char);
 	void levantarBaseDeDatos(Administrador*);
 	bool inicioDeSimulacion(Administrador*,AdministradorDeVotaciones*,char, int);
 	void destruir();
 	void destruirManual();
-	void main (int argc,const char* argv[]);
+	void main ();
 };
 
 #endif /* SIMULACIONSISTEMA_H_ */

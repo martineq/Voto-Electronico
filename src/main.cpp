@@ -81,9 +81,8 @@ int main(int argc,const char* argv[]) {
 //	the.testSimple();
 
 //	Pruebas de simulacion de sistema
-	SimulacionSistema sistema;
-	sistema.main(argc,argv);
-
+	SimulacionSistema sistema(argc,argv);
+	sistema.main();
 
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
