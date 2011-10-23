@@ -68,16 +68,13 @@ void AdministradorDeVotaciones::nuevoArchivoDeConteo(string pathArchivo, string 
 
 void AdministradorDeVotaciones::abrirArchivoDeConteo(string pathArchivo,string pathIndiceSecundario,int dimensionBloque){
 
-//	archivoDeConteo.opentree(pathArchivo);
-//	indiceSecundario.opentree(pathIndiceSecundario);
+	archivoDeConteo.opentree(pathArchivo,dimensionBloque);
+	indiceSecundario.opentree(pathIndiceSecundario,dimensionBloque);
 }
 
 int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 {
 	int resultadoFuncion = 1;
-
-	conteo->verEntidad();
-
 	string* conteoSerializado = conteo->serializar();
 
 	string clave = obtenerClavePrincipal(conteo);
