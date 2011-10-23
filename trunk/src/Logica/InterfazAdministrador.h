@@ -25,6 +25,8 @@
 #include "../Archivos/ArbolBMas/bplustree.h"
 #include "../Logica/AdministradorDeVotaciones.h"
 #include "../ClasesAuxiliares/Configuracion.h"
+#include "../../tests/SimulacionSistema.h"
+#include "./AdministradorDeVotaciones.h"
 #include <list>
 #include <time.h>
 #include <stdio.h>
@@ -32,15 +34,14 @@
 #include <string>
 #include <iostream>
 #include "../ClasesAuxiliares/Configuracion.h"
-#include "AdministradorDeVotaciones.h"
 
 using namespace std;
 
 class InterfazAdministrador {
 private:
 	Configuracion* config;
-	AdministradorDeVotaciones*	administradorDeConteo;
-	int longitudBucket;
+	AdministradorDeVotaciones * administradorDeConteo;
+	int longitud;
 	int longitudNodo;
 	string rutaHash;
 	string rutaArbol;
@@ -53,8 +54,11 @@ private:
 	void mostrarMenuCandidatos(Administrador * administrador);
 	void mostrarMenuInformes(Administrador * administrador);
 	void habilitarElecciones(Administrador * administrador);
+	void comienzoVotacion(Administrador * administrador);
 	int isANumber(string &cad);
 	void imprimirRespuesta(Resultados res);
+	void cargarArchivoDeConteo(Administrador * administrador, bplustree * arbolB);
+	string* getString(vector<char> vect);
 public:
 	InterfazAdministrador(Configuracion* configuracion);
 	void ingresoAdministrador(Administrador * administrador);
