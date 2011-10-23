@@ -83,7 +83,6 @@ int AdministradorDeVotaciones::agregarConteo(Conteo *conteo)
 	string clave = obtenerClavePrincipal(conteo);
 	vector<char> resultado = archivoDeConteo.search(clave);
 	if ( resultado.size() == 0 ){
-		cout << "size: " << conteoSerializado->size() << endl;
 
 		vector<char> data(conteoSerializado->begin(),conteoSerializado->end());
 
@@ -126,8 +125,7 @@ void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nomb
 
 		delete conteo;
 		delete conteoSerializado;
-	}else
-		cout << "size==0" << endl;
+	}
 }
 
 void AdministradorDeVotaciones::mostrarArchivoPrincipal(){
