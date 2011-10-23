@@ -21,9 +21,6 @@ Administrador::Administrador(string pathArchivo) {
 	espacio++;
 	password = str.substr(espacio);
 
-	cout << nombre;
-	cout << password;
-
 	archivo->close();
 	delete archivo;
 }
