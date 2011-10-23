@@ -11,7 +11,7 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 	this->config = configuracion;
 	this->rutaArbol = config->pathArbol();
 	this->rutaHash = config->pathHash();
-	this->longitud = config->darTamanioBucket();
+	this->longitudBucket = config->darTamanioBucket();
 	this->longitudNodo = config->darTamanioNodo();
 
 	administradorDeConteo = new AdministradorDeVotaciones();
@@ -171,7 +171,7 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 	string pathControl = this->rutaHash + "DeControlDistrito.txt";
 	string pathDatos = this->rutaHash + "DeDatosDistrito";
 
-	HashingExtensible * heDistrito = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heDistrito = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 
 	string opcion = "0";
@@ -237,7 +237,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 	string pathControl = this->rutaHash + "DeControlVotante.txt";
 	string pathDatos = this->rutaHash + "DeDatosVotante";
 
-	HashingExtensible * heVotante = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heVotante = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	int dni = 0;
@@ -369,7 +369,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 	string pathControl = this->rutaHash + "DeControlEleccion.txt";
 	string pathDatos = this->rutaHash + "DeDatosEleccion";
 
-	HashingExtensible * heEleccion = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heEleccion = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	string masDistritos = "S";
@@ -472,7 +472,7 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 	string pathControl = this->rutaHash + "DeControlCargo.txt";
 	string pathDatos = this->rutaHash + "DeDatosCargo";
 
-	HashingExtensible * heCargo = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heCargo = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 	string opcion = "0";
 	string cargoPpal,subCargo;
@@ -558,13 +558,13 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 	string pathControl = this->rutaHash + "DeControlCandidato.txt";
 	string pathDatos = this->rutaHash + "DeDatosCandidato";
 
-	HashingExtensible * heCandidato = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heCandidato = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 
 	pathControl = this->rutaHash+"DeControlVotante.txt";
 	pathDatos = this->rutaHash+"DeDatosVotante.txt";
 
-	HashingExtensible * heVotante = new HashingExtensible (LONGITUD_BLOQUE,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	HashingExtensible * heVotante = new HashingExtensible (this->longitudBucket,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
 
 	string opcion = "0";
@@ -697,8 +697,8 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 	string pathDatos = this->rutaArbol + "arbolDeListas";
 	bplustree * bLista = new bplustree();
-//	bLista->opentree(archivoDeDatos,LONGITUD_BLOQUE);
-	bLista->newtree((char*)pathDatos.c_str(),LONGITUD_BLOQUE);
+//	bLista->opentree(archivoDeDatos,this->longitudNodo);
+	bLista->newtree((char*)pathDatos.c_str(),this->longitudNodo);
 	string opcion = "0";
 	string fecha,cargo,nombreLista;
 
@@ -814,7 +814,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 	string archivoDeControl=this->rutaHash+"DeControlEleccion.txt";
 	string archivoDeDatos = this->rutaHash+"DeDatosEleccion.txt";
-	HashingExtensible * heEleccion = new HashingExtensible (LONGITUD_BLOQUE,(char*)archivoDeDatos.c_str(),(char*)archivoDeControl.c_str());
+	HashingExtensible * heEleccion = new HashingExtensible (this->longitudBucket,(char*)archivoDeDatos.c_str(),(char*)archivoDeControl.c_str());
 
 	string opcion = "0";
 	string fecha,cargo;

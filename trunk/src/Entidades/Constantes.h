@@ -15,7 +15,7 @@
 
 
 //Longitudes
-#define LONGITUD_BLOQUE 1024
+#define LONGITUD_CADENA 256  // <-- Es para el parseo del arch de password // LONGITUD_BLOQUE Ya no se usa mas
 #define TAM_FECHA 8
 #define TAM_BOOL sizeof(bool)
 #define TAM_LONG sizeof(long)

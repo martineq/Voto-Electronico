@@ -10,7 +10,7 @@
 Bucket::Bucket(int tamanioDispersion,int tamanioDeBucket){
 	this->tamanioDeDispersion=tamanioDispersion;
 	this->espacioLibre=tamanioDeBucket-12;
-//	this->espacioLibre=LONGITUD_BLOQUE;
+//	this->espacioLibre=LONGITUD_BLOQUE;  // LONGITUD_BLOQUE Ya no se usa mas!!!
 }
 
 Registro* Bucket::getRegistro(Registro* registro){

@@ -90,9 +90,9 @@ int main(int argc,const char* argv[]) {
 
 	Configuracion* conf = new Configuracion(argc,argv);
 
-	string pathPassword 	= conf->pathPassword() + ".bin";
+	string pathPassword = conf->pathPassword() + ".bin";
 
-	Administrador* administrador = new Administrador (pathPassword);
+	Administrador* administrador = new Administrador(pathPassword);
 
 	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
 	interfaz->ingresoAdministrador(administrador);

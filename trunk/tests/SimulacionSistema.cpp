@@ -827,7 +827,7 @@ void SimulacionSistema::main () {
 	Administrador* administrador = new Administrador (nombreDePrograma);
 
 	AdministradorDeVotaciones* administradorDeConteo = new AdministradorDeVotaciones();
-	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,LONGITUD_BLOQUE);
+	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,this->conf->darTamanioNodo());
 
 //	intenta acceder al sistema con usuario incorrecto pero contraseña correcta
 	if ((administrador->acceder("undomiel","1")) || (administrador->acceder("1","aragorn")) || (administrador->acceder("",""))) cout << "SEGURIDAD VIOLADA" << endl;
