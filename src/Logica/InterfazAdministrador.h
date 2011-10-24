@@ -59,6 +59,7 @@ private:
 	void imprimirRespuesta(Resultados res);
 	void cargarArchivoDeConteo(Administrador * administrador, bplustree * arbolB);
 	string* getString(vector<char> vect);
+	void cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador);
 public:
 	InterfazAdministrador(Configuracion* configuracion);
 	void ingresoAdministrador(Administrador * administrador);
