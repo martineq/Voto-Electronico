@@ -863,6 +863,38 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 	}
 }
 
+void InterfazAdministrador::verContenidoArbolListas (bplustree* arbolB){
+	//	se posiciona en el primer registro
+
+	string* registroSerializado = getString( arbolB-> search("") );
+	delete registroSerializado;
+	pair<vector<char>,string> par = arbolB->getnext();
+	if (par.second.size()!=0) {
+		registroSerializado = getString( par.first );
+
+		Registro* unRegistro = new Registro();
+		unRegistro->deserializar(registroSerializado);
+		delete registroSerializado;
+
+		unRegistro->verContenido();
+
+		par=arbolB->getnext();
+		while(par.second.size()!=0) {
+
+			registroSerializado = getString( par.first );
+			unRegistro->deserializar(registroSerializado);
+			delete registroSerializado;
+
+			unRegistro->verContenido();
+			cout << endl;
+			par=arbolB->getnext();
+		}
+		delete unRegistro;
+	}
+	else cout << "NO HAY LISTAS" << endl;
+}
+
+
 void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 	string pathDatos = this->rutaArbol + "arbolDeListas";
 	bplustree * bLista = new bplustree();
@@ -882,6 +914,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 			cout << "2) Baja Lista"<<endl;
 			cout << "3) Modificar Lista"<<endl;
 			cout << "4) Volver atrás"<<endl;
+//			cout << "5) Ver Listas" << endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
@@ -969,7 +1002,10 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 		case 4 : {
 			delete bLista;
 			return;
-		}
+		}//break;
+//		case 5 : {
+//			verContenidoArbolListas(bLista);
+//		}
 		}
 		i = 0;
 
@@ -1029,7 +1065,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 						dia = atoi(diaStr.c_str());
 					}
 					if ((anio >= 1980) and (anio <= 2020) and (mes > 0) and (mes <= 12)
-						and (dia > 0) and (dia <= 30)){
+							and (dia > 0) and (dia <= 30)){
 						fechaError = false;
 					}
 				}
@@ -1039,8 +1075,8 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 			cin >> cargo;
 
 			eleccion = new Eleccion(fecha,cargo);
-			delete eleccion;
 			registro = new Registro(eleccion);
+			delete eleccion;
 		}
 		switch (i)
 		{
@@ -1050,7 +1086,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 				eleccion = (Eleccion*) registroObtenido->getContenido();
 				administrador->habilitarEleccion(eleccion);
 				cout << "Elección habilitada"<<endl;
-				delete eleccion;
+//				delete eleccion;
 				delete registroObtenido;
 			}
 			else{
