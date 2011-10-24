@@ -1033,7 +1033,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 			cin >> cargo;
 
 			eleccion = new Eleccion(fecha,cargo);
-
+			delete eleccion;
 			registro = new Registro(eleccion);
 		}
 		switch (i)
@@ -1041,8 +1041,10 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 		case 1 : {
 			Registro * registroObtenido = heEleccion->obtenerRegistro(registro);
 			if ( registroObtenido != NULL){
+				eleccion = (Eleccion*) registroObtenido->getContenido();
 				administrador->habilitarEleccion(eleccion);
 				cout << "Elección habilitada"<<endl;
+				delete eleccion;
 				delete registroObtenido;
 			}
 			else{
