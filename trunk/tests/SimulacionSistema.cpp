@@ -468,7 +468,7 @@ void SimulacionSistema::crearArchivoDeVotantes(){
 
 	for (int i = 0; i < 10; i++){
 	        CreadorVotante * creador = new CreadorVotante(i+1);
-	        Votante* votante = creador->crearVotante();
+	        Votante* votante = creador->crearVotante(conf);
 	        Registro* registro = new Registro(votante);
        		this->heVotante->agregarRegistro(registro);
 //        	he->mostrarArchivoDeHash();
