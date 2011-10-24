@@ -60,6 +60,7 @@ private:
 	void cargarArchivoDeConteo(Administrador * administrador, bplustree * arbolB);
 	string* getString(vector<char> vect);
 	void cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador);
+	void verContenidoArbolListas (bplustree*);
 public:
 	InterfazAdministrador(Configuracion* configuracion);
 	void ingresoAdministrador(Administrador * administrador);
