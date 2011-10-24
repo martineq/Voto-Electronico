@@ -92,7 +92,6 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrador){
 	string opcion = "0";
 	int i = 0;
-	cout << "i: "<<i<<endl;
 	while ((i < 1) or (i > 10)){
 		cout << "Opciones: "<<endl<<endl;
 		cout << "1) Mantener Distritos"<<endl;
@@ -796,15 +795,22 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 			}
 			else {
 				cout << "Ingrese la lista: ";
-				cin >> nombreLista;
+				char* entrada = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada,this->longitud);
+				nombreLista = entrada;
+				delete[] entrada;
 				lista = new Lista(nombreLista,fecha,cargo);
 			}
 
 
 		}else if ( i == 3 ){
 			cout << "Ingrese el nombre del distrito: ";
-
-			cin >> nombreDelDistrito;
+			char* entrada = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada,this->longitud);
+			nombreDelDistrito = entrada;
+			delete[] entrada;
 			distrito = new Distrito(nombreDelDistrito);
 		}
 
@@ -817,7 +823,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 			administradorDeConteo->generarInformePorEleccion(eleccion);
 			cout << "Ingrese una tecla para continuar";
 
-			cin.ignore();
+			cin.ignore(cin.rdbuf()->in_avail());
 			cin.get();
 			delete eleccion;
 			eleccion = NULL;
@@ -832,7 +838,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 			administradorDeConteo->generarInformePorLista(lista,he);
 			delete he;
 			cout << "Ingrese una tecla para continuar";
-			cin.ignore();
+			cin.ignore(cin.rdbuf()->in_avail());
 			cin.get();
 			delete lista;
 			lista  = NULL;
@@ -842,7 +848,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		{
 			administradorDeConteo->generarInformePorDistrito(distrito);
 			cout << "Ingrese una tecla para continuar";
-			cin.ignore();
+			cin.ignore(cin.rdbuf()->in_avail());
 			cin.get();
 			delete distrito;
 			distrito = NULL;
@@ -1326,6 +1332,64 @@ string* InterfazAdministrador::getString(vector<char> vect){
 		it++;
 	}
 	return s;
+}
+
+void InterfazAdministrador::cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador){
+
+	//Busco en la lista de elecciones habilitadas
+	string pathDatos = this->rutaArbol + "arbolDeListas";
+	bplustree * arbolDeListas = new bplustree();
+//	arbolDeListas->opentree((char*)pathDatos.c_str(),this->longitudNodo);
+	arbolDeListas->newtree((char*)pathDatos.c_str(),this->longitudNodo);
+
+
+	string fecha = eleccion->getFecha();
+	string cargo = eleccion->getCargo();
+
+	string clave = fecha + cargo;
+	arbolDeListas->search(clave);
+
+	arbolDeListas->search(clave);
+	pair<vector<char>,string> map = arbolDeListas->getnext();
+
+	bool buscarSiguienteLista = true;
+	while ( map.second.size() != 0 and buscarSiguienteLista == true){
+
+		string* registroSerializado = getString(map.first);
+
+		Registro* registro = new Registro();
+		registro->deserializar(registroSerializado);
+		delete registroSerializado;
+
+		Lista* lista = (Lista*)registro->getContenido();
+		delete registro;
+
+		if ( lista != NULL ){
+
+			if ( lista->getFecha() == fecha and lista->getCargo() == cargo ){
+
+				// Recorro los distritos de la eleccion habilitada
+				list<Distrito>::iterator itDistrito = eleccion->obtenerIterador();
+				while( !eleccion->ultimo(itDistrito) ){
+					Conteo* conteo = new Conteo(fecha,cargo,lista->getNombre(),(*itDistrito).getDistrito());
+					administradorDeConteo->agregarConteo(conteo);
+					delete conteo;
+
+					itDistrito++;
+				}
+				pair<vector<char>,string> map = arbolDeListas->getnext();
+
+			}
+
+			else
+				buscarSiguienteLista = false;
+
+			delete lista;
+		}
+
+		else
+			buscarSiguienteLista = false;
+	}
 }
 
 
