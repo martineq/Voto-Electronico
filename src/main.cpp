@@ -82,7 +82,7 @@ int main(int argc,const char* argv[]) {
 //	the.testModificarRegistroConRedispersion();
 //	the.testSimple();
 
-//	Pruebas de simulacion de sistema
+//	Pruebas de simulacion de sistema de votacion
 //	SimulacionSistema sistema(argc,argv);
 //	sistema.main();
 
@@ -100,6 +100,7 @@ int main(int argc,const char* argv[]) {
 	delete conf;
 	delete administrador;
 	delete interfaz;
+	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }
 

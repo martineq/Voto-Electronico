@@ -231,9 +231,9 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 				cout << eleccion->getFecha() << "\t\t" << eleccion->getCargo() << "\t" << nombreDeListaActual << "\t\t" << cantidadDeVotos << endl;
 
 			}
-			delete conteo;
 			busquedaOK = true;
 		}
+		delete conteo;
 	}
 
 	if ( !busquedaOK )
@@ -288,7 +288,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 				delete conteoSerializado;
 			}
 
-			delete conteo;
+			busquedaOK = true;
 
 			cout << fecha << "\t\t" << nombreLista << "\t\t" << cantidadDeVotos << endl;
 
@@ -314,11 +314,11 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 				}
 
 				delete cargo;
-
-				busquedaOK = true;
 			}
 
 		}
+		delete conteo;
+
 		cout << endl;
 	}
 	if ( !busquedaOK )
@@ -400,10 +400,10 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 					cout << fechaEleccion << "\t\t" << cargoEleccion << "\t" << nombreDelGanador << "\t\t\t" << maximo << endl;
 
 				}
-				delete conteo;
 
 				busquedaOK = true;
 			}
+			delete conteo;
 		}
 	}
 

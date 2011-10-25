@@ -42,7 +42,7 @@ void TestVotanteAleatorio::crearArchivoDeVotantes()
 	HashingExtensible* he = new HashingExtensible(dimensionBucket,nombreDeArchivo,archivoConfiguracion);
 
 	 for (int i = 0; i < 1000; i++){
-	        CreadorVotante * creador = new CreadorVotante(time(NULL) * (i+1));
+	        /*CreadorVotante * creador = new CreadorVotante(time(NULL) * (i+1));
 	        Votante* votante = creador->crearVotante();
 	        Registro* registro = new Registro(votante);
        		he->agregarRegistro(registro);
@@ -51,7 +51,7 @@ void TestVotanteAleatorio::crearArchivoDeVotantes()
 	        delete (registro);
 	        delete (votante);
 	        delete (creador);
-	    }
+*/	    }
 
 	delete he;
 }

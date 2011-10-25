@@ -443,6 +443,12 @@ void SimulacionSistema::iniciarListasParaIntegracion(){
 	this->agregarBoletaAlArbol(registroLista1);
 	this->agregarBoletaAlArbol(registroLista2);
 	this->agregarBoletaAlArbol(registroLista3);
+
+	Lista* lista5 = new Lista ("Blanco","19970702","Gobernador");
+	Registro* registroLista5 = new Registro(lista5);
+	this->agregarBoletaAlArbol(registroLista5);
+	delete lista5;
+	delete registroLista5;
 }
 
 
@@ -839,10 +845,10 @@ void SimulacionSistema::main () {
 		cout << "INGRESO APROBADO" << endl;
 		cout << "Bienvenido al sistama de gestion de elecciones" << endl;
 		char modo = 'm';
-		int cantidadDeVotantes = 4; // No se que número va acá.... le puse un 4
+		int cantidadDeVotantes = 3;
 		this->cargarBaseDeDatos(administrador,modo);
 //		this->levantarBaseDeDatos(administrador);
-		//	habilita ciertas elecciones del archivo de elecciones
+//			habilita ciertas elecciones del archivo de elecciones
 		this->habilitarElecciones(administrador);
 		administrador->getEleccionesHabilitadas();
 		this->inicioDeSimulacion(administrador,administradorDeConteo,modo,cantidadDeVotantes);
@@ -854,7 +860,7 @@ void SimulacionSistema::main () {
 		   delete registroVotante3;
 		   delete registroVotante4;
 		}
-//	    if (modo!='a') this->destruirManual();
+	    if (modo!='a') this->destruirManual();
 
 	}
 	else cout << "ERROR EN EL NOMBRE DE USUARIO O PASSWORD" << endl;
