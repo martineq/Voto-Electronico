@@ -60,7 +60,7 @@ int ArchivoBloques::delblock(int nrrBorrado){
 		return 0;
 	}
 	// Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
-	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-TAM_CAMPOS_CTRL ){
+	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-(int)TAM_CAMPOS_CTRL ){
 		int metadataAnterior = this->currmetadata;					// Me guardo el bloque de metadata anterior
 		int nrrNuevo = growfile();									// Pido un NUEVO bloque de metadata
 		this->currmetadata = nrrNuevo;

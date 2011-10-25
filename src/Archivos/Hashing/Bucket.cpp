@@ -44,7 +44,7 @@ Registro* Bucket::consultarRegistro(Registro* registro){
 bool Bucket::agregarRegistro(Registro* unRegistro){
 	if (this->consultarRegistro(unRegistro)!=NULL) return false;
 	else
-		if ((unRegistro->getTamanio()+TAM_INT)>this->espacioLibre) return  false;
+		if ((int)(unRegistro->getTamanio()+TAM_INT)>this->espacioLibre) return  false;
 		else {
 			Registro* registro = unRegistro->duplicar();
 			this->listaDeRegistros.push_back(registro);

@@ -98,7 +98,7 @@ vector<char> bplustree::search(string key)
 	vector<char> block;
 	std::vector<char> retval;
 	int bn=0;
-	char blocktype=0;
+//	char blocktype=0;
 
 	q.clear();
 	bn=this->getrootblock();
@@ -125,7 +125,7 @@ vector<char> bplustree::search(string key)
 
 int bplustree::add(string key, vector<char> data){
 
-	if(key.size() + data.size() > this->bs-12) //just to make sure i am not inserting something larger than a block
+	if((int)(key.size() + data.size()) > this->bs-12) //just to make sure i am not inserting something larger than a block
 		return -1;
 	vector<char> tmp;
 	int bn=0;
@@ -138,7 +138,7 @@ int bplustree::add(string key, vector<char> data){
 	leaf_node tmpleaf;
 	int left=0;
 	int right=0;
-	int parent=0;
+//	int parent=0;
 	char blocktype='L';
 	std::pair<inner_node,leaf_node> pairifleaf;
 	std::pair<inner_node, inner_node> pairifnode;
@@ -296,7 +296,7 @@ int bplustree::add(string key, vector<char> data){
 
 int bplustree::modify(string key, vector<char> data)
 {
-	if(key.size() + data.size() > this->bs-12) //just to make sure i am not inserting something larger than a block
+	if((int)(key.size() + data.size()) > this->bs-12) //just to make sure i am not inserting something larger than a block
 		return -1;
 	vector<char> tmp;
 	int bn=0;
@@ -309,7 +309,7 @@ int bplustree::modify(string key, vector<char> data)
 	leaf_node tmpleaf;
 	int left=0;
 	int right=0;
-	int parent=0;
+//	int parent=0;
 	char blocktype='L';
 	std::pair<inner_node,leaf_node> pairifleaf;
 	std::pair<inner_node, inner_node> pairifnode;

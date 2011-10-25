@@ -391,7 +391,7 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 			int posicionesAreemplazar = tablaDeHash.size()/dispersionDelBucket;
 
 			// Libero el bucket y lo ubico en la lista de libres.
-			if ( numeroDeBucket == (tablaDeDispersion.size() -1 ) )
+			if ( numeroDeBucket == (int)(tablaDeDispersion.size() -1 ) )
 				tablaDeDispersion.pop_back();
 			else
 				tablaDeDispersion.at(numeroDeBucket) = BUCKET_LIBRE;

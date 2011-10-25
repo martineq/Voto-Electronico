@@ -988,6 +988,11 @@ void InterfazAdministrador::verContenidoArbolListas (bplustree* arbolB){
 }
 
 void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
+	string pathControl3 = this->rutaHash + "DeControlCargo.txt";
+	string pathDatos3 = this->rutaHash + "DeDatosCargo";
+
+	HashingExtensible * heCargo = new HashingExtensible (this->longitud,(char*)pathDatos3.c_str(),(char*)pathControl3.c_str());
+
 	string pathDatos = this->rutaArbol + "arbolDeListas";
 	bplustree * bLista = new bplustree();
 //	bLista->opentree(archivoDeDatos,LONGITUD_BLOQUE);
@@ -1046,12 +1051,30 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 				}
 			}
 
-			cout << "Ingrese el cargo: ";
-			char* entrada = new char[longitud];
-			cin.ignore();
-			cin.getline(entrada,this->longitud);
-			cargo = entrada;
-			delete[] entrada;
+			bool salir=false;
+			while (salir==false) {
+				cout << "Ingrese el cargo: ";
+				cin >> cargo;
+				Cargo* unCargo = new Cargo (cargo);
+				Registro* reg1 = new Registro (unCargo);
+				delete unCargo;
+				if(heCargo->obtenerRegistro(reg1)==NULL) cout << "No existe cargo/cargo no valido" << endl;
+				else salir=true;
+				delete reg1;
+				//
+//				cout << "Ingrese el cargo: ";
+//				char* entrada = new char[longitud];
+//				cin.ignore();
+//				cin.getline(entrada,this->longitud);
+//				cargo = entrada;
+//				delete[] entrada;
+//				Cargo* unCargo = new Cargo (cargo);
+//				Registro* reg1 = new Registro (unCargo);
+//				delete unCargo;
+//				if(heCargo->obtenerRegistro(reg1)==NULL) cout << "No existe cargo/cargo no valido" << endl;
+//				else salir=true;
+//				delete reg1;
+			}
 
 			cout << "Ingrese la lista: ";
 
@@ -1100,6 +1123,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 		}break;
 		case 4 : {
 			delete bLista;
+//			delete heCargo;
 			return;
 			break;
 		}
