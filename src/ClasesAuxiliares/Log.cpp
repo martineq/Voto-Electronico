@@ -16,8 +16,8 @@ Log::~Log() {
 	// TODO Auto-generated destructor stub
 }
 
-void Log::abrir(){
-	this->archivo = fopen("./ArchivosAuxiliares/texto","a+");
+void Log::abrir(Configuracion* configuracion){
+	this->archivo = fopen(configuracion->pathLog().c_str(),"a+");
 }
 
 void Log::cerrar(){
