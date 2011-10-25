@@ -37,6 +37,11 @@ public:
 	void agregarShortInt(short int valor);
 
 	/*
+	 * Agrega un unsigned int.
+	 */
+	void agregarUnsignedInt(unsigned int valor);
+
+	/*
 	 * Agrega un string al stream.
 	 */
 	void agregarString(string* cadena);
@@ -55,6 +60,11 @@ public:
 	 * Obtiene un short int del stream.
 	 */
 	short int obtenerShortInt();
+
+	/*
+	 * Obtiene un unsigned int del stream.
+	 */
+	unsigned int obtenerUnsignedInt();
 
 	/*
 	 * Devuelve un string, debe ser liberado luego de ser usado.

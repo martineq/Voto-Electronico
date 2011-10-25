@@ -133,19 +133,15 @@ Votante* CreadorVotante::crearVotante(Configuracion* configuracion){
     srand ( semilla );
     string path;
 
-    path = configuracion->pathVotante() + "Nombres.txt";
-    string nombre = this->getNombre(path);
+    string nombre = this->getNombre(configuracion->pathNombres());
 
-    path = configuracion->pathVotante() + "Apellidos.txt";
-    string apellido = this->getApellido(path);
+    string apellido = this->getApellido(configuracion->pathApellidos());
 
     int dni = this->getDNI();
 
-    path = configuracion->pathVotante() + "Distritos.txt";
-    string distrito = this->getDistrito(path);
+    string distrito = this->getDistrito(configuracion->pathDistritos());
 
-    path = configuracion->pathVotante() + "Domicilios.txt";
-    string domicilio = this->getDomicilio(path);
+    string domicilio = this->getDomicilio(configuracion->pathDomicilios());
 
     string password = this->getClave();
     Votante* votante = new Votante(dni, nombre+" "+apellido, password, domicilio, distrito);

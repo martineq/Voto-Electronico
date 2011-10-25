@@ -3,6 +3,9 @@
 #include "../tests/Pruebas.h"
 #include "../tests/SimulacionSistema.h"
 #include "../tests/TestHashingExtensible.h"
+#include "../tests/TestVotanteAleatorio.h"
+#include "../tests/TestArchivoDeBuckets.h"
+#include "../src/Archivos/Hashing/ArchivoDeBuckets.h"
 #include "./Logica/InterfazAdministrador.h"
 #include "./ClasesAuxiliares/Configuracion.h"
 
@@ -62,6 +65,7 @@ int main(int argc,const char* argv[]) {
 
 //	Pruebas Archivo de Buckets
 //	TestArchivoDeBuckets testArchivoDeBuckets;
+//	testArchivoDeBuckets.testConteo();
 //	testArchivoDeBuckets.testVotante();
 //	testArchivoDeBuckets.testCargo();
 //	testArchivoDeBuckets.tests();
@@ -82,6 +86,10 @@ int main(int argc,const char* argv[]) {
 //	the.testModificarRegistroConRedispersion();
 //	the.testSimple();
 
+//	Pruebas de votante aleatorio
+//	TestVotanteAleatorio testVotanteAleatorio;
+//	testVotanteAleatorio.crearArchivoDeVotantes();
+
 //	Pruebas de simulacion de sistema de votacion
 //	SimulacionSistema sistema(argc,argv);
 //	sistema.main();
@@ -90,9 +98,7 @@ int main(int argc,const char* argv[]) {
 
 	Configuracion* conf = new Configuracion(argc,argv);
 
-	string pathPassword = conf->pathPassword() + ".bin";
-
-	Administrador* administrador = new Administrador(pathPassword);
+	Administrador* administrador = new Administrador(conf->pathPassword());
 
 	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
 	interfaz->ingresoAdministrador(administrador);
@@ -100,6 +106,7 @@ int main(int argc,const char* argv[]) {
 	delete conf;
 	delete administrador;
 	delete interfaz;
+
 	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }

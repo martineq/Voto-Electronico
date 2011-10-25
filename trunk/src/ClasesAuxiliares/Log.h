@@ -14,6 +14,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include "Configuracion.h"
 #include "../Entidades/Votante.h"
 #include "../Entidades/Lista.h"
 
@@ -29,7 +30,7 @@ private:
 	string convertIntToString(int);
 public:
 	Log();
-	void abrir();
+	void abrir(Configuracion* configuracion);
 	void cerrar();
 	void insertarMensajeConEntero(int);
 	void insertarMensajeConEntidad(Entidad*,string);

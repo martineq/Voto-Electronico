@@ -46,6 +46,7 @@ void Configuracion::cargarArgumentos(int argc, const char** argv){
             fprintf (stderr, "Opción desconocida `-%c'.\n", optopt);
           else
             fprintf (stderr,"Caracter de opción desconocida `\\x%x'.\n",optopt);
+          break;
         default:
         	cerr << "Para ayuda consulte con: -h \nPrograma terminado."<<endl;
         	exit(1);
@@ -101,13 +102,18 @@ void Configuracion::cargarArchivoConfig(){
 	// Ahora cargo los parámetros que se obtuvieron del archivo de configuración
 	this->rutaArbol = "";
 	this->rutaHash = "";
-	this->rutaVotanteAleatorio = "";
+	this->rutaApellidos= "";
+	this->rutaDistritos = "";
+	this->rutaDomicilios = "";
+	this->rutaDomicilios = "";
+	this->rutaLog = "";
+	this->rutaNombres = "";
 	this->tamanioNodo = 0;
 	this->tamanioBucket = 0;
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:V:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
@@ -124,8 +130,20 @@ void Configuracion::cargarArchivoConfig(){
         case 'P':
         	this->rutaPass = optarg;
         	break;
-        case 'V':
-        	this->rutaVotanteAleatorio = optarg;
+        case 'S':
+        	this->rutaApellidos = optarg;
+        	break;
+        case 'M':
+        	this->rutaNombres = optarg;
+        	break;
+        case 'C':
+        	this->rutaDistritos = optarg;
+        	break;
+        case 'R':
+        	this->rutaDomicilios = optarg;
+        	break;
+        case 'L':
+        	this->rutaLog = optarg;
         	break;
         case '?':
           if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
@@ -133,14 +151,20 @@ void Configuracion::cargarArchivoConfig(){
           else if (optopt == 'N')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'B')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'P')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
-          else if (optopt == 'V')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'S')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'M')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'C')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'R')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'L')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
             fprintf (stderr,"Arch. Config. > Caracter de opción desconocida `\\x%x'.\n",optopt);
+          break;
         default:
         	cerr << "Arch. Config. > Corregir archivo. "<<endl;
         	cerr << "Para ayuda consulte con: -h"<<endl;
+        	break;
         }
     for (index = optind; index < argc; index++)
     	cerr << "Arch. Config. > Opción inválida: " << argv[index] << endl;
@@ -166,10 +190,6 @@ string Configuracion::pathHash(){
 
 string Configuracion::pathPassword(){
 	return this->rutaPass;
-}
-
-string Configuracion::pathVotante(){
-	return this->rutaVotanteAleatorio;
 }
 
 bool Configuracion::isAuto(){
@@ -206,12 +226,42 @@ void Configuracion::mostrarAyuda(){
 	cout << "	-N +<valor>		Asigna el tamaño del Nodo del árbol B+."<<endl;
 	cout << "	-B +<valor>		Asigna el tamaño del Bucket del archivo de dispersión."<<endl;
 	cout << "	-P +<ruta>		Asigna la ruta del archivo de Password del administrador."<<endl;
-	cout << "	-V +<ruta>		Asigna la ruta de los archivos de alta automatica de votante." << endl;
+
+	cout << "	-S +<ruta>		Asigna la ruta de los apellidos." << endl;
+	cout << "	-M +<ruta>		Asigna la ruta de los nombres." << endl;
+	cout << "	-C +<ruta>		Asigna la ruta de los distritos." << endl;
+	cout << "	-R +<ruta>		Asigna la ruta de los domicilios." << endl;
+	cout << "	-L +<ruta>		Asigna la ruta del log." << endl;
 	cout << ""<<endl;
 }
 
 void Configuracion::mostrarVersion(){
 	cout <<"Versión 1.0"<<endl;
+}
+
+string Configuracion::pathApellidos()
+{
+	return this->rutaApellidos;
+}
+
+string Configuracion::pathNombres()
+{
+	return this->rutaNombres;
+}
+
+string Configuracion::pathDomicilios()
+{
+	return this->rutaDomicilios;
+}
+
+string Configuracion::pathDistritos()
+{
+	return this->rutaDistritos;
+}
+
+string Configuracion::pathLog()
+{
+	return this->rutaLog;
 }
 
 Configuracion::~Configuracion() {

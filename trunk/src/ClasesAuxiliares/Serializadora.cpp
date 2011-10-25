@@ -75,6 +75,18 @@ short int Serializadora::obtenerShortInt()
 	return valor;
 }
 
+void Serializadora::agregarUnsignedInt(unsigned int valor)
+{
+	stream->write((char*)&valor,sizeof(unsigned int));
+}
+
+unsigned int Serializadora::obtenerUnsignedInt()
+{
+	unsigned int valor;
+	stream->read((char*)&valor,sizeof(unsigned int));
+	return valor;
+}
+
 Serializadora::~Serializadora() {
 	delete stream;
 }
