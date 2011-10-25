@@ -8,6 +8,7 @@
 #ifndef INTERFAZADMINISTRADOR_H_
 #define INTERFAZADMINISTRADOR_H_
 
+#include <iomanip>
 #include "../Entidades/Cargo.h"
 #include "../Entidades/Votante.h"
 #include "../Entidades/Distrito.h"

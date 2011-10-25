@@ -24,8 +24,6 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 }
 
 void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
-//	string nombreDePrograma = ".//doc//password";
-//	Administrador * administrador = new Administrador(nombreDePrograma);
 	string usuario,password;
 	string tecla = "P";
 	cout <<"Ingrese su nombre de usuario: ";
@@ -116,8 +114,6 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 
 	}
 
-	cout << string(100,'\n');
-
 	switch (i)
 	{
 	case 1  : mostrarMenuDistritos(administrador);break;
@@ -203,7 +199,13 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 
 		if ((i != 4) and (i != 5)){
 			cout << "Ingrese el nombre del distrito: "<<endl;
-			cin >> nombreDistrito;
+
+			char* entrada = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada,this->longitud);
+			nombreDistrito = entrada;
+			delete[] entrada;
+
 			cout << endl;
 			distrito = new Distrito(nombreDistrito);
 			registro = new Registro(distrito);
@@ -228,6 +230,7 @@ void InterfazAdministrador::mostrarMenuDistritos(Administrador * administrador){
 		}break;
 		case 5: {
 			heDistrito->mostrarArchivoDeHash();
+			break;
 		}
 		}
 		i = 0;
@@ -306,13 +309,25 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 
 				//Ingresar Domicilio
 				cout << "Ingrese el domicilio: ";
-				cin  >> dom;
+
+				char* entrada = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada,this->longitud);
+				dom = entrada;
+				delete[] entrada;
+
 				cout << endl;
 				cout << "dom: "<<dom<<endl;
 
 				//Ingresar Distrito
 				cout << "Ingrese el nombre del distrito: "<<endl;
-				cin >> nombreDistrito;
+
+				char* entrada2 = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada2,this->longitud);
+				nombreDistrito = entrada2;
+				delete[] entrada2;
+
 				cout << endl;
 				cout << "Distrito: "<<nombreDistrito<<endl;
 			}else{
@@ -366,6 +381,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 		}break;
 		case 6 : {
 			heVotante->mostrarArchivoDeHash();
+			break;
 		}
 		}
 
@@ -452,8 +468,15 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 			eleccion = new Eleccion(fecha,cargo);
 
 			while ((masDistritos.compare("S") == 0) and (i != 2)){
+
 				cout << "Ingrese el nombre del distrito: "<<endl;
-				cin >> nombreDistrito;
+
+				char* entrada2 = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada2,this->longitud);
+				nombreDistrito = entrada2;
+				delete[] entrada2;
+
 				cout << endl;
 				eleccion->agregarDistrito(nombreDistrito);
 				cout << "Desea agregar más distritos? (ingrese 'S' para seguir)";
@@ -492,6 +515,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 		} break;
 		case 5 : {
 			heEleccion->mostrarArchivoDeHash();
+			break;
 		}
 		}
 		delete registro;
@@ -534,7 +558,13 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 
 		if ((i != 4) and (i != 5)){
 			cout << "Ingrese el nombre del cargo principal: "<<endl;
-			cin >> cargoPpal;
+
+			char* entrada = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada,this->longitud);
+			cargoPpal = entrada;
+			delete[] entrada;
+
 			cout << endl;
 			cargo = new Cargo(cargoPpal);
 
@@ -546,7 +576,13 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 
 			while ((masSubcargos.compare("S") == 0) and (i != 2)){
 				cout << "Ingrese el nombre del subcargo: "<<endl;
-				cin >> subCargo;
+
+				char* entrada = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada,this->longitud);
+				subCargo = entrada;
+				delete[] entrada;
+
 				cout << endl;
 				cargo->agregarCargo(subCargo);
 				cout << "Desea agregar más subcargos? (ingrese 'S' para seguir)";
@@ -578,6 +614,7 @@ void InterfazAdministrador::mostrarMenuCargos(Administrador * administrador){
 		}
 		case 5 : {
 			heCargo->mostrarArchivoDeHash();
+			break;
 		}
 		}
 		masSubcargos = "S";
@@ -720,6 +757,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 			}
 			case 5 : {
 				heCandidato->mostrarArchivoDeHash();
+				break;
 			}
 			}
 			dni = 0;
@@ -806,11 +844,13 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 
 		}else if ( i == 3 ){
 			cout << "Ingrese el nombre del distrito: ";
+
 			char* entrada = new char[longitud];
 			cin.ignore();
 			cin.getline(entrada,this->longitud);
 			nombreDelDistrito = entrada;
 			delete[] entrada;
+
 			distrito = new Distrito(nombreDelDistrito);
 		}
 
@@ -864,34 +904,33 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 }
 
 void InterfazAdministrador::verContenidoArbolListas (bplustree* arbolB){
-	//	se posiciona en el primer registro
 
-	string* registroSerializado = getString( arbolB-> search("") );
-	delete registroSerializado;
+	arbolB->search("");
+
 	pair<vector<char>,string> par = arbolB->getnext();
-	if (par.second.size()!=0) {
-		registroSerializado = getString( par.first );
 
-		Registro* unRegistro = new Registro();
-		unRegistro->deserializar(registroSerializado);
-		delete registroSerializado;
+	if (par.second.size()!=0){
 
-		unRegistro->verContenido();
+		while (par.second.size()!=0){
+			string* registroSerializado = getString( par.first );
 
-		par=arbolB->getnext();
-		while(par.second.size()!=0) {
-
-			registroSerializado = getString( par.first );
+			Registro* unRegistro = new Registro();
 			unRegistro->deserializar(registroSerializado);
 			delete registroSerializado;
 
-			unRegistro->verContenido();
-			cout << endl;
+			Lista* lista = (Lista*)unRegistro->getContenido();
+			delete unRegistro;
+
+			cout << setw(10) << left << lista->getFecha()	<< "\t";
+			cout << lista->getCargo()	<< "\t";
+			cout << lista->getNombre()	<< endl;
+
+			delete lista;
+
 			par=arbolB->getnext();
 		}
-		delete unRegistro;
-	}
-	else cout << "NO HAY LISTAS" << endl;
+	}else
+		cout << "No hay Listas cargadas" << endl;
 }
 
 
@@ -908,13 +947,13 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 	Registro * registro = NULL;
 
 	while (true){
-		while ((i < 1) or (i > 4)){
+		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Alta Lista"<<endl;
 			cout << "2) Baja Lista"<<endl;
 			cout << "3) Modificar Lista"<<endl;
 			cout << "4) Volver atrás"<<endl;
-//			cout << "5) Ver Listas" << endl;
+			cout << "5) Ver Listas" << endl;
 			cout << "Opcion: ";
 			cin >> opcion;
 			cout <<endl;
@@ -924,7 +963,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 
 		}
 
-		if ((i != 4) and (i != 3)){
+		if ((i != 4) and (i != 3) and (i != 5)){
 
 			bool fechaError = true;
 			while (fechaError) {
@@ -955,11 +994,19 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 			}
 
 			cout << "Ingrese el cargo: ";
-			cin >> cargo;
+			char* entrada = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada,this->longitud);
+			cargo = entrada;
+			delete[] entrada;
 
 			cout << "Ingrese la lista: ";
-			cin >> nombreLista;
 
+			char* entrada2 = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada2,this->longitud);
+			nombreLista = entrada2;
+			delete[] entrada2;
 
 			lista = new Lista(nombreLista,fecha,cargo);
 
@@ -971,7 +1018,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 		{
 		case 1 : {
 			 rta = administrador->altaArbol(bLista,registro);
-			if (rta == 1) {
+			if (rta == 0) {
 				cout << "Operación exitosa"<<endl;
 			}
 			else{
@@ -980,7 +1027,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 		}break;
 		case 2 : {
 			rta = administrador->bajaArbol(bLista,registro);
-			if (rta == 1) {
+			if (rta == 0) {
 				cout << "Operación exitosa"<<endl;
 			}
 			else{
@@ -1002,10 +1049,12 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 		case 4 : {
 			delete bLista;
 			return;
-		}//break;
-//		case 5 : {
-//			verContenidoArbolListas(bLista);
-//		}
+			break;
+		}
+		case 5 : {
+			verContenidoArbolListas(bLista);
+			break;
+		}
 		}
 		i = 0;
 
@@ -1072,7 +1121,11 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 			}
 
 			cout << "Ingrese el cargo: ";
-			cin >> cargo;
+			char* entrada = new char[longitud];
+			cin.ignore();
+			cin.getline(entrada,this->longitud);
+			cargo = entrada;
+			delete[] entrada;
 
 			eleccion = new Eleccion(fecha,cargo);
 			registro = new Registro(eleccion);
@@ -1086,7 +1139,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 				eleccion = (Eleccion*) registroObtenido->getContenido();
 				administrador->habilitarEleccion(eleccion);
 				cout << "Elección habilitada"<<endl;
-//				delete eleccion;
+				delete eleccion;
 				delete registroObtenido;
 			}
 			else{
@@ -1101,7 +1154,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 			return;
 		}break;
 		}
-		delete eleccion;
+//		delete eleccion;
 		delete registro;
 		registro = NULL;
 		i = 0;
