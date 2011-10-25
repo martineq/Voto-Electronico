@@ -2,6 +2,7 @@
 #define ADMINISTRADORDEVOTACIONES_H_
 
 #include <string>
+#include <iomanip>
 #include "../Archivos/ArbolBMas/bplustree.h"
 #include "../Entidades/Eleccion.h"
 #include "../Entidades/Conteo.h"
@@ -57,6 +58,13 @@ public:
 	int agregarConteo(Conteo* conteo);
 
 	/*
+	 * Agrega la eleccion al archivo de conteo, necesita el arbol de listas, que
+	 * contiene el nombre de la eleccion.
+	 */
+
+	bool cargarEleccionEnArchivoDeConteo(Eleccion* eleccion, bplustree * arbolB);
+
+	/*
 	 * Devuelve 0 si se persistió el voto y 1 en caso contrario.
 	 */
 	void incrementarVoto(Eleccion* eleccion,string* nombreLista,string* distrito);
@@ -93,6 +101,11 @@ public:
 	 * Muestra el archivo de conteo en formato tabla.
 	 */
 	void mostrarArchivoPrincipalEnFormatoTabla();
+
+	/*
+	 * Muesta el archivo de conteo ordenado por distrito.
+	 */
+	void mostrarArchivoPrincipalEnFormatoTablaOrdenadoPorClaveSecundaria();
 
 	~AdministradorDeVotaciones();
 

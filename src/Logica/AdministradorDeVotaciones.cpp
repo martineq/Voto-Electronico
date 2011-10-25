@@ -110,8 +110,6 @@ void AdministradorDeVotaciones::incrementarVoto(Eleccion *eleccion, string *nomb
 		conteo = new Conteo("","","","");
 		conteo->deserializar(conteoSerializado);
 
-		conteo->verEntidad();
-
 		conteo->incrementarVotos();
 		delete conteoSerializado;
 
@@ -159,6 +157,8 @@ void AdministradorDeVotaciones::mostrarArchivoSecundario(){
 void AdministradorDeVotaciones::mostrarArchivoPrincipalEnFormatoTabla(){
 	string* conteoSerializado;
 
+	int contarVotos = 0;
+
 	archivoDeConteo.search("");
 
 	pair<vector<char>,string> par=archivoDeConteo.getnext();
@@ -169,23 +169,64 @@ void AdministradorDeVotaciones::mostrarArchivoPrincipalEnFormatoTabla(){
 		conteo->deserializar(conteoSerializado);
 		delete conteoSerializado;
 
-		cout << conteo->getFechaEleccion() << "\t\t";
-		cout << conteo->getCargoEleccion() << "\t\t";
-		cout << conteo->getLista() << "\t\t";
-		cout << conteo->getDistrito() << "\t\t";
-		cout << conteo->getCantidadVotos() << endl;
+		cout << setw(10) << left << conteo->getFechaEleccion();
+		cout << setw(20) << left << conteo->getCargoEleccion();
+		cout << setw(30) << left << conteo->getLista();
+		cout << setw(30) << left << conteo->getDistrito();
+		cout << setw(15) << conteo->getCantidadVotos();
+		cout << endl;
 
+		contarVotos += conteo->getCantidadVotos();
 
 		delete conteo;
-		cout << endl;
+
 		par=archivoDeConteo.getnext();
 	}
 
+	cout << endl << "Cantidad de votos en total: " << contarVotos << endl;
+}
+
+
+void AdministradorDeVotaciones::mostrarArchivoPrincipalEnFormatoTablaOrdenadoPorClaveSecundaria(){
+	string* conteoSerializado;
+
+	int contarVotos = 0;
+
+	indiceSecundario.search("");
+
+	pair<vector<char>,string> par=indiceSecundario.getnext();
+	while( par.second.size() != 0 ) {
+
+		string* clavePrimaria = getString(par.first);
+		conteoSerializado = getString( archivoDeConteo.search(*clavePrimaria) );
+		delete clavePrimaria;
+
+		Conteo* conteo = new Conteo("","","","");
+		conteo->deserializar(conteoSerializado);
+		delete conteoSerializado;
+
+		cout << setw(40) << left << conteo->getDistrito();
+		cout << setw(10) << left << conteo->getFechaEleccion();
+		cout << setw(30) << left << conteo->getCargoEleccion();
+		cout << setw(40) << left << conteo->getLista();
+		cout << setw(15) << conteo->getCantidadVotos();
+		cout << endl;
+
+		contarVotos += conteo->getCantidadVotos();
+
+		delete conteo;
+		par=indiceSecundario.getnext();
+	}
+
+	cout << endl << "Cantidad de votos en total: " << contarVotos << endl;
 }
 
 void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 {
 	bool busquedaOK = false;
+
+	bool mismaEleccion;
+	bool mismoDistrito;
 
 	cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 
@@ -207,35 +248,58 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 
 		if( conteo->getFechaEleccion() == eleccion->getFecha() && conteo->getCargoEleccion() == eleccion->getCargo() ){
 
-			cout << "Fecha de eleccion \tCargo \t\tLista \t\tCantidad de votos" << endl;
+			cout << setw(10) << left << "Fecha";
+			cout << setw(30) << left << "Cargo";
+			cout << setw(40) << left << "Lista";
+			cout << setw(15) << left << "Cantidad de votos";
+			cout << endl;
 
-			while( conteo->getFechaEleccion() == eleccion->getFecha() && conteo->getCargoEleccion() == eleccion->getCargo() ){
+			mismaEleccion = true;
+			while( mismaEleccion ){
 
-				int cantidadDeVotos = 0;
+				if  ( conteo->getFechaEleccion() == eleccion->getFecha() && conteo->getCargoEleccion() == eleccion->getCargo() ){
 
-				string nombreDeListaActual = conteo->getLista();
+					int cantidadDeVotos = 0;
+					string nombreDeListaActual = conteo->getLista();
 
-				while ( conteo->getLista() == nombreDeListaActual ){
+					mismoDistrito = true;
+					while ( mismoDistrito ){
 
-					cantidadDeVotos += conteo->getCantidadVotos();
+						if ( conteo->getLista() == nombreDeListaActual ){
+							cantidadDeVotos += conteo->getCantidadVotos();
 
-					pair<vector<char>,string> resultado = archivoDeConteo.getnext();
-					string* conteoSerializado = getString( resultado.first );
+							pair<vector<char>,string> resultado = archivoDeConteo.getnext();
 
-					delete conteo;
+							if ( resultado.second.size() != 0 ){
+								string* conteoSerializado = getString( resultado.first );
+								delete conteo;
 
-					conteo = new Conteo();
-					conteo->deserializar(conteoSerializado);
-					delete conteoSerializado;
-				}
-				cout << eleccion->getFecha() << "\t\t" << eleccion->getCargo() << "\t" << nombreDeListaActual << "\t\t" << cantidadDeVotos << endl;
+								conteo = new Conteo();
+								conteo->deserializar(conteoSerializado);
+								delete conteoSerializado;
 
+							}else{
+								mismoDistrito = false;
+								mismaEleccion = false;
+							}
+
+						}else mismoDistrito = false;
+					}
+
+					cout << setw(10) << left << eleccion->getFecha();
+					cout << setw(30) << left << eleccion->getCargo();
+					cout << setw(40) << left << nombreDeListaActual;
+					cout << setw(15) << cantidadDeVotos;
+					cout << endl;
+
+					busquedaOK = true;
+
+				}else mismaEleccion = false;
 			}
-			busquedaOK = true;
 		}
+
 		delete conteo;
 	}
-
 	if ( !busquedaOK )
 		cout << "No se encontraron registros previos." << endl;
 
@@ -245,6 +309,7 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExtensible* heCargo)
 {
 	bool busquedaOK = false;
+	bool mismaEleccion;
 
 	cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
 
@@ -268,29 +333,40 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 		if( conteo->getFechaEleccion() == fecha && conteo->getCargoEleccion() == cargoPrincipal && conteo->getLista() == nombreLista ){
 
-			cout << "Fecha de eleccion \tLista \t\tCantidad de votos." << endl;
+			busquedaOK = true;
 
+			cout << setw(10) << left << "Fecha";
+			cout << setw(40) << left << "Nombre de lista";
+			cout << setw(15) << "Cantidad de votos";
+			cout << endl;
 
 			int cantidadDeVotos = 0;
 
-			while( conteo->getFechaEleccion() == fecha && conteo->getCargoEleccion() == cargoPrincipal && conteo->getLista() == nombreLista ){
+			mismaEleccion = true;
+			while( mismaEleccion ){
 
-				cantidadDeVotos += conteo->getCantidadVotos();
+				if (conteo->getFechaEleccion() == fecha && conteo->getCargoEleccion() == cargoPrincipal && conteo->getLista() == nombreLista){
+					cantidadDeVotos += conteo->getCantidadVotos();
 
-				pair<vector<char>,string> resultado = archivoDeConteo.getnext();
+					pair<vector<char>,string> resultado = archivoDeConteo.getnext();
 
-				string* conteoSerializado = getString( resultado.first );
+					if ( resultado.second.size() != 0){
+						string* conteoSerializado = getString( resultado.first );
+						delete conteo;
 
-				delete conteo;
+						conteo = new Conteo();
+						conteo->deserializar(conteoSerializado);
+						delete conteoSerializado;
 
-				conteo = new Conteo();
-				conteo->deserializar(conteoSerializado);
-				delete conteoSerializado;
+					}else mismaEleccion = false;
+
+				}else mismaEleccion = false;
 			}
 
-			busquedaOK = true;
-
-			cout << fecha << "\t\t" << nombreLista << "\t\t" << cantidadDeVotos << endl;
+			cout << setw(10) << left << fecha;
+			cout << setw(40) << left << nombreLista;
+			cout << setw(15) << cantidadDeVotos;
+			cout << endl;
 
 			cout << "Cargo principal\t" << cargoPrincipal << endl;
 
@@ -328,6 +404,8 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 {
 	bool busquedaOK = false;
+	bool mismoDistrito;
+	bool mismaEleccion;
 
 	cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
 
@@ -358,47 +436,66 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 
 			if ( distritoAinformar == conteo->getDistrito() ){
 
-				cout << "Fecha de eleccion \tCargo \t\tLista ganadora \t\tCantidad de votos" << endl;
+				cout << setw(10) << left << "Fecha";
+				cout << setw(30) << left << "Cargo";
+				cout << setw(40) << left << "Lista ganadora";
+				cout << setw(15) << "Cantidad de votos obtenidos";
+				cout << endl;
 
-				while( distritoAinformar == conteo->getDistrito() )
+				mismoDistrito = true;
+				while( mismoDistrito )
 				{
+					if ( distritoAinformar == conteo->getDistrito() ){
 
-					string fechaEleccion = conteo->getFechaEleccion();
+						string fechaEleccion = conteo->getFechaEleccion();
 
-					string cargoEleccion = conteo->getCargoEleccion();
+						string cargoEleccion = conteo->getCargoEleccion();
 
-					unsigned int maximo = conteo->getCantidadVotos();
-					bool primero = true;
+						unsigned int maximo = conteo->getCantidadVotos();
+						bool primero = true;
 
-					string nombreDelGanador = conteo->getLista();
+						string nombreDelGanador = conteo->getLista();
 
-					while( conteo->getDistrito() == distritoAinformar && conteo->getFechaEleccion() == fechaEleccion && conteo->getCargoEleccion() == cargoEleccion)
-					{
+						mismaEleccion = true;
+						while( mismaEleccion){
 
-						if ( conteo->getCantidadVotos() > maximo ){
-							maximo = conteo->getCantidadVotos();
-							nombreDelGanador = conteo->getLista();
-							primero = false;
+							if ( conteo->getDistrito() == distritoAinformar && conteo->getFechaEleccion() == fechaEleccion && conteo->getCargoEleccion() == cargoEleccion ){
+								if ( conteo->getCantidadVotos() > maximo ){
+									maximo = conteo->getCantidadVotos();
+									nombreDelGanador = conteo->getLista();
+								}
+								else if ( conteo->getCantidadVotos() == maximo && primero == false)
+									nombreDelGanador = "empate";
+								primero = false;
+
+								resultadoBusquedaSecundario = indiceSecundario.getnext();
+
+								if ( resultadoBusquedaSecundario.second.size() != 0 ){
+									clavePrincipal = getString( resultadoBusquedaSecundario.first );
+									resultadoBusquedaPrimario = archivoDeConteo.search( *clavePrincipal );
+									delete clavePrincipal;
+
+									delete conteo;
+
+									contenidoSerializado = getString( resultadoBusquedaPrimario );
+									conteo = new Conteo();
+									conteo->deserializar(contenidoSerializado);
+									delete contenidoSerializado;
+								}
+								else{
+									mismaEleccion = false;
+									mismoDistrito = false;
+								}
+							}else mismaEleccion = false;
 						}
-						else if ( conteo->getCantidadVotos() == maximo && primero == false)
-							nombreDelGanador = "empate";
 
-						resultadoBusquedaSecundario = indiceSecundario.getnext();
+						cout << setw(10) << left << fechaEleccion;
+						cout << setw(30) << left << cargoEleccion;
+						cout << setw(40) << left << nombreDelGanador;
+						cout << setw(15) << maximo;
+						cout << endl;
 
-						clavePrincipal = getString( resultadoBusquedaSecundario.first );
-						resultadoBusquedaPrimario = archivoDeConteo.search( *clavePrincipal );
-						delete clavePrincipal;
-
-						delete conteo;
-
-						contenidoSerializado = getString( resultadoBusquedaPrimario );
-						conteo = new Conteo();
-						conteo->deserializar(contenidoSerializado);
-						delete contenidoSerializado;
-					}
-
-					cout << fechaEleccion << "\t\t" << cargoEleccion << "\t" << nombreDelGanador << "\t\t\t" << maximo << endl;
-
+					}else mismoDistrito = false;
 				}
 
 				busquedaOK = true;
@@ -416,3 +513,60 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 AdministradorDeVotaciones::~AdministradorDeVotaciones() {
 }
 
+bool AdministradorDeVotaciones::cargarEleccionEnArchivoDeConteo(Eleccion* eleccion, bplustree * arbolB)
+{
+
+	bool cargado = false;
+
+	Conteo* conteo;
+
+	string clave;
+	clave  = eleccion->getFecha();
+	clave += eleccion->getCargo();
+
+	vector<char> result = arbolB->search(clave);
+
+	bool buscarSiguienteLista = true;
+	while ( buscarSiguienteLista == true ){
+
+		buscarSiguienteLista = false;
+
+		pair<vector<char>,string> map = arbolB->getnext();
+
+		if ( map.first.size() != 0 ){
+
+			string* registroSerializado = getString(map.first);
+
+			Registro* registro = new Registro();
+			registro->deserializar(registroSerializado);
+			delete registroSerializado;
+
+			Lista* lista = (Lista*)registro->getContenido();
+			delete registro;
+
+			if ( lista != NULL ){
+
+				if ( lista->getFecha() == eleccion->getFecha() and lista->getCargo() == eleccion->getCargo() ){
+
+					// Recorro los distritos de la eleccion habilitada
+					list<Distrito>::iterator itDistrito = eleccion->obtenerIterador();
+					while( !eleccion->ultimo(itDistrito) ){
+						conteo = new Conteo(lista->getFecha(),lista->getCargo(),lista->getNombre(),(*itDistrito).getDistrito());
+						if ( agregarConteo(conteo) == 0)
+							cargado = true;
+
+						delete conteo;
+
+						itDistrito++;
+					}
+
+					buscarSiguienteLista = true;
+
+				}
+				delete lista;
+			}
+		}
+	}
+	return cargado;
+
+}
