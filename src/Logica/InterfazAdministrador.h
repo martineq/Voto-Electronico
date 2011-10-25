@@ -58,7 +58,6 @@ private:
 	void comienzoVotacion(Administrador * administrador);
 	int isANumber(string &cad);
 	void imprimirRespuesta(Resultados res);
-	void cargarArchivoDeConteo(Administrador * administrador, bplustree * arbolB);
 	string* getString(vector<char> vect);
 	void cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador);
 	void verContenidoArbolListas (bplustree*);
