@@ -1056,7 +1056,6 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 			cout << "Ingrese la lista: ";
 
 			char* entrada2 = new char[longitud];
-			cin.ignore();
 			cin.getline(entrada2,this->longitud);
 			nombreLista = entrada2;
 			delete[] entrada2;
