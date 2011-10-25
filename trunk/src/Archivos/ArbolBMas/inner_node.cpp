@@ -47,7 +47,7 @@ int inner_node::search(string str)
  if(this->l[0].second == str)
    return this->prev;
    
- for(int i=1; i<this->l.size(); i++)
+ for(int i=1; i<(int)this->l.size(); i++)
  {
   //cout << "counter:" << i << endl;
   //cout << "comparing " << this->l[i].second << " with " << str << endl;
@@ -121,7 +121,7 @@ std::vector<char> inner_node::serialize()
   }
   
   tmp=(char*)it->second.c_str();
-  for(int i=0;i<strlen(tmp);i++)
+  for(int i=0;i<(int)strlen(tmp);i++)
   {
    mem->push_back(tmp[i]);
   }
@@ -145,7 +145,7 @@ void inner_node::deserialize(std::vector<char> s)
  char *tmp;
  std::pair<int, std::string> elem;
  //remove header
- char h = (*v)[i++];
+// char h = (*v)[i++];
  tmp=(char*)&(this->prev);
  //get prev item
  for(int j=0;j<4;)
@@ -222,7 +222,7 @@ std::pair<inner_node,inner_node> inner_node::split_root(int maxsize, int leftblo
  curleftsize+=9; //the left hand thing has to be at least 9 bytes on disk
  while(curleftsize < maxsize/2)
  {
-	 if(i==this->l.size())
+	 if(i==(int)this->l.size())
 		 break; //this should not happen as you should never call this function in this case
 	 curleftsize+=8; //one int for the size of the string, one int for the pointer
 	 curleftsize+=this->l[i].second.size();
@@ -237,7 +237,7 @@ std::pair<inner_node,inner_node> inner_node::split_root(int maxsize, int leftblo
  currentstr = this->l[i].second;
  right.prev = this->l[i++].first;
 
- while(i < l.size())
+ while(i < (int)l.size())
 	 right.l.push_back(this->l[i++]);
  //we're done creating the root sons, we have to create a new root
 
@@ -258,7 +258,7 @@ std::pair<inner_node,inner_node> inner_node::split_root(int maxsize, int leftblo
 //returns 1 if there is an overflow, 0 if there was no problem, -1 if the item was already there
 int inner_node::add(std::pair<int, std::string> newelem, int maxsize)
 {
-	for(int i=0;i<this->l.size();i++)
+	for(int i=0;i<(int)this->l.size();i++)
 	{
 		//if this happens, then this element already exists. this should not happen
 		if(newelem.second==this->l[i].second)
@@ -324,7 +324,7 @@ std::pair<inner_node,std::pair<int,std::string> > inner_node::split(int maxsize,
 	iretval.second=this->l[elemsleftnode].second;
 	lretval.prev=this->l[elemsleftnode].first;
 	elemsleftnode++;
-	for(;elemsleftnode < this->l.size();elemsleftnode)
+	for(;elemsleftnode < (int)this->l.size();elemsleftnode)
 	{
 		lnewnode.push_back(this->l[elemsleftnode++]);
 	}

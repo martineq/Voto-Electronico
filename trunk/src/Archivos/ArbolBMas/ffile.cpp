@@ -32,11 +32,11 @@ void ffile::setblock(std::vector<char> vec, int bn){
 	int i;
 	int cant = this->blocksize;
 
-	if ( vec.size() > cant ){
+	if ( (int)vec.size() > cant ){
 		cerr << "Error Interno: Tamaño de nodo mayor al permitido.\nPrograma Terminado." << endl;
 		exit(1);
 	}else{
-		if( vec.size() < cant ){
+		if( (int)vec.size() < cant ){
 			// Si llego acá es porque el vector es menor del tamaño del bloque, pero igual lo copio.
 			//cerr << "Precaución: Tamaño de nodo menor al permitido." << endl;
 			cant = vec.size();

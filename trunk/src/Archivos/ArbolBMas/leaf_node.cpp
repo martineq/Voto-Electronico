@@ -60,7 +60,7 @@ std::pair<std::pair<vector<char>,std::string>,int> leaf_node::nextelem()
 		return retval;
 	retval.second=0;
 	retval.first = this->l[this->currentpos++];
-	if(this->l.size()==this->currentpos)
+	if((int)this->l.size()==this->currentpos)
 	{
 		if(this->next==0)
 			retval.second=-1;
@@ -80,7 +80,7 @@ std::vector<char> leaf_node::search(string str)
  
  while(this->l[this->currentpos].second < str)
  {
-   if (this->l.size()-1== this->currentpos)
+   if ((int)this->l.size()-1== this->currentpos)
 	   break;
    this->currentpos++;
  }
@@ -154,7 +154,7 @@ std::vector<char> leaf_node::serialize()
   }
   
   tmp=(char*)it->second.c_str();
-  for(int i=0;i<strlen(tmp);i++)
+  for(int i=0;i<(int)strlen(tmp);i++)
   {
    mem->push_back(tmp[i]);
   }
@@ -170,7 +170,7 @@ std::vector<char> leaf_node::serialize()
    mem->push_back(tmp[i]);
   }
   
-  for(int i=0;i<it->first.size();i++)
+  for(int i=0;i<(int)it->first.size();i++)
   {
    mem->push_back(it->first[i]);
   }
@@ -272,7 +272,7 @@ std::pair<inner_node,leaf_node> leaf_node::split_root(int maxsize, int rightbloc
 		retval.second.l.push_back(this->l[elemsleftnode]);
 	}
 	rootelems.second=this->l[elemsleftnode-1].second;
-	for(;elemsleftnode < this->l.size();elemsleftnode)
+	for(;elemsleftnode < (int)this->l.size();elemsleftnode)
 	{
 		tmpl.push_back(this->l[elemsleftnode++]);
 	}
@@ -292,7 +292,7 @@ std::pair<inner_node,leaf_node> leaf_node::split_root(int maxsize, int rightbloc
 
 int leaf_node::add(std::pair<vector<char>,std::string> newelem, int maxsize)
 {
-	for(int i=0;i<this->l.size();i++)
+	for(int i=0;i<(int)this->l.size();i++)
 	{
 		//if this happens, then this element already exists. this should not happen
 		if(newelem.second==this->l[i].second)
@@ -311,7 +311,7 @@ int leaf_node::add(std::pair<vector<char>,std::string> newelem, int maxsize)
 int leaf_node::modify(std::pair<vector<char>,std::string> newelem, int maxsize)
 {
 	int modified=0;
-	for(int i=0;i<this->l.size();i++)
+	for(int i=0;i<(int)this->l.size();i++)
 	{
 		//if this happens, then this element already exists. we modify
 		if(newelem.second==this->l[i].second)
@@ -383,7 +383,7 @@ std::pair<leaf_node,std::pair<int,std::string> > leaf_node::split(int maxsize, i
 		loldleaf.push_back(this->l[elemsleftnode]);
 	}
 	iretval.second=this->l[elemsleftnode-1].second;
-	for(;elemsleftnode < this->l.size();elemsleftnode)
+	for(;elemsleftnode < (int)this->l.size();elemsleftnode)
 	{
 		lnewleaf.push_back(this->l[elemsleftnode++]);
 	}
