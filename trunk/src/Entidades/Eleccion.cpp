@@ -26,8 +26,7 @@ void Eleccion::verEntidad(){
 
 Eleccion::Eleccion(string fecha,string cargoPrincipal){
 	this->fecha 		= fecha;
-	if (this->verificarCargo(cargoPrincipal))	this->cargoPrincipal= cargoPrincipal;
-	else cout << "NO EXISTE ESE CARGO HABILITADO" << endl;
+	this->cargoPrincipal= cargoPrincipal;
 }
 
 int Eleccion::getTamanio(){
@@ -78,8 +77,7 @@ string Eleccion::getCargo(){
 }
 
 void Eleccion::setCargo(string cargoPrincipal){
-	if (this->verificarCargo(cargoPrincipal)) this->cargoPrincipal = cargoPrincipal;
-	else cout << "CARGO NO EXISTENTE" << endl;
+	this->cargoPrincipal = cargoPrincipal;
 }
 
 bool Eleccion::agregarDistrito(string nombre){
@@ -87,24 +85,12 @@ bool Eleccion::agregarDistrito(string nombre){
 	list<Distrito>::iterator iterador = this->distritos.begin();
 	while (iterador != this->distritos.end()){
 		if ((iterador->getDistrito()).compare(unDistrito.getDistrito()) == 0){
+			cout << "El distrito ya esta habilitado en esta eleccion" << endl;
 			return false;
 		}
 		iterador++;
 	}
-	if (this->verificarDistrito(nombre)) {
-		this->distritos.push_back(unDistrito);
-		return true;
-	}
-	return false;
-}
-
-bool Eleccion::verificarDistrito(string cargo) {
-	#warning "Debe buscarse si el distrito existe usando hashing"
-	return true;
-}
-
-bool Eleccion::verificarCargo(string cargo) {
-	#warning "Debe buscarse si el cargo existe usando busqueda secuencial probablemente ya que son pocos cargos"
+	this->distritos.push_back(unDistrito);
 	return true;
 }
 
