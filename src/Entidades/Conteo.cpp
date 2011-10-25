@@ -31,31 +31,7 @@ Conteo::Conteo(string fecha,string cargo,string lista,string distrito){
 	this->cantidadVotos = 0;
 }
 
-int Conteo::getTamanio(){
-	int tamFecha    = this->fechaEleccion.length(); //por default siempre es 8
-	int tamCargo    = TAM_INT + this->cargoEleccion.length();
-	int tamLista    = TAM_INT + this->nombreLista.length();
-	int tamDistrito = TAM_INT + this->distrito.length();
-	int tamVotos    = TAM_INT;
-	return (tamFecha + tamCargo + tamLista + tamDistrito + tamVotos);
-}
-
 unsigned long Conteo::getClave(){
-//	int c = 0;
-//
-//	int size = fechaEleccion.length();
-//	for (int i=0; i< size; i++)
-//		c += (int)fechaEleccion[i];
-//
-//	size = cargoEleccion.length();
-//	for (int i=0; i< size ; i++)
-//		c += (int)cargoEleccion[i];
-//
-//	size = nombreLista.length();
-//	for (int i=0; i< size ; i++)
-//		c += (int)nombreLista[i];
-//
-//	return c;
 
 	  string stringClave = this->fechaEleccion + this->cargoEleccion + this->nombreLista;
 	  locale loc;                 // the "C" locale
@@ -108,6 +84,15 @@ Entidad* Conteo::duplicar(){
 	return conteoCopia;
 }
 
+int Conteo::getTamanio(){
+	int tamFecha    = TAM_INT + fechaEleccion.size();
+	int tamCargo    = TAM_INT + cargoEleccion.size();
+	int tamLista    = TAM_INT + nombreLista.size();
+	int tamDistrito = TAM_INT + distrito.size();
+	int tamVotos    = TAM_UNSINT;
+	return (tamFecha + tamCargo + tamLista + tamDistrito + tamVotos);
+}
+
 string* Conteo::serializar(){
 	stringstream streamDatos;
 	int cantidadDeBytes;
@@ -124,71 +109,33 @@ string* Conteo::serializar(){
 	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
 	streamDatos.write((char*)distrito.c_str(),cantidadDeBytes);
 
-	//serializado fechaEleccion
-	cantidadDeBytes = this->fechaEleccion.size();
-	streamDatos.write((char*)fechaEleccion.c_str(),cantidadDeBytes);
-
 	//serializado nombreLista
 	cantidadDeBytes = this->nombreLista.size();
 	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
 	streamDatos.write((char*)nombreLista.c_str(),cantidadDeBytes);
 
+	//serializado fechaEleccion
+	cantidadDeBytes = this->fechaEleccion.size();
+	streamDatos.write((char*)&cantidadDeBytes,TAM_INT);
+	streamDatos.write((char*)fechaEleccion.c_str(),cantidadDeBytes);
 
-	string* datos = new string(streamDatos.str());
-	return datos;
+	return new string(streamDatos.str());
 
 }
 
 void Conteo::deserializar(string* source){
-	istringstream streamDatos(*source);
-	stringstream * miString = new stringstream();
-	int cantidadDeBytes;
 
-	//deserializo cantidad de votos
-	streamDatos.read((char*)&cantidadVotos,TAM_UNSINT);
+	Serializadora serializadora(source);
 
-	//Deserializado cargo elección
-	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
-    char* cargoChar = new char[cantidadDeBytes];
-    streamDatos.read((char*)cargoChar,cantidadDeBytes);
-    miString->write(cargoChar,cantidadDeBytes);
-    string cargoString = miString->str();
-    this->cargoEleccion = cargoString;
-    delete []cargoChar;
-    delete miString;
+	cantidadVotos 	= serializadora.obtenerUnsignedInt();
 
-    //Deserializado distrito
-	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
-    char* distritoChar = new char[cantidadDeBytes];
-    miString = new stringstream();
-    streamDatos.read((char*)distritoChar,cantidadDeBytes);
-    miString->write(distritoChar,cantidadDeBytes);
-    string distritoString = miString->str();
-    this->distrito = distritoString;
-    delete []distritoChar;
-    delete miString;
+	cargoEleccion	= serializadora.obtenerString();
 
-    //Deserializado fecha elección
-    cantidadDeBytes = TAM_FECHA;
-    char* fechaChar = new char[cantidadDeBytes];
-    miString = new stringstream();
-    streamDatos.read((char*)fechaChar,cantidadDeBytes);
-    miString->write(fechaChar,cantidadDeBytes);
-    string fechaString = miString->str();
-    this->fechaEleccion = fechaString;
-    delete []fechaChar;
-    delete miString;
+	distrito 		= serializadora.obtenerString();
 
-    //Deserializado nombre lista
-	streamDatos.read((char*)&cantidadDeBytes,TAM_INT);
-    char* listaChar = new char[cantidadDeBytes];
-    miString = new stringstream();
-    streamDatos.read((char*)listaChar,cantidadDeBytes);
-    miString->write(listaChar,cantidadDeBytes);
-    string listaString = miString->str();
-    this->nombreLista = listaString;
-    delete []listaChar;
-    delete miString;
+	nombreLista 	= serializadora.obtenerString();
+
+	fechaEleccion 	= serializadora.obtenerString();
 }
 
 NombreDeEntidad Conteo::getNombreDeEntidad(){
