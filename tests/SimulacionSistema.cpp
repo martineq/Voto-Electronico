@@ -664,7 +664,7 @@ void SimulacionSistema::habilitarElecciones(Administrador* administrador){
 
 bool SimulacionSistema::inicioDeSimulacion(Administrador* administrador,AdministradorDeVotaciones* administradorDeConteo, char modo, int cantidadDeSimulaciones){
 	Log log;
-	log.abrir();
+//	log.abrir();
 	cout << endl;
 	cout << "Bienvenido al sistema de voto electronico de los Gutierrez" << endl;
 	cout << endl;
