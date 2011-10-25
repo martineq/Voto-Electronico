@@ -473,11 +473,10 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 				}
 			}
 
-			cout << "Ingrese el cargo: ";
-			cin >> cargo;
-
 			bool salir=false;
 			while (salir==false){
+				cout << "Ingrese el cargo: ";
+				cin >> cargo;
 				Cargo* unCargo = new Cargo (cargo);
 				Registro* reg1 = new Registro (unCargo);
 				delete unCargo;
