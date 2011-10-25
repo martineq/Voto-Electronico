@@ -62,26 +62,21 @@ int Administrador::altaArbol (bplustree* arbolB,Registro* registro){
 }
 
 bool Administrador::habilitarEleccion(Eleccion* unaEleccion){
-	if (this->verificarEleccion(unaEleccion)) {
-		list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
-		int size = listaDeEleccionesHabilitadas.size();
-		for (int i=0; i < size; i++){
-			Eleccion* eleccion = new Eleccion ((*it)->getFecha(),(*it)->getCargo());
-			if ((unaEleccion->getCargo()==eleccion->getCargo()) && (unaEleccion->getFecha()==eleccion->getFecha())) {
-				cout << "LA ELECCION YA ESTA HABILITADA" << endl;
-				delete eleccion;
-				return false;
-			}
-			else {delete eleccion;
-			it++;}
+	list<Eleccion*>::iterator it = this->listaDeEleccionesHabilitadas.begin();
+	int size = listaDeEleccionesHabilitadas.size();
+	for (int i=0; i < size; i++){
+		Eleccion* eleccion = new Eleccion ((*it)->getFecha(),(*it)->getCargo());
+		if ((unaEleccion->getCargo()==eleccion->getCargo()) && (unaEleccion->getFecha()==eleccion->getFecha())) {
+			cout << "LA ELECCION YA ESTA HABILITADA" << endl;
+			delete eleccion;
+			return false;
 		}
-		Eleccion* eleccion = (Eleccion*) unaEleccion->duplicar();
-		this->listaDeEleccionesHabilitadas.push_back(eleccion);
-		return true;
+		else {delete eleccion;
+		it++;}
 	}
-	else cout << "NO EXISTE ELECCION. CREE LA ELECCION PRIMERO" << endl;
-	return false;
-
+	Eleccion* eleccion = (Eleccion*) unaEleccion->duplicar();
+	this->listaDeEleccionesHabilitadas.push_back(eleccion);
+	return true;
 }
 
 void Administrador::getEleccionesHabilitadas(){
@@ -210,7 +205,7 @@ int Administrador::elegirBoleta(char modo){
 //	Posibilidad que el sistema asigne otra boleta al votante
 	int error = rand () % 10;
 	if (!error) {
-		if (c==(this->listaDeBoletas.size())) c=1;
+		if (c==((int)(this->listaDeBoletas.size()))) c=1;
 		else c++;
 	}
 	return c;
@@ -258,6 +253,7 @@ bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol)
 	}
 	delete registro;
 	delete boletaDelArbol;
+	return true;
 }
 
 char Administrador::sufragar (int numeroDeBoleta, char modo){
@@ -297,11 +293,6 @@ char Administrador::sufragar (int numeroDeBoleta, char modo){
 	if (modo=='a') c='s';
 	else cin >> c;
 	return c;
-}
-
-bool Administrador::verificarEleccion(Eleccion* unaEleccion) {
-#warning "verificar que la eleccion exista en el archivo de elecciones"
-	return true;
 }
 
 void Administrador::destruir(){

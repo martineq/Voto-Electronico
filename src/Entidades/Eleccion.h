@@ -23,8 +23,6 @@ private:
 	string			fecha;				// identificador
 	string			cargoPrincipal;		// identificador
 	list<Distrito>	distritos;
-	bool verificarDistrito(string);
-	bool verificarCargo(string);
 public:
 	Eleccion();
 

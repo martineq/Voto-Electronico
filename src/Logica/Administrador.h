@@ -35,7 +35,6 @@ private:
 	list<Lista*> listaDeBoletas;
 	int blancos;
 	int novalidos;
-	bool verificarEleccion(Eleccion*);
 	void mostrarEleccionesDelVotante (list<Eleccion*>);
 	void abrirArchivoDePassword ();
 	string* getString(vector<char> vect);
