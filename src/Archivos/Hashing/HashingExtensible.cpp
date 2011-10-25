@@ -594,11 +594,12 @@ void HashingExtensible::mostrarArchivoDeHash()
 			int espacioLibre = bucket->getEspacioLibre();
 			cout << "(free=" << espacioLibre<<") :";
 			int cantRegs = bucket->getCantidadDeRegistros();
-			cout << " (cant: " << cantRegs << "): ";
+			cout << " (cant: " << cantRegs << "): " << endl;
 			list<Registro*>::iterator it = bucket->ubicarPrimero();
 			for(int i = 0; i < cantRegs; i++){
 				(*it)->verContenido();
 				it++;
+				cout << endl;
 			}
 			cout << endl;
 		}
