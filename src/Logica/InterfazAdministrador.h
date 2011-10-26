@@ -8,7 +8,6 @@
 #ifndef INTERFAZADMINISTRADOR_H_
 #define INTERFAZADMINISTRADOR_H_
 
-#include <iomanip>
 #include "../Entidades/Cargo.h"
 #include "../Entidades/Votante.h"
 #include "../Entidades/Distrito.h"
@@ -30,7 +29,9 @@
 #include "./AdministradorDeVotaciones.h"
 #include <list>
 #include <time.h>
+#include <iomanip>
 #include <stdio.h>
+#include <limits>
 #include "../Archivos/ArbolBMas/bplustree.h"
 #include <string>
 #include <iostream>
@@ -46,6 +47,7 @@ private:
 	int longitudNodo;
 	string rutaHash;
 	string rutaArbol;
+	string* dummy;
 	bool mostrarMenuAdministrador(Administrador * administrador);
 	void mostrarMenuDistritos(Administrador * administrador);
 	void mostrarMenuVotantes(Administrador * administrador);
