@@ -79,6 +79,7 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 
 		cout << "Adios!!"<<endl;
 
+
 	}else{
 		cout << "Nombre de usuario o contraseña incorrecto. Adiós!"<<endl;
 	}
@@ -247,12 +248,18 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 
 	HashingExtensible * heVotante = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
+	pathControl = this->rutaHash + "DeControlDistrito.txt";
+	pathDatos = this->rutaHash + "DeDatosDistrito";
+
+	HashingExtensible * heDistrito = new HashingExtensible(this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
 	string opcion = "0";
 	int dni = 0;
 	string DNIString,nombre,apellido,apeNom,clave,dom,nombreDistrito;
 	int i = 0;
 	Votante * votante = NULL;
 	Registro * registro = NULL;
+	bool errorCarga = false;
 
 	while (true){
 		while ((i < 1) or (i > 6)){
@@ -330,6 +337,16 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 
 				cout << endl;
 				cout << "Distrito: "<<nombreDistrito<<endl;
+
+				Distrito * distrito = new Distrito(nombreDistrito);
+				Registro * registroDistrito = new Registro(distrito);
+				Registro * registroDistritoObtenido = heDistrito->obtenerRegistro(registroDistrito);
+				if (registroDistritoObtenido == NULL){
+					errorCarga = true;
+				}
+				delete (distrito);
+				delete (registroDistrito);
+				delete (registroDistritoObtenido);
 			}else{
 				apeNom = "";
 				clave = "";
@@ -343,8 +360,12 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 		switch (i)
 		{
 		case 1 : {
-			Resultados rta = administrador->altaHash(heVotante,registro);
-			imprimirRespuesta(rta);
+			if (! errorCarga) {
+				Resultados rta = administrador->altaHash(heVotante,registro);
+				imprimirRespuesta(rta);
+			} else{
+				cout << "Error de carga!! distrito inválido!!"<<endl;
+			}
 		}break;
 		case 2 : {
 			Resultados rta = administrador->bajaHash(heVotante,registro);
@@ -356,6 +377,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 		}break;
 		case 4: {
 			delete heVotante;
+			delete heDistrito;
 			return;
 		}break;
 		case 5 : {
@@ -367,6 +389,15 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 			while (cantIngr < cantTotal){
 				CreadorVotante * creador = new CreadorVotante(cont);
 				votante = creador->crearVotante(config);
+				Distrito * distrito = new Distrito(votante->getDistrito());
+				Registro * registroDistrito = new Registro(distrito);
+				delete (distrito);
+				Registro * registroDistritoObtenido = heDistrito->obtenerRegistro(registroDistrito);
+				if (registroDistritoObtenido == NULL){
+					heDistrito->agregarRegistro(registroDistrito);
+				}
+				delete (registroDistritoObtenido);
+				delete (registroDistrito);
 				registro = new Registro(votante);
 				Resultados rta = administrador->altaHash(heVotante,registro);
 				votante->verVotante();
@@ -420,6 +451,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 	string masDistritos = "S";
 	string nombreDistrito,fecha,cargo;
 	int i = 0;
+	bool errorCarga = false;
 	Eleccion * eleccion = NULL;
 	Registro * registro = NULL;
 
@@ -482,7 +514,19 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 				if(heCargo->obtenerRegistro(reg1)==NULL) cout << "No existe cargo/cargo no valido" << endl;
 				else salir=true;
 				delete reg1;
+				string tecla = "P";
+				while ((tecla.compare("S") != 0) and (tecla.compare("N") != 0)){
+					cout << "¿ Desea repetir? (S/N): ";
+					cin >> tecla;
+					cout <<endl;
+					if (tecla.compare("N") == 0){
+						salir = true;
+						errorCarga = true;
+						cargo = "";
+					}
+				}
 			}
+
 
 			eleccion = new Eleccion(fecha,cargo);
 
@@ -507,6 +551,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 				else {
 					delete unregistro;
 					cout << "El distrito no existe" << endl;
+					errorCarga = true;
 				}
 				cout << endl;
 				cout << "Desea agregar más distritos? (ingrese 'S' para seguir)";
@@ -520,16 +565,20 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 		switch (i)
 		{
 		case 1 : {
-			Resultados rta = administrador->altaHash(heEleccion,registro);
-			imprimirRespuesta(rta);
-			if (rta == operacionOK){
-				Lista * lista = new Lista("blanco",fecha,cargo);
-				Registro * regLista = new Registro(lista);
-				delete lista;
-				administrador->altaArbol(bLista,regLista);
-				delete regLista;
+			if (!errorCarga){
+				Resultados rta = administrador->altaHash(heEleccion,registro);
+				imprimirRespuesta(rta);
+				if (rta == operacionOK){
+					Lista * lista = new Lista("blanco",fecha,cargo);
+					Registro * regLista = new Registro(lista);
+					delete lista;
+					administrador->altaArbol(bLista,regLista);
+					delete regLista;
+				}
+				else cout << "La eleccion ya existe" << endl;
+			} else{
+				cout << "Error!! cargo inexistente!!"<<endl;
 			}
-			else cout << "La eleccion ya existe" << endl;
 		}break;
 		case 2 : {
 			Resultados rta = administrador->bajaHash(heEleccion,registro);
@@ -668,17 +717,30 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 
 	HashingExtensible * heCandidato = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
+	pathControl = this->rutaHash + "DeControlCargo.txt";
+	pathDatos = this->rutaHash + "DeDatosCargo";
 
-	pathControl = this->rutaHash+"DeControlVotante.txt";
-	pathDatos = this->rutaHash+"DeDatosVotante.txt";
+	HashingExtensible * heCargo = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
-	HashingExtensible * heVotante = new HashingExtensible (longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+	pathControl = this->rutaHash + "DeControlVotante.txt";
+	pathDatos = this->rutaHash + "DeDatosVotante";
+
+	HashingExtensible * heVotante = new HashingExtensible (this->longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
+
+	pathDatos = this->rutaArbol + "arbolDeListas";
+	bplustree * bLista = new bplustree();
+//	bLista->opentree(archivoDeDatos,LONGITUD_BLOQUE);
+	bLista->newtree((char*)pathDatos.c_str(),this->longitudNodo);
 
 
 	string opcion = "0";
 	string fecha,cargo,nombre,DNIStr;
 	int dni = 0;
 	int i = 0;
+	bool errorCarga = false;
+	bool errorLista = false;
+	bool errorVotante = false;
+	bool errorCargo = true;
 	Candidato * candidato = NULL;
 	Registro * registro = NULL;
 
@@ -699,7 +761,6 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 
 		}
 
-		bool existe = true;
 		if ((i != 4) and (i != 3) and (i != 5)){
 
 				while (dni == 0){
@@ -717,12 +778,12 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 				Registro * regVotanteHash = heVotante->obtenerRegistro(regVotante);
 
 				if (regVotanteHash == NULL) {
-					existe = false;
+					errorVotante = true;
 				}
 				delete regVotante;
 				delete regVotanteHash;
 
-			if (existe){
+			if (!errorVotante){
 				bool fechaError = true;
 				while (fechaError) {
 					cout << "Ingrese la fecha de la elección: ";
@@ -755,10 +816,25 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 				cin >> cargo;
 				cout << endl;
 
+				Cargo * objetoCargo = new Cargo(cargo);
+				Registro * registroCargo = new Registro(objetoCargo);
+				Registro * registroCargoObtenido = heCargo->obtenerRegistro(registroCargo);
+				if (registroCargoObtenido == NULL){
+					errorCargo = true;
+				}
+				delete (objetoCargo);
+				delete (registroCargo);
+				delete (registroCargoObtenido);
+
+
+
+				/* Agregar búsqueda si existe lista */
+
 				cout << "Ingrese el nombre de la lista: ";
-				cin >> cargo;
+				cin >> nombre;
 				cout << endl;
 
+				/*----------------------------------*/
 				candidato = new Candidato(fecha,cargo,nombre,dni);
 				registro = new Registro(candidato);
 				delete (candidato);
@@ -766,16 +842,20 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 				cout << "No existe el candidato!!"<<endl;
 			}
 		}
+
+		if ((!errorCargo) and (!errorVotante) and (!errorLista)) {
+			errorCarga = true;
+		}
 		switch (i)
 			{
 			case 1 : {
-				if (existe){
+				if (!errorCarga){
 					Resultados rta = administrador->altaHash(heCandidato,registro);
 					imprimirRespuesta(rta);
 				}
 			}break;
 			case 2 : {
-				if (existe){
+				if (!errorCarga){
 					Resultados rta = administrador->bajaHash(heCandidato,registro);
 					imprimirRespuesta(rta);
 				}
@@ -1052,33 +1132,25 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 			}
 
 			bool salir=false;
-			while (salir==false) {
+			while (salir==false){
 				cout << "Ingrese el cargo: ";
-				cin >> cargo;
+				char* entrada = new char[longitud];
+				cin.ignore();
+				cin.getline(entrada,this->longitud);
+				cargo = entrada;
+				delete[] entrada;
 				Cargo* unCargo = new Cargo (cargo);
 				Registro* reg1 = new Registro (unCargo);
 				delete unCargo;
 				if(heCargo->obtenerRegistro(reg1)==NULL) cout << "No existe cargo/cargo no valido" << endl;
 				else salir=true;
 				delete reg1;
-				//
-//				cout << "Ingrese el cargo: ";
-//				char* entrada = new char[longitud];
-//				cin.ignore();
-//				cin.getline(entrada,this->longitud);
-//				cargo = entrada;
-//				delete[] entrada;
-//				Cargo* unCargo = new Cargo (cargo);
-//				Registro* reg1 = new Registro (unCargo);
-//				delete unCargo;
-//				if(heCargo->obtenerRegistro(reg1)==NULL) cout << "No existe cargo/cargo no valido" << endl;
-//				else salir=true;
-//				delete reg1;
 			}
 
 			cout << "Ingrese la lista: ";
 
 			char* entrada2 = new char[longitud];
+			cin.ignore();
 			cin.getline(entrada2,this->longitud);
 			nombreLista = entrada2;
 			delete[] entrada2;
