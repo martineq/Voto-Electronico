@@ -511,7 +511,9 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 				Cargo* unCargo = new Cargo (cargo);
 				Registro* reg1 = new Registro (unCargo);
 				delete unCargo;
-				if(heCargo->obtenerRegistro(reg1)==NULL) {
+				Registro* reg2;
+				reg2=heCargo->obtenerRegistro(reg1);
+				if(reg2==NULL) {
 					cout << "No existe cargo/cargo no valido" << endl;
 					tecla = "S";
 				}
@@ -520,6 +522,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 					tecla = "P";
 					errorCarga=false;
 				}
+				delete reg2;
 				delete reg1;
 				if (tecla.compare("S") == 0){
 					cout << "¿ Desea repetir? (S/N): ";
@@ -552,7 +555,8 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 				Distrito* undistrito = new Distrito (nombreDistrito);
 				Registro* unregistro = new Registro (undistrito);
 				delete undistrito;
-				if (heDistrito->obtenerRegistro(unregistro)!=NULL) {
+				Registro* reg = heDistrito->obtenerRegistro(unregistro);
+				if (reg!=NULL) {
 					delete unregistro;
 					if (eleccion->agregarDistrito(nombreDistrito)) cout << "Distrito agregado" << endl;
 				}
@@ -560,6 +564,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 					delete unregistro;
 					cout << "El distrito no existe" << endl;
 				}
+				delete reg;
 				cout << endl;
 				cout << "Desea agregar más distritos? (ingrese 'S' para seguir)";
 				cin >> masDistritos;
@@ -1150,7 +1155,8 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 				Cargo* unCargo = new Cargo (cargo);
 				Registro* reg1 = new Registro (unCargo);
 				delete unCargo;
-				if(heCargo->obtenerRegistro(reg1)==NULL) {
+				Registro* reg2 = heCargo->obtenerRegistro(reg1);
+				if(reg2==NULL) {
 					cout << "No existe cargo/cargo no valido" << endl;
 					tecla = "S";
 				}
@@ -1160,6 +1166,7 @@ void InterfazAdministrador::mostrarMenuListas(Administrador * administrador){
 					errorCarga=false;
 				}
 				delete reg1;
+				delete reg2;
 				if (tecla.compare("S") == 0){
 					cout << "¿ Desea repetir? (S/N): ";
 					cin >> tecla;
@@ -1307,6 +1314,7 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 			cin.getline(entrada,this->longitud);
 			cargo = entrada;
 			delete[] entrada;
+//			cin >> cargo;
 
 			eleccion = new Eleccion(fecha,cargo);
 			registro = new Registro(eleccion);
