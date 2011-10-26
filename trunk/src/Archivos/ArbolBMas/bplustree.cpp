@@ -14,7 +14,7 @@ int bplustree::del(string key)
 {
 	//this implementation ignores the underflow
 	int bn=0;
-	int status=0;
+//	int status=0; //Por ahora no se usa
 	vector<char> tmp;
 	tmp=this->search(key);
 
@@ -22,7 +22,7 @@ int bplustree::del(string key)
 		return 1; // this should not happen
 	bn=this->q.back();
 	this->q.pop_back();
-	status=this->n.del(key,this->bs);
+//	status=this->n.del(key,this->bs);
 	this->f->setblock(this->n.serialize(),bn);
 	return 0;
 }

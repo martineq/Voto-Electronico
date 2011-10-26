@@ -1,0 +1,10 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Introducci\'on}{3}
+\contentsline {section}{\numberline {2}Objetivos}{3}
+\contentsline {section}{\numberline {3}Desarrollo}{3}
+\contentsline {subsection}{\numberline {3.1}Instalaci\'on}{3}
+\contentsline {subsection}{\numberline {3.2}Ejecuci\'on}{3}
+\contentsline {section}{\numberline {4}Corridas de prueba}{3}
+\contentsline {section}{\numberline {5}Conclusiones}{5}
+\contentsline {section}{\numberline {6}C\'odigo en C++}{7}
+\contentsline {section}{\numberline {7}Apendice - Enunciado TP Etapa 1}{8}

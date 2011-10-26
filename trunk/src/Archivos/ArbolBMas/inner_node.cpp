@@ -324,7 +324,7 @@ std::pair<inner_node,std::pair<int,std::string> > inner_node::split(int maxsize,
 	iretval.second=this->l[elemsleftnode].second;
 	lretval.prev=this->l[elemsleftnode].first;
 	elemsleftnode++;
-	for(;elemsleftnode < (int)this->l.size();elemsleftnode)
+	for(;elemsleftnode < (int)this->l.size();)
 	{
 		lnewnode.push_back(this->l[elemsleftnode++]);
 	}
