@@ -3,20 +3,20 @@
 HashingExtensible::HashingExtensible(int dimensionDelBucket,char* pathArchivoDeDatos,char* pathArchivoDeControl){
 	archivo = new ArchivoDeBuckets(pathArchivoDeDatos,dimensionDelBucket);
 
-	archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
+	this->pathArchivoDeControl = new string(pathArchivoDeControl);
+
+	ArchivoDeControl* archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
 
 	if (!archivoDeControl->vacio()){
-		this->listaDeBucketsLibres = archivoDeControl->hidratarLista();
-		this->tablaDeTraduccion = archivoDeControl->hidratarVector();
-		this->tablaDeHash = archivoDeControl->hidratarVector();
-		this->tablaDeDispersion = archivoDeControl->hidratarVector();
-
-		// Elimina el archivo actual y espera a que el programa termine
-		// para almacenar la nueva configuracion.
-		delete archivoDeControl;
-		remove(pathArchivoDeControl);
-		archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
+		this->listaDeBucketsLibres	= archivoDeControl->hidratarLista();
+		this->tablaDeTraduccion		= archivoDeControl->hidratarVector();
+		this->tablaDeHash			= archivoDeControl->hidratarVector();
+		this->tablaDeDispersion		= archivoDeControl->hidratarVector();
 	}
+
+	delete archivoDeControl;
+	remove(pathArchivoDeControl);
+	cout << "se abrio el archivo de hash: " << pathArchivoDeDatos << endl;
 }
 
 Bucket* HashingExtensible::duplicarBucket(Bucket* bucket){
@@ -479,7 +479,7 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 
 Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 
-	Resultados resultado = operacionOK;
+	Resultados resultado = operacionFALLO;
 
 	// Obtengo el Bucket a partir de la clave.
 	unsigned long clave = registro->obtenerClave();
@@ -498,11 +498,10 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 		if ( registroObtenido !=NULL ){
 
 			// Eliminamos el registro
-			if ( bucket->eliminarRegistro(registroObtenido) )
+			if ( bucket->eliminarRegistro(registroObtenido) ){
 				archivo->modificarBucket(nrr,bucket);
-
-			else
-				resultado = operacionFALLO;
+				resultado = operacionOK;
+			}
 
 			// Si el bucket quedó vacío, evaluo si lo puedo liberar.
 			if ( bucket->getCantidadDeRegistros() == 0 )
@@ -510,12 +509,6 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 
 			delete registroObtenido;
 		}
-
-		else
-			resultado = operacionFALLO;
-
-		imprimirTablaDeHash();
-		imprimirTablaDeDispersion();
 	}
 
 	return resultado;
@@ -611,6 +604,7 @@ void HashingExtensible::mostrarArchivoDeHash()
 }
 
 HashingExtensible::~HashingExtensible() {
+	ArchivoDeControl* archivoDeControl = new ArchivoDeControl((char*)pathArchivoDeControl->c_str());
 	archivoDeControl->persistirLista(&listaDeBucketsLibres);
 	archivoDeControl->persistirVector(&tablaDeTraduccion);
 	archivoDeControl->persistirVector(&tablaDeHash);
@@ -618,5 +612,8 @@ HashingExtensible::~HashingExtensible() {
 	delete archivoDeControl;
 
 	delete archivo;
+	cout << "se cerro el archivo de hash: " << *pathArchivoDeControl << endl;
+	delete pathArchivoDeControl;
+
 }
 
