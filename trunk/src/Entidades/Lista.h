@@ -11,7 +11,6 @@ private:
 	string nombre;
 	string fecha;
 	string cargo;
-	bool verificarCargo(string);
 public:
 	Lista();
 	Lista(string nombre, string fecha, string cargo);

@@ -10,15 +10,10 @@ Votante::Votante(int dni, string nombre, string password, string domicilio, stri
 	this->nombre=nombre;
 	this->password=password;
 	this->domicilio=domicilio;
-	if (this->verificarDistrito(distrito)) this->distrito=distrito;
-	else cout << "EL VOTANTE NO PERTENECE A UN DISTRITO VALIDO" << endl;
+	this->distrito=distrito;
 	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
 }
 
-bool Votante::verificarDistrito(string distrito) {
-	#warning "Debe buscarse si el distrito existe usando hashing"
-	return true;
-}
 
 Votante::~Votante() {
 	list<EleccionAnterior*>::iterator it = listaDeEleccionesAnteriores->begin();

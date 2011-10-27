@@ -15,13 +15,7 @@ void Lista::verEntidad(){
 Lista::Lista(string nombre, string fecha, string cargo) {
 	this->nombre=nombre;
 	this->fecha=fecha;
-	if (this->verificarCargo(cargo)) this->cargo=cargo;
-	else cout << "ERROR CARGO INEXISTENTE" << endl;
-}
-
-bool Lista::verificarCargo(string cargo) {
-	#warning "Debe buscarse si el cargo existe usando busqueda secuencial probablemente ya que son pocos cargos"
-	return true;
+	this->cargo=cargo;
 }
 
 Lista::~Lista() {
