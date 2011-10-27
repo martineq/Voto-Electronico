@@ -26,7 +26,8 @@
 #include "../Logica/AdministradorDeVotaciones.h"
 #include "../ClasesAuxiliares/Configuracion.h"
 #include "../../tests/SimulacionSistema.h"
-#include "./AdministradorDeVotaciones.h"
+#include "./AdministradorDeVotaciones.h";
+#include "./NombresDeArchivosTemporales.h";
 #include <list>
 #include <time.h>
 #include <iomanip>
@@ -42,7 +43,6 @@ using namespace std;
 class InterfazAdministrador {
 private:
 	Configuracion* config;
-	AdministradorDeVotaciones * administradorDeConteo;
 	int longitud;
 	int longitudNodo;
 	string rutaHash;
@@ -61,8 +61,9 @@ private:
 	int isANumber(string &cad);
 	void imprimirRespuesta(Resultados res);
 	string* getString(vector<char> vect);
-	void cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador);
 	void verContenidoArbolListas (bplustree*);
+	bool validarRespuesta();
+
 public:
 	InterfazAdministrador(Configuracion* configuracion);
 	void ingresoAdministrador(Administrador * administrador);

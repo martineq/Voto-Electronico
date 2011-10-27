@@ -14,7 +14,7 @@ int bplustree::del(string key)
 {
 	//this implementation ignores the underflow
 	int bn=0;
-	int status=0;
+//	int status=0;
 	vector<char> tmp;
 	tmp=this->search(key);
 
@@ -22,7 +22,8 @@ int bplustree::del(string key)
 		return 1; // this should not happen
 	bn=this->q.back();
 	this->q.pop_back();
-	status=this->n.del(key,this->bs);
+//	status=this->n.del(key,this->bs);
+	this->n.del(key,this->bs);
 	this->f->setblock(this->n.serialize(),bn);
 	return 0;
 }
@@ -33,7 +34,7 @@ std::pair<vector<char>,std::string> bplustree::getnext()
 	std::pair<std::pair<vector<char>,std::string>,int> rretval=this->n.nextelem();
 	std::pair<vector<char>,std::string> empty;
 	vector<char> block;
-
+	
 	//this is to take into account that there might be empty blocks with a next pointer
 	while(rretval.first.second.size() == 0 && rretval.second !=0)
 	{
@@ -65,8 +66,8 @@ void bplustree::newtree(string p, int bs)
 	leaf_node root;
 	this->f = new ffile(p,bs);
 	this->bs = bs; //this will be used as max size of the tree nodes
-	int punteroRaiz = this->f->newblock();	// Creo la raiz del Ã¡rbol
-	this->f->setblock(root.serialize(),punteroRaiz); // Escribo sobre la raiz del Ã¡rbol
+	int punteroRaiz = this->f->newblock();	// Creo la raiz del árbol
+	this->f->setblock(root.serialize(),punteroRaiz); // Escribo sobre la raiz del árbol
 }
 
 
@@ -98,7 +99,7 @@ vector<char> bplustree::search(string key)
 	vector<char> block;
 	std::vector<char> retval;
 	int bn=0;
-	char blocktype=0;
+//	char blocktype=0;
 
 	q.clear();
 	bn=this->getrootblock();
@@ -125,7 +126,7 @@ vector<char> bplustree::search(string key)
 
 int bplustree::add(string key, vector<char> data){
 
-	if(key.size() + data.size() > this->bs-12) //just to make sure i am not inserting something larger than a block
+	if((int)( key.size() + data.size()) > this->bs-12) //just to make sure i am not inserting something larger than a block
 		return -1;
 	vector<char> tmp;
 	int bn=0;
@@ -138,7 +139,7 @@ int bplustree::add(string key, vector<char> data){
 	leaf_node tmpleaf;
 	int left=0;
 	int right=0;
-	int parent=0;
+//	int parent=0;
 	char blocktype='L';
 	std::pair<inner_node,leaf_node> pairifleaf;
 	std::pair<inner_node, inner_node> pairifnode;
@@ -149,7 +150,7 @@ int bplustree::add(string key, vector<char> data){
 	tmp=this->search(key);
 	//so, up to this point, i have a queue with the path to my block
 	//and a copy of the block in which i searched stuff
-
+	
 	//if the data was already there, do not add a thing
 	if (tmp.size()!=0)
 		return -1;
@@ -288,7 +289,7 @@ int bplustree::add(string key, vector<char> data){
 			tmpinner.deserialize(block);
 		if(blocktype == 'L')
 			tmpleaf->deserialize(block);
-		 */
+			*/
 	}
 	return 0;
 }
@@ -296,7 +297,7 @@ int bplustree::add(string key, vector<char> data){
 
 int bplustree::modify(string key, vector<char> data)
 {
-	if(key.size() + data.size() > this->bs-12) //just to make sure i am not inserting something larger than a block
+	if((int)(key.size() + data.size()) > this->bs-12) //just to make sure i am not inserting something larger than a block
 		return -1;
 	vector<char> tmp;
 	int bn=0;
@@ -309,7 +310,7 @@ int bplustree::modify(string key, vector<char> data)
 	leaf_node tmpleaf;
 	int left=0;
 	int right=0;
-	int parent=0;
+//	int parent=0;
 	char blocktype='L';
 	std::pair<inner_node,leaf_node> pairifleaf;
 	std::pair<inner_node, inner_node> pairifnode;
@@ -320,7 +321,7 @@ int bplustree::modify(string key, vector<char> data)
 	tmp=this->search(key);
 	//so, up to this point, i have a queue with the path to my block
 	//and a copy of the block in which i searched stuff
-
+	
 	//if the data was already there, do not add a thing
 	if (tmp.size()==0)
 		return -1;
@@ -459,7 +460,7 @@ int bplustree::modify(string key, vector<char> data)
 			tmpinner.deserialize(block);
 		if(blocktype == 'L')
 			tmpleaf->deserialize(block);
-		 */
+			*/
 	}
 	return 0;
 }
