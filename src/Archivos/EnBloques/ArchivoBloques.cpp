@@ -54,10 +54,16 @@ int ArchivoBloques::newblock(){
 // Si el bloque a borrar se encuentra en la última posición del archivo, lo trunca del mismo
 // ***Siempre se va a borrar un bloque de datos***
 int ArchivoBloques::delblock(int nrrBorrado){
+
+	if (nrrBorrado < this->blocksize) {
+		cerr << "Archivo de Bloques >> Escritura ilegal en cabecera." << endl;
+		exit(1);
+	}
 	// Si el bloque a borrar es el último del archivo, lo trunco.
 	if ( nrrBorrado == ((this->blocksize) * (this->maxblocknum - 1)) ){
-		truncarUltimoBolque();
-		return 0;
+		#warning Descomentar al momento de habilitar el truncar
+//		truncarUltimoBolque();
+//		return 0;
 	}
 	// Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
 	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-(int)TAM_CAMPOS_CTRL ){
@@ -74,7 +80,7 @@ int ArchivoBloques::delblock(int nrrBorrado){
 	guardarTipoInt(nrrMetadata+nuevaPos,&(nrrBorrado));				// Guardo el nuevo bloque libre en metadata
 	guardarTipoInt(nrrMetadata+POSREL_CURR_MD,&(nuevaPos));			// Guardo la nuevaPos en el bloque de metadata
 	this->currpos = nuevaPos;										// Actualizo en memoria
-   return 0;
+	return 0;
 }
 
 // Busca en metadata el último bloque borrado
@@ -132,36 +138,17 @@ void ArchivoBloques::deserializehead(){
 }
 
 
-void ArchivoBloques::truncarUltimoBolque(){
+void ArchivoBloques::truncarUltimoBloque(){
 
-	cout << "Trunco último bloque" << endl;
+#warning  Este código está probado, pero no lo habilito por ahora
 
-	// Posible solución: Truncar justo antes de terminar el programa (o sea que el truncate debería ir dentro
-	// de "cerrarArchivo").	Ver el último bloque, si este es uno borrado mirar el siguiente borrado
-	// (mirar en el metadata actual, e ir actualizando allí), así hasta no encotrar mas borrados.
-	// quedarse con el nrr del último .Luego volcar nuestro archivo hasta el nrr indicado en otro archivo nuevo,
-	// sin copiar. os bloques que quedaron marcados como libres y que se encuentren al final del archivo...
-
-
-	/* LÓGICA VIEJA
-	struct stat statbuf;
-    int *mem;
-    munmap((void*)this->mem, statbuf.st_size);
-    if (fstat (this->fd,&statbuf) < 0){
-        perror("cannot stat file");
-        std::cerr << "cannot stat file\n";
-    }
-
-    lseek(this->fd,(statbuf.st_size) - (this->blocksize) ,SEEK_END);
-    write(this->fd,"",sizeof(char));
-    if ( (void*)(mem = (int*)mmap (0,statbuf.st_size - this->blocksize, PROT_READ | PROT_WRITE, MAP_SHARED, this->fd, 0)) == (caddr_t) -1){
-       perror("mmap error for output\n");
-       std::cerr << "mmap error for output\n";
-    }
-    this->mem=mem;
-    this->maxblocknum-=1;
-    serializehead();
-    */
+//	if ( truncate(this->archivo->obtenerNombreArchivo().c_str(),(this->blocksize) * (this->maxblocknum - 1) ) == 0  ){
+//		this->maxblocknum = this->maxblocknum - 1;
+//		this->serializehead();
+//	}else{
+//		cerr << "Archivo de Bloques >> Error al truncar." << endl;
+//	}
+//
 
 }
 
@@ -229,22 +216,6 @@ void ArchivoBloques::guardarBloque(int nrr, char *datos){
 	this->archivo->posicionarse(nrr);
 	this->archivo->escribir(datos,this->blocksize);
 }
-
-
-//// Función temporal: Depués se borra
-//void ArchivoBloques::infoInts(){
-//	cout <<"*********INFO INTS**************"<<endl;
-//	this->archivo->posicionarse(0);
-//	int i = 0;
-//	char* buf= new char[TAM_CAMPOS_CTRL];
-//	cout << "Tamaño del archivo: " << this->blocksize *this->maxblocknum << " bytes."<<endl;
-//	for(i=0; i<(this->blocksize *this->maxblocknum) ;i+=(TAM_CAMPOS_CTRL)){
-//		this->leerTipoInt(i,(int*)buf);
-//		cout << "Int["<<i/4<<"]-NRR["<< i << "]: "<< *(int*)buf << endl;
-//	}
-//	delete[] buf;
-//}
-
 
 ArchivoBloques::~ArchivoBloques() {
 	delete (this->archivo);

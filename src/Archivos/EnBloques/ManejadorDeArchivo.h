@@ -16,12 +16,8 @@ class ManejadorDeArchivo{
         string nombre;
 
         void abrir(string nombre);
-        string obtenerNombreArchivo();			// Por ahora no se usa
-        string obtenerNombreArchivoTmp();		// Por ahora no se usa
-        void renombrar(string nombreNuevo);		// Por ahora no se usa
 
     public:
-
 
         ManejadorDeArchivo(string nombre);
         void leer(char* registro, size_t cantBytes);
@@ -33,6 +29,7 @@ class ManejadorDeArchivo{
         ios::pos_type obtenerPosicionDeLectura();
         ios::pos_type obtenerTamArchivo();
         void borrar();
+        string obtenerNombreArchivo();
         virtual ~ManejadorDeArchivo();
 
 };
