@@ -16,19 +16,6 @@ void ManejadorDeArchivo::borrar(){
 	std::remove(obtenerNombreArchivo().c_str());
 }
 
-// Renombra el archivo en disco
-void ManejadorDeArchivo::renombrar(string nombreNuevo){
-	std::rename(obtenerNombreArchivo().c_str(), nombreNuevo.c_str());
-}
-
-// Devuelve el nombre del archivo con la terminación cambiada a "tmp", por ej. "arch.tmp"
-string ManejadorDeArchivo::obtenerNombreArchivoTmp(){
-	string nombreArchivoTemp = obtenerNombreArchivo();
-	nombreArchivoTemp.erase(nombreArchivoTemp.length() - 3, 3);
-	nombreArchivoTemp.append("tmp");
-	return nombreArchivoTemp;
-}
-
 // Devuelve el nombre del archivo
 string ManejadorDeArchivo::obtenerNombreArchivo(){
 	return this->nombre;

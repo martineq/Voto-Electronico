@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "ManejadorDeArchivo.h"
 
 #ifndef ARCHIVOBLOQUES_H_
@@ -53,8 +54,8 @@ private:
 	void serializehead();
 	//deserializehead() populates a filehandle struct from the metadata in the first block of a file
 	void deserializehead();
-	//truncarUltimoBolque() truncates a file by 1 blocksize
-	void truncarUltimoBolque();
+	//truncarUltimoBloque() truncates a file by 1 blocksize
+	void truncarUltimoBloque();
 	// obtenerCurrPos() Obtiene la posición actual dentro del metadata actual
 	int obtenerCurrPos();
 	// Lee un sector del archivo de tamaño int, desde la posición <pos>
@@ -75,11 +76,6 @@ public:
 	void borrarBloque(int nrr);
 	// Guarda un bloque de datos, en la posición <numeroBloque>
 	void guardarBloque(int nrr, char* datos);
-
-	//Muestra TODO_ el contenido del archivo en intervalos de Ints (en paquetes de a 4 Bytes)
-	// Una vez usada, bórrese! =D
-	//void infoInts();
-
 	virtual ~ArchivoBloques();
 
 };
