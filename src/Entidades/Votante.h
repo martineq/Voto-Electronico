@@ -19,7 +19,6 @@ private:
 	string distrito;
 	list <EleccionAnterior*>* listaDeEleccionesAnteriores;
 	void verEleccionesAnteriores ();
-	bool verificarDistrito(string);
 public:
 	Votante();
 	Votante(int dni, string nombre, string password, string domicilio, string distrito);
