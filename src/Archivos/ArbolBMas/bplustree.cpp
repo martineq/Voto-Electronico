@@ -23,6 +23,7 @@ int bplustree::del(string key)
 	bn=this->q.back();
 	this->q.pop_back();
 //	status=this->n.del(key,this->bs);
+	this->n.del(key,this->bs);
 	this->f->setblock(this->n.serialize(),bn);
 	return 0;
 }
