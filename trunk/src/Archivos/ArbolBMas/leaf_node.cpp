@@ -60,7 +60,7 @@ std::pair<std::pair<vector<char>,std::string>,int> leaf_node::nextelem()
 		return retval;
 	retval.second=0;
 	retval.first = this->l[this->currentpos++];
-	if( (int)this->l.size() == this->currentpos)
+	if((int)this->l.size()==this->currentpos)
 	{
 		if(this->next==0)
 			retval.second=-1;
@@ -80,7 +80,7 @@ std::vector<char> leaf_node::search(string str)
  
  while(this->l[this->currentpos].second < str)
  {
-   if ( (int)this->l.size()-1== this->currentpos)
+   if ((int)this->l.size()-1== this->currentpos)
 	   break;
    this->currentpos++;
  }
@@ -272,7 +272,7 @@ std::pair<inner_node,leaf_node> leaf_node::split_root(int maxsize, int rightbloc
 		retval.second.l.push_back(this->l[elemsleftnode]);
 	}
 	rootelems.second=this->l[elemsleftnode-1].second;
-	while( elemsleftnode < (int)this->l.size() )
+	for(;elemsleftnode < (int)this->l.size();)
 	{
 		tmpl.push_back(this->l[elemsleftnode++]);
 	}
@@ -383,7 +383,7 @@ std::pair<leaf_node,std::pair<int,std::string> > leaf_node::split(int maxsize, i
 		loldleaf.push_back(this->l[elemsleftnode]);
 	}
 	iretval.second=this->l[elemsleftnode-1].second;
-	while( elemsleftnode < (int)this->l.size() )
+	for(;elemsleftnode < (int)this->l.size();)
 	{
 		lnewleaf.push_back(this->l[elemsleftnode++]);
 	}

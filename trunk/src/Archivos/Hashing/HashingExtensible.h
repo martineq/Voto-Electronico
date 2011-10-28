@@ -24,7 +24,7 @@ private:
 	 * Archivo donde se almacena información necesaria para reconstruir el
 	 * hashing luego de ser almacenado.
 	 */
-	string*				pathArchivoDeControl;
+	ArchivoDeControl*	archivoDeControl;
 
 	/*
 	 * Tabla de hash necesaria para emplear el hashing extensible.

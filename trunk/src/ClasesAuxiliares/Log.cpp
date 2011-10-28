@@ -50,7 +50,7 @@ void Log::insertarMensaje(string mensaje){
 
 void Log::insertarMensajeSeparador (int k) {
 	this->insertarTimestamp();
-	fputs ("====================Votante",this->archivo);
+	fputs ("====================Fin Votante",this->archivo);
 	string s = this->convertIntToString(k);
 	fputs (&s[0],this->archivo);
 	fputs ("==================================",this->archivo);
