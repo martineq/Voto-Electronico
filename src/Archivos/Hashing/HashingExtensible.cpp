@@ -3,20 +3,20 @@
 HashingExtensible::HashingExtensible(int dimensionDelBucket,char* pathArchivoDeDatos,char* pathArchivoDeControl){
 	archivo = new ArchivoDeBuckets(pathArchivoDeDatos,dimensionDelBucket);
 
-	this->pathArchivoDeControl = new string(pathArchivoDeControl);
-
-	ArchivoDeControl* archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
+	archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
 
 	if (!archivoDeControl->vacio()){
-		this->listaDeBucketsLibres	= archivoDeControl->hidratarLista();
-		this->tablaDeTraduccion		= archivoDeControl->hidratarVector();
-		this->tablaDeHash			= archivoDeControl->hidratarVector();
-		this->tablaDeDispersion		= archivoDeControl->hidratarVector();
-	}
+		this->listaDeBucketsLibres = archivoDeControl->hidratarLista();
+		this->tablaDeTraduccion = archivoDeControl->hidratarVector();
+		this->tablaDeHash = archivoDeControl->hidratarVector();
+		this->tablaDeDispersion = archivoDeControl->hidratarVector();
 
-	delete archivoDeControl;
-	remove(pathArchivoDeControl);
-	cout << "se abrio el archivo de hash: " << pathArchivoDeDatos << endl;
+		// Elimina el archivo actual y espera a que el programa termine
+		// para almacenar la nueva configuracion.
+		delete archivoDeControl;
+		remove(pathArchivoDeControl);
+		archivoDeControl = new ArchivoDeControl(pathArchivoDeControl);
+	}
 }
 
 Bucket* HashingExtensible::duplicarBucket(Bucket* bucket){
@@ -479,35 +479,44 @@ Resultados HashingExtensible::modificarRegistro(Registro* registro){
 
 Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 
-	Resultados resultado = operacionFALLO;
+	Resultados resultado = operacionOK;
 
 	// Obtengo el Bucket a partir de la clave.
 	unsigned long clave = registro->obtenerClave();
 	int posicionEnTablaDeHash = obtenerPosicion(clave);
-	int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
+	if ( tablaDeHash.size() > 0 ){
+		int numeroDeBucket = tablaDeHash[posicionEnTablaDeHash];
 
-	if ( bucketDisponible == estadoDelBucket(numeroDeBucket) ){
+		if ( bucketDisponible == estadoDelBucket(numeroDeBucket) ){
 
-		int nrr = tablaDeTraduccion[numeroDeBucket];
-		Bucket* bucket = archivo->obtenerBucket(nrr);
+			int nrr = tablaDeTraduccion[numeroDeBucket];
+			Bucket* bucket = archivo->obtenerBucket(nrr);
 
-		// Obtengo el registro.
-		//cout << "Registro a buscar en eliminar registro: " << registro->obtenerClave() << endl;
-		Registro* registroObtenido = bucket->getRegistro(registro);
+			// Obtengo el registro.
+			//cout << "Registro a buscar en eliminar registro: " << registro->obtenerClave() << endl;
+			Registro* registroObtenido = bucket->getRegistro(registro);
 
-		if ( registroObtenido !=NULL ){
+			if ( registroObtenido !=NULL ){
 
-			// Eliminamos el registro
-			if ( bucket->eliminarRegistro(registroObtenido) ){
-				archivo->modificarBucket(nrr,bucket);
-				resultado = operacionOK;
+				// Eliminamos el registro
+				if ( bucket->eliminarRegistro(registroObtenido) )
+					archivo->modificarBucket(nrr,bucket);
+
+				else
+					resultado = operacionFALLO;
+
+				// Si el bucket quedó vacío, evaluo si lo puedo liberar.
+				if ( bucket->getCantidadDeRegistros() == 0 )
+					liberarBucket(posicionEnTablaDeHash);
+
+				delete registroObtenido;
 			}
 
-			// Si el bucket quedó vacío, evaluo si lo puedo liberar.
-			if ( bucket->getCantidadDeRegistros() == 0 )
-				liberarBucket(posicionEnTablaDeHash);
+			else
+				resultado = operacionFALLO;
 
-			delete registroObtenido;
+			imprimirTablaDeHash();
+			imprimirTablaDeDispersion();
 		}
 	}
 
@@ -553,28 +562,28 @@ void HashingExtensible::mostrarArchivoDeHash()
 		bool bucketLibre = false;
 		int nrr = tablaDeTraduccion[i];
 
-		if ( tablaDeDispersion[i] == BUCKET_LIBRE )
-			bucketLibre = true;
+		cout << "tamaño de la tabla de dispersion: "<< tablaDeDispersion.size() << endl;
 
-		else{
+		if ( tablaDeTraduccion.size() > tablaDeDispersion.size() ){
+			bool fin = false;
+			list<int>::iterator it2 = listaDeBucketsLibres.begin();
+			while (!fin){
+				cout << "salida tabla: " << *it2 << endl;
+				if ( it2 == listaDeBucketsLibres.end() )
+					fin = true;
 
-			if ( tablaDeTraduccion.size()>tablaDeDispersion.size() ){
-				bool fin = false;
-				list<int>::iterator it2 = listaDeBucketsLibres.begin();
-				while (!fin){
-					if ( it2 == listaDeBucketsLibres.end() )
+				else {
+					if ( i == *it2 ){
+						bucketLibre = true;
 						fin = true;
-
-					else {
-						if ( i == *it2 ){
-							bucketLibre = true;
-							fin = true;
-						}
-						else
-							it2++;
 					}
+					else
+						it2++;
 				}
 			}
+		}else{
+			if ( tablaDeDispersion[i] == BUCKET_LIBRE )
+				bucketLibre = true;
 		}
 
 		cout << tablaDeTraduccion[i] << " B"<<i << " :";
@@ -604,7 +613,6 @@ void HashingExtensible::mostrarArchivoDeHash()
 }
 
 HashingExtensible::~HashingExtensible() {
-	ArchivoDeControl* archivoDeControl = new ArchivoDeControl((char*)pathArchivoDeControl->c_str());
 	archivoDeControl->persistirLista(&listaDeBucketsLibres);
 	archivoDeControl->persistirVector(&tablaDeTraduccion);
 	archivoDeControl->persistirVector(&tablaDeHash);
@@ -612,8 +620,5 @@ HashingExtensible::~HashingExtensible() {
 	delete archivoDeControl;
 
 	delete archivo;
-	cout << "se cerro el archivo de hash: " << *pathArchivoDeControl << endl;
-	delete pathArchivoDeControl;
-
 }
 
