@@ -330,7 +330,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 				cout << "Ingrese el nombre del distrito: "<<endl;
 
 				char* entrada2 = new char[longitud];
-				cin.ignore();
+//				cin.ignore();
 				cin.getline(entrada2,this->longitud);
 				nombreDistrito = entrada2;
 				delete[] entrada2;
