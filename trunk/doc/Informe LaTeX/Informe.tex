@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage[ansinew]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{fancyhdr} % Para tener cabecera y pie de página con un estilo personalizado:
 \usepackage{pdfpages} % Para importar PDF 
 
 \title{		\textbf{Trabajo Práctico - Etapa 1 \\ \textit{Voto Electrónico}} }
@@ -23,6 +24,8 @@
        }
 \date{26/10/11}
 
+
+
 \begin{document}
 
 \maketitle
@@ -32,6 +35,8 @@
 \tableofcontents
 \newpage
 
+
+\pagestyle{fancy} % A partir de acá Encabezados y pes de pagina con formato
 \section{Introducción}
 
 El trabajo consiste crear una aplicación capaz de mantener un sistema de voto electrónico.
@@ -58,11 +63,6 @@ La resolución del trabajo práctico debe será realizada en plataforma Linux y en 
 \item Cargo ((cargo)i)
 \item Administrador ((usuario)i, clave)
 \end{itemize}
-%\begin{quote}
-%voto -c /ArchivosAuxiliares/config.txt
-%\end{quote}
-%
-%\textbf{Nota:} -c es configuración
 
 \subsection{Estructuras de datos}
 	Las estructuras principales elegidas para este trabajo han sido elegidas según la necesidad de cada entidad. Las mismas son:
@@ -89,7 +89,7 @@ En el ámbito del administrador se encuentran las siguientes funcionalidades:
 
 \subsection{Descripción de la arquitectura utilizada}
 
-Para una mejor observación de los diagramas de clases de la arquitectura utilizada en el programa, las mismas se encuentran documentadas en un archivo externo junto con su descripción, se puede acceder a el a través del archivo '00 Index.html', el mismo se encuentra en la carpeta 'documentación'. Desde allí se puede navegar a través de todas las clases existentes.
+Para una mejor observación de los diagramas de clases de la arquitectura utilizada en el programa, las mismas se encuentran documentadas en un archivo externo junto con su descripción, se puede acceder a el a través del archivo `00 Index.html', el mismo se encuentra en la carpeta `Documentación'. Desde allí se puede navegar a través de todas las clases existentes.
 
 
 \subsection{Descripción de cada clase utilizada}
@@ -109,7 +109,7 @@ Para una mejor observación de los diagramas de clases de la arquitectura utiliza
     El uso del \textit{archivo de dispersión} se eligió debido a que usa la menor cantidad de accesos posibles (solo un acceso) haciendo que se optimice el uso de estos archivos, al ser los mas accedidos en disco.
     El uso del \textit{archivo de bloques} se eligió por ser el más compatible con respecto a la persistencia del Árbol B+ y del archivo de dispersión, haciendo mas efectivo el uso de los mismos.
 
-\subsection{Descripción de la organización de archivos auxiliares}
+\subsection{Archivos auxiliares}
 Definiciones lógicas y físicas de todos los archivos que se utilicen (datos maestros, índices, trabajo, control, etc).Descripción de la organización de cada uno de los archivos.  Para qué se utiliza. Por qué se utiliza (base teórica).
 
 Dentro de los archivos utilizados para el funcionamiento del programa disponemos de las siguientes estructuras auxiliares:
@@ -226,7 +226,7 @@ El árbol esta implementado en 4 clases diferentes, la ya mencionada ffile, bplus
 
 En memoria, estas clases utilizan un vector de pares de enteros y cadenas de caracteres para los nodos internos (la clase inner$\_$node) y pares de cadenas y vectores en las hojas (la clase leaf$\_$node). Estas 2 clases, al serializarse se transforman en una cadena larga de caracteres (que se guarda en un vector) representada por pares longitud, datos. Ademas a esto se agrega un entero mas que representa la cantidad de pares, longitud, datos que existen en la cadena en adicion a un encabezado que es una I o una L segun sea el nodo un nodo interno o una hoja y un par de enteros mas que representan el nodo que contiene los datos cuya clave es mayor al nodo actual o el nodo que tiene datos menor al primer par del nodo.
 
-En este momento, el arbol se comporta como un arbol B+ clásico para los agregados pero no hace rebalanceos en caso de los borrados.
+En este momento, el árbol se comporta como un árbol B+ clásico para los agregados pero no hace rebalanceos en caso de los borrados.
 
 Mas alla de los enteros que tienen tamaño fijo, el resto de las estructuras son dinamicas. El objetivo de esta implementacion fue utilizar la mayor cantidad de las funciones de la STL que fueran posible y, como desafortunadamente, la STL, si bien tiene una funcion de busqueda que funciona en contenedores como los vectores utilizados para almacenar los datos en la memoria de este árbol, ésta solo devuelve si un dato se encuentra o no en el contenedor pero no su posición o sus datos por lo que la búsqueda dentro de los nodos es lineal.
 
@@ -238,13 +238,18 @@ Para ordenar los datos en memoria, sin embargo si se utiliza la función sort() d
 
 \subsection{Instalación del sistema}
 
-Para la instalación del sistema se usará un archivo makefile, el cual realizará automaticamente toda la operación de compilación de todos los archivos de código fuente, recorriendo todas las subcarpetas necesarias para una operación exitosa.
+La instalación usará un archivo makefile, el cual realizará automaticamente toda la operación de compilación de todos los archivos de código fuente, recorriendo todas las subcarpetas necesarias para una operación exitosa.
 
-    Para la instalación del sistema debemos descomprimir el archivo conteniendo el código fuente en la carpeta donde se desea realizar la instalación. Una vez realizada la descompresión debemos ejecutar por consola, situados en la ruta elegida, el comando \textit{make} el cual compilará todos los archivos fuente y como consecuencia obtendremos el archivo ejecutable listo para usar.
+Para la instalación del sistema debemos descomprimir el archivo conteniendo el código fuente en la carpeta donde se desea realizar la misma. Una vez realizada la descompresión debemos ejecutar por consola, situados en la ruta elegida, el comando \textit{make} el cual compilará todos los archivos fuente y como consecuencia obtendremos el archivo ejecutable listo para usar.
 
 \subsection{Ejecución del sistema}
 
-    Una vez creado el archivo ejecutable debemos iniciar el programa\footnote{Para iniciar el programa, al administrador se debe autentificar. User: undomiel, Pass: aragorn} pasando por parámetro la ruta del archivo de configuración, esto es un requisito obligatorio para comenzar con el programa, mediante los argumentos -c  $<$rutaArchivoConfiguración$>$
+    Una vez creado el archivo ejecutable debemos iniciar el programa\footnote{Para iniciar el programa, al administrador se debe autentificar. User: undomiel, Pass: aragorn} pasando por parámetro la ruta del archivo de configuración, esto es un requisito obligatorio para comenzar con el programa, mediante los argumentos -c  $<$rutaArchivoConfiguración$>$. De esta forma, desde el directorio donde se creó el ejecutable, se inicia el sistema:
+
+\begin{quote}
+ ./voto -c ../ArchivosAuxiliares/config.txt
+\end{quote}
+\textbf{Nota:} -c es el flag para ubicar el archivo de configuración. Para ver las demás opciones podemos ingreasar al programa con -h
 
 A su vez el archivo de configuración proveerá todos los requisitos necesarios para ubicar los demás archivos relativos al programa, ya sean archivos de datos, control, configuración o el archivo de password.
 
@@ -316,26 +321,15 @@ Opcion:
 \newpage
 
 
-\section{Conclusiones}
-Conclusiones 
-\newpage
-
-
-\section{Código en C++}
-
-A continuación se adjunta el código del programa en lenguaje C++
-
-% \includepdf[pages={1-3}]{./fuente.pdf}
-
-\newpage
-
-
-
 \begin{thebibliography}{01}
+\bibitem{LIB01} Folk, Michael J. Zoellick, Bill. \textit{File Structures}.
+
+\bibitem{LIB02} Smith, Peter. Barnes, G. \textit{Files and Databases: An Introduction}. Addison-Wesley.
 
 \bibitem{NET01} Documentación: Texmaker 3.0.2 (para la redacción de este informe) \begin{verbatim}
 http://www.xm1math.net/texmaker/
 \end{verbatim}
+
 
 \end{thebibliography}
 \newpage
@@ -343,7 +337,7 @@ http://www.xm1math.net/texmaker/
 
 \section{Apendice - Enunciado TP Etapa 1}
 A continuación se agrega el enunciado de la Etapa 1, correspondiente a este Trabajo Práctico.
-% \includepdf[pages={1-4}]{./enunciado.pdf}
+\includepdf[pages={1-10}]{./enunc.pdf}
 
 
 \end{document}
