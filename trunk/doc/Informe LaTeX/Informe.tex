@@ -289,17 +289,13 @@ Corridas de prueba:
 
 \begin{verbatim}
 
-Ingrese su nombre de usuario: undomiel
-
-Ahora ingrese su contraseña: aragorn
-
-usuario: <undomiel>
-password: <aragorn>
+Ingreso:
 INGRESO APROBADO
 Bienvenido al sistama de gestion de elecciones
 ¿ Desea eliminar la base de datos y comenzar de 0? S/N
-N
+S
 
+Menú principal:
 Opciones: 
 
 1) Mantener Distritos
@@ -312,10 +308,764 @@ Opciones:
 8) Habilitar Elecciones
 9) Habilitar Votantes para elección
 10) salir
-Opcion: 
-.
-.
-.
+Opcion: 1
+
+Menú de Distrito:
+Opciones: 
+
+1) Alta Distrito
+2) Baja Distrito
+3) Modificar Distrito
+4) Volver atrás
+5) Ver Distritos
+Opcion: 1
+
+Ingrese el nombre del distrito: 
+Misiones
+
+Operacion OK
+
+Menú de Votante:
+Opciones: 
+
+1) Alta Votante
+2) Baja Votante
+3) Modificar Votante
+4) Volver atrás
+5) Alta Automática
+6) Ver votantes
+Opcion: 1
+
+Ingrese el DNI del votante: 14254983
+
+Ingrese nombre: Daniel
+
+Ingrese apellido: Martinez
+
+Ingrese la clave: 8754
+
+Clave: 8754
+Ingrese el domicilio: San Luis 2728
+
+dom: San Luis 2728
+Ingrese el nombre del distrito: 
+Misiones
+
+Distrito: Misiones
+Operacion OK
+
+Opciones: 
+
+1) Alta Votante
+2) Baja Votante
+3) Modificar Votante
+4) Volver atrás
+5) Alta Automática
+6) Ver votantes
+Opcion: 5
+
+Ingrese la cantidad de votantes a ingresar: 3
+ - Nombre: Mariel Iacub
+ - DNI: 1
+ - Password: 8335
+ - Domicilio: Haiti 2793
+ - Distrito: Jujuy
+Elecciones Anteriores: 
+---------------------- 
+El votante no participo de ninguna eleccion a la fecha
+
+ - Nombre: Ivan Lopez
+ - DNI: 2
+ - Password: 6498
+ - Domicilio: Montiel 3061
+ - Distrito: Santa Fe
+Elecciones Anteriores: 
+---------------------- 
+El votante no participo de ninguna eleccion a la fecha
+
+ - Nombre: Fernanda Rodriguez
+ - DNI: 3
+ - Password: 4940
+ - Domicilio: Udaondo 1425
+ - Distrito: Ciudad Autonoma de Buenos Aires
+Elecciones Anteriores: 
+---------------------- 
+El votante no participo de ninguna eleccion a la fecha
+
+Menu de Cargo:
+Opciones: 
+
+1) Alta Cargo
+2) Baja Cargo
+3) Modificar Cargo
+4) Volver atrás
+5) Ver cargos
+Opcion: 1
+
+Ingrese el nombre del cargo principal: 
+Presidente
+
+Desea agregar subcargos? (S/N)S
+
+Ingrese el nombre del subcargo: 
+Vice Presidente
+
+Desea agregar más subcargos? (ingrese 'S' para seguir)N
+
+Operacion OK
+
+Menú de Elección:
+Opciones: 
+
+1) Alta Eleccion
+2) Baja Eleccion
+3) Modificar Eleccion
+4) Volver atrás
+5) Ver elecciones
+Opcion: 1
+
+Ingrese la fecha de la elección: 19991010
+
+Ingrese el cargo: Panadero
+No existe cargo/cargo no valido
+¿ Desea repetir? (S/N): S
+
+Ingrese el cargo: Presidente
+Ingrese el nombre del distrito: 
+Panaderia
+
+El distrito no existe
+
+Desea agregar más distritos? (ingrese 'S' para seguir)S
+
+Ingrese el nombre del distrito: 
+Misiones
+
+Distrito agregado
+
+Desea agregar más distritos? (ingrese 'S' para seguir)N
+
+Operacion OK
+
+Opciones: 
+
+1) Alta Eleccion
+2) Baja Eleccion
+3) Modificar Eleccion
+4) Volver atrás
+5) Ver elecciones
+Opcion: 5
+
+
+tamaño de la tabla de dispersion: 1
+2048 B0 :(free=958) : (cant: 1): 
+Fecha: 19991010
+Cargo Principal: Presidente
+Distrito: Misiones
+
+
+Tabla de hash (size: 1):  0
+Tabla de dispersion (size: 1):  1
+
+Menú de Lista:
+Opciones: 
+
+1) Alta Lista
+2) Baja Lista
+3) Modificar Lista
+4) Volver atrás
+5) Ver Listas
+Opcion: 1
+
+Ingrese la fecha de la elección: 19991110
+
+Ingrese el cargo: Zapatero
+No existe cargo/cargo no valido
+¿ Desea repetir? (S/N): S
+
+Ingrese el cargo: Presidente
+Ingrese la lista: Datos 
+Operación exitosa
+Opciones: 
+
+1) Alta Lista
+2) Baja Lista
+3) Modificar Lista
+4) Volver atrás
+5) Ver Listas
+Opcion: 5
+
+19991010  	Presidente	blanco
+19991110  	Presidente	Datos
+
+Menú Candidato:
+Opciones: 
+
+1) Alta Candidato
+2) Baja Candidato
+3) Modificar Candidato
+4) Volver atrás
+5) Mostrar Candidatos
+Opcion: 1
+
+Ingrese el numero de DNI: 1
+
+Ingrese la fecha de la elección: 19991010
+
+Ingrese el cargo: Gobernador
+
+Ingrese el nombre de la lista: FIUBA
+
+Operacion OK
+
+Menú Habilitar Elecciones
+Opciones: 
+
+1) Habilitar Eleccion
+2) Ver elecciones habilitadas
+3) Salir
+Opcion: 1
+
+Ingrese la fecha de la elección: 19991010
+
+Ingrese el cargo: Presidente
+Elección habilitada
+Opciones: 
+
+1) Habilitar Eleccion
+2) Ver elecciones habilitadas
+3) Salir
+Opcion: 2
+
+
+
+ELECCIONES ACTIVAS
+------------------
+Eleccion 1
+Fecha: 19991010
+Cargo Principal: Presidente
+------------------------------------------
+
+Menú habilitar votante:
+Caso Automático:
+Ingrese la cantidad de votos a realizar: 4800
+
+Ingrese modo de votación: Automático (a) o Manual (m)a.
+Bienvenido Jessica Michel
+Ingrese su Password
+INGRESO AUTORIZADO
+
+Las elecciones activas en las que usted emitir su voto son las siguientes
+Eleccion 1:
+Fecha: 19991010
+Cargo Principal: Presidente
+---------------
+Indique el numero de eleccion en la cual desea sufragar
+Usted eligio la eleccion 1
+Si es correcto presione s sino n
+
+Estas son sus boletas a elegir
+Lista 1
+Nombre: ARI
+Lista 2
+Nombre: Izquierda
+Lista 3
+Nombre: PJ
+Lista 4
+Nombre: PRO
+Lista 5
+Nombre: Socialista
+Lista 6
+Nombre: UCR
+Lista 7
+Nombre: blanco
+
+Elija su boleta en base al numero de opcion indicado
+La opcion elegida es: 1
+LISTA: ARI
+Si esta seguro presione s si desea corregir su voto presione n
+
+Caso Manual:
+Ingrese la cantidad de votos a realizar: 1
+
+Ingrese modo de votación: Automático (a) o Manual (m)m
+
+Bienvenido al sistema de voto electronico de los Gutierrez
+
+Ingrese su DNI: 
+5002
+Su dni es: 5002
+Presione S para confirmar, N para cancelar
+s
+
+Bienvenido Daniel Martinez
+Ingrese su Password
+5002
+INGRESO AUTORIZADO
+
+Las elecciones activas en las que usted emitir su voto son las siguientes
+Eleccion 1:
+Fecha: 19991010
+Cargo Principal: Presidente
+---------------
+Indique el numero de eleccion en la cual desea sufragar
+1
+Usted eligio la eleccion 1
+Si es correcto presione s sino n
+s
+
+Estas son sus boletas a elegir
+Lista 1
+Nombre: Datos
+Lista 2
+Nombre: blanco
+
+Elija su boleta en base al numero de opcion indicado
+1
+La opcion elegida es: 1
+LISTA: Datos
+Si esta seguro presione s si desea corregir su voto presione n
+s
+
+Menú de informes:
+Opciones: 
+
+1) Informe por elección
+2) Informe por lista
+3) Informe por distrito
+4) Volver atrás
+5) Mostrar archivo de conteo
+6) Mostrar archivo de conteo ordenado por distrito
+Opcion: 1
+
+Ingrese la fecha de la elección: 19991010
+
+Ingrese el cargo: Presidente
+********* GENERO EL INFORME POR ELECCION **********
+
+Fecha     Cargo                         Lista                                   Cantidad de votos
+19991010  Presidente                    ARI                                     2533           
+19991010  Presidente                    Izquierda                               1283           
+19991010  Presidente                    PJ                                      1267           
+19991010  Presidente                    PRO                                     1332           
+19991010  Presidente                    Socialista                              1305           
+19991010  Presidente                    UCR                                     1280           
+19991010  Presidente                    blanco                                  0              
+
+Ingrese una tecla para continuar
+
+Opciones: 
+
+1) Informe por elección
+2) Informe por lista
+3) Informe por distrito
+4) Volver atrás
+5) Mostrar archivo de conteo
+6) Mostrar archivo de conteo ordenado por distrito
+Opcion: 2
+
+Ingrese la fecha de la elección: 19991010
+
+Ingrese el cargo: Presidente
+Ingrese la lista: Socialista
+********* GENERO EL INFORME POR LISTA **********
+
+Lista a informar: Socialista
+
+Fecha     Nombre de lista                         Cantidad de votos
+19991010  Socialista                              1305           
+Cargo principal	Presidente
+Subcargo 1	Vicepresidente
+
+Ingrese una tecla para continuar
+
+Opciones: 
+
+1) Informe por elección
+2) Informe por lista
+3) Informe por distrito
+4) Volver atrás
+5) Mostrar archivo de conteo
+6) Mostrar archivo de conteo ordenado por distrito
+Opcion: 3
+
+Ingrese el nombre del distrito: Misiones
+********* GENERO EL INFORME POR DISTRITO **********
+
+Distrito a informar: Misiones
+
+Fecha     Cargo                         Lista ganadora                          Cantidad de votos obtenidos
+19991010  Presidente                    ARI                                     108            
+
+Ingrese una tecla para continuar
+
+Opciones: 
+
+1) Informe por elección
+2) Informe por lista
+3) Informe por distrito
+4) Volver atrás
+5) Mostrar archivo de conteo
+6) Mostrar archivo de conteo ordenado por distrito
+Opcion: 5
+
+19991010  Presidente          ARI                           Buenos Aires                  107            
+19991010  Presidente          ARI                           Catamarca                     82             
+19991010  Presidente          ARI                           Chaco                         112            
+19991010  Presidente          ARI                           Chubut                        105            
+19991010  Presidente          ARI                           Ciudad Autonoma de Buenos Aires88             
+19991010  Presidente          ARI                           Cordoba                       99             
+19991010  Presidente          ARI                           Corrientes                    115            
+19991010  Presidente          ARI                           Entre Rios                    90             
+19991010  Presidente          ARI                           Formosa                       106            
+19991010  Presidente          ARI                           Jujuy                         118            
+19991010  Presidente          ARI                           La Pampa                      107            
+19991010  Presidente          ARI                           La Rioja                      105            
+19991010  Presidente          ARI                           Mendoza                       112            
+19991010  Presidente          ARI                           Misiones                      108            
+19991010  Presidente          ARI                           Neuquen                       108            
+19991010  Presidente          ARI                           Rio Negro                     119            
+19991010  Presidente          ARI                           Salta                         109            
+19991010  Presidente          ARI                           San Juan                      111            
+19991010  Presidente          ARI                           San Luis                      109            
+19991010  Presidente          ARI                           Santa Cruz                    100            
+19991010  Presidente          ARI                           Santa Fe                      103            
+19991010  Presidente          ARI                           Santiago del Estero           98             
+19991010  Presidente          ARI                           Tierra del Fuego              105            
+19991010  Presidente          ARI                           Tucuman                       117            
+19991010  Presidente          Izquierda                     Buenos Aires                  55             
+19991010  Presidente          Izquierda                     Catamarca                     56             
+19991010  Presidente          Izquierda                     Chaco                         53             
+19991010  Presidente          Izquierda                     Chubut                        41             
+19991010  Presidente          Izquierda                     Ciudad Autonoma de Buenos Aires63             
+19991010  Presidente          Izquierda                     Cordoba                       57             
+19991010  Presidente          Izquierda                     Corrientes                    44             
+19991010  Presidente          Izquierda                     Entre Rios                    57             
+19991010  Presidente          Izquierda                     Formosa                       66             
+19991010  Presidente          Izquierda                     Jujuy                         45             
+19991010  Presidente          Izquierda                     La Pampa                      56             
+19991010  Presidente          Izquierda                     La Rioja                      49             
+19991010  Presidente          Izquierda                     Mendoza                       50             
+19991010  Presidente          Izquierda                     Misiones                      51             
+19991010  Presidente          Izquierda                     Neuquen                       70             
+19991010  Presidente          Izquierda                     Rio Negro                     52             
+19991010  Presidente          Izquierda                     Salta                         49             
+19991010  Presidente          Izquierda                     San Juan                      58             
+19991010  Presidente          Izquierda                     San Luis                      47             
+19991010  Presidente          Izquierda                     Santa Cruz                    60             
+19991010  Presidente          Izquierda                     Santa Fe                      63             
+19991010  Presidente          Izquierda                     Santiago del Estero           60             
+19991010  Presidente          Izquierda                     Tierra del Fuego              41             
+19991010  Presidente          Izquierda                     Tucuman                       40             
+19991010  Presidente          PJ                            Buenos Aires                  50             
+19991010  Presidente          PJ                            Catamarca                     61             
+19991010  Presidente          PJ                            Chaco                         61             
+19991010  Presidente          PJ                            Chubut                        53             
+19991010  Presidente          PJ                            Ciudad Autonoma de Buenos Aires59             
+19991010  Presidente          PJ                            Cordoba                       47             
+19991010  Presidente          PJ                            Corrientes                    50             
+19991010  Presidente          PJ                            Entre Rios                    61             
+19991010  Presidente          PJ                            Formosa                       57             
+19991010  Presidente          PJ                            Jujuy                         62             
+19991010  Presidente          PJ                            La Pampa                      58             
+19991010  Presidente          PJ                            La Rioja                      43             
+19991010  Presidente          PJ                            Mendoza                       48             
+19991010  Presidente          PJ                            Misiones                      49             
+19991010  Presidente          PJ                            Neuquen                       49             
+19991010  Presidente          PJ                            Rio Negro                     45             
+19991010  Presidente          PJ                            Salta                         50             
+19991010  Presidente          PJ                            San Juan                      61             
+19991010  Presidente          PJ                            San Luis                      47             
+19991010  Presidente          PJ                            Santa Cruz                    45             
+19991010  Presidente          PJ                            Santa Fe                      47             
+19991010  Presidente          PJ                            Santiago del Estero           44             
+19991010  Presidente          PJ                            Tierra del Fuego              61             
+19991010  Presidente          PJ                            Tucuman                       59             
+19991010  Presidente          PRO                           Buenos Aires                  46             
+19991010  Presidente          PRO                           Catamarca                     60             
+19991010  Presidente          PRO                           Chaco                         55             
+19991010  Presidente          PRO                           Chubut                        50             
+19991010  Presidente          PRO                           Ciudad Autonoma de Buenos Aires55             
+19991010  Presidente          PRO                           Cordoba                       49             
+19991010  Presidente          PRO                           Corrientes                    52             
+19991010  Presidente          PRO                           Entre Rios                    48             
+19991010  Presidente          PRO                           Formosa                       63             
+19991010  Presidente          PRO                           Jujuy                         54             
+19991010  Presidente          PRO                           La Pampa                      52             
+19991010  Presidente          PRO                           La Rioja                      53             
+19991010  Presidente          PRO                           Mendoza                       57             
+19991010  Presidente          PRO                           Misiones                      48             
+19991010  Presidente          PRO                           Neuquen                       68             
+19991010  Presidente          PRO                           Rio Negro                     62             
+19991010  Presidente          PRO                           Salta                         64             
+19991010  Presidente          PRO                           San Juan                      59             
+19991010  Presidente          PRO                           San Luis                      64             
+19991010  Presidente          PRO                           Santa Cruz                    49             
+19991010  Presidente          PRO                           Santa Fe                      60             
+19991010  Presidente          PRO                           Santiago del Estero           60             
+19991010  Presidente          PRO                           Tierra del Fuego              54             
+19991010  Presidente          PRO                           Tucuman                       50             
+19991010  Presidente          Socialista                    Buenos Aires                  60             
+19991010  Presidente          Socialista                    Catamarca                     47             
+19991010  Presidente          Socialista                    Chaco                         66             
+19991010  Presidente          Socialista                    Chubut                        44             
+19991010  Presidente          Socialista                    Ciudad Autonoma de Buenos Aires53             
+19991010  Presidente          Socialista                    Cordoba                       54             
+19991010  Presidente          Socialista                    Corrientes                    52             
+19991010  Presidente          Socialista                    Entre Rios                    40             
+19991010  Presidente          Socialista                    Formosa                       63             
+19991010  Presidente          Socialista                    Jujuy                         58             
+19991010  Presidente          Socialista                    La Pampa                      64             
+19991010  Presidente          Socialista                    La Rioja                      53             
+19991010  Presidente          Socialista                    Mendoza                       50             
+19991010  Presidente          Socialista                    Misiones                      50             
+19991010  Presidente          Socialista                    Neuquen                       59             
+19991010  Presidente          Socialista                    Rio Negro                     69             
+19991010  Presidente          Socialista                    Salta                         56             
+19991010  Presidente          Socialista                    San Juan                      46             
+19991010  Presidente          Socialista                    San Luis                      54             
+19991010  Presidente          Socialista                    Santa Cruz                    55             
+19991010  Presidente          Socialista                    Santa Fe                      42             
+19991010  Presidente          Socialista                    Santiago del Estero           67             
+19991010  Presidente          Socialista                    Tierra del Fuego              49             
+19991010  Presidente          Socialista                    Tucuman                       54             
+19991010  Presidente          UCR                           Buenos Aires                  49             
+19991010  Presidente          UCR                           Catamarca                     59             
+19991010  Presidente          UCR                           Chaco                         59             
+19991010  Presidente          UCR                           Chubut                        57             
+19991010  Presidente          UCR                           Ciudad Autonoma de Buenos Aires51             
+19991010  Presidente          UCR                           Cordoba                       68             
+19991010  Presidente          UCR                           Corrientes                    53             
+19991010  Presidente          UCR                           Entre Rios                    48             
+19991010  Presidente          UCR                           Formosa                       57             
+19991010  Presidente          UCR                           Jujuy                         47             
+19991010  Presidente          UCR                           La Pampa                      58             
+19991010  Presidente          UCR                           La Rioja                      50             
+19991010  Presidente          UCR                           Mendoza                       45             
+19991010  Presidente          UCR                           Misiones                      52             
+19991010  Presidente          UCR                           Neuquen                       52             
+19991010  Presidente          UCR                           Rio Negro                     55             
+19991010  Presidente          UCR                           Salta                         61             
+19991010  Presidente          UCR                           San Juan                      57             
+19991010  Presidente          UCR                           San Luis                      40             
+19991010  Presidente          UCR                           Santa Cruz                    49             
+19991010  Presidente          UCR                           Santa Fe                      54             
+19991010  Presidente          UCR                           Santiago del Estero           60             
+19991010  Presidente          UCR                           Tierra del Fuego              47             
+19991010  Presidente          UCR                           Tucuman                       52             
+19991010  Presidente          blanco                        Buenos Aires                  0              
+19991010  Presidente          blanco                        Catamarca                     0              
+19991010  Presidente          blanco                        Chaco                         0              
+19991010  Presidente          blanco                        Chubut                        0              
+19991010  Presidente          blanco                        Ciudad Autonoma de Buenos Aires0              
+19991010  Presidente          blanco                        Cordoba                       0              
+19991010  Presidente          blanco                        Corrientes                    0              
+19991010  Presidente          blanco                        Entre Rios                    0              
+19991010  Presidente          blanco                        Formosa                       0              
+19991010  Presidente          blanco                        Jujuy                         0              
+19991010  Presidente          blanco                        La Pampa                      0              
+19991010  Presidente          blanco                        La Rioja                      0              
+19991010  Presidente          blanco                        Mendoza                       0              
+19991010  Presidente          blanco                        Misiones                      0              
+19991010  Presidente          blanco                        Neuquen                       0              
+19991010  Presidente          blanco                        Rio Negro                     0              
+19991010  Presidente          blanco                        Salta                         0              
+19991010  Presidente          blanco                        San Juan                      0              
+19991010  Presidente          blanco                        San Luis                      0              
+19991010  Presidente          blanco                        Santa Cruz                    0              
+19991010  Presidente          blanco                        Santa Fe                      0              
+19991010  Presidente          blanco                        Santiago del Estero           0              
+19991010  Presidente          blanco                        Tierra del Fuego              0              
+19991010  Presidente          blanco                        Tucuman                       0              
+
+Cantidad de votos en total: 9000
+Ingrese una tecla para continuar
+
+Opciones: 
+
+1) Informe por elección
+2) Informe por lista
+3) Informe por distrito
+4) Volver atrás
+5) Mostrar archivo de conteo
+6) Mostrar archivo de conteo ordenado por distrito
+Opcion: 6
+
+Buenos Aires                            19991010  Presidente                    ARI                                     107            
+Buenos Aires                            19991010  Presidente                    Izquierda                               55             
+Buenos Aires                            19991010  Presidente                    PJ                                      50             
+Buenos Aires                            19991010  Presidente                    PRO                                     46             
+Buenos Aires                            19991010  Presidente                    Socialista                              60             
+Buenos Aires                            19991010  Presidente                    UCR                                     49             
+Buenos Aires                            19991010  Presidente                    blanco                                  0              
+Catamarca                               19991010  Presidente                    ARI                                     82             
+Catamarca                               19991010  Presidente                    Izquierda                               56             
+Catamarca                               19991010  Presidente                    PJ                                      61             
+Catamarca                               19991010  Presidente                    PRO                                     60             
+Catamarca                               19991010  Presidente                    Socialista                              47             
+Catamarca                               19991010  Presidente                    UCR                                     59             
+Catamarca                               19991010  Presidente                    blanco                                  0              
+Chaco                                   19991010  Presidente                    ARI                                     112            
+Chaco                                   19991010  Presidente                    Izquierda                               53             
+Chaco                                   19991010  Presidente                    PJ                                      61             
+Chaco                                   19991010  Presidente                    PRO                                     55             
+Chaco                                   19991010  Presidente                    Socialista                              66             
+Chaco                                   19991010  Presidente                    UCR                                     59             
+Chaco                                   19991010  Presidente                    blanco                                  0              
+Chubut                                  19991010  Presidente                    ARI                                     105            
+Chubut                                  19991010  Presidente                    Izquierda                               41             
+Chubut                                  19991010  Presidente                    PJ                                      53             
+Chubut                                  19991010  Presidente                    PRO                                     50             
+Chubut                                  19991010  Presidente                    Socialista                              44             
+Chubut                                  19991010  Presidente                    UCR                                     57             
+Chubut                                  19991010  Presidente                    blanco                                  0              
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    ARI                                     88             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    Izquierda                               63             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    PJ                                      59             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    PRO                                     55             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    Socialista                              53             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    UCR                                     51             
+Ciudad Autonoma de Buenos Aires         19991010  Presidente                    blanco                                  0              
+Cordoba                                 19991010  Presidente                    ARI                                     99             
+Cordoba                                 19991010  Presidente                    Izquierda                               57             
+Cordoba                                 19991010  Presidente                    PJ                                      47             
+Cordoba                                 19991010  Presidente                    PRO                                     49             
+Cordoba                                 19991010  Presidente                    Socialista                              54             
+Cordoba                                 19991010  Presidente                    UCR                                     68             
+Cordoba                                 19991010  Presidente                    blanco                                  0              
+Corrientes                              19991010  Presidente                    ARI                                     115            
+Corrientes                              19991010  Presidente                    Izquierda                               44             
+Corrientes                              19991010  Presidente                    PJ                                      50             
+Corrientes                              19991010  Presidente                    PRO                                     52             
+Corrientes                              19991010  Presidente                    Socialista                              52             
+Corrientes                              19991010  Presidente                    UCR                                     53             
+Corrientes                              19991010  Presidente                    blanco                                  0              
+Entre Rios                              19991010  Presidente                    ARI                                     90             
+Entre Rios                              19991010  Presidente                    Izquierda                               57             
+Entre Rios                              19991010  Presidente                    PJ                                      61             
+Entre Rios                              19991010  Presidente                    PRO                                     48             
+Entre Rios                              19991010  Presidente                    Socialista                              40             
+Entre Rios                              19991010  Presidente                    UCR                                     48             
+Entre Rios                              19991010  Presidente                    blanco                                  0              
+Formosa                                 19991010  Presidente                    ARI                                     106            
+Formosa                                 19991010  Presidente                    Izquierda                               66             
+Formosa                                 19991010  Presidente                    PJ                                      57             
+Formosa                                 19991010  Presidente                    PRO                                     63             
+Formosa                                 19991010  Presidente                    Socialista                              63             
+Formosa                                 19991010  Presidente                    UCR                                     57             
+Formosa                                 19991010  Presidente                    blanco                                  0              
+Jujuy                                   19991010  Presidente                    ARI                                     118            
+Jujuy                                   19991010  Presidente                    Izquierda                               45             
+Jujuy                                   19991010  Presidente                    PJ                                      62             
+Jujuy                                   19991010  Presidente                    PRO                                     54             
+Jujuy                                   19991010  Presidente                    Socialista                              58             
+Jujuy                                   19991010  Presidente                    UCR                                     47             
+Jujuy                                   19991010  Presidente                    blanco                                  0              
+La Pampa                                19991010  Presidente                    ARI                                     107            
+La Pampa                                19991010  Presidente                    Izquierda                               56             
+La Pampa                                19991010  Presidente                    PJ                                      58             
+La Pampa                                19991010  Presidente                    PRO                                     52             
+La Pampa                                19991010  Presidente                    Socialista                              64             
+La Pampa                                19991010  Presidente                    UCR                                     58             
+La Pampa                                19991010  Presidente                    blanco                                  0              
+La Rioja                                19991010  Presidente                    ARI                                     105            
+La Rioja                                19991010  Presidente                    Izquierda                               49             
+La Rioja                                19991010  Presidente                    PJ                                      43             
+La Rioja                                19991010  Presidente                    PRO                                     53             
+La Rioja                                19991010  Presidente                    Socialista                              53             
+La Rioja                                19991010  Presidente                    UCR                                     50             
+La Rioja                                19991010  Presidente                    blanco                                  0              
+Mendoza                                 19991010  Presidente                    ARI                                     112            
+Mendoza                                 19991010  Presidente                    Izquierda                               50             
+Mendoza                                 19991010  Presidente                    PJ                                      48             
+Mendoza                                 19991010  Presidente                    PRO                                     57             
+Mendoza                                 19991010  Presidente                    Socialista                              50             
+Mendoza                                 19991010  Presidente                    UCR                                     45             
+Mendoza                                 19991010  Presidente                    blanco                                  0              
+Misiones                                19991010  Presidente                    ARI                                     108            
+Misiones                                19991010  Presidente                    Izquierda                               51             
+Misiones                                19991010  Presidente                    PJ                                      49             
+Misiones                                19991010  Presidente                    PRO                                     48             
+Misiones                                19991010  Presidente                    Socialista                              50             
+Misiones                                19991010  Presidente                    UCR                                     52             
+Misiones                                19991010  Presidente                    blanco                                  0              
+Neuquen                                 19991010  Presidente                    ARI                                     108            
+Neuquen                                 19991010  Presidente                    Izquierda                               70             
+Neuquen                                 19991010  Presidente                    PJ                                      49             
+Neuquen                                 19991010  Presidente                    PRO                                     68             
+Neuquen                                 19991010  Presidente                    Socialista                              59             
+Neuquen                                 19991010  Presidente                    UCR                                     52             
+Neuquen                                 19991010  Presidente                    blanco                                  0              
+Rio Negro                               19991010  Presidente                    ARI                                     119            
+Rio Negro                               19991010  Presidente                    Izquierda                               52             
+Rio Negro                               19991010  Presidente                    PJ                                      45             
+Rio Negro                               19991010  Presidente                    PRO                                     62             
+Rio Negro                               19991010  Presidente                    Socialista                              69             
+Rio Negro                               19991010  Presidente                    UCR                                     55             
+Rio Negro                               19991010  Presidente                    blanco                                  0              
+Salta                                   19991010  Presidente                    ARI                                     109            
+Salta                                   19991010  Presidente                    Izquierda                               49             
+Salta                                   19991010  Presidente                    PJ                                      50             
+Salta                                   19991010  Presidente                    PRO                                     64             
+Salta                                   19991010  Presidente                    Socialista                              56             
+Salta                                   19991010  Presidente                    UCR                                     61             
+Salta                                   19991010  Presidente                    blanco                                  0              
+San Juan                                19991010  Presidente                    ARI                                     111            
+San Juan                                19991010  Presidente                    Izquierda                               58             
+San Juan                                19991010  Presidente                    PJ                                      61             
+San Juan                                19991010  Presidente                    PRO                                     59             
+San Juan                                19991010  Presidente                    Socialista                              46             
+San Juan                                19991010  Presidente                    UCR                                     57             
+San Juan                                19991010  Presidente                    blanco                                  0              
+San Luis                                19991010  Presidente                    ARI                                     109            
+San Luis                                19991010  Presidente                    Izquierda                               47             
+San Luis                                19991010  Presidente                    PJ                                      47             
+San Luis                                19991010  Presidente                    PRO                                     64             
+San Luis                                19991010  Presidente                    Socialista                              54             
+San Luis                                19991010  Presidente                    UCR                                     40             
+San Luis                                19991010  Presidente                    blanco                                  0              
+Santa Cruz                              19991010  Presidente                    ARI                                     100            
+Santa Cruz                              19991010  Presidente                    Izquierda                               60             
+Santa Cruz                              19991010  Presidente                    PJ                                      45             
+Santa Cruz                              19991010  Presidente                    PRO                                     49             
+Santa Cruz                              19991010  Presidente                    Socialista                              55             
+Santa Cruz                              19991010  Presidente                    UCR                                     49             
+Santa Cruz                              19991010  Presidente                    blanco                                  0              
+Santa Fe                                19991010  Presidente                    ARI                                     103            
+Santa Fe                                19991010  Presidente                    Izquierda                               63             
+Santa Fe                                19991010  Presidente                    PJ                                      47             
+Santa Fe                                19991010  Presidente                    PRO                                     60             
+Santa Fe                                19991010  Presidente                    Socialista                              42             
+Santa Fe                                19991010  Presidente                    UCR                                     54             
+Santa Fe                                19991010  Presidente                    blanco                                  0              
+Santiago del Estero                     19991010  Presidente                    ARI                                     98             
+Santiago del Estero                     19991010  Presidente                    Izquierda                               60             
+Santiago del Estero                     19991010  Presidente                    PJ                                      44             
+Santiago del Estero                     19991010  Presidente                    PRO                                     60             
+Santiago del Estero                     19991010  Presidente                    Socialista                              67             
+Santiago del Estero                     19991010  Presidente                    UCR                                     60             
+Santiago del Estero                     19991010  Presidente                    blanco                                  0              
+Tierra del Fuego                        19991010  Presidente                    ARI                                     105            
+Tierra del Fuego                        19991010  Presidente                    Izquierda                               41             
+Tierra del Fuego                        19991010  Presidente                    PJ                                      61             
+Tierra del Fuego                        19991010  Presidente                    PRO                                     54             
+Tierra del Fuego                        19991010  Presidente                    Socialista                              49             
+Tierra del Fuego                        19991010  Presidente                    UCR                                     47             
+Tierra del Fuego                        19991010  Presidente                    blanco                                  0              
+Tucuman                                 19991010  Presidente                    ARI                                     117            
+Tucuman                                 19991010  Presidente                    Izquierda                               40             
+Tucuman                                 19991010  Presidente                    PJ                                      59             
+Tucuman                                 19991010  Presidente                    PRO                                     50             
+Tucuman                                 19991010  Presidente                    Socialista                              54             
+Tucuman                                 19991010  Presidente                    UCR                                     52             
+Tucuman                                 19991010  Presidente                    blanco                                  0              
+
+Cantidad de votos en total: 9000
+
+
+
+
+
 \end{verbatim}
 
 \newpage
