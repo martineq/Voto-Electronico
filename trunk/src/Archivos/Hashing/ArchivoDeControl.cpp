@@ -12,6 +12,8 @@ void ArchivoDeControl::persistirVector(vector<int>* tabla){
 	stringstream* stream =  new stringstream();
 	int size = tabla->size();
 
+	cout << "tamaño de la tabla a persistir: " << size << endl;
+
 	// Almaceno la cantidad de elementos de la lista.
 	stream->write((char*)&size,sizeof(int));
 
@@ -48,8 +50,10 @@ vector<int> ArchivoDeControl::hidratarVector()
 	stream->write(numero,sizeof(int));
 	delete[] numero;
 
-	int cantidadDeElementos = stream->get();
+	int cantidadDeElementos;
+	stream->read((char*)&cantidadDeElementos,sizeof(int));
 	delete stream;
+
 
 	int sizeBuffer = sizeof(int)*cantidadDeElementos;
 	char* vector = new char[sizeBuffer];
@@ -105,12 +109,15 @@ list<int> ArchivoDeControl::hidratarLista()
 	char* numero = new char[sizeof(int)];
 	archivo->leer(numero,sizeof(int));
 
+
 	stringstream* stream = new stringstream();
 	stream->write(numero,sizeof(int));
 	delete[] numero;
 
-	int cantidadDeElementos = stream->get();
+	int cantidadDeElementos;
+	stream->read((char*)&cantidadDeElementos,sizeof(int));
 	delete stream;
+
 
 	int sizeBuffer = sizeof(int)*cantidadDeElementos;
 	char* vector = new char[sizeBuffer];
@@ -143,4 +150,3 @@ bool ArchivoDeControl::vacio()
 ArchivoDeControl::~ArchivoDeControl() {
 	delete archivo;
 }
-
