@@ -61,9 +61,8 @@ int ArchivoBloques::delblock(int nrrBorrado){
 	}
 	// Si el bloque a borrar es el último del archivo, lo trunco.
 	if ( nrrBorrado == ((this->blocksize) * (this->maxblocknum - 1)) ){
-		#warning Descomentar al momento de habilitar el truncar
-//		truncarUltimoBolque();
-//		return 0;
+		truncarUltimoBloque();
+		return 0;
 	}
 	// Este es el caso (A) donde no tengo bloque de metadata y agrego el 1ro o (B) el bloque actual está lleno
 	if ( (this->currmetadata == 0) || (this->currpos) >= (this->blocksize)-(int)TAM_CAMPOS_CTRL ){
@@ -140,15 +139,13 @@ void ArchivoBloques::deserializehead(){
 
 void ArchivoBloques::truncarUltimoBloque(){
 
-#warning  Este código está probado, pero no lo habilito por ahora
+	if ( truncate(this->archivo->obtenerNombreArchivo().c_str(),(this->blocksize) * (this->maxblocknum - 1) ) == 0  ){
+		this->maxblocknum = this->maxblocknum - 1;
+		this->serializehead();
+	}else{
+		cerr << "Archivo de Bloques >> Error al truncar." << endl;
+	}
 
-//	if ( truncate(this->archivo->obtenerNombreArchivo().c_str(),(this->blocksize) * (this->maxblocknum - 1) ) == 0  ){
-//		this->maxblocknum = this->maxblocknum - 1;
-//		this->serializehead();
-//	}else{
-//		cerr << "Archivo de Bloques >> Error al truncar." << endl;
-//	}
-//
 
 }
 
