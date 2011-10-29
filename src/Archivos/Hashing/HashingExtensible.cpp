@@ -212,7 +212,7 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 	// Se crea el nuevo Bucket.
 	nuevoBucket = new Bucket(dispersionNuevoBucket,archivo->getDimensionDelBucket());
 
-	if ( usandoBucketLibre ){
+	if ( usandoBucketLibre and nuevoNumeroDeBucket < (int)tablaDeDispersion.size() ){
 		int nrr = tablaDeTraduccion[nuevoNumeroDeBucket];
 		archivo->modificarBucket(nrr,nuevoBucket);
 		posBloque = nuevoNumeroDeBucket;
