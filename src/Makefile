@@ -12,11 +12,12 @@ LGC = ./Logica/*.cpp
 TST = ../tests/*.cpp
 
 # Constantes
-NOMBRE_EJECUTABLE = voto																	# Nombre del ejecutable
-FUENTES = *.cpp $(ABM) $(ABQ) $(HSH) $(AUX) $(ENT) $(LGC) $(TST)							# Enumero los *.cpp existentes
-SUBCARPETAS = ClasesAuxiliares																# Subcarpetas donde existan archivos "*.h" que no sean de clases
-FLAGS = -O0 -Wall -Wextra -g3 -fmessage-length=0 -I $(SUBCARPETAS) -o $(NOMBRE_EJECUTABLE)	# Preparo todos los flags para el comando g++
- 
+NOMBRE_EJECUTABLE = voto											# Nombre del ejecutable
+FUENTES = *.cpp $(ABM) $(ABQ) $(HSH) $(AUX) $(ENT) $(LGC) $(TST)	# Enumero los *.cpp existentes
+SUBCARPETAS = ClasesAuxiliares										# Subcarpetas donde existan archivos "*.h" que no sean de clases
+FLAGSWARN = -Wall -Wextra											# Flags para obtener warnings del compilador g++
+FLAGS = -O0 -g3 -fmessage-length=0 -I $(SUBCARPETAS) -o $(NOMBRE_EJECUTABLE)	# Preparo todos los flags para el comando g++
+
 
 #Objetivo Inicio: Aquí se enumeran todos los objetivos que quiero correr
 inicio : main
@@ -31,7 +32,6 @@ main :
 	@echo $(FUENTES)
 	@echo '-----------------------------------------------'
 	@g++ $(FUENTES) $(FLAGS)
-	@echo '-----------------------------------------------'
 	@echo 'Terminó la compilación'
 	@echo ' '
 
