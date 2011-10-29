@@ -107,7 +107,7 @@ int main(int argc,const char* argv[]) {
 	delete administrador;
 	delete interfaz;
 
-	cout << "\n\n** EXITO! **" << endl;
+//	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }
 

@@ -30,7 +30,7 @@ string CreadorVotante::getNombre(string path){
        archivo.close();
     }
     else{
-        cout << "Pucha no esta"<<endl;
+//        cout << "Pucha no esta"<<endl;
     }
      return linea;
 
