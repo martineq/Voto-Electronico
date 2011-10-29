@@ -45,25 +45,25 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 			if (tecla.compare("S") == 0) {
 				string pathABorrar = this->rutaHash+"DeControlVotante.txt";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaHash+"DeDatosVotante.txt";
+				pathABorrar = this->rutaHash+"DeDatosVotante";
 				remove (pathABorrar.c_str());
 				pathABorrar = this->rutaHash+"DeControlDistrito.txt";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaHash+"DeDatosDistrito.txt";
+				pathABorrar = this->rutaHash+"DeDatosDistrito";
 				remove (pathABorrar.c_str());
 				pathABorrar = this->rutaHash+"DeControlEleccion.txt";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaHash+"DeDatosEleccion.txt";
+				pathABorrar = this->rutaHash+"DeDatosEleccion";
 				(pathABorrar.c_str());
 				pathABorrar = this->rutaHash+"DeControlCandidato.txt";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaHash+"DeDatosCandidato.txt";
+				pathABorrar = this->rutaHash+"DeDatosCandidato";
 				remove (pathABorrar.c_str());
 				pathABorrar = this->rutaHash+"DeControlCargo.txt";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaHash+"DeDatosCargo.txt";
+				pathABorrar = this->rutaHash+"DeDatosCargo";
 				remove (pathABorrar.c_str());
-				pathABorrar = this->rutaArbol+"DeListas";
+				pathABorrar = this->rutaArbol+"arbolDeListas";
 				remove (pathABorrar.c_str());
 			} else {
 				if (tecla.compare("N") != 0){
@@ -420,6 +420,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 		registro = NULL;
 		i = 0;
 		dni = 0;
+		errorCarga = false;
 	}
 
 }
