@@ -174,9 +174,7 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		tablaDeHash[posicionEnTablaDeHash] = nuevoNumeroDeBucket;
 
 		// Se determina el tamaño de dispersión del nuevo bucket.
-		if ( usandoBucketLibre ){
-			cout << "nuevoNumeroDeBucket : "<<nuevoNumeroDeBucket<<endl;
-			cout << "tablaDeDispersion.at(nuevoNumeroDeBucket) :"<<tablaDeDispersion.at( nuevoNumeroDeBucket )<<endl;
+		if ( usandoBucketLibre and (tablaDeDispersion.size()>nuevoNumeroDeBucket)){
 			tablaDeDispersion.at( nuevoNumeroDeBucket ) = tablaDeHash.size();
 		}
 		else
@@ -346,8 +344,7 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 	if ( tablaDeHash.size() == 1 ){
 
 		// Libero el bucket y lo ubico en la lista de libres.
-#warning
-//		tablaDeDispersion.pop_back();   //ESTO LO SACO!!
+		tablaDeDispersion.pop_back();   //ESTO LO SACO!!
 		tablaDeHash.pop_back();
 
 		// Se procede a liberar el bucket
@@ -382,7 +379,6 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 			// Dispersión diferente, comparo el elemento anterior y siguiente para
 			// ver si son el mismo bloque. De ser así, se lo reemplaza.
 			if ( tablaDeHash[posicionBucketAnterior]==tablaDeHash[posicionBucketPosterior] ){
-
 				reemplazarBucket = 1;
 			}
 
@@ -395,11 +391,10 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 
 			// Libero el bucket y lo ubico en la lista de libres.
 			if ( numeroDeBucket == (int)(tablaDeDispersion.size() -1 ) )
-//				tablaDeDispersion.pop_back();
-#warning
-				cout <<"tu vieja"<<endl;
+				tablaDeDispersion.pop_back();
 			else
 				tablaDeDispersion.at(numeroDeBucket) = BUCKET_LIBRE;
+
 
 			// Se procede a liberar el bucket
 			int nrrBucket = tablaDeTraduccion[numeroDeBucket];
@@ -617,7 +612,6 @@ void HashingExtensible::mostrarArchivoDeHash()
 
 	this->imprimirTablaDeHash();
 	this->imprimirTablaDeDispersion();
-	cout << "Maximo tamaño hash: "<<this->tablaDeHash.capacity()<<endl;
 }
 
 HashingExtensible::~HashingExtensible() {
