@@ -212,9 +212,10 @@ int Configuracion::darTamanioBucket(){
 
 void Configuracion::mostrarAyuda(){
 	cout << "Argumentos válidos pasados por parámetro: "<<endl;
-	cout << "	-c <ruta>	Agrega la ruta del archivo de configuración (obligatorio)."<<endl;
+	cout << "	-c <ruta>	Agrega la ruta del archivo de configuración (obligatorio para acceder al sistema)."<<endl;
 	cout << "	-v		Muestra la versión y sale del programa."<<endl;
-	cout << "	-h		Muestra esta ayuda y sale del programa."<<endl<<endl<<endl;
+	cout << "	-h		Muestra esta ayuda y sale del programa."<<endl<<endl;
+	cout << "Para obtener el User/Pass de ingreso al sistema consulte el manual de usuario."<<endl<<endl<<endl;
 	cout << "Archivo de configuración. Para su uso:"<<endl;
 	cout << "La lectura de las opciones se relizará a partir del delimitador '/"<<"/'."<<endl;
 	cout << "La lectura se realizará hasta el final del archivo."<<endl;
@@ -236,7 +237,8 @@ void Configuracion::mostrarAyuda(){
 }
 
 void Configuracion::mostrarVersion(){
-	cout <<"Versión 1.0"<<endl;
+	cout <<"Versión 1.2"<<endl;
+	// Versíon xx.yy   Con:  xx etapa del TP, yy entrega del TP
 }
 
 string Configuracion::pathApellidos()
