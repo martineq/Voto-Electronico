@@ -1502,7 +1502,7 @@ void InterfazAdministrador::comienzoVotacion(Administrador * administrador){
 								modoApertura = 'm';
 							}
 							boleta = administrador->elegirBoleta(modoApertura);
-							if (!boleta) return;
+//							if (!boleta) return;
 							c=administrador->sufragar(boleta,modoApertura);
 							if ((c=='s')||(c=='n')) ok=true;
 							else cout << "Tecla no reconocida" << endl;
