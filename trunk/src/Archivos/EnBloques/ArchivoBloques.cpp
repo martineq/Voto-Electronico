@@ -160,7 +160,7 @@ void ArchivoBloques::truncarUltimoBloque(){
 
 ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 
-	if ( (blocksize) >= (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) && ((blocksize%(TAM_CAMPOS_CTRL))==0) ){
+	if ( (blocksize) >= (MIN_BLOCK_SIZE) && ((blocksize%(TAM_CAMPOS_CTRL))==0) ){
 		this->archivo = new ManejadorDeArchivo(path);
 
 		if (archivo->obtenerTamArchivo() <= 0){		// Si el archivo está vacio inicialo los atributos en cero
@@ -191,8 +191,8 @@ ArchivoBloques::ArchivoBloques(char *path, int blocksize){
 		if((blocksize%(TAM_CAMPOS_CTRL))!=0){
 			cerr << "El bloque definido debe ser múltiplo de "<< (TAM_CAMPOS_CTRL) << endl;
 		}
-		if ( (blocksize) < (int)((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) ){
-		cerr << "El bloque definido debe ser por lo menos de "<< ((MIN_CAMPOS_CTRL)*(TAM_CAMPOS_CTRL)) << " bytes." << endl;
+		if ( (blocksize) < (MIN_BLOCK_SIZE) ){
+		cerr << "El bloque definido debe ser por lo menos de "<< (MIN_BLOCK_SIZE) << " bytes." << endl;
 		}
 		cerr << "Archivo NO creado. \nPrograma terminado." << endl;
 		exit(1);

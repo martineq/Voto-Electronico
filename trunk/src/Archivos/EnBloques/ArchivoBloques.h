@@ -16,7 +16,7 @@
 #define ARCHIVOBLOQUES_H_
 
 #define TAM_CAMPOS_CTRL sizeof(int)  //Tamaño de campos de control para el funcionamiento (Debe ser potencia de 2)
-#define MIN_CAMPOS_CTRL 4  //Cantidad mínima de campos de control para el funcionamiento (Debe ser potencia de 2)
+#define MIN_BLOCK_SIZE 256  //Tamaño mínimo de bloque del archivo (Para que no tenga problemas con la metadata de las estructuras)
 #define POSREL_CURRMD_HEAD (0*TAM_CAMPOS_CTRL)		// Posición relativa del campo de ctrl currMD dentro del Bq HEAD
 #define POSREL_MAXBLOQNUM_HEAD (1*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl maxblocknum dentro del Bq HEAD
 #define POSREL_BLOCKSIZE_HEAD (2*TAM_CAMPOS_CTRL)// Posición relativa del campo de ctrl Blocksize dentro del Bq HEAD
