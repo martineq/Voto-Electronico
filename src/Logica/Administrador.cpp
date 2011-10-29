@@ -208,7 +208,7 @@ int Administrador::elegirBoleta(char modo){
 		if (c==((int)(this->listaDeBoletas.size()))) c=1;
 		else c++;
 	}
-	return c;
+	return c-1;
 }
 
 bool Administrador::cargarListasDeEleccion(Eleccion* eleccion, bplustree* arbol){
@@ -287,7 +287,7 @@ char Administrador::sufragar (int numeroDeBoleta, char modo){
 //	me posiciono en la lista elegida de las opciones dadas
 	list <Lista*>::iterator itListas = this->listaDeBoletas.begin();
 	for (int i=0; i< numeroDeBoleta-1;i++) itListas++;
-	cout << "La opcion elegida es: " <<  numeroDeBoleta << endl;
+	cout << "La opcion elegida es: " <<  numeroDeBoleta+1 << endl;
 	cout << "LISTA: " << (*itListas)->getNombre() << endl;
 	cout << "Si esta seguro presione s si desea corregir su voto presione n" << endl;
 	if (modo=='a') c='s';
