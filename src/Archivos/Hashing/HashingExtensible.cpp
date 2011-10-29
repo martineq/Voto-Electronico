@@ -174,9 +174,11 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		tablaDeHash[posicionEnTablaDeHash] = nuevoNumeroDeBucket;
 
 		// Se determina el tamaño de dispersión del nuevo bucket.
-		if ( usandoBucketLibre )
+		if ( usandoBucketLibre ){
+			cout << "nuevoNumeroDeBucket : "<<nuevoNumeroDeBucket<<endl;
+			cout << "tablaDeDispersion.at(nuevoNumeroDeBucket) :"<<tablaDeDispersion.at( nuevoNumeroDeBucket )<<endl;
 			tablaDeDispersion.at( nuevoNumeroDeBucket ) = tablaDeHash.size();
-		
+		}
 		else
 			tablaDeDispersion.push_back(tablaDeHash.size());
 
@@ -344,7 +346,8 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 	if ( tablaDeHash.size() == 1 ){
 
 		// Libero el bucket y lo ubico en la lista de libres.
-		tablaDeDispersion.pop_back();
+#warning
+//		tablaDeDispersion.pop_back();   //ESTO LO SACO!!
 		tablaDeHash.pop_back();
 
 		// Se procede a liberar el bucket
@@ -392,7 +395,9 @@ Resultados HashingExtensible::liberarBucket(unsigned int posicionEnTablaDeHash){
 
 			// Libero el bucket y lo ubico en la lista de libres.
 			if ( numeroDeBucket == (int)(tablaDeDispersion.size() -1 ) )
-				tablaDeDispersion.pop_back();
+//				tablaDeDispersion.pop_back();
+#warning
+				cout <<"tu vieja"<<endl;
 			else
 				tablaDeDispersion.at(numeroDeBucket) = BUCKET_LIBRE;
 
@@ -518,6 +523,8 @@ Resultados HashingExtensible::eliminarRegistro(Registro* registro){
 			imprimirTablaDeHash();
 			imprimirTablaDeDispersion();
 		}
+	}else{
+		resultado = operacionFALLO;
 	}
 
 	return resultado;
@@ -610,6 +617,7 @@ void HashingExtensible::mostrarArchivoDeHash()
 
 	this->imprimirTablaDeHash();
 	this->imprimirTablaDeDispersion();
+	cout << "Maximo tamaño hash: "<<this->tablaDeHash.capacity()<<endl;
 }
 
 HashingExtensible::~HashingExtensible() {
