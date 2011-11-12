@@ -9,6 +9,7 @@
 #include "./Logica/InterfazAdministrador.h"
 #include "./ClasesAuxiliares/Configuracion.h"
 #include "./Criptografia/RSA.h"
+#include "../tests/TestVigenere.h"
 
 
 using namespace std;
@@ -19,6 +20,10 @@ using namespace std;
 	 * luego invocarlo con "prueba.<nombreDeLaPrueba>()".
 	 */
 int main(int argc,const char* argv[]) {
+
+	int resultado = 0;
+	int fail = 0;
+	int exito = 0;
 
 //	Pruebas* prueba = new Pruebas();
 
@@ -118,7 +123,24 @@ int main(int argc,const char* argv[]) {
 	long numeroEncriptado = rsa.encriptar(numero);
 	rsa.desencriptar(numeroEncriptado);
 
-	cout << "\n\n** EXITO! **" << endl;
+	cout << endl;
+
+//	Test Vigenere
+	TestVigenere testVigenere;
+
+	testVigenere.testCifrado()==0 ? exito++ : fail++;
+	testVigenere.testEnBloques()==0 ? exito++ : fail++;
+
+//	Mensaje final
+
+	if (fail != 0 )
+		cout << "Fallaron: " << fail << " pruebas " << endl;
+	else
+		cout << "Todas las pruebas resultaron exitosas." << endl;
+
+	cout << "Pasaron " << exito << " pruebas exitosamente." << endl;
+
+	cout << "\n** EXITO! **" << endl;
 	return 0;
 }
 
