@@ -8,6 +8,7 @@
 #include "../src/Archivos/Hashing/ArchivoDeBuckets.h"
 #include "./Logica/InterfazAdministrador.h"
 #include "./ClasesAuxiliares/Configuracion.h"
+#include "./Criptografia/RSA.h"
 
 
 using namespace std;
@@ -96,18 +97,28 @@ int main(int argc,const char* argv[]) {
 
 //	Pruebas de interfaz
 
-	Configuracion* conf = new Configuracion(argc,argv);
+//	Configuracion* conf = new Configuracion(argc,argv);
+//
+//	Administrador* administrador = new Administrador(conf->pathPassword());
+//
+//	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
+//	interfaz->ingresoAdministrador(administrador);
+//
+//	delete conf;
+//	delete administrador;
+//	delete interfaz;
 
-	Administrador* administrador = new Administrador(conf->pathPassword());
+//	CRIPTOGRAFIA
+	RSA rsa;
+	rsa.generarPyQ();
+	rsa.calcularN();
+	rsa.calcularPhi();
+	rsa.calcularE();
+	int numero = 46;
+	long numeroEncriptado = rsa.encriptar(numero);
+	rsa.desencriptar(numeroEncriptado);
 
-	InterfazAdministrador* interfaz = new InterfazAdministrador(conf);
-	interfaz->ingresoAdministrador(administrador);
-
-	delete conf;
-	delete administrador;
-	delete interfaz;
-
-//	cout << "\n\n** EXITO! **" << endl;
+	cout << "\n\n** EXITO! **" << endl;
 	return 0;
 }
 
