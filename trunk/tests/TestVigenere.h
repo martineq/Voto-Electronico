@@ -9,11 +9,9 @@
 #define TESTVIGENERE_H_
 
 #include <iostream>
-#include <vector>
 #include <string>
 #include "../src/Criptografia/Vigenere.h"
 
-using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
