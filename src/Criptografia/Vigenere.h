@@ -1,26 +1,24 @@
 #ifndef VIGENERE_H_
 #define VIGENERE_H_
 
-#include <vector>
 #include <string>
 
 using std::string;
-using std::vector;
 
 class Vigenere{
 
 private:
 	// Almacena internamente la clave empleada para la encriptación y desencriptación.
-	vector<int>		clave;
+	string		clave;
 
 	// Contiene el tamaño del alfabeto empleado.
-	int				cardinalAlfabeto;
+	int			cardinalAlfabeto;
 
 	// Mantiene la última posición empleada de la clave por el cifrador.
-	int				posicionCifrador;
+	int			posicionCifrador;
 
 	// Mantiene la última posición traducida de la clave por el descifrador.
-	int				posicionDescifrador;
+	int			posicionDescifrador;
 
 public:
 
@@ -28,13 +26,13 @@ public:
 	 * Instancia un objeto cifrador, el tamaño del alfabeto está implícito
 	 * y se asume resulta ser de 256.
 	 */
-	Vigenere(vector<int> clave);
+	Vigenere(string clave);
 
 	/*
 	 * Intancia un objeto cifrador, el tamaño del alfabeto se define mediante
 	 * cardinalAlfabeto.
 	 */
-	Vigenere(vector<int> clave,int cardinalAlfabeto);
+	Vigenere(string clave,int cardinalAlfabeto);
 
 	/*
 	 * Cifra un mensaje obteniendo y devuelve un criptograma.

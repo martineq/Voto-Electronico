@@ -13,11 +13,8 @@ TestVigenere::TestVigenere() {
 }
 
 int TestVigenere::testCifrado(){
-	vector<int> clave;
-	clave.push_back('A');
-	clave.push_back('B');
-	clave.push_back('C');
-	clave.push_back('D');
+
+	string clave = "ABCD";
 
 	Vigenere* vigenere = new Vigenere(clave);
 
@@ -40,13 +37,8 @@ int TestVigenere::testCifrado(){
 }
 
 int TestVigenere::testEnBloques(){
-	vector<int> clave;
-	clave.push_back('H');
-	clave.push_back('Z');
-	clave.push_back('D');
-	clave.push_back('I');
-	clave.push_back('O');
-	clave.push_back('P');
+
+	string clave = "HZDIOP";
 
 	Vigenere* vigenere = new Vigenere(clave);
 
@@ -81,6 +73,7 @@ int TestVigenere::testEnBloques(){
 	mensaje.append(m4);
 
 	string* mensajeDescifrado = vigenere->descifrar(criptograma);
+
 
 	int resultado = mensajeDescifrado->compare(mensaje);
 
