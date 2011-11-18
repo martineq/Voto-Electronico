@@ -14,7 +14,6 @@ Votante::Votante(int dni, string nombre, string password, string domicilio, stri
 	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
 }
 
-
 Votante::~Votante() {
 	list<EleccionAnterior*>::iterator it = listaDeEleccionesAnteriores->begin();
 	while (it!=listaDeEleccionesAnteriores->end()) {
@@ -22,6 +21,10 @@ Votante::~Votante() {
 		it++;
 	}
 	delete (listaDeEleccionesAnteriores);
+}
+
+void Votante::setRSA(RSA * rsa){
+	this->rsa = rsa;
 }
 
 void Votante::setNombre (string nombre) {
@@ -151,11 +154,11 @@ string* Votante::serializar(){
 		it++;
 	}
 
-	return new string(buffer.str());
+	return new string( rsa->encriptar(buffer.str()));
 }
 
 void Votante::deserializar(string* source){
-	istringstream buffer (*source);
+	istringstream buffer ( rsa->desencriptar(*source));
 	stringstream * miString;
 	int cantidadDeBytes;
 

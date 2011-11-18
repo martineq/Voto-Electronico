@@ -3,10 +3,11 @@
 
 #include <list>
 #include <string>
-#include "Eleccion.h"
 #include "EleccionAnterior.h"
+#include "Eleccion.h"
 #include <iostream>
 #include "Entidad.h"
+#include "../Criptografia/RSA.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ private:
 	string domicilio;
 	string distrito;
 	list <EleccionAnterior*>* listaDeEleccionesAnteriores;
+	RSA * rsa;
 	void verEleccionesAnteriores ();
 public:
 	Votante();
@@ -39,6 +41,7 @@ public:
 	string getDomicilio ();
 	string getDistrito ();
 	string* serializar();
+	void setRSA(RSA * rsa);
 	list <EleccionAnterior*>* getListaDeEleccionesAnteriores ();
 
 	/*
