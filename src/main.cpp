@@ -10,6 +10,7 @@
 #include "./ClasesAuxiliares/Configuracion.h"
 #include "./Criptografia/RSA.h"
 #include "../tests/TestVigenere.h"
+#include "../tests/TestEncriptacionVotante.h"
 
 
 using namespace std;
@@ -114,16 +115,23 @@ int main(int argc,const char* argv[]) {
 //	delete interfaz;
 
 //	CRIPTOGRAFIA
-	RSA rsa;
-	rsa.generarPyQ();
-	rsa.calcularN();
-	rsa.calcularPhi();
-	rsa.calcularE();
-	int numero = 46;
-	long numeroEncriptado = rsa.encriptar(numero);
-	rsa.desencriptar(numeroEncriptado);
+//	RSA
 
-	cout << endl;
+//	RSA rsa;
+//	rsa.generarPyQ();
+//	rsa.calcularN();
+//	rsa.calcularPhi();
+//	rsa.calcularE();
+//	int numero = 46;
+//	long long numeroEncriptado = rsa.encriptar(numero);
+//	rsa.desencriptar(numeroEncriptado);
+//	rsa.atacar();
+
+//	Prueba encriptacion y desencriptacion de votante
+
+	TestEncriptacionVotante testRSAVotante;
+	testRSAVotante.principal();
+
 
 //	Test Vigenere
 	TestVigenere testVigenere;
