@@ -12,13 +12,57 @@ RSA::RSA() {
 		this->fila1.push_back(0);
 		this->fila2.push_back(0);
 	}
+	this->generarPyQ();
+	this->calcularN();
+	this->calcularPhi();
+	this->calcularE();
 }
+
+RSA::RSA(long z, long n, bool encriptar) {
+	this->n = n;
+	if (encriptar){
+		this->e = z;
+	}
+	else{
+		this->d = z;
+	}
+}
+
 
 RSA::~RSA() {
 	// TODO Auto-generated destructor stub
 }
 
-long RSA::aBinario (long num){
+void RSA::generarListaDePrimos(){
+	int indice = 2;
+	primos.push_back(indice);
+
+	for(int j = ++indice; j < 100; j=j+2){
+
+		list<int>::iterator it = primos.begin();
+		bool primo = true;
+
+		while ( (it != primos.end()) && primo){
+			if ( (j % (*it)) == 0 )
+				primo = false;
+			it++;
+		}
+
+		if ( primo )
+			primos.push_back(j);
+
+	}
+
+
+//	list<int>::iterator it = primos.begin();
+//	while ( it != primos.end()){
+//		cout << *it << " ";
+//		it++;
+//	}
+}
+
+
+long long RSA::aBinario (long long num){
 	if (num < 2){
 		return num;
 	}
@@ -27,10 +71,10 @@ long RSA::aBinario (long num){
 	}
 }
 
-bool RSA::esPrimo(int numero){
-	int resto;
+bool RSA::esPrimo(long long numero){
+	long long resto;
 	int nc=0;
-	for(int c=1;c<=numero;c++)	{
+	for(int c=1;c<=(int) numero;c++)	{
 		resto=numero%c;
 		if(resto==0) nc++;
 		if(nc>2) break;
@@ -45,7 +89,7 @@ void RSA::generarPyQ() {
 	bool salir = false;
 	int k = 1;
 	while (!salir) {
-		int numero = rand () % 50;
+		long long numero = rand () % 100;
 		if (numero>3){
 			if (esPrimo(numero)){
 				if (k==1) {
@@ -85,7 +129,7 @@ void RSA::elegirD(){
 	cout << "Se va a calcular d" << endl;
 	bool fin = false;
 	while (!fin){
-		int numero = rand () % 50;
+		long long  numero = rand () % 100;
 		if (numero>3){
 			if (esPrimo(numero)){
 				if ((numero!=this->p) && (numero!=this->q) && (numero<this->phi)) {
@@ -113,7 +157,7 @@ void RSA::calcularE() {
 	while (!fin){
 		this->elegirD();
 		while (!fin){
-			int Q = this->fila1[2]/this->fila1[5];
+			long long Q = this->fila1[2]/this->fila1[5];
 			this->fila2[0]=this->fila1[3];
 			this->fila2[1]=this->fila1[4];
 			this->fila2[2]=this->fila1[5];
@@ -125,8 +169,14 @@ void RSA::calcularE() {
 				fin = true;
 			}
 			else {
-				for (int i=0;i<(int)this->fila2.size();i++)
-					this->fila1[i]=this->fila2[i];
+				if (this->fila2[5]==0) {
+					fin=true;
+					this->e=0;
+				}
+				else {
+					for (int i=0;i<(int)this->fila2.size();i++)
+						this->fila1[i]=this->fila2[i];
+				}
 			}
 		}
 		if (this->e<=0) fin = false;
@@ -134,28 +184,29 @@ void RSA::calcularE() {
 	cout << "e = " << this->e << endl;
 }
 
-long RSA::encriptar(int dato){
+long long RSA::encriptar(int dato){
 	cout << "Se va a encriptar " << dato << endl;
-	long eEnBinario = this->aBinario(this->e);
+	long long eEnBinario = this->aBinario(this->e);
+	cout << this->e << " en binario= " << eEnBinario << endl;
 	stringstream ss;
 	ss << eEnBinario;
 	string eEnString = ss.str();
-	int eEnEntero = atoi(&eEnString[0]);
-	vector<int> numero;
-	int fin = 0;
-	while (fin < (int)eEnString.size()){
+	long long eEnEntero = atol(&eEnString[0]);
+	vector<long long> numero;
+	long long fin = 0;
+	while (fin < (long long)eEnString.size()){
 		numero.push_back(eEnEntero%10);
 		eEnEntero/=10;
 		fin++;
 	}
-	unsigned int cantidadDeIteraciones = numero.size();
-	long anterior = dato % this->n;
-	long suma=1;
-	int j=0;
+	long long cantidadDeIteraciones = numero.size();
+	long long anterior = dato % this->n;
+	long long suma=1;
+	long long j=0;
 	if (numero[j]) suma=anterior%this->n;
 	int i=1;
 	j++;
-	while (i < (int)cantidadDeIteraciones) {
+	while (i < (long long)cantidadDeIteraciones) {
 		anterior = (anterior*anterior) % this->n;
 		if (numero[j]) suma=(suma*anterior)%this->n;
 		i++;
@@ -165,24 +216,63 @@ long RSA::encriptar(int dato){
 	return suma;
 }
 
-int RSA::desencriptar(long dato){
+string RSA::encriptar(string mensaje){
+	int size = mensaje.size();
+	stringstream textoCifrado;
+
+	textoCifrado.write((char*)&size,sizeof(int));
+	for(int i = 0 ; i < size ; i++){
+		int numero = (int) mensaje.at(i);
+		long long resultado = this->encriptar( numero );
+		textoCifrado.write((char*)&resultado,sizeof(long long));
+	}
+	return textoCifrado.str();
+}
+
+long RSA::getN(){
+	return this->n;
+}
+
+long RSA::getE(){
+	return this->e;
+}
+
+long RSA::getD(){
+	return this->d;
+}
+
+string RSA::desencriptar(string mensajeCifrado){
+	stringstream criptograma;
+	criptograma << mensajeCifrado;
+	string mensajeDesencriptado;
+	int sizeDesencriptado;
+	criptograma.read((char*)&sizeDesencriptado,sizeof(int));
+	for (int j = 0; j < sizeDesencriptado; j++){
+		long long dato;
+		criptograma.read((char*)&dato,sizeof(long long));
+		mensajeDesencriptado.push_back( this->desencriptar(dato) );
+	}
+	return mensajeDesencriptado;
+}
+
+int RSA::desencriptar(long long dato){
 	cout << "Se va a desencriptar " << dato << endl;
 	long dEnBinario = this->aBinario(this->d);
 	stringstream ss;
 	ss << dEnBinario;
 	string dEnString = ss.str();
-	int dEnEntero = atoi(&dEnString[0]);
-	vector<int> numero;
-	int fin = 0;
-	while (fin < (int)dEnString.size()){
+	long long dEnEntero = atol(&dEnString[0]);
+	vector<long long> numero;
+	long long fin = 0;
+	while (fin < (long long)dEnString.size()){
 		numero.push_back(dEnEntero%10);
 		dEnEntero/=10;
 		fin++;
 	}
-	unsigned int cantidadDeIteraciones = numero.size();
-	long anterior = dato % this->n;
-	long suma=1;
-	int j=0;
+	long long cantidadDeIteraciones = numero.size();
+	long long anterior = dato % this->n;
+	long long suma=1;
+	long long j=0;
 	if (numero[j]) suma=anterior%this->n;
 	int i=1;
 	j++;
@@ -197,5 +287,28 @@ int RSA::desencriptar(long dato){
 }
 
 void RSA::atacar(){
-
+	long long pAtacado, qAtacado;
+	this->generarListaDePrimos();
+	list<int>::iterator it1 = primos.begin();
+	list<int>::iterator it2 = primos.begin();
+	it2++;
+	bool fin = false;
+	while ((!fin) && (it1!= primos.end())){
+		while (it2!= primos.end() && (!fin)){
+			long long supuestoN= *it1*(*it2);
+			if (supuestoN==this->n){
+				pAtacado=*it1;
+				qAtacado=*it2;
+				fin=true;
+			}
+			else it2++;
+		}
+		if (!fin) {
+			it1++;
+			it2=it1;
+			it2++;
+		}
+	}
+	cout << "El p era= " << pAtacado << endl;
+	cout << "El q era= " << qAtacado << endl;
 }

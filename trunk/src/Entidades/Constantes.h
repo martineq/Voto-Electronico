@@ -19,6 +19,7 @@
 #define TAM_FECHA 8
 #define TAM_BOOL sizeof(bool)
 #define TAM_LONG sizeof(long)
+#define TAM_LONG_LONG sizeof(long long)
 #define TAM_UNSINT sizeof(unsigned int)
 #define TAM_INT sizeof(int)
 #define TAM_SINT sizeof (short int)

@@ -14,30 +14,43 @@
 #include <cmath>
 #include <time.h>
 #include <iostream>
+#include <list>
 using namespace std;
 
 class RSA {
 private:
-	int p;
-	int q;
-	int n;
-	int d;
-	int e;
-	int phi;
-	vector<int> fila1;
-	vector<int> fila2;
-	bool esPrimo (int);
+	long long p;
+	long long q;
+	long long n;
+	long long d;
+	long long e;
+	long long phi;
+	list <int> primos;
+	vector<long long> fila1;
+	vector<long long> fila2;
+	bool esPrimo (long long );
 	void elegirD();
-	long aBinario(long);
+	long long aBinario(long long);
+	void generarListaDePrimos();
 public:
 	RSA();
+	/*
+	 * si encriptar es true entonces z = e.
+	 * sino z = d.
+	 */
+	RSA(long z, long  n,bool encriptar);
+	long getN();
+	long getE();
+	long getD();
 	virtual ~RSA();
 	void generarPyQ();
 	void calcularN();
 	void calcularPhi();
 	void calcularE();
-	long encriptar(int);
-	int desencriptar(long);
+	long long encriptar(int);
+	string encriptar(string);
+	string desencriptar(string);
+	int desencriptar(long long);
 	void atacar();
 };
 
