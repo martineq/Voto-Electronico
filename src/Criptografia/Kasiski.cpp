@@ -24,21 +24,30 @@ int Kasiski::getkeylen(std::string c)
      */
     std::vector<int> vcoin; //store the coincidences of each pass
     unsigned int coin; //store current coincicences
-
+    cout << "getkeylen"<<endl;
     string aux=c;
+//    cout << "c.size(): " << c.size()<<endl;
+//    cout << "vcoin.size(): " << vcoin.size()<<endl;
+//    cout << "AUX: " << aux<<endl;
     while(vcoin.size() < c.size()/2)
     {
-       aux.insert(0,0);
+    	const char empty = '\0';
+       aux.insert(aux.begin(),empty);
+//       cout << "vcoin.size(): " << vcoin.size()<<endl;
        coin=0;
-       for(unsigned int i=vcoin.size();i>c.size();i++)
+
+       for(unsigned int i=vcoin.size();i<c.size();i++)
        {
             if(c[i]==aux[i])
                 coin++;
        }
        vcoin.push_back(coin);
     }
+    cout << "sort"<<endl;
     sort(vcoin.begin(),vcoin.end());
-    return *vcoin.end();
+    cout << "*vcoin.end(): "<<*vcoin.end()<<endl;
+    cout << "*vcoin.begin(): "<<*vcoin.begin()<<endl;
+    return *vcoin.begin();
 }
 
 
@@ -57,8 +66,10 @@ std::vector<std::vector<char> > Kasiski::ngram(std::string c, unsigned int keyle
      */
    std::vector<std::vector<char> > r;
    vector<char> v;
+
    for(unsigned int i=0;i<keylen;i++)
        r.push_back(v);
+
 
    for(unsigned int j=0;j<c.size();j++)
        r[j%keylen].push_back(c[j]);
@@ -81,6 +92,7 @@ std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string 
      for(unsigned int i=0;i<keylen;i++)
      {
          tmphist.empty();
+         cout << "i: "<< i<<endl;
          for(int j=0;j<255;j++)
          {
              tmppair.first=j;
@@ -89,6 +101,7 @@ std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string 
          }
          r.push_back(tmphist);
      }
+     cout << "END of buildhisto"<<endl;
      return r;
 }
 
@@ -96,6 +109,7 @@ std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string 
 std::string Kasiski::getkey(std::string c)
 {
     int keylen=this->getkeylen(c);
+
     std::vector<std::vector<std::pair<char,int> > > histo = buildhisto(c,keylen);
     std::vector<std::vector<std::pair<char,int> > > tmphisto=histo;
     string r;
@@ -116,6 +130,9 @@ std::string Kasiski::getkey(std::string c)
             char fplace=tmphisto[j].at(1).first;
             char splace=tmphisto[j].at(2).first;
             char tplace=tmphisto[j].at(3).first;
+            cout <<"Primero: "<<(short int)fplace<<endl;
+            cout <<"Segundo: "<<(short int)splace<<endl;
+            cout <<"Tercero: "<<(short int)tplace<<endl;
 
             if((fplace+4)%27==splace ||(fplace+4)%27==tplace)
             {
@@ -128,6 +145,7 @@ std::string Kasiski::getkey(std::string c)
 
             tmphisto.erase(tmphisto.begin());
         }
+
         //here i have to make each frequency analysis
         found=0;
     }

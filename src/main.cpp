@@ -138,6 +138,7 @@ int main(int argc,const char* argv[]) {
 
 	testVigenere.testCifrado()==0 ? exito++ : fail++;
 	testVigenere.testEnBloques()==0 ? exito++ : fail++;
+//	testVigenere.testCifradoCadenaLarga(); // Solo lo agrego para sacar un msj cifrado en un txt (largo)
 
 //	Mensaje final
 
