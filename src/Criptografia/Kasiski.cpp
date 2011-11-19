@@ -92,7 +92,7 @@ std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string 
      for(unsigned int i=0;i<keylen;i++)
      {
          tmphist.empty();
-         cout << "i: "<< i<<endl;
+
          for(int j=0;j<255;j++)
          {
              tmppair.first=j;
