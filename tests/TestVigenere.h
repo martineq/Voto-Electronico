@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include "../src/Criptografia/Vigenere.h"
+#include "../src/Archivos/EnBloques/ArchivoBloques.h"
 
 using std::string;
 using std::cout;
@@ -20,6 +21,7 @@ class TestVigenere {
 public:
 	TestVigenere();
 	int testCifrado();
+	int testCifradoCadenaLarga();
 	int testEnBloques();
 	virtual ~TestVigenere();
 };

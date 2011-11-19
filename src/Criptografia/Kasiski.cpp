@@ -1,11 +1,147 @@
-/*
- * Kasiski.cpp
- *
- *  Created on: 13/11/2011
- *      Author: lucas
- */
 
 #include "Kasiski.h"
+
+using namespace std;
+
+Kasiski::Kasiski() {
+}
+
+Kasiski::Kasiski(const Kasiski& orig) {
+}
+
+Kasiski::~Kasiski() {
+}
+
+
+
+int Kasiski::getkeylen(std::string c)
+{
+    /*how it works:
+     *basically, this will add an empty char at the begining of each pass to
+     * the aux string, and traverse through the original string comparing it
+     * to the same position of the aux string, if the number of coincidences
+     * spikes, then we have the length of the key
+     */
+    std::vector<int> vcoin; //store the coincidences of each pass
+    unsigned int coin; //store current coincicences
+
+    string aux=c;
+    while(vcoin.size() < c.size()/2)
+    {
+       aux.insert(0,0);
+       coin=0;
+       for(unsigned int i=vcoin.size();i>c.size();i++)
+       {
+            if(c[i]==aux[i])
+                coin++;
+       }
+       vcoin.push_back(coin);
+    }
+    sort(vcoin.begin(),vcoin.end());
+    return *vcoin.end();
+}
+
+
+int Kasiski::compare(std::pair<char, int> l, std::pair<char, int> r)
+{
+        return l.first < r.first;
+}
+
+
+std::vector<std::vector<char> > Kasiski::ngram(std::string c, unsigned int keylen)
+{
+    /*how it works:
+     *I need my ngrams to analyze, so i basically create a vector of char vectors
+     * i initialize keylen of those and then i traverse c putting in each vector
+     * the char that fits
+     */
+   std::vector<std::vector<char> > r;
+   vector<char> v;
+   for(unsigned int i=0;i<keylen;i++)
+       r.push_back(v);
+
+   for(unsigned int j=0;j<c.size();j++)
+       r[j%keylen].push_back(c[j]);
+
+   return r;
+}
+
+std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string c, unsigned int keylen)
+{
+    /*how it works:
+     *i basically take the ngrams, sort, count them and then add that a
+     *vector of pairs, i sort the vector of pairs with occurrence as a key
+     * and add them to my vector of vectors
+     */
+     std::vector<std::vector<char> > ngrm = this->ngram(c,keylen);
+     std::vector<std::vector<std::pair<char,int> > > r;
+     std::vector<std::pair<char,int> > tmphist;
+     std::pair<char,int> tmppair;
+
+     for(unsigned int i=0;i<keylen;i++)
+     {
+         tmphist.empty();
+         for(int j=0;j<255;j++)
+         {
+             tmppair.first=j;
+             tmppair.second=std::count(ngrm[i].begin(),ngrm[i].end(),j);
+             tmphist.push_back(tmppair);
+         }
+         r.push_back(tmphist);
+     }
+     return r;
+}
+
+
+std::string Kasiski::getkey(std::string c)
+{
+    int keylen=this->getkeylen(c);
+    std::vector<std::vector<std::pair<char,int> > > histo = buildhisto(c,keylen);
+    std::vector<std::vector<std::pair<char,int> > > tmphisto=histo;
+    string r;
+
+    for(unsigned int i=0;i<tmphisto.size();i++)
+        sort(tmphisto[i].begin(),tmphisto[i].end(), this->compare);
+
+    for(unsigned int j=0;j<tmphisto.size();j++)
+    {
+        int found=0;
+        while(!found)
+        {
+            if (tmphisto[j].empty())
+            {
+				r.clear();
+                return r;
+            }
+            char fplace=tmphisto[j].at(1).first;
+            char splace=tmphisto[j].at(2).first;
+            char tplace=tmphisto[j].at(3).first;
+
+            if((fplace+4)%27==splace ||(fplace+4)%27==tplace)
+            {
+                if((fplace+15)%27==splace ||(fplace+15)%27==tplace)
+                {
+                    r.push_back(fplace);
+                    found=1;
+                }
+            }
+
+            tmphisto.erase(tmphisto.begin());
+        }
+        //here i have to make each frequency analysis
+        found=0;
+    }
+    return r;
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+/*
 
 Kasiski::Kasiski(string textoARomper) {
 	this->textoCifrado = textoARomper;
@@ -79,5 +215,7 @@ string Kasiski::romper(){
 	int mcd = this->MCDDistancias();
 }
 Kasiski::~Kasiski() {
-	// TODO Auto-generated destructor stub
+
 }
+
+*/
