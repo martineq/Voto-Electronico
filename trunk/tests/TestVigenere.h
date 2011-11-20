@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include "./Constitucion.h"
 #include "../src/Criptografia/Vigenere.h"
 #include "../src/Archivos/EnBloques/ArchivoBloques.h"
 
