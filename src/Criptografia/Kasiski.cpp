@@ -1,4 +1,3 @@
-
 #include "Kasiski.h"
 
 using namespace std;
@@ -23,15 +22,19 @@ int Kasiski::getkeylen(std::string c)
      * spikes, then we have the length of the key
      */
     std::vector<int> vcoin; //store the coincidences of each pass
+	std::vector<int> tmpvcoin; //store the coincidences of each pass
     unsigned int coin; //store current coincicences
-    cout << "getkeylen"<<endl;
+	vector<int>::iterator pos;
+
+//    cout << "getkeylen"<<endl;
+	int len = 0;
     string aux=c;
 //    cout << "c.size(): " << c.size()<<endl;
 //    cout << "vcoin.size(): " << vcoin.size()<<endl;
 //    cout << "AUX: " << aux<<endl;
     while(vcoin.size() < c.size()/2)
     {
-    	const char empty = '\0';
+        const char empty = '\0';
        aux.insert(aux.begin(),empty);
 //       cout << "vcoin.size(): " << vcoin.size()<<endl;
        coin=0;
@@ -43,19 +46,59 @@ int Kasiski::getkeylen(std::string c)
        }
        vcoin.push_back(coin);
     }
-    cout << "sort"<<endl;
-    sort(vcoin.begin(),vcoin.end());
-    cout << "*vcoin.end(): "<<*vcoin.end()<<endl;
-    cout << "*vcoin.begin(): "<<*vcoin.begin()<<endl;
-    return *vcoin.begin();
+
+	tmpvcoin=vcoin;
+	pos=max_element(tmpvcoin.begin(),tmpvcoin.end());
+	coin = *pos;
+
+	int mpos=0;
+	int ampos=0;
+
+	for(unsigned int i=0;i<vcoin.size();i++)
+		if(vcoin[i]==coin)
+			mpos=i;
+
+	tmpvcoin.erase(pos);
+	pos=max_element(tmpvcoin.begin(),tmpvcoin.end());
+
+	for(unsigned int i=0;i<vcoin.size();i++)
+		if(vcoin[i]==coin)
+			ampos=i;
+
+	return mcd(mpos,ampos);
+
+    //cout << "*vcoin.end(): "<<*vcoin.end()<<endl;
+    //cout << "*vcoin.begin(): "<<*vcoin.begin()<<endl;
+
+	/*int index=2;
+	int retval = mcd(vcoin[vcoin.size()-1],vcoin[vcoin.size()-index]);
+	while(retval==1)
+	{
+		retval=mcd(vcoin[vcoin.size()-1],vcoin[vcoin.size()-index]);
+		index++;
+		if(index == vcoin.size()-1)
+			return 0;
+	}
+	return retval;*/
 }
 
 
 int Kasiski::compare(std::pair<char, int> l, std::pair<char, int> r)
 {
-        return l.first < r.first;
+        return l.second < r.second;
 }
 
+int Kasiski::mcd(int a, int b)
+{
+        if (a <= 0 || b <= 0)
+            return -1;
+        while (a != b)
+            if (a < b)
+                b-= a;
+            else
+                a=a - b;
+        return a;
+}
 
 std::vector<std::vector<char> > Kasiski::ngram(std::string c, unsigned int keylen)
 {
@@ -91,7 +134,7 @@ std::vector<std::vector<std::pair<char,int> > > Kasiski::buildhisto(std::string 
 
      for(unsigned int i=0;i<keylen;i++)
      {
-         tmphist.empty();
+         tmphist.clear();
 
          for(int j=0;j<255;j++)
          {
@@ -115,24 +158,27 @@ std::string Kasiski::getkey(std::string c)
     string r;
 
     for(unsigned int i=0;i<tmphisto.size();i++)
+	{
         sort(tmphisto[i].begin(),tmphisto[i].end(), this->compare);
+		reverse(tmphisto[i].begin(),tmphisto[i].end());
+	}
 
     for(unsigned int j=0;j<tmphisto.size();j++)
     {
         int found=0;
         while(!found)
         {
-            if (tmphisto[j].empty())
+            if (tmphisto[j].size()==245) // more than this guesses is pointless
             {
-				r.clear();
+                                r.clear();
                 return r;
             }
             char fplace=tmphisto[j].at(1).first;
             char splace=tmphisto[j].at(2).first;
             char tplace=tmphisto[j].at(3).first;
-            cout <<"Primero: "<<(short int)fplace<<endl;
-            cout <<"Segundo: "<<(short int)splace<<endl;
-            cout <<"Tercero: "<<(short int)tplace<<endl;
+            //cout <<"Primero: "<<(short int)fplace<<endl;
+            //cout <<"Segundo: "<<(short int)splace<<endl;
+            //cout <<"Tercero: "<<(short int)tplace<<endl;
 
             if((fplace+4)%27==splace ||(fplace+4)%27==tplace)
             {
@@ -143,7 +189,7 @@ std::string Kasiski::getkey(std::string c)
                 }
             }
 
-            tmphisto.erase(tmphisto.begin());
+            tmphisto[j].erase(tmphisto[j].begin());
         }
 
         //here i have to make each frequency analysis
@@ -151,89 +197,3 @@ std::string Kasiski::getkey(std::string c)
     }
     return r;
 }
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-/*
-
-Kasiski::Kasiski(string textoARomper) {
-	this->textoCifrado = textoARomper;
-	this->maximaLongitudPatron = 0;
-}
-
-int Kasiski::MCDDistancias(){
-	list<Patron>::iterator it = this->listaPatrones.begin();
-	int mcd = (*(it->devolverDistancias()));
-
-	while (it != this->listaPatrones.end()){
-		list<int>::iterator itInts = it->devolverDistancias();
-		while (! it->esUltimo(itInts)){
-			mcd = gcd(mcd,(*itInts));
-			itInts++;
-		}
-		it++;
-	}
-	return mcd;
-}
-
-int Kasiski::gcd(int a, int b){
-	if (b == 0) return a;
-	return gcd(b, a%b);
-}
-
-bool Kasiski::noExiste(Patron patron){
-	bool encontrado = false;
-	list<Patron>::iterator it = this->listaPatrones.begin();
-	while ((it != this->listaPatrones.end()) and (!encontrado)){
-		if (patron.getPalabra() != it->getPalabra()){
-			encontrado = true;
-		}
-	}
-	return encontrado;
-}
-
-void Kasiski::listarPatrones(){
-	int cantidadCharsComun = 3;
-	unsigned int posicion = 0;
-	unsigned int posicionUltimaOcurrencia = posicion;
-	unsigned int posicionDesde = 3;
-	string textoABuscar;
-	string textoRestante;
-
-	while (posicion < (this->textoCifrado.length() - 2)) {
-		posicionUltimaOcurrencia = posicion;
-		textoABuscar = this->textoCifrado.substr(posicion,cantidadCharsComun);
-		Patron patron(textoABuscar);
-		if (noExiste(patron)) {
-			posicionDesde = posicion+cantidadCharsComun;
-			while (posicionDesde < this->textoCifrado.length()){
-				posicionDesde = this->textoCifrado.find(textoABuscar,posicionDesde);
-				if (posicionDesde != string::npos){
-					int diferencia = posicionDesde - posicionUltimaOcurrencia;
-					posicionUltimaOcurrencia = posicionDesde;
-					posicionDesde += cantidadCharsComun;
-					patron.agregarDistancia(diferencia);
-				}
-			}
-			if (posicionUltimaOcurrencia != posicion){
-				this->listaPatrones.push_back(patron);
-			}
-		}
-		posicion++;
-	}
-}
-
-string Kasiski::romper(){
-	this->listarPatrones();
-	int mcd = this->MCDDistancias();
-}
-Kasiski::~Kasiski() {
-
-}
-
-*/

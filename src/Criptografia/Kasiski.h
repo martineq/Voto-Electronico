@@ -1,7 +1,7 @@
-
 #ifndef KASISKI_H
 #define	KASISKI_H
 
+#pragma once
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -19,39 +19,7 @@ public:
     std::string getkey(std::string c);
 private:
     static int compare(std::pair<char, int> l, std::pair<char, int> r);
+	static int mcd(int a, int b);
 };
-
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-/*
-#include <string>
-#include <list>
-#include "Patron.h"
-
-using std::string;
-using std::list;
-
-class Kasiski {
-private:
-	string textoCifrado;
-	list<Patron> listaPatrones;
-	list<int> listaDistancias;
-	int maximaLongitudPatron;
-
-	int MCDDistancias();
-	int gcd(int a, int b);
-	bool noExiste(Patron patron);
-	void agregarPatron(Patron patron, int posicion);
-	void listarPatrones();
-public:
-	Kasiski(string);
-	string romper();
-	virtual ~Kasiski();
-};
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
-*/
 
 #endif /* KASISKI_H_ */
