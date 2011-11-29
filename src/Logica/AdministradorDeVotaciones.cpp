@@ -228,7 +228,13 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 	bool mismaEleccion;
 	bool mismoDistrito;
 
+	Vigenere* vigenere = new Vigenere(claveParaEleccion);
+	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorEleccion);
+	stringstream informe;
+	string* mensaje = new string();
+
 	cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
+	informe << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 
 	cout << endl;
 	string clave = eleccion->getFecha();
@@ -253,6 +259,12 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 			cout << setw(40) << left << "Lista";
 			cout << setw(15) << left << "Cantidad de votos";
 			cout << endl;
+
+			informe << setw(10) << left << "Fecha";
+			informe << setw(30) << left << "Cargo";
+			informe << setw(40) << left << "Lista";
+			informe << setw(15) << left << "Cantidad de votos";
+			informe << endl;
 
 			mismaEleccion = true;
 			while( mismaEleccion ){
@@ -292,7 +304,19 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 					cout << setw(15) << cantidadDeVotos;
 					cout << endl;
 
+					informe << setw(10) << left << eleccion->getFecha();
+					informe << setw(30) << left << eleccion->getCargo();
+					informe << setw(40) << left << nombreDeListaActual;
+					informe << setw(15) << cantidadDeVotos;
+					informe << endl;
+
 					busquedaOK = true;
+
+					mensaje->assign(informe.str());
+					string* criptograma = vigenere->cifrar(mensaje);
+					archivo->escribir(criptograma->c_str(),criptograma->size()+1);
+
+					delete criptograma;
 
 				}else mismaEleccion = false;
 			}
@@ -300,6 +324,11 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 
 		delete conteo;
 	}
+
+	delete mensaje;
+	delete archivo;
+	delete vigenere;
+
 	if ( !busquedaOK )
 		cout << "No se encontraron registros previos." << endl;
 
@@ -311,13 +340,22 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 	bool busquedaOK = false;
 	bool mismaEleccion;
 
+
+	Vigenere* vigenere = new Vigenere(claveParaLista);
+	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorLista);
+	stringstream informe;
+	string* mensaje = new string();
+
+
 	cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
+	informe << "********* GENERO EL INFORME POR LISTA **********" << endl;
 
 	string fecha = lista->getFecha();
 	string cargoPrincipal = lista->getCargo();
 	string nombreLista = lista->getNombre();
 
 	cout << endl << "Lista a informar: "<< nombreLista << endl << endl;
+	informe << endl << "Lista a informar: "<< nombreLista << endl << endl;
 	string clave = fecha + cargoPrincipal + nombreLista;
 
 	archivoDeConteo.search(clave);
@@ -339,6 +377,11 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 			cout << setw(40) << left << "Nombre de lista";
 			cout << setw(15) << "Cantidad de votos";
 			cout << endl;
+
+			informe << setw(10) << left << "Fecha";
+			informe << setw(40) << left << "Nombre de lista";
+			informe << setw(15) << "Cantidad de votos";
+			informe << endl;
 
 			int cantidadDeVotos = 0;
 
@@ -370,6 +413,13 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 
 			cout << "Cargo principal\t" << cargoPrincipal << endl;
 
+			informe << setw(10) << left << fecha;
+			informe << setw(40) << left << nombreLista;
+			informe << setw(15) << cantidadDeVotos;
+			informe << endl;
+
+			informe << "Cargo principal\t" << cargoPrincipal << endl;
+
 			Cargo* cargo 		= new Cargo(cargoPrincipal);
 			Registro* registro	= new Registro(cargo);
 			delete cargo;
@@ -386,6 +436,7 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 				list<string>::iterator it = listaCargos.begin();
 				for(int i=0; i < cantidadSubcargos ; i++){
 					cout << "Subcargo " << i+1 << "\t" << *it << endl;
+					informe << "Subcargo " << i+1 << "\t" << *it << endl;
 					it++;
 				}
 
@@ -396,7 +447,20 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 		delete conteo;
 
 		cout << endl;
+		informe << endl;
 	}
+
+	mensaje->assign(informe.str());
+	string* criptograma = vigenere->cifrar(mensaje);
+	archivo->escribir(criptograma->c_str(),criptograma->size()+1);
+
+	cout << "se escribieron " << criptograma->size() << endl;
+
+	delete mensaje;
+	delete archivo;
+	delete vigenere;
+
+
 	if ( !busquedaOK )
 		cout << "No se encontraron registros previos." << endl;
 }
@@ -407,9 +471,16 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 	bool mismoDistrito;
 	bool mismaEleccion;
 
+	Vigenere* vigenere = new Vigenere(claveParaDistrito);
+	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorDistrito);
+	stringstream informe;
+	string* mensaje = new string();
+
 	cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
+	informe << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
 
 	cout << endl << "Distrito a informar: " << distrito->getDistrito() << endl<<endl;
+	informe << endl << "Distrito a informar: " << distrito->getDistrito() << endl<<endl;
 
 	string clave = distrito->getDistrito();
 
@@ -441,6 +512,12 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 				cout << setw(40) << left << "Lista ganadora";
 				cout << setw(15) << "Cantidad de votos obtenidos";
 				cout << endl;
+
+				informe << setw(10) << left << "Fecha";
+				informe << setw(30) << left << "Cargo";
+				informe << setw(40) << left << "Lista ganadora";
+				informe << setw(15) << "Cantidad de votos obtenidos";
+				informe << endl;
 
 				mismoDistrito = true;
 				while( mismoDistrito )
@@ -495,6 +572,12 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 						cout << setw(15) << maximo;
 						cout << endl;
 
+						informe << setw(10) << left << fechaEleccion;
+						informe << setw(30) << left << cargoEleccion;
+						informe << setw(40) << left << nombreDelGanador;
+						informe << setw(15) << maximo;
+						informe << endl;
+
 					}else mismoDistrito = false;
 				}
 
@@ -504,10 +587,83 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 		}
 	}
 
+	mensaje->assign(informe.str());
+	string* criptograma = vigenere->cifrar(mensaje);
+	archivo->escribir(criptograma->c_str(),criptograma->size()+1);
+
+	delete mensaje;
+	delete archivo;
+	delete vigenere;
+
 	if ( !busquedaOK )
 		cout << "No se encontraron registros previos."<<endl;
 
 	cout << endl;
+}
+
+bplustree AdministradorDeVotaciones::getArchivoDeConteo() const
+{
+    return archivoDeConteo;
+}
+
+bplustree AdministradorDeVotaciones::getIndiceSecundario() const
+{
+    return indiceSecundario;
+}
+
+string AdministradorDeVotaciones::getPathInformePorDistrito() const
+{
+    return pathInformePorDistrito;
+}
+
+string AdministradorDeVotaciones::getPathInformePorEleccion() const
+{
+    return pathInformePorEleccion;
+}
+
+string AdministradorDeVotaciones::getPathInformePorLista() const
+{
+    return pathInformePorLista;
+}
+
+void AdministradorDeVotaciones::setArchivoDeConteo(bplustree archivoDeConteo)
+{
+    this->archivoDeConteo = archivoDeConteo;
+}
+
+void AdministradorDeVotaciones::setIndiceSecundario(bplustree indiceSecundario)
+{
+    this->indiceSecundario = indiceSecundario;
+}
+
+void AdministradorDeVotaciones::setPathInformePorDistrito(string pathInformePorDistrito)
+{
+    this->pathInformePorDistrito = pathInformePorDistrito;
+}
+
+void AdministradorDeVotaciones::setPathInformePorEleccion(string pathInformePorEleccion)
+{
+    this->pathInformePorEleccion = pathInformePorEleccion;
+}
+
+void AdministradorDeVotaciones::setClaveParaDistrito(string claveParaDistrito)
+{
+    this->claveParaDistrito = claveParaDistrito;
+}
+
+void AdministradorDeVotaciones::setClaveParaEleccion(string claveParaEleccion)
+{
+    this->claveParaEleccion = claveParaEleccion;
+}
+
+void AdministradorDeVotaciones::setClaveParaLista(string claveParaLista)
+{
+    this->claveParaLista = claveParaLista;
+}
+
+void AdministradorDeVotaciones::setPathInformePorLista(string pathInformePorLista)
+{
+    this->pathInformePorLista = pathInformePorLista;
 }
 
 AdministradorDeVotaciones::~AdministradorDeVotaciones() {

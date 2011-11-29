@@ -92,7 +92,7 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrador){
 	string opcion = "0";
 	int i = 0;
-	while ((i < 1) or (i > 11)){
+	while ((i < 1) or (i > 12)){
 		cout << "Opciones: "<<endl<<endl;
 		cout << "1) Mantener Distritos"<<endl;
 		cout << "2) Mantener Votantes"<<endl;
@@ -105,6 +105,7 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 		cout << "9) Habilitar Votantes para elección"<<endl;
 		cout << "10) salir"<<endl;
 		cout << "11) Votacion automatica" << endl;
+		cout << "12) Criptoanalizar informes" << endl;
 		cout << "Opcion: ";
 		cin >> opcion;
 		cout <<endl;
@@ -130,6 +131,7 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 	case 9  : comienzoVotacion(administrador);break;
 	case 10 : return true; break;
 	case 11 : mostrarMenuVotacionAutomatica(administrador);break;
+	case 12 : mostrarMenuCriptoanalisis(administrador);break;
 	}
 
 	return false;
@@ -998,9 +1000,12 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		{
 		case 1 :
 		{
-
-			string informe = "/temp/informePorEleccion.bin";
+			string informe = config->pathInformes()+"Eleccion.atc";
 			administradorDeConteo->setPathInformePorEleccion(informe);
+			cout << "Ingrese una clave para cifrar el informe" << endl;
+			string clave;
+			getline(cin,clave);
+			administradorDeConteo->setClaveParaEleccion(clave);
 
 			administradorDeConteo->generarInformePorEleccion(eleccion);
 			cout << "Ingrese una tecla para continuar";
@@ -1017,6 +1022,13 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 			string pathControl	= this->rutaHash + "DeControlCargo.txt";
 			HashingExtensible* he = new HashingExtensible(longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
+			string informe = config->pathInformes()+"Lista.atc";
+			administradorDeConteo->setPathInformePorLista(informe);
+			cout << "Ingrese una clave para cifrar el informe" << endl;
+			string clave;
+			getline(cin,clave);
+			administradorDeConteo->setClaveParaLista(clave);
+
 			administradorDeConteo->generarInformePorLista(lista,he);
 			delete he;
 			cout << "Ingrese una tecla para continuar";
@@ -1028,6 +1040,15 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		}
 		case 3 :
 		{
+
+			string informe = config->pathInformes()+"Distrito.atc";
+			administradorDeConteo->setPathInformePorDistrito(informe);
+			cout << "Ingrese una clave para cifrar el informe" << endl;
+			string clave;
+			getline(cin,clave);
+			administradorDeConteo->setClaveParaDistrito(clave);
+
+
 			administradorDeConteo->generarInformePorDistrito(distrito);
 			cout << "Ingrese una tecla para continuar";
 			cin.ignore(cin.rdbuf()->in_avail());
@@ -1345,6 +1366,8 @@ void InterfazAdministrador::habilitarElecciones(Administrador * administrador){
 					administradorDeConteo->cargarEleccionEnArchivoDeConteo(eleccion, arbolB);
 					delete arbolB;
 					cout << "Elección habilitada"<<endl;
+
+					cout << "Se habilito la eleccion: " << eleccion->getFecha() << endl;
 				}
 
 
@@ -1629,15 +1652,28 @@ void InterfazAdministrador::mostrarMenuVotacionAutomatica(Administrador * admini
 
 	if ( votoAutomatizado == false ){
 
-		string votantes = "2\n5\n100\n4\n";
+		string s = "";
+
+		string votantes = "2\n5\n5000\n4\n";
 		string cargo = "4\n1\nPresidente\nS\nVicepresidente\nN\n4\n";
-		string eleccion = "3\n1\n20110303\nPresidente\nCiudad Autonoma de Buenos Aires\nS\nBuenos Aires\nS\nEntre Rios\nS\nCorrientes\nS\nMisiones\nS\nFormosa\nS\nChaco\nS\nSanta Fe\nS\nCordoba\nS\nSantiago del Estero\nS\nTucuman\nS\nSalta\nS\nJujuy\nS\nCatamarca\nS\nLa Rioja\nS\nSan Juan\nS\nMendoza\nS\nSan Luis\nS\nLa Pampa\nS\nRio Negro\nS\nNeuquen\nS\nChubut\nS\nSanta Cruz\nS\nTierra del Fuego\nN\n4\n";
-		string listas = "5\n1\n20110303\nPresidente\nVerde\n1\n20110303\nPresidente\nAzul\n1\n20110303\nPresidente\nRoja\n1\n20110303\nPresidente\nAmarilla\n1\n20110303\nPresidente\nVioleta\n1\n20110303\nPresidente\nCesleste\n1\n20110303\nPresidente\nNegra\n1\n20110303\nPresidente\nTurquesa\n1\n20110303\nPresidente\nRosa\n1\n20110303\nPresidente\nBlanca\n1\n20110303\nPresidente\nMarron\n4\n";
-		string habilitarEleccion = "8\n1\n20110303\nPresidente\n3\n";
-		string votacion = "9\n100\na\n";
+
+		for(int a = 1983; a < 2010; a++){
+			//for(int m = 1; m < 13; m++){
+				stringstream stream;
+				stream << a;
+//				if (m < 10) stream <<"0";
+//				stream << m;
+				string fecha = stream.str()+"0303";
+				string eleccion = "3\n1\n"+fecha+"\nPresidente\nCiudad Autonoma de Buenos Aires\nS\nBuenos Aires\nS\nEntre Rios\nS\nCorrientes\nS\nMisiones\nS\nFormosa\nS\nChaco\nS\nSanta Fe\nS\nCordoba\nS\nSantiago del Estero\nS\nTucuman\nS\nSalta\nS\nJujuy\nS\nCatamarca\nS\nLa Rioja\nS\nSan Juan\nS\nMendoza\nS\nSan Luis\nS\nLa Pampa\nS\nRio Negro\nS\nNeuquen\nS\nChubut\nS\nSanta Cruz\nS\nTierra del Fuego\nN\n4\n";
+				string listas = "5\n1\n"+fecha+"\nPresidente\nVerde\n1\n"+fecha+"\nPresidente\nAzul\n1\n"+fecha+"\nPresidente\nRoja\n1\n"+fecha+"\nPresidente\nAmarilla\n1\n"+fecha+"\nPresidente\nVioleta\n1\n"+fecha+"\nPresidente\nCesleste\n1\n"+fecha+"\nPresidente\nNegra\n1\n"+fecha+"\nPresidente\nTurquesa\n1\n"+fecha+"\nPresidente\nRosa\n1\n"+fecha+"\nPresidente\nBlanca\n1\n"+fecha+"\nPresidente\nMarron\n4\n";
+				string habilitarEleccion = "8\n1\n"+fecha+"\nPresidente\n3\n";
+				s += eleccion + listas + habilitarEleccion;
+			//}
+		}
+		string votacion = "9\n5000\na\n";
 		string terminar = "11\n";
 
-		string automata = votantes+cargo+eleccion+listas+habilitarEleccion+votacion+terminar;
+		string automata = votantes+cargo+s+votacion+terminar;
 
 		stream = new stringstream(automata);
 		backup = cin.rdbuf(stream->rdbuf());
@@ -1650,6 +1686,129 @@ void InterfazAdministrador::mostrarMenuVotacionAutomatica(Administrador * admini
 	return;
 
 
+}
+
+void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administrador){
+
+	int i;
+	string opcion = "0";
+
+	while (true){
+
+		i = 0;
+
+		while ((i < 1) or (i > 5)){
+			cout << "Opciones: "<<endl<<endl;
+			cout << "1) Criptoanalizar informe de Elecciones"<<endl;
+			cout << "2) Criptoanalizar informe de Distritos"<<endl;
+			cout << "3) Criptoanalizar informe de Listas"<<endl;
+			cout << "4) Volver atrás"<<endl;
+			cout << "Opcion: ";
+			cin >> opcion;
+			cout <<endl;
+			if ( isANumber(opcion) == 1){
+				i = atoi(opcion.c_str());
+			}
+
+		}
+
+		switch (i)
+		{
+		case 1 : {
+
+			cout << "verificacion del cifrado"<<endl;
+
+			string* criptograma;
+			string* mensaje;
+
+			string clave = "";
+			cout << "Ingrese clave para descifrar el informe" << endl;
+			cin >> clave;
+			Vigenere* vigenere = new Vigenere(clave);
+
+			string informe = config->pathInformes()+"Eleccion.atc";
+
+			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
+			int size = 10000;
+			char* cadena = new char[size+1];
+			ma->leer(cadena,size);
+			criptograma = new string(cadena);
+
+			cout << "size del criptograma: " << criptograma->size() << endl;
+			mensaje = vigenere->descifrar(criptograma);
+			cout << *mensaje;
+
+
+			delete mensaje;
+			delete criptograma;
+			delete vigenere;
+			delete[] cadena;
+
+		}break;
+		case 2 : {
+			cout << "verificacion del cifrado"<<endl;
+
+			string* criptograma;
+			string* mensaje;
+
+			string clave = "";
+			cout << "Ingrese clave para descifrar el informe" << endl;
+			cin >> clave;
+			Vigenere* vigenere = new Vigenere(clave);
+
+			string informe = config->pathInformes()+"Distritos.atc";
+
+			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
+			int size = 10000;
+			char* cadena = new char[size+1];
+			ma->leer(cadena,size);
+			criptograma = new string(cadena);
+			mensaje = vigenere->descifrar(criptograma);
+			cout << *mensaje;
+
+
+			delete mensaje;
+			delete criptograma;
+			delete vigenere;
+			delete[] cadena;
+
+		}break;
+		case 3 : {
+			cout << "verificacion del cifrado"<<endl;
+
+			string* criptograma;
+			string* mensaje;
+
+			string clave = "";
+			cout << "Ingrese clave para descifrar el informe" << endl;
+			cin >> clave;
+			Vigenere* vigenere = new Vigenere(clave);
+
+			string informe = config->pathInformes()+"Listas.atc";
+
+			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
+			int size = 10000;
+			char* cadena = new char[size+1];
+			ma->leer(cadena,size);
+			criptograma = new string(cadena);
+
+			cout << "size del criptograma: " << criptograma->size() << endl;
+			mensaje = vigenere->descifrar(criptograma);
+			cout << *mensaje;
+
+
+			delete mensaje;
+			delete criptograma;
+			delete vigenere;
+			delete[] cadena;
+
+
+		}break;
+		case 4 :
+			return;
+		}
+
+	}
 }
 
 
