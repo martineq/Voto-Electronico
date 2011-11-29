@@ -113,7 +113,7 @@ void Configuracion::cargarArchivoConfig(){
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:I")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
@@ -145,6 +145,9 @@ void Configuracion::cargarArchivoConfig(){
         case 'L':
         	this->rutaLog = optarg;
         	break;
+        case 'I':
+            this->rutaInformes = optarg;
+            break;
         case '?':
           if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
@@ -156,6 +159,7 @@ void Configuracion::cargarArchivoConfig(){
           else if (optopt == 'C')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'R')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'L')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'I')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
@@ -233,6 +237,7 @@ void Configuracion::mostrarAyuda(){
 	cout << "	-C +<ruta>		Asigna la ruta de los distritos." << endl;
 	cout << "	-R +<ruta>		Asigna la ruta de los domicilios." << endl;
 	cout << "	-L +<ruta>		Asigna la ruta del log." << endl;
+	cout << "	-I +<ruta>		Asigna la ruta de los informes." << endl;
 	cout << ""<<endl;
 }
 
@@ -264,6 +269,10 @@ string Configuracion::pathDistritos()
 string Configuracion::pathLog()
 {
 	return this->rutaLog;
+}
+
+string Configuracion::pathInformes(){
+	return this->rutaInformes;
 }
 
 Configuracion::~Configuracion() {
