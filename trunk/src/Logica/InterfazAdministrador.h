@@ -28,9 +28,8 @@
 #include "../../tests/SimulacionSistema.h"
 #include "./AdministradorDeVotaciones.h"
 #include <list>
-#include <time.h>
+#include <ctime>
 #include <iomanip>
-#include <stdio.h>
 #include <limits>
 #include "../Archivos/ArbolBMas/bplustree.h"
 #include <string>
@@ -45,9 +44,13 @@ private:
 	AdministradorDeVotaciones * administradorDeConteo;
 	int longitud;
 	int longitudNodo;
+	bool	votoAutomatizado;
 	string rutaHash;
 	string rutaArbol;
 	string* dummy;
+	streambuf*		backup;
+	stringstream*	stream;
+
 	bool mostrarMenuAdministrador(Administrador * administrador);
 	void mostrarMenuDistritos(Administrador * administrador);
 	void mostrarMenuVotantes(Administrador * administrador);
@@ -56,6 +59,7 @@ private:
 	void mostrarMenuListas(Administrador * administrador);
 	void mostrarMenuCandidatos(Administrador * administrador);
 	void mostrarMenuInformes(Administrador * administrador);
+	void mostrarMenuVotacionAutomatica(Administrador * administrador);
 	void habilitarElecciones(Administrador * administrador);
 	void comienzoVotacion(Administrador * administrador);
 	int isANumber(string &cad);

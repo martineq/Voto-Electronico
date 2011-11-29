@@ -13,6 +13,7 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 	this->rutaHash = config->pathHash();
 	this->longitud = config->darTamanioBucket();
 	this->longitudNodo = config->darTamanioNodo();
+	votoAutomatizado = false;
 	
 	administradorDeConteo = new AdministradorDeVotaciones();
 
@@ -91,7 +92,7 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrador){
 	string opcion = "0";
 	int i = 0;
-	while ((i < 1) or (i > 10)){
+	while ((i < 1) or (i > 11)){
 		cout << "Opciones: "<<endl<<endl;
 		cout << "1) Mantener Distritos"<<endl;
 		cout << "2) Mantener Votantes"<<endl;
@@ -103,6 +104,7 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 		cout << "8) Habilitar Elecciones"<<endl;
 		cout << "9) Habilitar Votantes para elección"<<endl;
 		cout << "10) salir"<<endl;
+		cout << "11) Votacion automatica" << endl;
 		cout << "Opcion: ";
 		cin >> opcion;
 		cout <<endl;
@@ -126,7 +128,8 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 	case 7  : mostrarMenuInformes(administrador);break;
 	case 8  : habilitarElecciones(administrador);break;
 	case 9  : comienzoVotacion(administrador);break;
-	case 10 : return true;
+	case 10 : return true; break;
+	case 11 : mostrarMenuVotacionAutomatica(administrador);break;
 	}
 
 	return false;
@@ -995,6 +998,9 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		case 1 :
 		{
 
+			string informe = "/temp/informePorEleccion.bin";
+			administradorDeConteo->setPathInformePorEleccion(informe);
+
 			administradorDeConteo->generarInformePorEleccion(eleccion);
 			cout << "Ingrese una tecla para continuar";
 
@@ -1616,6 +1622,24 @@ void InterfazAdministrador::cargarArchivoDeConteo(Eleccion* eleccion,Administrad
 		else
 			buscarSiguienteLista = false;
 	}
+}
+
+void InterfazAdministrador::mostrarMenuVotacionAutomatica(Administrador * administrador){
+
+	if ( votoAutomatizado == false ){
+
+		string automata = "2\n5\n100\n11\n";
+		stream = new stringstream(automata);
+		backup = cin.rdbuf(stream->rdbuf());
+		votoAutomatizado = true;
+	}else{
+		cin.rdbuf(backup);
+		delete stream;
+		votoAutomatizado = false;
+	}
+	return;
+
+
 }
 
 
