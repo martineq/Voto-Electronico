@@ -29,6 +29,7 @@ private:
 	string rutaDomicilios;
 	string rutaNombres;
 	string rutaLog;
+	string rutaInformes;
 
 	int tamanioNodo;
 	int tamanioBucket;
@@ -50,6 +51,7 @@ public:
 	string pathDomicilios();
 	string pathDistritos();
 	string pathLog();
+	string pathInformes();
 
 	bool isAuto();
 	bool isManual();
