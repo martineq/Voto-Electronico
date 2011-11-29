@@ -25,4 +25,4 @@ Opciones válidas (cada una debe estar separada con un espacio):
 	
 Fin de los comentarios-> //	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
--D +./temp/archivoHash -A +./temp/archivoArbol -N +256 -B +256 -P +./ArchivosAuxiliares/password.bin -S +./ArchivosAuxiliares/ -S +./ArchivosAuxiliares/Apellidos.txt -M +./ArchivosAuxiliares/Nombres.txt -R +./ArchivosAuxiliares/Domicilios.txt -C +./ArchivosAuxiliares/Distritos.txt -L +./temp/Log.txt -I ./temp/Informes 
+-D +./temp/archivoHash -A +./temp/archivoArbol -N +2048 -B +2048 -P +./ArchivosAuxiliares/password.bin -S +./ArchivosAuxiliares/ -S +./ArchivosAuxiliares/Apellidos.txt -M +./ArchivosAuxiliares/Nombres.txt -R +./ArchivosAuxiliares/Domicilios.txt -C +./ArchivosAuxiliares/Distritos.txt -L +./temp/Log.txt -I +./temp/Informes 
