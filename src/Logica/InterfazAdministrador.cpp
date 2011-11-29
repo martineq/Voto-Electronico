@@ -578,6 +578,7 @@ void InterfazAdministrador::mostrarMenuElecciones(Administrador * administrador)
 			registro = new Registro(eleccion);
 			delete eleccion;
 		}
+
 		switch (i)
 		{
 		case 1 : {
@@ -1628,7 +1629,16 @@ void InterfazAdministrador::mostrarMenuVotacionAutomatica(Administrador * admini
 
 	if ( votoAutomatizado == false ){
 
-		string automata = "2\n5\n100\n11\n";
+		string votantes = "2\n5\n100\n4\n";
+		string cargo = "4\n1\nPresidente\nS\nVicepresidente\nN\n4\n";
+		string eleccion = "3\n1\n20110303\nPresidente\nCiudad Autonoma de Buenos Aires\nS\nBuenos Aires\nS\nEntre Rios\nS\nCorrientes\nS\nMisiones\nS\nFormosa\nS\nChaco\nS\nSanta Fe\nS\nCordoba\nS\nSantiago del Estero\nS\nTucuman\nS\nSalta\nS\nJujuy\nS\nCatamarca\nS\nLa Rioja\nS\nSan Juan\nS\nMendoza\nS\nSan Luis\nS\nLa Pampa\nS\nRio Negro\nS\nNeuquen\nS\nChubut\nS\nSanta Cruz\nS\nTierra del Fuego\nN\n4\n";
+		string listas = "5\n1\n20110303\nPresidente\nVerde\n1\n20110303\nPresidente\nAzul\n1\n20110303\nPresidente\nRoja\n1\n20110303\nPresidente\nAmarilla\n1\n20110303\nPresidente\nVioleta\n1\n20110303\nPresidente\nCesleste\n1\n20110303\nPresidente\nNegra\n1\n20110303\nPresidente\nTurquesa\n1\n20110303\nPresidente\nRosa\n1\n20110303\nPresidente\nBlanca\n1\n20110303\nPresidente\nMarron\n4\n";
+		string habilitarEleccion = "8\n1\n20110303\nPresidente\n3\n";
+		string votacion = "9\n100\na\n";
+		string terminar = "11\n";
+
+		string automata = votantes+cargo+eleccion+listas+habilitarEleccion+votacion+terminar;
+
 		stream = new stringstream(automata);
 		backup = cin.rdbuf(stream->rdbuf());
 		votoAutomatizado = true;
