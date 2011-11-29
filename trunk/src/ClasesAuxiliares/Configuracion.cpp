@@ -113,7 +113,7 @@ void Configuracion::cargarArchivoConfig(){
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:I")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:I:")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
