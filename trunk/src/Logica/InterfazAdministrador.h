@@ -60,6 +60,7 @@ private:
 	void mostrarMenuCandidatos(Administrador * administrador);
 	void mostrarMenuInformes(Administrador * administrador);
 	void mostrarMenuVotacionAutomatica(Administrador * administrador);
+	void mostrarMenuCriptoanalisis(Administrador * administrador);
 	void habilitarElecciones(Administrador * administrador);
 	void comienzoVotacion(Administrador * administrador);
 	int isANumber(string &cad);
