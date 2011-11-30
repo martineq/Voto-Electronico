@@ -35,6 +35,7 @@
 #include <string>
 #include <iostream>
 #include "../ClasesAuxiliares/Configuracion.h"
+#include "NombresDeArchivosTemporales.h"
 
 using namespace std;
 

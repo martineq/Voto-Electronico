@@ -1000,7 +1000,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		{
 		case 1 :
 		{
-			string informe = config->pathInformes()+"Eleccion.atc";
+			string informe = config->pathInformes()+ELECCIONES;
 			administradorDeConteo->setPathInformePorEleccion(informe);
 			cout << "Ingrese una clave para cifrar el informe" << endl;
 			string clave;
@@ -1022,7 +1022,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 			string pathControl	= this->rutaHash + "DeControlCargo.txt";
 			HashingExtensible* he = new HashingExtensible(longitud,(char*)pathDatos.c_str(),(char*)pathControl.c_str());
 
-			string informe = config->pathInformes()+"Lista.atc";
+			string informe = config->pathInformes()+LISTAS;
 			administradorDeConteo->setPathInformePorLista(informe);
 			cout << "Ingrese una clave para cifrar el informe" << endl;
 			string clave;
@@ -1041,7 +1041,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		case 3 :
 		{
 
-			string informe = config->pathInformes()+"Distrito.atc";
+			string informe = config->pathInformes()+DISTRITOS;
 			administradorDeConteo->setPathInformePorDistrito(informe);
 			cout << "Ingrese una clave para cifrar el informe" << endl;
 			string clave;
@@ -1700,8 +1700,8 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 		while ((i < 1) or (i > 5)){
 			cout << "Opciones: "<<endl<<endl;
 			cout << "1) Criptoanalizar informe de Elecciones"<<endl;
-			cout << "2) Criptoanalizar informe de Distritos"<<endl;
-			cout << "3) Criptoanalizar informe de Listas"<<endl;
+			cout << "2) Criptoanalizar informe de Listas"<<endl;
+			cout << "3) Criptoanalizar informe de Distritos"<<endl;
 			cout << "4) Volver atrás"<<endl;
 			cout << "Opcion: ";
 			cin >> opcion;
@@ -1724,21 +1724,25 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 			string clave = "";
 			cout << "Ingrese clave para descifrar el informe" << endl;
 			cin >> clave;
+
 			Vigenere* vigenere = new Vigenere(clave);
 
-			string informe = config->pathInformes()+"Eleccion.atc";
-
+			string informe = config->pathInformes()+ELECCIONES;
 			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-			int size = 10000;
-			char* cadena = new char[size+1];
-			ma->leer(cadena,size);
-			criptograma = new string(cadena);
 
-			cout << "size del criptograma: " << criptograma->size() << endl;
+			int size = ma->obtenerTamArchivo();
+
+			char* cadena = new char[size];
+			ma->leer(cadena,size);
+
+			stringstream stream;
+			stream.write(cadena,size);
+			criptograma = new string(stream.str());
+
 			mensaje = vigenere->descifrar(criptograma);
 			cout << *mensaje;
 
-
+			delete ma;
 			delete mensaje;
 			delete criptograma;
 			delete vigenere;
@@ -1756,21 +1760,29 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 			cin >> clave;
 			Vigenere* vigenere = new Vigenere(clave);
 
-			string informe = config->pathInformes()+"Distritos.atc";
+			string informe = config->pathInformes()+LISTAS;
 
 			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-			int size = 10000;
-			char* cadena = new char[size+1];
+
+			int size = ma->obtenerTamArchivo();
+
+			char* cadena = new char[size];
 			ma->leer(cadena,size);
-			criptograma = new string(cadena);
+
+			stringstream stream;
+			stream.write(cadena,size);
+			criptograma = new string(stream.str());
+
 			mensaje = vigenere->descifrar(criptograma);
 			cout << *mensaje;
 
 
+			delete ma;
 			delete mensaje;
 			delete criptograma;
 			delete vigenere;
 			delete[] cadena;
+
 
 		}break;
 		case 3 : {
@@ -1784,24 +1796,27 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 			cin >> clave;
 			Vigenere* vigenere = new Vigenere(clave);
 
-			string informe = config->pathInformes()+"Listas.atc";
+			string informe = config->pathInformes()+DISTRITOS;
 
 			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-			int size = 10000;
-			char* cadena = new char[size+1];
-			ma->leer(cadena,size);
-			criptograma = new string(cadena);
 
-			cout << "size del criptograma: " << criptograma->size() << endl;
+			int size = ma->obtenerTamArchivo();
+
+			char* cadena = new char[size];
+			ma->leer(cadena,size);
+
+			stringstream stream;
+			stream.write(cadena,size);
+			criptograma = new string(stream.str());
+
 			mensaje = vigenere->descifrar(criptograma);
 			cout << *mensaje;
 
-
+			delete ma;
 			delete mensaje;
 			delete criptograma;
 			delete vigenere;
 			delete[] cadena;
-
 
 		}break;
 		case 4 :

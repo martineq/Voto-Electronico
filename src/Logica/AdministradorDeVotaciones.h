@@ -42,6 +42,9 @@ private:
 	 * Obtiene la clave del índice secundario.
 	 */
     string obtenerClaveSecundaria(Conteo *conteo);
+
+    void guardarStringEnArchivo(string* s,ManejadorDeArchivo* m);
+
 public:
     AdministradorDeVotaciones();
     /*
