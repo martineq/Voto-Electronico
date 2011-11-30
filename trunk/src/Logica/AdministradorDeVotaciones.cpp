@@ -58,6 +58,19 @@ int AdministradorDeVotaciones::agregarConteoAlIndicePorDistrito(Conteo* conteo){
 
 }
 
+void AdministradorDeVotaciones::guardarStringEnArchivo(string* s,ManejadorDeArchivo* m){
+	int size = s->size();
+
+	char* cadena = new char[size];
+	stringstream* stream = new stringstream();
+
+	stream->write(s->c_str(),size);
+	stream->read(cadena,size);
+	m->escribir(cadena,size);
+
+	delete[] cadena;
+}
+
 /* METODOS PUBLICOS **********************************************************/
 
 void AdministradorDeVotaciones::nuevoArchivoDeConteo(string pathArchivo, string pathIndiceSecundario,int dimensionBloque)
@@ -231,7 +244,6 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 	Vigenere* vigenere = new Vigenere(claveParaEleccion);
 	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorEleccion);
 	stringstream informe;
-	string* mensaje = new string();
 
 	cout << "********* GENERO EL INFORME POR ELECCION **********" << endl;
 	informe << "********* GENERO EL INFORME POR ELECCION **********" << endl;
@@ -312,12 +324,6 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 
 					busquedaOK = true;
 
-					mensaje->assign(informe.str());
-					string* criptograma = vigenere->cifrar(mensaje);
-					archivo->escribir(criptograma->c_str(),criptograma->size()+1);
-
-					delete criptograma;
-
 				}else mismaEleccion = false;
 			}
 		}
@@ -325,7 +331,11 @@ void AdministradorDeVotaciones::generarInformePorEleccion(Eleccion *eleccion)
 		delete conteo;
 	}
 
-	delete mensaje;
+	string mensaje = informe.str();
+	string* criptograma = vigenere->cifrar(&mensaje);
+	guardarStringEnArchivo(criptograma,archivo);
+
+	delete criptograma;
 	delete archivo;
 	delete vigenere;
 
@@ -344,8 +354,6 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 	Vigenere* vigenere = new Vigenere(claveParaLista);
 	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorLista);
 	stringstream informe;
-	string* mensaje = new string();
-
 
 	cout << "********* GENERO EL INFORME POR LISTA **********" << endl;
 	informe << "********* GENERO EL INFORME POR LISTA **********" << endl;
@@ -450,13 +458,11 @@ void AdministradorDeVotaciones::generarInformePorLista(Lista *lista,HashingExten
 		informe << endl;
 	}
 
-	mensaje->assign(informe.str());
-	string* criptograma = vigenere->cifrar(mensaje);
-	archivo->escribir(criptograma->c_str(),criptograma->size()+1);
+	string mensaje = informe.str();
+	string* criptograma = vigenere->cifrar(&mensaje);
+	guardarStringEnArchivo(criptograma,archivo);
 
-	cout << "se escribieron " << criptograma->size() << endl;
-
-	delete mensaje;
+	delete criptograma;
 	delete archivo;
 	delete vigenere;
 
@@ -474,7 +480,6 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 	Vigenere* vigenere = new Vigenere(claveParaDistrito);
 	ManejadorDeArchivo* archivo = new ManejadorDeArchivo(pathInformePorDistrito);
 	stringstream informe;
-	string* mensaje = new string();
 
 	cout << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
 	informe << "********* GENERO EL INFORME POR DISTRITO **********" << endl;
@@ -587,11 +592,11 @@ void AdministradorDeVotaciones::generarInformePorDistrito(Distrito *distrito)
 		}
 	}
 
-	mensaje->assign(informe.str());
-	string* criptograma = vigenere->cifrar(mensaje);
-	archivo->escribir(criptograma->c_str(),criptograma->size()+1);
+	string mensaje = informe.str();
+	string* criptograma = vigenere->cifrar(&mensaje);
+	guardarStringEnArchivo(criptograma,archivo);
 
-	delete mensaje;
+	delete criptograma;
 	delete archivo;
 	delete vigenere;
 

@@ -21,4 +21,10 @@
 #define	ARBOL_DE_CONTEO			"DeConteo"
 #define	ARBOL_INDICE_SEC_CONTEO	"IndiceSecundarioDeConteo"
 
+#define	DISTRITOS				"Distritos.atc"
+
+#define	LISTAS					"Listas.atc"
+
+#define	ELECCIONES				"Elecciones.atc"
+
 #endif /* NOMBRESDEARCHIVOSTEMPORALES_H_ */
