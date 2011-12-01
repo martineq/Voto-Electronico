@@ -174,7 +174,7 @@ Resultados HashingExtensible::redispersarBucket(Bucket* bucket,int numeroDeBucke
 		tablaDeHash[posicionEnTablaDeHash] = nuevoNumeroDeBucket;
 
 		// Se determina el tamaño de dispersión del nuevo bucket.
-		if ( usandoBucketLibre and (tablaDeDispersion.size()>nuevoNumeroDeBucket)){
+		if ( usandoBucketLibre and ( (int)tablaDeDispersion.size() > nuevoNumeroDeBucket)){
 			tablaDeDispersion.at( nuevoNumeroDeBucket ) = tablaDeHash.size();
 		}
 		else
