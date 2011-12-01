@@ -108,12 +108,14 @@ void Configuracion::cargarArchivoConfig(){
 	this->rutaDomicilios = "";
 	this->rutaLog = "";
 	this->rutaNombres = "";
+	this->rutaInformes = "";
+	this->claveVigenere = "";
 	this->tamanioNodo = 0;
 	this->tamanioBucket = 0;
 	int index,c;
     opterr = 0;
     optind = 1; // Inicalo la variable para poder usar el getopt otra vez
-    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:I:")) != -1)
+    while ((c = getopt (argc, (char* const*)argv, "A:D:N:B:P:S:M:C:R:L:I:K:")) != -1)
     	switch (c){
     	case 'D':
     		this->rutaHash = optarg;
@@ -148,6 +150,9 @@ void Configuracion::cargarArchivoConfig(){
         case 'I':
             this->rutaInformes = optarg;
             break;
+        case 'K':
+            this->claveVigenere = optarg;
+            break;
         case '?':
           if (optopt == 'A')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'D')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
@@ -160,6 +165,7 @@ void Configuracion::cargarArchivoConfig(){
           else if (optopt == 'R')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'L')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (optopt == 'I')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
+          else if (optopt == 'K')fprintf (stderr, "Arch. Config. > La opción -%c requiere un argumento.\n",optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Arch. Config. > Opción desconocida `-%c'.\n", optopt);
           else
@@ -273,6 +279,16 @@ string Configuracion::pathLog()
 
 string Configuracion::pathInformes(){
 	return this->rutaInformes;
+}
+
+string Configuracion::getClaveVigenere() const
+{
+    return claveVigenere;
+}
+
+void Configuracion::setClaveVigenere(string claveVigenere)
+{
+    this->claveVigenere = claveVigenere;
 }
 
 Configuracion::~Configuracion() {

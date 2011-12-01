@@ -30,6 +30,7 @@ private:
 	string rutaNombres;
 	string rutaLog;
 	string rutaInformes;
+	string claveVigenere;
 
 	int tamanioNodo;
 	int tamanioBucket;
@@ -58,6 +59,8 @@ public:
 	int darTamanioNodo();
 	int darTamanioBucket();
 	virtual ~Configuracion();
+    string getClaveVigenere() const;
+    void setClaveVigenere(string claveVigenere);
 };
 
 #endif /* CONFIGURACION_H_ */
