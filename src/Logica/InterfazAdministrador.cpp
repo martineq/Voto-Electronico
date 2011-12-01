@@ -1002,9 +1002,13 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		{
 			string informe = config->pathInformes()+ELECCIONES;
 			administradorDeConteo->setPathInformePorEleccion(informe);
-			cout << "Ingrese una clave para cifrar el informe" << endl;
-			string clave;
-			getline(cin,clave);
+
+			string clave = this->config->getClaveVigenere();
+			if ( clave.size() == 0 ){
+				cout << "Ingrese una clave para cifrar el informe" << endl;
+				string clave;
+				getline(cin,clave);
+			}
 			administradorDeConteo->setClaveParaEleccion(clave);
 
 			administradorDeConteo->generarInformePorEleccion(eleccion);
@@ -1024,9 +1028,12 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 
 			string informe = config->pathInformes()+LISTAS;
 			administradorDeConteo->setPathInformePorLista(informe);
-			cout << "Ingrese una clave para cifrar el informe" << endl;
-			string clave;
-			getline(cin,clave);
+			string clave = this->config->getClaveVigenere();
+			if ( clave.size() == 0 ){
+				cout << "Ingrese una clave para cifrar el informe" << endl;
+				string clave;
+				getline(cin,clave);
+			}
 			administradorDeConteo->setClaveParaLista(clave);
 
 			administradorDeConteo->generarInformePorLista(lista,he);
@@ -1043,9 +1050,12 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 
 			string informe = config->pathInformes()+DISTRITOS;
 			administradorDeConteo->setPathInformePorDistrito(informe);
-			cout << "Ingrese una clave para cifrar el informe" << endl;
-			string clave;
-			getline(cin,clave);
+			string clave = this->config->getClaveVigenere();
+			if ( clave.size() == 0 ){
+				cout << "Ingrese una clave para cifrar el informe" << endl;
+				string clave;
+				getline(cin,clave);
+			}
 			administradorDeConteo->setClaveParaDistrito(clave);
 
 
