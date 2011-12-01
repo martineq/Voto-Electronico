@@ -2,27 +2,35 @@
 
 int TestKasiski::testObtenerClaveDeVigenere(){
 
-	string clave = "ABCD";
+	string clave = "abFgi";
+
 	Vigenere* vigenere = new Vigenere(clave,256);
 
 	Constitucion constitucion;
 	string mensaje = constitucion.getTexto();
+//	string mensaje = "PBVRQVICADSKAZSDETSJPSIEDBGGMPSLRPWRZPWYEDSDEZDRDPCRCPQMNPWKUBZVSFNVRDMTIPWUEQVVCBOVNUEDIFQLONMWNUVRSEIKAZYEACEYEDSETFPHLBHGUZESOMEHLBXVAEEPUZELISEVEFWHUNMCLPQPMBRRNBPVIZMTIBVVEZIDANSJAMTJOKMDODSELPWIUFOZMQMVNFOHASESRJWRSFQCOTWVMBJGRPWVSUEXINQRSJEUEMGGRBDGNNILAGSJIDSVSUEEINTGRUEETFGGMPORDFOGTSSTOSEQOZTGRRYVLPWJIFWXOTGGRPQRRJSKETXRNBLZETGGNEMUOTXJATORVJHRSFHVNUEJIBCHASEHEUEUOTIEFFGYATGGMPIKTBWUEZENIEEU.";
 
 	string* criptograma = vigenere->cifrar(&mensaje);
 
 	Kasiski ka;
 	string key;
-	key = ka.getkey(*criptograma);
-	cout <<"Key: "<<key<<endl;
 
-	string* mensajeDescifrado = vigenere->descifrar(criptograma);
-	int resultado = mensajeDescifrado->compare(mensaje);
+//	ka.analisisDeFrecuencias(mensaje);
+
+	ka.generarPatrones(criptograma);
+//	ka.listarPatrones();
+	cout << ka.MCDDistancias() << endl;
+	ka.analisisDeFrecuencias(*criptograma);
+	key = ka.romper();
+
+	cout << key << endl;
+
+	int resultado = clave.compare(key);
 
 	if (resultado != 0)
-		cout << "testVigenere.testKasiski: FALLO" << endl;
+		cout << "testKasiski.testObtenerClaveDeVigenere: FALLO" << endl;
 
 	delete criptograma;
-	delete mensajeDescifrado;
 	delete vigenere;
 
 	return resultado;

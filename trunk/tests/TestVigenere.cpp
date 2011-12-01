@@ -104,7 +104,7 @@ int TestVigenere::testCifradoCadenaLarga(){
 	string* criptograma = vigenere->cifrar(&mensaje);
 
 	// Salida a archivo
-	char* buf = new char[criptograma->size()];
+	char* buf = new char[criptograma->size()+1];
 	strcpy(buf,criptograma->c_str());
 	archivo->escribir(buf,criptograma->size());
 	delete[] buf;

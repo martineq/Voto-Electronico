@@ -11,14 +11,30 @@ using std::list;
 
 class Patron {
 private:
+	// almacena el patrón hallado.
 	string palabra;
+
+	// lista de distancias entre patrones recurrentes.
 	list<int> listaDistancias;
+
 public:
+
+	// constructor del objeto, recibe el patrón en un string.
 	Patron(string);
+
+	// agrega una distancia a la lista de distancias.
 	void agregarDistancia(int distancia);
+
+	// devuelve el string correspondiente al patrón que caracteriza el objeto.
 	string getPalabra();
+
+	// devuelve el iterador al primer elemento de la lista de distancias.
 	list<int>::iterator devolverDistancias();
-	bool esUltimo(list<int>::iterator iterador);
+
+	// devuelve true mientras el iterador pasado por parámetro no apunte al último elemento
+	// de la lista.
+	bool noEsUltimo(list<int>::iterator iterador);
+
 	virtual ~Patron();
 };
 

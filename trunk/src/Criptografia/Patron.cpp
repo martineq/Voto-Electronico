@@ -16,8 +16,8 @@ list<int>::iterator Patron::devolverDistancias(){
 	return this->listaDistancias.begin();
 }
 
-bool Patron::esUltimo(list<int>::iterator iterador){
-	return (this->listaDistancias.end() == iterador);
+bool Patron::noEsUltimo(list<int>::iterator iterador){
+	return (this->listaDistancias.end() != iterador);
 }
 
 
