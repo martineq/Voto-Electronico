@@ -36,6 +36,8 @@
 #include <iostream>
 #include "../ClasesAuxiliares/Configuracion.h"
 #include "NombresDeArchivosTemporales.h"
+#include "../Criptografia/Kasiski.h"
+#include "../Criptografia/Vigenere.h"
 
 using namespace std;
 
@@ -69,6 +71,7 @@ private:
 	string* getString(vector<char> vect);
 	void cargarArchivoDeConteo(Eleccion* eleccion,Administrador* administrador);
 	void verContenidoArbolListas (bplustree*);
+	void criptoanalizarInforme(string informe);
 public:
 	InterfazAdministrador(Configuracion* configuracion);
 	void ingresoAdministrador(Administrador * administrador);
