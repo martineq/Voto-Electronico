@@ -1725,109 +1725,14 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 		switch (i)
 		{
 		case 1 : {
-
-			cout << "verificacion del cifrado"<<endl;
-
-			string* criptograma;
-			string* mensaje;
-
-			string clave = "";
-			cout << "Ingrese clave para descifrar el informe" << endl;
-			cin >> clave;
-
-			Vigenere* vigenere = new Vigenere(clave);
-
-			string informe = config->pathInformes()+ELECCIONES;
-			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-
-			int size = ma->obtenerTamArchivo();
-
-			char* cadena = new char[size];
-			ma->leer(cadena,size);
-
-			stringstream stream;
-			stream.write(cadena,size);
-			criptograma = new string(stream.str());
-
-			mensaje = vigenere->descifrar(criptograma);
-			cout << *mensaje;
-
-			delete ma;
-			delete mensaje;
-			delete criptograma;
-			delete vigenere;
-			delete[] cadena;
+			this->criptoanalizarInforme(config->pathInformes()+ELECCIONES);
 
 		}break;
 		case 2 : {
-			cout << "verificacion del cifrado"<<endl;
-
-			string* criptograma;
-			string* mensaje;
-
-			string clave = "";
-			cout << "Ingrese clave para descifrar el informe" << endl;
-			cin >> clave;
-			Vigenere* vigenere = new Vigenere(clave);
-
-			string informe = config->pathInformes()+LISTAS;
-
-			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-
-			int size = ma->obtenerTamArchivo();
-
-			char* cadena = new char[size];
-			ma->leer(cadena,size);
-
-			stringstream stream;
-			stream.write(cadena,size);
-			criptograma = new string(stream.str());
-
-			mensaje = vigenere->descifrar(criptograma);
-			cout << *mensaje;
-
-
-			delete ma;
-			delete mensaje;
-			delete criptograma;
-			delete vigenere;
-			delete[] cadena;
-
-
+			this->criptoanalizarInforme(config->pathInformes()+LISTAS);
 		}break;
 		case 3 : {
-			cout << "verificacion del cifrado"<<endl;
-
-			string* criptograma;
-			string* mensaje;
-
-			string clave = "";
-			cout << "Ingrese clave para descifrar el informe" << endl;
-			cin >> clave;
-			Vigenere* vigenere = new Vigenere(clave);
-
-			string informe = config->pathInformes()+DISTRITOS;
-
-			ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
-
-			int size = ma->obtenerTamArchivo();
-
-			char* cadena = new char[size];
-			ma->leer(cadena,size);
-
-			stringstream stream;
-			stream.write(cadena,size);
-			criptograma = new string(stream.str());
-
-			mensaje = vigenere->descifrar(criptograma);
-			cout << *mensaje;
-
-			delete ma;
-			delete mensaje;
-			delete criptograma;
-			delete vigenere;
-			delete[] cadena;
-
+			this->criptoanalizarInforme(config->pathInformes()+DISTRITOS);
 		}break;
 		case 4 :
 			return;
@@ -1836,6 +1741,41 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 	}
 }
 
+
+void InterfazAdministrador::criptoanalizarInforme(string informe){
+
+	string* criptograma;
+	string* mensaje;
+	ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
+	int size = ma->obtenerTamArchivo();
+
+	char* cadena = new char[size];
+	ma->leer(cadena,size);
+
+	stringstream stream;
+	stream.write(cadena,size);
+	criptograma = new string(stream.str());
+
+	Kasiski ka;
+	string key;
+
+	ka.generarPatrones(criptograma);
+	ka.MCDDistancias();
+	ka.analisisDeFrecuencias(*criptograma);
+	key = ka.romper();
+
+	cout << "Clave descifrada: " << key << endl<< endl;
+
+	Vigenere* vigenere = new Vigenere(key);
+	mensaje = vigenere->descifrar(criptograma);
+	cout << *mensaje;
+
+	delete ma;
+	delete mensaje;
+	delete criptograma;
+	delete vigenere;
+	delete[] cadena;
+}
 
 InterfazAdministrador::~InterfazAdministrador() {
 //	delete (this->config);
