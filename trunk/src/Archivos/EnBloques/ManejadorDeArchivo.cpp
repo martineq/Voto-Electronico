@@ -2,6 +2,7 @@
 
 // Constructor con parámetro para abrir automáticamente
 ManejadorDeArchivo::ManejadorDeArchivo(string nombre){
+	this->ex = 0;
 	this->abrir(nombre);
 }
 
@@ -14,6 +15,10 @@ ManejadorDeArchivo::~ManejadorDeArchivo(){
 // Borra el archivo del disco
 void ManejadorDeArchivo::borrar(){
 	std::remove(obtenerNombreArchivo().c_str());
+}
+
+int ManejadorDeArchivo::existe(){
+	return this->ex;
 }
 
 // Devuelve el nombre del archivo
@@ -124,6 +129,8 @@ void ManejadorDeArchivo::abrir(string nombre){
 		if (! this->archivo.is_open())
 			cerr << "ERROR: El archivo no pudo ser abierto" << endl;
 	}
+	else
+		this->ex = 1;
 	this->nombre = nombre;
 }
 

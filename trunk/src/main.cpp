@@ -3,6 +3,7 @@
 
 #include "../tests/TestMain.h"
 
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -13,6 +14,9 @@ int main(int argc,const char* argv[]) {
 
 //	TestMain mainTest;
 //	mainTest.ejecutar();
+
+//	TestEncriptacionVotante test;
+//	test.principal();
 
 //	Programa Principal
 

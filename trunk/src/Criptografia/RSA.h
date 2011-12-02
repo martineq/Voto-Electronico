@@ -15,6 +15,7 @@
 #include <time.h>
 #include <iostream>
 #include <list>
+
 using namespace std;
 
 class RSA {
@@ -33,15 +34,16 @@ private:
 	long long aBinario(long long);
 	void generarListaDePrimos();
 public:
-	RSA();
+	RSA(bool inicializar = false);
 	/*
 	 * si encriptar es true entonces z = e.
 	 * sino z = d.
 	 */
 	RSA(long z, long  n,bool encriptar);
-	long getN();
-	long getE();
-	long getD();
+	RSA* duplicar();
+	long long getN();
+	long long getE();
+	long long getD();
 	virtual ~RSA();
 	void generarPyQ();
 	void calcularN();
@@ -52,6 +54,13 @@ public:
 	string desencriptar(string);
 	int desencriptar(long long);
 	void atacar();
+	string* serializar ();
+	void deserializar ();
+	void setN (long long n);
+	void setD (long long d);
+	void setE (long long e);
+	void setP (long long);
+	void setQ (long long);
 };
 
 #endif /* RSA_H_ */

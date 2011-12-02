@@ -14,7 +14,7 @@ class ManejadorDeArchivo{
     private:
         fstream archivo;
         string nombre;
-
+        int ex;
         void abrir(string nombre);
 
     public:
@@ -25,6 +25,7 @@ class ManejadorDeArchivo{
         void posicionarse(ios::pos_type pos);
         void posicionarseEnFin();
         void guardarBuffer();
+        int existe();
         bool fin();
         ios::pos_type obtenerPosicionDeLectura();
         ios::pos_type obtenerTamArchivo();

@@ -148,6 +148,26 @@ Votante* CreadorVotante::crearVotante(Configuracion* configuracion){
     return votante;
 }
 
+Votante* CreadorVotante::crearVotante(Configuracion* configuracion, RSA* rsa){
+    srand ( semilla );
+    string path;
+
+    string nombre = this->getNombre(configuracion->pathNombres());
+
+    string apellido = this->getApellido(configuracion->pathApellidos());
+
+    int dni = this->getDNI();
+
+    string distrito = this->getDistrito(configuracion->pathDistritos());
+
+    string domicilio = this->getDomicilio(configuracion->pathDomicilios());
+
+    string password = this->getClave();
+    Votante* votante = new Votante(dni, nombre+" "+apellido, password, domicilio, distrito);
+    votante->setRSA(rsa->duplicar());
+    return votante;
+}
+
 CreadorVotante::~CreadorVotante() {
     // TODO Auto-generated destructor stub
 }

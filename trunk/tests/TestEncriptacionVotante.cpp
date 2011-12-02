@@ -22,15 +22,16 @@ void TestEncriptacionVotante::principal() {
 	cout << "Se contruyo el votante" << endl;
 	unVotante->verVotante();
 	cout << "Se va a serializar el votante" << endl;
-	RSA * rsa = new RSA();
+	RSA * rsa = new RSA(true);
 	unVotante->setRSA(rsa);
 	string* votanteSerializado = unVotante->serializar();
 	delete unVotante;
 	cout << "Se serializo el votante" << endl;
 	cout << "Se va a deserializar el votante" << endl;
 	unVotante = new Votante();
-	unVotante->verVotante();
+//	unVotante->verVotante();
 	unVotante->setRSA(rsa);
 	unVotante->deserializar(votanteSerializado);
 	unVotante->verVotante();
+	delete rsa;
 }

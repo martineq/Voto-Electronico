@@ -34,6 +34,7 @@ private:
 public:
 	CreadorVotante(int seed);
 	Votante* crearVotante(Configuracion* configuracion);
+	Votante* crearVotante(Configuracion* configuracion, RSA* rsa);
 	virtual ~CreadorVotante();
 };
 
