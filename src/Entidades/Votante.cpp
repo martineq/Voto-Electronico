@@ -4,7 +4,9 @@
 Votante::Votante(){
 	this->dni = 0;
 	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
+	this->rsa = NULL;
 }
+
 Votante::Votante(int dni, string nombre, string password, string domicilio, string distrito) {
 	this->dni=dni;
 	this->nombre=nombre;
@@ -12,6 +14,7 @@ Votante::Votante(int dni, string nombre, string password, string domicilio, stri
 	this->domicilio=domicilio;
 	this->distrito=distrito;
 	this->listaDeEleccionesAnteriores=new list <EleccionAnterior*>;
+	this->rsa = NULL;
 }
 
 Votante::~Votante() {
@@ -21,10 +24,7 @@ Votante::~Votante() {
 		it++;
 	}
 	delete (listaDeEleccionesAnteriores);
-}
-
-void Votante::setRSA(RSA * rsa){
-	this->rsa = rsa;
+	delete this->rsa;
 }
 
 void Votante::setNombre (string nombre) {
@@ -61,21 +61,24 @@ bool Votante::agregarEleccion (string fecha, string cargo) {
 }
 
 int  Votante::getTamanio(){
-	int tamanioDni = TAM_INT;
-	int tamanioNombre = TAM_INT + this->nombre.size();
-	int tamanioPassword = TAM_INT + this->password.size();
-	int tamanioDomicilio = TAM_INT + this->domicilio.size();
-	int tamanioDistrito = TAM_INT + this->distrito.size();
-	int tamanioEleccionesAnteriores = TAM_INT; //tamaño de ver cantidad de elementos
-	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
-	while (it != this->listaDeEleccionesAnteriores->end()){
-		tamanioEleccionesAnteriores += (*it)->getTamanio();
-		it++;
-	}
-
-	return (tamanioDni + tamanioNombre + tamanioNombre + tamanioPassword + tamanioDomicilio +
-			tamanioDistrito + tamanioEleccionesAnteriores);
-
+//	int tamanioDni = TAM_INT;
+//	int tamanioNombre = TAM_INT + this->nombre.size();
+//	int tamanioPassword = TAM_INT + this->password.size();
+//	int tamanioDomicilio = TAM_INT + this->domicilio.size();
+//	int tamanioDistrito = TAM_INT + this->distrito.size();
+//	int tamanioEleccionesAnteriores = TAM_INT; //tamaño de ver cantidad de elementos
+//	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
+//	while (it != this->listaDeEleccionesAnteriores->end()){
+//		tamanioEleccionesAnteriores += (*it)->getTamanio();
+//		it++;
+//	}
+//
+//	return (tamanioDni + tamanioNombre + tamanioNombre + tamanioPassword + tamanioDomicilio +
+//			tamanioDistrito + tamanioEleccionesAnteriores);
+//	cout << "Tamanio votante encriptado: "<<this->tamanio<<endl;
+	string* encriptado = this->serializar();
+	delete encriptado;
+	return (this->tamanio);
 }
 
 unsigned long Votante::getClave(){
@@ -125,6 +128,11 @@ void Votante::verVotante() {
 	this->verEleccionesAnteriores ();
 }
 
+void Votante::setRSA(RSA * rsa){
+	this->rsa = rsa->duplicar();
+}
+
+
 string* Votante::serializar(){
 	stringstream buffer;
 	int cantidadDeBytes;
@@ -153,18 +161,57 @@ string* Votante::serializar(){
 		buffer.write((char*)((*it)->getCargo()).c_str(),cantidadDeBytes);
 		it++;
 	}
-
-	return new string( rsa->encriptar(buffer.str()));
+	string strNuevo = this->rsa->encriptar(buffer.str());
+//	cout << "StrNuevo.size(): "<<strNuevo.size()<<endl;
+	this->tamanio = (int)strNuevo.size();
+//	cout << "Tamanio: "<<this->tamanio<<endl;
+	return new string(strNuevo);
+//	return new string(buffer.str());
 }
 
 void Votante::deserializar(string* source){
-	istringstream buffer ( rsa->desencriptar(*source));
+	ManejadorDeArchivo manejador ("clavePrivada.txt");
+	this->rsa = new RSA();
+	long long* numero = new long long;
+	manejador.posicionarse(0);
+	char* buf= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+	manejador.leer(buf,sizeof(long long));	// Leo en archivo
+	(*numero) = *(long long*)buf;					// Guardo el valor en donde apunta <dest>
+	delete[] buf;
+	this->rsa->setD(*numero);
+	char* buf2= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+	manejador.leer(buf2,sizeof(long long));	// Leo en archivo
+	(*numero) = *(long long*)buf2;					// Guardo el valor en donde apunta <dest>
+	delete[] buf2;
+	this->rsa->setN(*numero);
+
+
+	char* buf3= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+	manejador.leer(buf3,sizeof(long long));	// Leo en archivo
+	(*numero) = *(long long*)buf3;					// Guardo el valor en donde apunta <dest>
+	delete[] buf3;
+	this->rsa->setE(*numero);
+	delete numero;
+//
+//	cout << "D: "<<this->rsa->getD()<<endl;
+//	cout << "N: "<<this->rsa->getN()<<endl;
+//	cout << "E: "<<this->rsa->getE()<<endl;
+//	char trulala;
+//	cin >> trulala;
+//
+//
+//	cout << "this->rsa->getN();= " << this->rsa->getN() << endl;
+//	cout << "this->rsa->getD();= " << this->rsa->getD() << endl;
+
+	istringstream buffer ( this->rsa->desencriptar(*source));
+
+//	istringstream buffer(*source);
 	stringstream * miString;
 	int cantidadDeBytes;
 
 //	hidrato el dni
     buffer.read((char*)&this->dni,TAM_INT);
-
+    cout << "DNI: "<<this->dni<<endl;
 //  hidrato el nombre
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* nombreSerializado = new char[cantidadDeBytes];
@@ -177,8 +224,10 @@ void Votante::deserializar(string* source){
     delete pasoAString;
     delete miString;
 
+    cout << "Nombre: "<<this->nombre<<endl;
 //  hidrato el password
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
+//    cout << "CantBytes: "<<cantidadDeBytes<<endl;
     char* passwordSerializado = new char[cantidadDeBytes];
     buffer.read((char*)passwordSerializado,cantidadDeBytes);
     miString = new stringstream();
@@ -239,6 +288,7 @@ void Votante::deserializar(string* source){
 
 		EleccionAnterior* unaEleccionAnterior = new EleccionAnterior(fecha,cargo);
 		this->listaDeEleccionesAnteriores->push_back(unaEleccionAnterior);
+//		cout << "salgo"<<endl;
 //		el delete de unaEleccionAnterior esta en el destructor
 //		porque mi lista es lista de punteros a Eleccion Anterior
 	}
@@ -271,6 +321,8 @@ Entidad *Votante::duplicar()
 	copia->domicilio = this->domicilio;
 	copia->nombre = this->nombre;
 	copia->password = this->password;
+	copia->rsa = this->rsa->duplicar();
+	copia->tamanio = this->tamanio;
 	list<EleccionAnterior*>::iterator it = this->listaDeEleccionesAnteriores->begin();
 	while (it != this->listaDeEleccionesAnteriores->end()){
 		copia->agregarEleccion((*it)->getFecha(),(*it)->getCargo());

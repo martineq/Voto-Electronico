@@ -7,15 +7,19 @@
 
 #include "RSA.h"
 
-RSA::RSA() {
-	for (int i=0; i<6; i++) {
-		this->fila1.push_back(0);
-		this->fila2.push_back(0);
+RSA::RSA(bool inicializar) {
+
+	if (inicializar) {
+//		cout << "CONSTRUCTOR RSA" << endl;
+		for (int i=0; i<6; i++) {
+			this->fila1.push_back(0);
+			this->fila2.push_back(0);
+		}
+		this->generarPyQ();
+		this->calcularN();
+		this->calcularPhi();
+		this->calcularE();
 	}
-	this->generarPyQ();
-	this->calcularN();
-	this->calcularPhi();
-	this->calcularE();
 }
 
 RSA::RSA(long z, long n, bool encriptar) {
@@ -30,7 +34,24 @@ RSA::RSA(long z, long n, bool encriptar) {
 
 
 RSA::~RSA() {
+//	cout << "destructor rsa" << endl;
 	// TODO Auto-generated destructor stub
+}
+
+RSA* RSA::duplicar(){
+	RSA* unRSA = new RSA();
+	unRSA->d = this->d;
+	unRSA->e = this->e;
+	unRSA->p = this->p;
+	unRSA->q = this->q;
+	unRSA->phi = this->phi;
+	unRSA->n = this->n;
+
+	for (int i=0; i<6; i++) {
+		unRSA->fila1.push_back(0);
+		unRSA->fila2.push_back(0);
+	}
+	return unRSA;
 }
 
 void RSA::generarListaDePrimos(){
@@ -54,11 +75,11 @@ void RSA::generarListaDePrimos(){
 	}
 
 
-//	list<int>::iterator it = primos.begin();
-//	while ( it != primos.end()){
-//		cout << *it << " ";
-//		it++;
-//	}
+	//	list<int>::iterator it = primos.begin();
+	//	while ( it != primos.end()){
+	//		cout << *it << " ";
+	//		it++;
+	//	}
 }
 
 
@@ -83,6 +104,16 @@ bool RSA::esPrimo(long long numero){
 	else return false;
 }
 
+void RSA::setN (long long n){
+	this->n=n;
+}
+void RSA::setE (long long e){
+	this->e=e;
+}
+void RSA::setD (long long d){
+	this->d=d;
+}
+
 void RSA::generarPyQ() {
 	cout << "Se van a generar p y q" << endl;
 	srand (time(NULL));
@@ -105,10 +136,10 @@ void RSA::generarPyQ() {
 			}
 		}
 	}
-//	PARA PRUEBA
-//	this->p=19;
-//	this->q=7;
-//	============
+	//	PARA PRUEBA
+	//	this->p=19;
+	//	this->q=7;
+	//	============
 	cout << "P= " << this->p << endl;
 	cout << "Q= " << this->q << endl;
 }
@@ -139,9 +170,9 @@ void RSA::elegirD(){
 			}
 		}
 	}
-//	PARA PRUEBA
-//	this->d=73;
-//	===========
+	//	PARA PRUEBA
+	//	this->d=73;
+	//	===========
 	this->fila1[0]=1;
 	this->fila1[1]=0;
 	this->fila1[2]=this->phi;
@@ -185,9 +216,10 @@ void RSA::calcularE() {
 }
 
 long long RSA::encriptar(int dato){
-	cout << "Se va a encriptar " << dato << endl;
+//	cout << "Se va a encriptar " << dato << endl;
+//	cout << "this->e= " << this->e << endl;
 	long long eEnBinario = this->aBinario(this->e);
-	cout << this->e << " en binario= " << eEnBinario << endl;
+//	cout << this->e << " en binario= " << eEnBinario << endl;
 	stringstream ss;
 	ss << eEnBinario;
 	string eEnString = ss.str();
@@ -212,7 +244,7 @@ long long RSA::encriptar(int dato){
 		i++;
 		j++;
 	}
-	cout << "Resultado de la encriptacion: " << suma << endl;
+//	cout << "Resultado de la encriptacion: " << suma << endl;
 	return suma;
 }
 
@@ -229,16 +261,25 @@ string RSA::encriptar(string mensaje){
 	return textoCifrado.str();
 }
 
-long RSA::getN(){
+
+long long RSA::getN(){
 	return this->n;
 }
 
-long RSA::getE(){
+long long RSA::getE(){
 	return this->e;
 }
 
-long RSA::getD(){
+long long RSA::getD(){
 	return this->d;
+}
+
+void RSA::setP (long long p) {
+	this->p=p;
+}
+
+void RSA::setQ (long long q) {
+	this->q=q;
 }
 
 string RSA::desencriptar(string mensajeCifrado){
@@ -256,7 +297,7 @@ string RSA::desencriptar(string mensajeCifrado){
 }
 
 int RSA::desencriptar(long long dato){
-	cout << "Se va a desencriptar " << dato << endl;
+//	cout << "Se va a desencriptar " << dato << endl;
 	long dEnBinario = this->aBinario(this->d);
 	stringstream ss;
 	ss << dEnBinario;
@@ -282,7 +323,7 @@ int RSA::desencriptar(long long dato){
 		i++;
 		j++;
 	}
-	cout << "Resultado de la desencriptacion: " << suma << endl;
+//	cout << "Resultado de la desencriptacion: " << suma << endl;
 	return suma;
 }
 
@@ -309,6 +350,15 @@ void RSA::atacar(){
 			it2++;
 		}
 	}
-	cout << "El p era= " << pAtacado << endl;
-	cout << "El q era= " << qAtacado << endl;
+	cout << "ATACADO" << endl;
+	cout << "El p es= " << pAtacado << endl;
+	cout << "El q es= " << qAtacado << endl;
+	RSA* unRSA = new RSA(true);
+	unRSA->setP(pAtacado);
+	unRSA->setQ(qAtacado);
+	unRSA->calcularN();
+	unRSA->calcularPhi();
+	unRSA->calcularE();
+	delete unRSA;
+	cout << "Con estos datos puede crearse el archivo clavePrivada.txt y vulnerarse la seguridad" << endl;
 }

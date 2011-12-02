@@ -69,6 +69,7 @@ void AdministradorDeVotaciones::guardarStringEnArchivo(string* s,ManejadorDeArch
 	m->escribir(cadena,size);
 
 	delete[] cadena;
+	delete stream;
 }
 
 /* METODOS PUBLICOS **********************************************************/

@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Entidad.h"
 #include "../Criptografia/RSA.h"
+#include "../Archivos/EnBloques/ManejadorDeArchivo.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ private:
 	list <EleccionAnterior*>* listaDeEleccionesAnteriores;
 	RSA * rsa;
 	void verEleccionesAnteriores ();
+	int tamanio;
 public:
 	Votante();
 	Votante(int dni, string nombre, string password, string domicilio, string distrito);
