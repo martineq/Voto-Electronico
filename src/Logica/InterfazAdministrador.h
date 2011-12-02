@@ -18,13 +18,15 @@
 #include "../Entidades/Constantes.h"
 #include "../ClasesAuxiliares/Log.h"
 #include "../ClasesAuxiliares/CreadorVotante.h"
+#include "../ClasesAuxiliares/Configuracion.h"
 #include "../Logica/Administrador.h"
+#include "../Logica/AdministradorDeVotaciones.h"
 #include "../Archivos/Hashing/Bucket.h"
 #include "../Archivos/Hashing/HashingExtensible.h"
 #include "../Archivos/EnBloques/ArchivoBloques.h"
 #include "../Archivos/ArbolBMas/bplustree.h"
-#include "../Logica/AdministradorDeVotaciones.h"
-#include "../ClasesAuxiliares/Configuracion.h"
+#include "../Archivos/EnBloques/ManejadorDeArchivo.h"
+#include "../Criptografia/RSA.h"
 #include "../../tests/SimulacionSistema.h"
 #include "./AdministradorDeVotaciones.h"
 #include <list>
@@ -53,6 +55,7 @@ private:
 	string* dummy;
 	streambuf*		backup;
 	stringstream*	stream;
+	RSA* rsa;
 
 	bool mostrarMenuAdministrador(Administrador * administrador);
 	void mostrarMenuDistritos(Administrador * administrador);
@@ -64,6 +67,7 @@ private:
 	void mostrarMenuInformes(Administrador * administrador);
 	void mostrarMenuVotacionAutomatica(Administrador * administrador);
 	void mostrarMenuCriptoanalisis(Administrador * administrador);
+	void atacarRSA();
 	void habilitarElecciones(Administrador * administrador);
 	void comienzoVotacion(Administrador * administrador);
 	int isANumber(string &cad);
