@@ -22,6 +22,63 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 
 	administradorDeConteo->nuevoArchivoDeConteo(pathArchivoConteo,pathIndiceSecundario,configuracion->darTamanioNodo());
 	
+//	Se crea el RSA para encriptar votantes
+	this->rsa = new RSA(true);
+	long long numero;
+	ManejadorDeArchivo manejador("clavePrivada.txt");
+//	cout << "ingrese el d de la clave privada de RSA: " << endl;
+//	cin >> numero;
+	if(!manejador.existe())
+	{
+		numero = this->rsa->getD();
+		manejador.escribir((char*) &numero,sizeof(long long));
+
+//		cout << "ingrese el n de la clave privada de RSA: " << endl;
+//		cin >> numero;
+
+		numero = this->rsa->getN();
+		manejador.escribir((char*)&numero,sizeof(long long));
+
+		numero = this->rsa->getE();
+		manejador.escribir((char*)&numero,sizeof(long long));
+
+		manejador.guardarBuffer();
+
+		cout << "D: "<<this->rsa->getD()<<endl;
+		cout << "N: "<<this->rsa->getN()<<endl;
+		cout << "E: "<<this->rsa->getE()<<endl;
+		char trulala;
+		cin >> trulala;
+
+	}
+	else
+	{
+		long long* numeroPuntero = new long long;
+		manejador.posicionarse(0);
+		char* buf= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+		manejador.leer(buf,sizeof(long long));	// Leo en archivo
+		(*numeroPuntero) = *(long long*)buf;					// Guardo el valor en donde apunta <dest>
+		delete[] buf;
+		this->rsa->setD(*numeroPuntero);
+		char* buf2= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+		manejador.leer(buf2,sizeof(long long));	// Leo en archivo
+		(*numeroPuntero) = *(long long*)buf2;					// Guardo el valor en donde apunta <dest>
+		delete[] buf2;
+		this->rsa->setN(*numeroPuntero);
+
+		char* buf3= new char[sizeof(long long)]; 		// Preparo un buffer de tamaño int para obtener los datos		// Voy a la posición <pos>
+		manejador.leer(buf3,sizeof(long long));	// Leo en archivo
+		(*numeroPuntero) = *(long long*)buf3;					// Guardo el valor en donde apunta <dest>
+		delete[] buf3;
+		this->rsa->setE(*numeroPuntero);
+		delete numeroPuntero;
+
+		cout << "D en archivo: "<<this->rsa->getD()<<endl;
+		cout << "N en archivo: "<<this->rsa->getN()<<endl;
+		cout << "E en archivo: "<<this->rsa->getE()<<endl;
+
+
+	}
 }
 
 void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
@@ -34,6 +91,11 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 	cout <<endl;
 	cout << "usuario: <"<<usuario<<">"<<endl;
 	cout << "password: <"<<password<<">"<<endl;
+
+//	========================
+	usuario="undomiel";
+	password="aragorn";
+//	========================
 
 	if (administrador->acceder(usuario,password)){
 		cout << "INGRESO APROBADO" << endl;
@@ -92,7 +154,7 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrador){
 	string opcion = "0";
 	int i = 0;
-	while ((i < 1) or (i > 12)){
+	while ((i < 1) or (i > 13)){
 		cout << "Opciones: "<<endl<<endl;
 		cout << "1) Mantener Distritos"<<endl;
 		cout << "2) Mantener Votantes"<<endl;
@@ -106,6 +168,7 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 		cout << "10) salir"<<endl;
 		cout << "11) Votacion automatica" << endl;
 		cout << "12) Criptoanalizar informes" << endl;
+		cout << "13) Atacar RSA" << endl;
 		cout << "Opcion: ";
 		cin >> opcion;
 		cout <<endl;
@@ -132,6 +195,7 @@ bool InterfazAdministrador::mostrarMenuAdministrador(Administrador * administrad
 	case 10 : return true; break;
 	case 11 : mostrarMenuVotacionAutomatica(administrador);break;
 	case 12 : mostrarMenuCriptoanalisis(administrador);break;
+	case 13 : atacarRSA(); break;
 	}
 
 	return false;
@@ -359,6 +423,8 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 				nombreDistrito = "";
 			}
 			votante = new Votante(dni,apeNom,clave,dom,nombreDistrito);
+			//	Cada votante recibe una clave RSA
+			votante->setRSA(this->rsa);
 			registro = new Registro(votante);
 			delete (votante);
 		}
@@ -393,7 +459,7 @@ void InterfazAdministrador::mostrarMenuVotantes(Administrador * administrador){
 			cin >> cantTotal;
 			while (cantIngr < cantTotal){
 				CreadorVotante * creador = new CreadorVotante(cont);
-				votante = creador->crearVotante(config);
+				votante = creador->crearVotante(config,rsa);
 				Distrito * distrito = new Distrito(votante->getDistrito());
 				Registro * registroDistrito = new Registro(distrito);
 				delete (distrito);
@@ -795,6 +861,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 					}
 				}
 				Votante * votante = new Votante(dni,"","","","");
+				votante->setRSA(this->rsa);
 				Registro * regVotante = new Registro(votante);
 
 				delete votante;
@@ -889,6 +956,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 			case 4 : {
 				delete heCandidato;
 				delete heVotante;
+				delete heCargo;
 				return;
 			}
 			case 5 : {
@@ -1090,6 +1158,7 @@ void InterfazAdministrador::mostrarMenuInformes(Administrador * administrador){
 		}
 		i = 0;
 	}
+
 }
 
 void InterfazAdministrador::verContenidoArbolListas (bplustree* arbolB){
@@ -1443,6 +1512,7 @@ void InterfazAdministrador::comienzoVotacion(Administrador * administrador){
 		bool seguir = true;
 		Registro* registroAuxiliar;
 		Votante* votanteActual = new Votante (k,"","","","");
+		votanteActual->setRSA(this->rsa);
 		if (modo.compare("a") == 0) {
 			Registro* reg = new Registro(votanteActual);
 			delete votanteActual;
@@ -1469,6 +1539,7 @@ void InterfazAdministrador::comienzoVotacion(Administrador * administrador){
 			}
 			delete votanteActual;
 			votanteActual = new Votante (dni,"","","","");
+			votanteActual->setRSA(this->rsa);
 			Registro* reg = new Registro(votanteActual);
 			delete votanteActual;
 			registroAuxiliar = heVotante->obtenerRegistro(reg);
@@ -1744,40 +1815,51 @@ void InterfazAdministrador::mostrarMenuCriptoanalisis(Administrador * administra
 
 void InterfazAdministrador::criptoanalizarInforme(string informe){
 
-	string* criptograma;
-	string* mensaje;
 	ManejadorDeArchivo* ma = new ManejadorDeArchivo(informe);
 	int size = ma->obtenerTamArchivo();
 
-	char* cadena = new char[size];
-	ma->leer(cadena,size);
+	if ( size > 0 ){
 
-	stringstream stream;
-	stream.write(cadena,size);
-	criptograma = new string(stream.str());
+		string* criptograma;
+		string* mensaje;
+		char* cadena = new char[size];
+		ma->leer(cadena,size);
 
-	Kasiski ka;
-	string key;
+		stringstream stream;
+		stream.write(cadena,size);
+		criptograma = new string(stream.str());
 
-	ka.generarPatrones(criptograma);
-	ka.MCDDistancias();
-	ka.analisisDeFrecuencias(*criptograma);
-	key = ka.romper();
+		Kasiski ka;
+		string key;
 
-	cout << "Clave descifrada: " << key << endl<< endl;
+		ka.generarPatrones(criptograma);
+		ka.MCDDistancias();
+		ka.analisisDeFrecuencias(*criptograma);
+		key = ka.romper();
 
-	Vigenere* vigenere = new Vigenere(key);
-	mensaje = vigenere->descifrar(criptograma);
-	cout << *mensaje;
+		cout << "Clave descifrada: " << key << endl<< endl;
 
+		Vigenere* vigenere = new Vigenere(key);
+		mensaje = vigenere->descifrar(criptograma);
+		cout << *mensaje;
+
+		delete mensaje;
+		delete criptograma;
+		delete vigenere;
+		delete[] cadena;
+
+	}else{
+		cout << "Archivo del informe vacio o inexistente" << endl;
+	}
 	delete ma;
-	delete mensaje;
-	delete criptograma;
-	delete vigenere;
-	delete[] cadena;
+}
+
+void InterfazAdministrador::atacarRSA(){
+	this->rsa->atacar();
 }
 
 InterfazAdministrador::~InterfazAdministrador() {
 //	delete (this->config);
 	delete (this->administradorDeConteo);
+	delete rsa;
 }
