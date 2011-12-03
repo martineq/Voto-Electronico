@@ -280,11 +280,14 @@ Una vez iniciada una votación, se dispondrá de una interfaz para el usuario 'vot
 \item Informar voto
 \end{itemize}
 
+\newpage
 
-\section{Segunda etapa}
 
-\begin{verbatim}
-Método de Vigènere
+\section{Segunda etapa - Seguridad}
+
+\subsection{Método de Vigènere}
+
+\subsubsection{Resolución del método}
 
 Se empleará el método para cifrar los reportes generados: Listas, Elección, Distrito.
 
@@ -292,135 +295,22 @@ Para la resolución se necesitará generar una clave k de dimensión n. Cada elemen
 
 Una opción resulta en considerar al alfabeto como todo el conjunto de los elementos representables con 1 byte, es decir 256 elementos. De esta forma se trabaja con aritmética modular de modulo 256.
 
-Objeto: Vigènere
-
 Desde el punto de vista de la programación se crearía la clase Vigènere que sería la encargada de realizar la encriptación ( y desencriptación ) de un documento.
 
 El criptosistema es simétrico por lo que al instanciar la clase se le asignaría la clave que podría ser del tipo vector. Se define implícitamente el tamaño del alfabeto que resulta ser de 256, correspondiente al código ASCII.
 
-    /*
-
-     * Instancia un objeto cifrador, el tamaño del alfabeto está implícito
-
-     * y se asume resulta ser de 256.
-
-     */
-
-Vigenere(string clave);    // constructor
-
-La clase tendría como miembro dicha clave.
-
-También existe un constructor alternativo para poder emplear alfabetos de menor tamaño.
-
-    /*
-
-     * Intancia un objeto cifrador, el tamaño del alfabeto se define mediante
-
-     * cardinalAlfabeto.
-
-     */
-
-    Vigenere(string clave,int cardinalAlfabeto);
-
 La clave se pasa por valor de forma tal que el objeto instanciado tenga un copia interna de la clave y pueda manejarse sin riesgo de que en el caso de ser pasado por referencia se elimine accidentalmente.
 
-La encriptación manejaría strings, recibiría en mensaje y lo cifraría devolviendo el correspondiente criptograma.
+La encriptación manejaría strings, recibiría en mensaje y lo cifraría devolviendo el correspondiente criptograma. De esta forma haríamos que se desentienda del origen del objeto que está manejando, que podría ser desde memoria o desde disco.
 
-    /*
-
-     * Cifra un mensaje obteniendo y devuelve un criptograma.
-
-     *
-
-     * Si no se está haciendo un cifrado en bloques entonces hay que invocar
-
-     * al método reiniciarCifrador previamente, excepto en el primer uso.
-
-     *
-
-     * El método reserva un string en memoria por lo que debe ser liberado luego
-
-     * de ser empleado.
-
-     */
-
-    string* cifrar(string* mensaje);
-
-De esta forma haríamos que se desentienda del origen del objeto que está manejando, que podría ser desde memoria o desde disco.
-
-Si necesitáramos descifrar el mensaje entonces se usaría el siguiente método, que resulta similar al anterior:
-
-    /*
-
-     * Descifra un criptograma, devolviendo el mensaje original.
-
-     *
-
-     * Si no se está haciendo un descifrado en bloques entonces hay que invocar
-
-     * al método reiniciarDescifrador previamente, excepto en el primer uso.
-
-     *
-
-     * El método reserva un string en memoria por lo que debe ser liberado luego
-
-     * de ser empleado.
-
-     */
-
-    string* descifrar(string* criptograma);
-
-El descrifrador recibe el criptograma, lo descifra con la clave y devuelve el mensaje como un string*.
+El descrifrador recibe el criptograma, lo descifra con la clave y devuelve el mensaje como un string.
 
 Hay dos situaciones diferentes en las cuales se debe usar Vigeneré. Una es para cifrar un texto plano. La otra es para cifrar un texto plano y a continuación otro texto plano utilizando la misma instancia de Vigeneré y la misma clave.
 
 En el caso que se quiere cifrar un texto plano solamente con la misma clave y la misma instancia de Vigeneré: para el manejo en bloques Vigenere cuenta con dos variables que contienen la última posición de la clave durante el uso del cifrador y del descifrador, de forma tal que no haya que restringir el mensaje que se desea encriptrar/descencriptar a un tamaño múltiplo del tamaño de la clave porque cada vez que se llega a la última posición del cifrador/descifrador se reinicia esta variable.
 
-En la otra situación debería invocarse previamente a cada invocación a los métodos de cifrado, un método para reinicializar dichos contadores:
+\subsubsection{Criptoanálisis}
 
-    /*
-
-     * Para el manejo en bloques el método tiene un contador interno de la
-
-     * última posición leída, si se quiere encriptar un nuevo mensaje debe
-
-     * reiniciarse dicho contador.
-
-     */
-
-    void reiniciarCifrador();
-
-    /*
-
-     * Para el manejo en bloques el método tiene un contador interno de la
-
-     * última posición leída, si se quiere desencriptar un nuevo mensaje debe
-
-     * reiniciarse dicho contador.
-
-     */
-
-    void reiniciarDescifrador();
-
-Por lo tanto el objeto final estaría constituído por los siguientes miembros privados:
-
-    // Almacena internamente la clave empleada para la encriptación y desencriptación.
-
-string        clave;
-
-    // Contiene el tamaño del alfabeto empleado.
-
-    int        cardinalAlfabeto;
-
-    // Mantiene la última posición empleada de la clave por el cifrador.
-
-    int        posicionCifrador;
-
-    // Mantiene la última posición traducida de la clave por el descifrador.
-
-    int        posicionDescifrador;
-
-Criptoanálisis
 
 Para realizar el criptoanálisis una opción es resolverlo empleando el método de Kasiski.
 
@@ -435,165 +325,60 @@ Luego conociendo previamente el idioma en que se encuentra el criptograma, se pr
 Como tenemos 256 posibilidades, hacemos un prueba sobre un archivo para obtener un histograma de las frecuencias de las apariciones de los códigos ASCII en un texto.
 
 En base a pruebas realizadas por el grupo se obtuvo el siguiente gráfico:
+\begin{center}
+\begin{figure}[h] %[h] para here [b] para bottom [t] para top
+\includegraphics[scale=0.5]{./histo.jpg}
+\end{figure}
+\end{center}
 
 El gráfico que se observa muestra las frecuencias obtenidas en una prueba para los 255 caracteres ASCII. En el gráfico no se puede observar claramente pero se observa que se encuentran entre el 42 y el 126 que corresponde a los caracteres imprimibles. Por otro lado, hay un pico muy elevado que corresponde al caracter 32 que resulta ser el espacio.
 
-A continuación se agrega el mismo gráfico pero acotado a los valores imprimibles.
-
-Como se puede observar el carácter con mayor frecuencia es el 32, que resulta ser el espacio, seguido del carácter e (101), el carácter a(97) y por último el carácter o(111). Estos son los más frecuentes y dependiendo del archivo la frecuencia puede variar levemente.
+Luego se analiza el mismo gráfico pero acotado a los valores imprimibles. En este caso, el caracter con mayor frecuencia es el 32, que resulta ser el espacio, seguido del caracter e (101), el caracter a(97) y por último el caracter o(111). Estos son los más frecuentes y dependiendo del archivo la frecuencia puede variar levemente.
 
 En el texto de prueba se obtuvieron en porcentaje:
+\begin{itemize}
+\item espacio:16\%
+\item a: 9\%
+\item e: 10\%
+\item o: 6,7\%
+\end{itemize}
 
-espacio:  16%
+Es decir que como es esperable las minúsculas son más probables que las mayúsculas, y el caracter espacio es el más probable. Esta información es de suma utilidad al realizar el análisis de frecuencias que requiere el método.
 
-a     :    9%
-
-e     :  10%
-
-o     : 6,7%
-
-Es decir que como es esperable las minúsculas son más probables que las mayúsculas, y el carácter espacio es el más probable. Esta información es de suma utilidad al realizar el análisis de frecuencias que requiere el método.
-
-Es destacable que con sólo los caracteres espacio, a, e y o se emplean en el 36% de un texto.
+Es destacable que con sólo los caracteres espacio, a, e y o se emplean en el 36\% de un texto.
 
 Finalmente se descifra el mensaje.
 
+\subsection{Método RSA}
 
-
-Objeto: Kasiski
-
-Es objeto contendrá un índice con las posiciones de las cadenas encontradas. Esto se resolverá mediante una lista de objetos patrones, que se definen más adelante.
-
-También sería necesario resolver el cálculo del máximo común divisor. Sólo consiste en aplicar el mcd sobre todas las distancias halladas en todos los patrones y devolver un único resultado.
-
-Finalmente armar un vector de analizadores de frecuencias (un objeto) que contendrá las frecuencias de los elementos encontrados.
-
-Finalmente como resultado final el método devuelve la clave.
-
-private:
-
-string         claveEncontrada;
-
-int        mcd;
-
-list<Patron>     listaPatrones;
-
-int gcd(int a, int b);
-
-bool noExiste(Patron patron);
-
-void agregarPatron(Patron patron, int posicion);
-
-public:
-
-void generarPatrones(string);
-
-void listarPatrones();
-
-int MCDDistancias();
-
-void analisisDeFrecuencias(string);
-
-string romper();
-
-
-
-Objeto: Patrón
-
-Contiene un conjunto de caracteres que se repite a lo largo del texto a descrifrar. También contiene las distancias entre dos conjuntos sucesivos de un mismo patrón.
-
-    // almacena el patrón hallado.
-
-string palabra;
-
-// lista de distancias entre patrones recurrentes.
-
-    list<int> listaDistancias;
-
-También contiene un conjunto de métodos:
-
-// constructor del objeto, recibe el patrón en un string.
-
-Patron(string);
-
-// agrega una distancia a la lista de distancias.
-
-void agregarDistancia(int distancia);
-
-// devuelve el string correspondiente al patrón que caracteriza el objeto.
-
-string getPalabra();
-
-// devuelve el iterador al primer elemento de la lista de distancias.
-
-list<int>::iterator devolverDistancias();
-
-// devuelve true mientras el iterador pasado por parámetro no apunte al último elemento
-
-// de la lista.
-
-bool noEsUltimo(list<int>::iterator iterador);
-
-
-
-
-
-Objeto: Analizador de frecuencias
-
-Contiene un conjunto de frecuencias de todos los elementos a analizar. Así como también los métodos pertinentes para ser empleados en el análisis de frecuencias.
-
-private:
-
-vector<int>        listaDeFrecuencias;
-
-bool            supremo;
-
-public:
-
-AnalizadorDeFrecuencias(int cantidadElementos);
-
-bool incrementarFrecuencia(int posicion);
-
-bool existeSupremo();
-
-int posicionMaximaFrecuencia();
-
-void mostrarListaDeFrecuencias();
-
-virtual ~AnalizadorDeFrecuencias();
-
-
-Sobre RSA:
-
-             
+\subsubsection{Resolución del método}
 
 Se empleará el método para cifrar los datos de los votantes.
 
 El sistema empieza generando por primera y única vez el par de claves privada y pública que son guardadas en un archivo en disco.
 
-Utilizacion de campos finitos en el algoritmo de RSA:
+\paragraph{Utilizacion de campos finitos en el algoritmo de RSA}
 
 Se utilizará el algoritmo de euclides extendido para generar el inverso multiplicativo o sea el número que se utilizará para desencriptar y que por lo tanto compondrá la clave privada.
 
-También se usará exponenciación por cuadrados para la operación a^b mod q .
+También se usará exponenciación por cuadrados para la operación $a^b$ mod q .
 
 Por esta razón se debe tener especial cuidado en la cantidad de bits que se utilizará para representar los números ya que si se trabaja con números demasiado grandes las operaciones de campos finitos pueden fallar. Por esto el enunciado al pedir que se ingrese el tamaño del número da la posibilidad de limitar este tamaño.
 
 Limitaremos el tamaño de los números primos a entre 3 y 97. Siendo los demás números resultados de operaciones de campos finitos de tamaño manejable por el algoritmo de RSA.
 
-Objeto RSA
+\paragraph{Objeto RSA}
 
 Desde el punto de vista de la programación se crearía la clase RSA que será la encargada de realizar la encriptación/desencriptación de los datos del votante.
 
-Encriptación:
-
+\paragraph{Encriptación}
 El votante instancia un objeto RSA con sus atributos cargados apartir de un archivo.
 
 La encriptación se realiza sobre el string serializado del votante.
 
 Desde serializar se llama al método de encriptación de RSA pasándole el string serializado.
 
-Se toma cada carácter del string y se lo convierte en número entero.
+Se toma cada caracter del string y se lo convierte en número entero.
 
 Se realizan las operaciones de campos finitos y se devuelve un numero grande.
 
@@ -603,8 +388,7 @@ Luego de almacenar todos los caracteres transformados en numeros en el buffer au
 
 Todos los votantes se cifran con la misma clave, ésta se genera una única vez y se almacena en un archivo aparte. Cada vez que se desee encriptar se buscará la clave pública en el archivo. De esta forma al desencriptar se evita tener que realizar una búsqueda de la clave que cifró cada votante ya que es la misma para todos.
 
-Desencriptación:
-
+\paragraph{Desencriptación}
 El deserializar de votante recibe el string serializado y encriptado.
 
 El deserializar de votante instancia un objeto RSA.
@@ -613,29 +397,29 @@ Se inicializan los atributos del RSA apartir de la clave privada y pública guard
 
 Se desencripta el string que recibió el deserializar de votante a partir del método desencriptar de RSA.
 
-Desencriptar recibe el string serializado y encriptado y procede a desencriptar cada carácter del string casteado a un numero grande.
+Desencriptar recibe el string serializado y encriptado y procede a desencriptar cada caracter del string casteado a un numero grande.
 
 Se realizan las operaciones de campos finitos y se devuelve un numero entero.
 
-Cada número entero (carácter desencriptado) se carga en un string. Al final se devuelve este string desencriptado que es el que el deserializar procede a hidratar.
+Cada número entero (caracter desencriptado) se carga en un string. Al final se devuelve este string desencriptado que es el que el deserializar procede a hidratar.
 
-Criptoanalisis:
 
+
+\subsubsection{Criptoanálisis}
 Se genera una lista de números primos entre 3 y 97 dado que hemos decidido acotar los números primos a este rango.
 
 Se realizan multiplicaciones entre todos los numeros hasta lograr encontrar el par que de como resultado el n de las claves.
 
 El ataque por fuerza bruta es el más sencillo y eficaz dado el pequeño rango de números posibles. Por eso se recomienda que los números primos sean de 1024 bits al menos así dificulta la capacidad de la computadora de realizar operaciones matemáticas en un tiempo razonable o útil.
-\end{verbatim}
-
 
 \newpage
 
-\section{Corridas de prueba}
+
+\section{Corridas de prueba - 1er Etapa}
 
 A continuación se detallan las pruebas realizadas sobre el funcionamiento del programa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con éxito.
 
-Corridas de prueba:
+\paragraph{Corridas de prueba}
 
 \begin{verbatim}
 
@@ -1412,10 +1196,173 @@ Tucuman                                 19991010  Presidente                    
 
 Cantidad de votos en total: 9000
 
+\end{verbatim}
+
+\newpage
 
 
 
+\section{Corridas de prueba - 2da Etapa}
 
+A continuación se detallan las pruebas realizadas sobre el funcionamiento del programa para la segunda etapa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con éxito.
+
+\paragraph{Corridas de prueba}
+
+\begin{verbatim}
+Ejemplo de vulneración de RSA
+
+(Salida para verificar que realmente fue vulnerada la seguridad)
+N en archivo: 3953
+D en archivo: 19
+E en archivo: 403
+
+Ingrese su nombre de usuario: undomiel
+
+Ahora ingrese su contraseña: aragorn
+
+usuario: <undomiel>
+password: <aragorn>
+INGRESO APROBADO
+Bienvenido al sistama de gestion de elecciones
+¿ Desea eliminar la base de datos y comenzar de 0? S/N
+S
+
+Opciones: 
+
+1) Mantener Distritos
+2) Mantener Votantes
+3) Mantener Elecciones
+4) Mantener Cargos
+5) Mantener Listas
+6) Mantener Candidatos
+7) Informar Resultados
+8) Habilitar Elecciones
+9) Habilitar Votantes para elección
+10) salir
+11) Votacion automatica
+12) Criptoanalizar informes
+13) Atacar RSA
+Opcion: 13
+
+Vulnerado!!!
+El p es= 59
+El q es= 67
+N= 3953
+D: 19
+E= 403
+Con estos datos puede crearse el archivo clavePrivada.txt y vulnerarse la seguridad
+(porque las claves se levantan desde el archivo clavePrivada.txt)
+
+================================================================================================
+Ejemplo de vulneracion de Vigeneré con Kasiski.
+
+1) Mantener Distritos
+2) Mantener Votantes
+3) Mantener Elecciones
+4) Mantener Cargos
+5) Mantener Listas
+6) Mantener Candidatos
+7) Informar Resultados
+8) Habilitar Elecciones
+9) Habilitar Votantes para elección
+10) salir
+11) Votacion automatica
+12) Criptoanalizar informes
+13) Atacar RSA
+Opcion: 12
+
+Opciones: 
+
+1) Criptoanalizar informe de Elecciones
+2) Criptoanalizar informe de Listas
+3) Criptoanalizar informe de Distritos
+4) Volver atrás
+Opcion: 1
+
+Clave descifrada: EXITO
+
+********* GENERO EL INFORME POR ELECCION **********
+Fecha     Cargo                         Lista                                   Cantidad de votos
+19990303  Presidente                    Amarilla                                28             
+19990303  Presidente                    Azul                                    15             
+19990303  Presidente                    Blanca                                  13             
+19990303  Presidente                    Cesleste                                10             
+19990303  Presidente                    Marron                                  17             
+19990303  Presidente                    Negra                                   22             
+19990303  Presidente                    Roja                                    13             
+19990303  Presidente                    Rosa                                    20             
+19990303  Presidente                    Turquesa                                17             
+19990303  Presidente                    Verde                                   12             
+19990303  Presidente                    Violeta                                 11             
+19990303  Presidente                    blanco                                  0              
+Opciones: 
+
+1) Criptoanalizar informe de Elecciones
+2) Criptoanalizar informe de Listas
+3) Criptoanalizar informe de Distritos
+4) Volver atrás
+Opcion: 2
+
+Clave descifrada: EXITO
+
+********* GENERO EL INFORME POR LISTA **********
+
+Lista a informar: Roja
+
+Fecha     Nombre de lista                         Cantidad de votos
+19990303  Roja                                    13             
+Cargo principal	Presidente
+Subcargo 1	Vicepresidente
+
+Opciones: 
+
+1) Criptoanalizar informe de Elecciones
+2) Criptoanalizar informe de Listas
+3) Criptoanalizar informe de Distritos
+4) Volver atrás
+Opcion: 3
+
+Clave descifrada: EXITO
+
+********* GENERO EL INFORME POR DISTRITO **********
+
+Distrito a informar: Misiones
+
+Fecha     Cargo                         Lista ganadora                          Cantidad de votos obtenidos
+19830303  Presidente                    empate                                  2              
+19840303  Presidente                    empate                                  2              
+19850303  Presidente                    Negra                                   3              
+19860303  Presidente                    empate                                  2              
+19870303  Presidente                    empate                                  2              
+19880303  Presidente                    Amarilla                                3              
+19890303  Presidente                    empate                                  2              
+19900303  Presidente                    empate                                  1              
+19910303  Presidente                    empate                                  2              
+19920303  Presidente                    Cesleste                                1              
+19930303  Presidente                    Turquesa                                3              
+19940303  Presidente                    empate                                  1              
+19950303  Presidente                    empate                                  1              
+19960303  Presidente                    Roja                                    2              
+19970303  Presidente                    Negra                                   3              
+19980303  Presidente                    Cesleste                                2              
+19990303  Presidente                    Negra                                   2              
+20000303  Presidente                    empate                                  2              
+20010303  Presidente                    Marron                                  3              
+20020303  Presidente                    empate                                  1              
+20030303  Presidente                    Violeta                                 2              
+20040303  Presidente                    Cesleste                                2              
+20050303  Presidente                    Negra                                   2              
+20060303  Presidente                    Rosa                                    4              
+20070303  Presidente                    empate                                  1              
+20080303  Presidente                    Azul                                    2              
+20090303  Presidente                    Amarilla                                2              
+Opciones: 
+
+1) Criptoanalizar informe de Elecciones
+2) Criptoanalizar informe de Listas
+3) Criptoanalizar informe de Distritos
+4) Volver atrás
+Opcion: 
 \end{verbatim}
 
 \newpage
@@ -1438,6 +1385,10 @@ http://www.xm1math.net/texmaker/
 \section{Apendice - Enunciado TP Etapa 1}
 A continuación se agrega el enunciado de la Etapa 1, correspondiente a este Trabajo Práctico.
 \includepdf[pages={1-10}]{./enunc.pdf}
+
+\section{Apendice - Enunciado TP Etapa 2}
+A continuación se agrega el enunciado de la Etapa 2, correspondiente a este Trabajo Práctico.
+\includepdf[pages={1-6}]{./enunc2.pdf}
 
 
 \end{document}
