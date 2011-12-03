@@ -960,6 +960,7 @@ void InterfazAdministrador::mostrarMenuCandidatos(Administrador * administrador)
 			i = 0;
 			if (i != 3){
 				delete registro;
+				delete bLista;
 			};
 			registro = NULL;
 
