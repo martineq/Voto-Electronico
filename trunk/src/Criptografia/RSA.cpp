@@ -115,7 +115,7 @@ void RSA::setD (long long d){
 }
 
 void RSA::generarPyQ() {
-	cout << "Se van a generar p y q" << endl;
+//	cout << "Se van a generar p y q" << endl;
 	srand (time(NULL));
 	bool salir = false;
 	int k = 1;
@@ -140,24 +140,24 @@ void RSA::generarPyQ() {
 	//	this->p=19;
 	//	this->q=7;
 	//	============
-	cout << "P= " << this->p << endl;
-	cout << "Q= " << this->q << endl;
+//	cout << "P= " << this->p << endl;
+//	cout << "Q= " << this->q << endl;
 }
 
 void RSA::calcularN(){
-	cout << "Se va a calcular n" << endl;
+//	cout << "Se va a calcular n" << endl;
 	this->n=p*q;
-	cout << "n= " << this->n << endl;
+//	cout << "N= " << this->n << endl;
 }
 
 void RSA::calcularPhi(){
-	cout << "Se va a calcular phi" << endl;
+//	cout << "Se va a calcular phi" << endl;
 	this->phi=(p-1)*(q-1);
-	cout << "PHI= " << this->phi << endl;
+//	cout << "PHI= " << this->phi << endl;
 }
 
 void RSA::elegirD(){
-	cout << "Se va a calcular d" << endl;
+//	cout << "Se va a calcular d" << endl;
 	bool fin = false;
 	while (!fin){
 		long long  numero = rand () % 100;
@@ -183,7 +183,7 @@ void RSA::inicializarMatriz(){
 	this->fila1[3]=0;
 	this->fila1[4]=1;
 	this->fila1[5]=this->d;
-	cout << "d= " << this->d << endl;
+//	cout << "d= " << this->d << endl;
 }
 
 void RSA::auxiliarE(bool calculoD){
@@ -215,11 +215,11 @@ void RSA::auxiliarE(bool calculoD){
 		}
 		if (this->e<=0) fin = false;
 	}
-	cout << "e = " << this->e << endl;
+//	cout << "E = " << this->e << endl;
 
 }
 void RSA::calcularE() {
-	cout << "Se va a calcular e " << endl;
+//	cout << "Se va a calcular e " << endl;
 	this->auxiliarE(true);
 }
 
@@ -366,17 +366,23 @@ void RSA::atacar(){
 			it2++;
 		}
 	}
-	cout << "ATACADO" << endl;
+	cout << "Vulnerado!!!" << endl;
 	cout << "El p es= " << pAtacado << endl;
 	cout << "El q es= " << qAtacado << endl;
-	RSA* unRSA = new RSA(true);
+	RSA* unRSA = new RSA();
+	for (int i=0; i<6; i++) {
+		unRSA->fila1.push_back(0);
+		unRSA->fila2.push_back(0);
+	}
 	unRSA->setP(pAtacado);
 	unRSA->setQ(qAtacado);
 	unRSA->calcularN();
+	cout << "N= " << this->n << endl;
 	unRSA->calcularPhi();
 	unRSA->setD(this->d);
-	cout << "D: "<<this->d<<endl;
+	cout << "D: "<< this->d <<endl;
 	unRSA->calcularEATAQUE();
+	cout << "E= " << this->e  << endl;
 	delete unRSA;
 	cout << "Con estos datos puede crearse el archivo clavePrivada.txt y vulnerarse la seguridad" << endl;
 }
