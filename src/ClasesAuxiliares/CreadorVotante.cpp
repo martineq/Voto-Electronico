@@ -164,7 +164,7 @@ Votante* CreadorVotante::crearVotante(Configuracion* configuracion, RSA* rsa){
 
     string password = this->getClave();
     Votante* votante = new Votante(dni, nombre+" "+apellido, password, domicilio, distrito);
-    votante->setRSA(rsa->duplicar());
+    votante->setRSA(rsa);
     return votante;
 }
 

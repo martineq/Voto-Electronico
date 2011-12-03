@@ -211,7 +211,6 @@ void Votante::deserializar(string* source){
 
 //	hidrato el dni
     buffer.read((char*)&this->dni,TAM_INT);
-    cout << "DNI: "<<this->dni<<endl;
 //  hidrato el nombre
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
     char* nombreSerializado = new char[cantidadDeBytes];
@@ -224,7 +223,6 @@ void Votante::deserializar(string* source){
     delete pasoAString;
     delete miString;
 
-    cout << "Nombre: "<<this->nombre<<endl;
 //  hidrato el password
     buffer.read((char*)&cantidadDeBytes,TAM_INT);
 //    cout << "CantBytes: "<<cantidadDeBytes<<endl;
