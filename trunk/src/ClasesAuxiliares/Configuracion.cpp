@@ -248,7 +248,7 @@ void Configuracion::mostrarAyuda(){
 }
 
 void Configuracion::mostrarVersion(){
-	cout <<"Versión 1.2"<<endl;
+	cout <<"Versión 2.1"<<endl;
 	// Versíon xx.yy   Con:  xx etapa del TP, yy entrega del TP
 }
 

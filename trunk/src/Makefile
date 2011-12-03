@@ -35,5 +35,11 @@ main :
 	@g++ $(FUENTES) $(FLAGS)
 	@echo 'Terminó la compilación'
 	@echo ' '
+	@echo 'Para correr el programa con la configuración creada por defecto usar:'
+	@echo './voto -c ../ArchivosAuxiliares/config.txt'
+	@echo ' '
+	@echo 'Con User: undomiel'
+	@echo 'y Pass: aragorn'
+	@echo ' '
 
 
