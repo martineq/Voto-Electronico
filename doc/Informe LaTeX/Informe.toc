@@ -27,5 +27,6 @@
 \contentsline {subsection}{\numberline {4.2}Ejecuci\'on del sistema}{9}
 \contentsline {subsubsection}{\numberline {4.2.1}Interfaz de administrador}{9}
 \contentsline {subsubsection}{\numberline {4.2.2}Interfaz de usuario}{10}
-\contentsline {section}{\numberline {5}Corridas de prueba}{10}
-\contentsline {section}{\numberline {6}Apendice - Enunciado TP Etapa 1}{28}
+\contentsline {section}{\numberline {5}Segunda etapa}{10}
+\contentsline {section}{\numberline {6}Corridas de prueba}{18}
+\contentsline {section}{\numberline {7}Apendice - Enunciado TP Etapa 1}{35}
