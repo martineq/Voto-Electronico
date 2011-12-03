@@ -44,12 +44,9 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 
 		manejador.guardarBuffer();
 
-		cout << "D: "<<this->rsa->getD()<<endl;
-		cout << "N: "<<this->rsa->getN()<<endl;
-		cout << "E: "<<this->rsa->getE()<<endl;
-		char trulala;
-		cin >> trulala;
-
+		cout << "Se archiva N: "<<this->rsa->getN()<<endl;
+		cout << "Se archiva D: "<<this->rsa->getD()<<endl;
+		cout << "Se archiva E: "<<this->rsa->getE()<<endl;
 	}
 	else
 	{
@@ -73,8 +70,8 @@ InterfazAdministrador::InterfazAdministrador(Configuracion* configuracion) {
 		this->rsa->setE(*numeroPuntero);
 		delete numeroPuntero;
 
-		cout << "D en archivo: "<<this->rsa->getD()<<endl;
 		cout << "N en archivo: "<<this->rsa->getN()<<endl;
+		cout << "D en archivo: "<<this->rsa->getD()<<endl;
 		cout << "E en archivo: "<<this->rsa->getE()<<endl;
 
 
@@ -91,11 +88,6 @@ void InterfazAdministrador::ingresoAdministrador(Administrador * administrador){
 	cout <<endl;
 	cout << "usuario: <"<<usuario<<">"<<endl;
 	cout << "password: <"<<password<<">"<<endl;
-
-//	========================
-	usuario="undomiel";
-	password="aragorn";
-//	========================
 
 	if (administrador->acceder(usuario,password)){
 		cout << "INGRESO APROBADO" << endl;
