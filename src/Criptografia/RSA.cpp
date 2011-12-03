@@ -173,6 +173,10 @@ void RSA::elegirD(){
 	//	PARA PRUEBA
 	//	this->d=73;
 	//	===========
+	this->inicializarMatriz();
+}
+
+void RSA::inicializarMatriz(){
 	this->fila1[0]=1;
 	this->fila1[1]=0;
 	this->fila1[2]=this->phi;
@@ -182,11 +186,10 @@ void RSA::elegirD(){
 	cout << "d= " << this->d << endl;
 }
 
-void RSA::calcularE() {
-	cout << "Se va a calcular e " << endl;
+void RSA::auxiliarE(bool calculoD){
 	bool fin = false;
 	while (!fin){
-		this->elegirD();
+		if (calculoD) this->elegirD();
 		while (!fin){
 			long long Q = this->fila1[2]/this->fila1[5];
 			this->fila2[0]=this->fila1[3];
@@ -213,7 +216,20 @@ void RSA::calcularE() {
 		if (this->e<=0) fin = false;
 	}
 	cout << "e = " << this->e << endl;
+
 }
+void RSA::calcularE() {
+	cout << "Se va a calcular e " << endl;
+	this->auxiliarE(true);
+}
+
+
+
+void RSA::calcularEATAQUE() {
+	this->inicializarMatriz();
+	this->auxiliarE(false);
+}
+
 
 long long RSA::encriptar(int dato){
 //	cout << "Se va a encriptar " << dato << endl;
@@ -358,7 +374,9 @@ void RSA::atacar(){
 	unRSA->setQ(qAtacado);
 	unRSA->calcularN();
 	unRSA->calcularPhi();
-	unRSA->calcularE();
+	unRSA->setD(this->d);
+	cout << "D: "<<this->d<<endl;
+	unRSA->calcularEATAQUE();
 	delete unRSA;
 	cout << "Con estos datos puede crearse el archivo clavePrivada.txt y vulnerarse la seguridad" << endl;
 }
