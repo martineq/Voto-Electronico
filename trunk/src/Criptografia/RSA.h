@@ -33,6 +33,9 @@ private:
 	void elegirD();
 	long long aBinario(long long);
 	void generarListaDePrimos();
+	void calcularEATAQUE();
+	void inicializarMatriz();
+	void auxiliarE(bool calculoD);
 public:
 	RSA(bool inicializar = false);
 	/*
