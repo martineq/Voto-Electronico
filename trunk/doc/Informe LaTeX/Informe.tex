@@ -3,24 +3,24 @@
 \usepackage{graphicx}
 \usepackage[ansinew]{inputenc}
 \usepackage[spanish]{babel}
-\usepackage{fancyhdr} % Para tener cabecera y pie de p·gina con un estilo personalizado:
+\usepackage{fancyhdr} % Para tener cabecera y pie de p√°gina con un estilo personalizado:
 \usepackage{pdfpages} % Para importar PDF 
 
-\title{		\textbf{Trabajo Pr·ctico - Etapa 1 \\ \textit{Voto ElectrÛnico}} }
+\title{		\textbf{Trabajo Pr√°ctico - Etapa 1 \\ \textit{Voto Electr√≥nico}} }
 
-\author{	MartÌn Hern·n GÛmez, \textit{PadrÛn Nro. 85.780}                     \\
+\author{	Mart√≠n Hern√°n G√≥mez, \textit{Padr√≥n Nro. 85.780}                     \\
             \texttt{martinhgomez@yahoo.com.ar}                                              \\[2.5ex]
-            Ignacio Marambio Cat·n, \textit{PadrÛn Nro. 82.694}                     \\
+            Ignacio Marambio Cat√°n, \textit{Padr√≥n Nro. 82.694}                     \\
             \texttt{ignacio.marambio@gmail.com}                                             \\[2.5ex]
-            MartÌn Eduardo Quiroz, \textit{PadrÛn Nro. 86.012}                     \\
-            \texttt{martinedq@yahoo.com.ar}                                              \\[2.5ex]
-            Daniel Shlufman, \textit{PadrÛn Nro. 88.040}                     \\
+            aaa, \textit{Padr√≥n Nro. 00000}                     \\
+            \texttt{a@a.com }                                              \\[2.5ex]
+            Daniel Shlufman, \textit{Padr√≥n Nro. 88.040}                     \\
             \texttt{incorporado@gmail.com}                                              \\[2.5ex]
-            Lucas Damian Tarcetti, \textit{PadrÛn Nro. 87.165}                     \\
+            Lucas Damian Tarcetti, \textit{Padr√≥n Nro. 87.165}                     \\
             \texttt{lucas.tarcetti@yahoo.com.ar}                                              \\[2.5ex]
             \normalsize{2do. Cuatrimestre de 2011}                                      \\
-            \normalsize{75.06 OrganizaciÛn de Datos $-$ C·tedra Lic. Arturo Servetto}  \\
-            \normalsize{Facultad de IngenierÌa, Universidad de Buenos Aires}            \\
+            \normalsize{75.06 Organizaci√≥n de Datos $-$ C√°tedra Lic. Arturo Servetto}  \\
+            \normalsize{Facultad de Ingenier√≠a, Universidad de Buenos Aires}            \\
        }
 \date{26/10/11}
 
@@ -29,28 +29,28 @@
 \begin{document}
 
 \maketitle
-\thispagestyle{empty}   % quita el n˙mero en la primer p·gina
+\thispagestyle{empty}   % quita el n√∫mero en la primer p√°gina
 \newpage
 
 \tableofcontents
 \newpage
 
 
-\pagestyle{fancy} % A partir de ac· Encabezados y pes de pagina con formato
-\section{IntroducciÛn}
+\pagestyle{fancy} % A partir de ac√° Encabezados y pes de pagina con formato
+\section{Introducci√≥n}
 
-El trabajo consiste crear una aplicaciÛn capaz de mantener un sistema de voto electrÛnico.
+El trabajo consiste crear una aplicaci√≥n capaz de mantener un sistema de voto electr√≥nico.
 
 \subsection{Objetivos}
 
-El objetivo de este trabajo pr·ctico es que la aplicaciÛn sea capaz de mantener informaciÛn sobre las entidades que componen el sistema de votaciones (votantes, elecciones, candidatos, etc.), y de proveer la posibilidad a un votante de emitir su voto para la correspondiente elecciÛn.
+El objetivo de este trabajo pr√°ctico es que la aplicaci√≥n sea capaz de mantener informaci√≥n sobre las entidades que componen el sistema de votaciones (votantes, elecciones, candidatos, etc.), y de proveer la posibilidad a un votante de emitir su voto para la correspondiente elecci√≥n.
 
 
-\section{DocumentaciÛn tÈcnica}
+\section{Documentaci√≥n t√©cnica}
 
 
-\subsection{ElecciÛn del lenguaje de programaciÛn}
-La resoluciÛn del trabajo pr·ctico debe ser· realizada en plataforma Linux y en lenguaje C++, aprovechando el uso de la programaciÛn orientada a objetos.
+\subsection{Elecci√≥n del lenguaje de programaci√≥n}
+La resoluci√≥n del trabajo pr√°ctico debe ser√° realizada en plataforma Linux y en lenguaje C++, aprovechando el uso de la programaci√≥n orientada a objetos.
 
 \subsection{Entidades}
 
@@ -65,17 +65,17 @@ La resoluciÛn del trabajo pr·ctico debe ser· realizada en plataforma Linux y en 
 \end{itemize}
 
 \subsection{Estructuras de datos}
-	Las estructuras principales elegidas para este trabajo han sido elegidas seg˙n la necesidad de cada entidad. Las mismas son:
+	Las estructuras principales elegidas para este trabajo han sido elegidas seg√∫n la necesidad de cada entidad. Las mismas son:
 
 \begin{itemize}
-\item ¡rbol B+
-\item DispersiÛn Extensible
+\item √Årbol B+
+\item Dispersi√≥n Extensible
 \item Archivos de Bloques
 \item Registros Variables
 \end{itemize}	
 	
 \subsection{Funcionalidades}
-En el ·mbito del administrador se encuentran las siguientes funcionalidades:
+En el √°mbito del administrador se encuentran las siguientes funcionalidades:
 
 \begin{itemize}
 \item Mantener Distritos
@@ -87,64 +87,64 @@ En el ·mbito del administrador se encuentran las siguientes funcionalidades:
 \item Informar Resultados
 \end{itemize}	
 
-\subsection{DescripciÛn de la arquitectura utilizada}
+\subsection{Descripci√≥n de la arquitectura utilizada}
 
-Para una mejor observaciÛn de los diagramas de clases de la arquitectura utilizada en el programa, las mismas se encuentran documentadas en un archivo externo junto con su descripciÛn, se puede acceder a el a travÈs del archivo `00 Index.html', el mismo se encuentra en la carpeta `DocumentaciÛn'. Desde allÌ se puede navegar a travÈs de todas las clases existentes.
+Para una mejor observaci√≥n de los diagramas de clases de la arquitectura utilizada en el programa, las mismas se encuentran documentadas en un archivo externo junto con su descripci√≥n, se puede acceder a el a trav√©s del archivo `00 Index.html', el mismo se encuentra en la carpeta `Documentaci√≥n'. Desde all√≠ se puede navegar a trav√©s de todas las clases existentes.
 
 
-\subsection{DescripciÛn de cada clase utilizada}
+\subsection{Descripci√≥n de cada clase utilizada}
 
-    A continuaciÛn se enumeran las principales clases de la aplicaciÛn, no refirÈndonos a sus nombres de archivo sino con su nombre conceptual.
+    A continuaci√≥n se enumeran las principales clases de la aplicaci√≥n, no refir√©ndonos a sus nombres de archivo sino con su nombre conceptual.
 
 \begin{itemize}
-\item Clase ArbolBMas: Se utiliza para guardar las listas de votaciÛn y para la confecciÛn de informes.
-\item Clase DispersiÛn: Se utiliza para almacenar todas las dem·s entidades que no sean las listas de votaciÛn.
-\item Clase Archivo en Bloques: Se usa para darle un sustento en disco a las clases de ¡rbol B+ y de DispesiÛn. Ofrece una persistencia en disco en un archivo de bloques.
-\item Clases de Entidades: Las mismas se utilizan para instanciar cada entidad necesaria al momento de crear una votaciÛn. Las mismas incluyen: Distrito, Votante, Eleccion, Lista, Candidato, Cargo, Administrador.
+\item Clase ArbolBMas: Se utiliza para guardar las listas de votaci√≥n y para la confecci√≥n de informes.
+\item Clase Dispersi√≥n: Se utiliza para almacenar todas las dem√°s entidades que no sean las listas de votaci√≥n.
+\item Clase Archivo en Bloques: Se usa para darle un sustento en disco a las clases de √Årbol B+ y de Dispesi√≥n. Ofrece una persistencia en disco en un archivo de bloques.
+\item Clases de Entidades: Las mismas se utilizan para instanciar cada entidad necesaria al momento de crear una votaci√≥n. Las mismas incluyen: Distrito, Votante, Eleccion, Lista, Candidato, Cargo, Administrador.
 \end{itemize}	
 
 
-\subsection{JustificaciÛn de uso de cada clase utilizada}
-    El uso del \textit{¡rbol B+} se eligiÛ principalmente debido a la opciÛn de poder hacer b˙squedas parciales y adem·s a la ventaja de poder acceder secuencialmente a los datos de forma ordenada.
-    El uso del \textit{archivo de dispersiÛn} se eligiÛ debido a que usa la menor cantidad de accesos posibles (solo un acceso) haciendo que se optimice el uso de estos archivos, al ser los mas accedidos en disco.
-    El uso del \textit{archivo de bloques} se eligiÛ por ser el m·s compatible con respecto a la persistencia del ¡rbol B+ y del archivo de dispersiÛn, haciendo mas efectivo el uso de los mismos.
+\subsection{Justificaci√≥n de uso de cada clase utilizada}
+    El uso del \textit{√Årbol B+} se eligi√≥ principalmente debido a la opci√≥n de poder hacer b√∫squedas parciales y adem√°s a la ventaja de poder acceder secuencialmente a los datos de forma ordenada.
+    El uso del \textit{archivo de dispersi√≥n} se eligi√≥ debido a que usa la menor cantidad de accesos posibles (solo un acceso) haciendo que se optimice el uso de estos archivos, al ser los mas accedidos en disco.
+    El uso del \textit{archivo de bloques} se eligi√≥ por ser el m√°s compatible con respecto a la persistencia del √Årbol B+ y del archivo de dispersi√≥n, haciendo mas efectivo el uso de los mismos.
 
 \subsection{Archivos auxiliares}
-Definiciones lÛgicas y fÌsicas de todos los archivos que se utilicen (datos maestros, Ìndices, trabajo, control, etc).DescripciÛn de la organizaciÛn de cada uno de los archivos.  Para quÈ se utiliza. Por quÈ se utiliza (base teÛrica).
+Definiciones l√≥gicas y f√≠sicas de todos los archivos que se utilicen (datos maestros, √≠ndices, trabajo, control, etc).Descripci√≥n de la organizaci√≥n de cada uno de los archivos.  Para qu√© se utiliza. Por qu√© se utiliza (base te√≥rica).
 
 Dentro de los archivos utilizados para el funcionamiento del programa disponemos de las siguientes estructuras auxiliares:
 
 \begin{itemize}
-\item Archivo de configuraciÛn: El mismo se usa para obtener las rutas de los archivos de dispersiÛn, archivo del ·rbol, tamaÒos de cubetas y de nodos.
-\item Õndice: El Ìndice se usa para la obtenciÛn de los informes de votaciones por distintos criterios de una misma base de datos.
-\item Archivo de control: Se utiliza para poder persistir datos referentes a las estructuras de control de las estructuras, como por ejemplo la tabla de dispersiÛn dentro de la estructuras de dispersiÛn.
+\item Archivo de configuraci√≥n: El mismo se usa para obtener las rutas de los archivos de dispersi√≥n, archivo del √°rbol, tama√±os de cubetas y de nodos.
+\item √çndice: El √≠ndice se usa para la obtenci√≥n de los informes de votaciones por distintos criterios de una misma base de datos.
+\item Archivo de control: Se utiliza para poder persistir datos referentes a las estructuras de control de las estructuras, como por ejemplo la tabla de dispersi√≥n dentro de la estructuras de dispersi√≥n.
 \item Archivo de password: Guarda el \textit{user} y \textit{pass} perteneciente al administrador de votos.
 \end{itemize}	
 
-\subsection{PlanificaciÛn de tareas}
-PlanificaciÛn (identificaciÛn de tareas, estimaciÛn de duraciÛn y asignaciÛn)
+\subsection{Planificaci√≥n de tareas}
+Planificaci√≥n (identificaci√≥n de tareas, estimaci√≥n de duraci√≥n y asignaci√≥n)
 
-A grandes rasgos la planificaciÛn del proyecto se realizÛ dentro de las cinco semanas la siguiente manera:
+A grandes rasgos la planificaci√≥n del proyecto se realiz√≥ dentro de las cinco semanas la siguiente manera:
 
 \begin{itemize}
-\item Semana 1: Planeamiento del problema, elecciÛn de las distintas estructuras para las entidades existentes, configuraciÛn del sistema operativo, herramientas de compilaciÛn, IDE's, etc. Para su correcto funcionamiento en el sistema Linux. DuraciÛn aproximada: 1 semana.
-\item Semana 2: ConstrucciÛn de las entidades, creaciÛn de sus respectivas clases (1 semana). CreaciÛn de la clase encargada del manejo en disco, manejador de archivos (1 semana). Comienzo de creaciÛn de la clase de ¡rbol B+ (4 semanas).
-\item Semana 3: Comienzo de creaciÛn de la clase de DispersiÛn (3 semanas). CreaciÛn de la clase encargada del archivo de bloques (2 semanas). CreaciÛn de clase bucket y creaciÛn de clase nodo.
-\item Semana 4: CreaciÛn de pruebas individuales e integrales (1 semana). SerializaciÛn e hidrataciÛn de datos (1 semana). CreaciÛn del archivo de buckets (1 semana).
-\item Semana 5: IntegraciÛn de los distintos mÛdulos (1 semana). CreaciÛn de la lÛgica de votaciÛn (1 semana). ImplementaciÛn de una interfaz para el usuario (1 semana).
+\item Semana 1: Planeamiento del problema, elecci√≥n de las distintas estructuras para las entidades existentes, configuraci√≥n del sistema operativo, herramientas de compilaci√≥n, IDE's, etc. Para su correcto funcionamiento en el sistema Linux. Duraci√≥n aproximada: 1 semana.
+\item Semana 2: Construcci√≥n de las entidades, creaci√≥n de sus respectivas clases (1 semana). Creaci√≥n de la clase encargada del manejo en disco, manejador de archivos (1 semana). Comienzo de creaci√≥n de la clase de √Årbol B+ (4 semanas).
+\item Semana 3: Comienzo de creaci√≥n de la clase de Dispersi√≥n (3 semanas). Creaci√≥n de la clase encargada del archivo de bloques (2 semanas). Creaci√≥n de clase bucket y creaci√≥n de clase nodo.
+\item Semana 4: Creaci√≥n de pruebas individuales e integrales (1 semana). Serializaci√≥n e hidrataci√≥n de datos (1 semana). Creaci√≥n del archivo de buckets (1 semana).
+\item Semana 5: Integraci√≥n de los distintos m√≥dulos (1 semana). Creaci√≥n de la l√≥gica de votaci√≥n (1 semana). Implementaci√≥n de una interfaz para el usuario (1 semana).
 \end{itemize}
 
 
 \subsection{Bugs conocidos}
 
-A continuaciÛn se enumeran ciertas situaciones donde el programa podrÌa presentar dificultades en su proceso:
+A continuaci√≥n se enumeran ciertas situaciones donde el programa podr√≠a presentar dificultades en su proceso:
 
 \begin{itemize}
 \item La fechas deben tener tener el formato: aaaa/mm/dd para poder procesarse correctamente.
-\item Si el archivo de configuraciÛn no tiene el delimitador `//' dentro del archivo, el mismo no parsea ning˙n dato, ya que toma al archivo entero como comentario
-\item El archivo de bloques debido a su estructura interna debe tener un tamaÒo de bloque que sea m˙ltiplo de 4 bytes, si no es de esta forma podrÌa referenciar erroneamente a un bloque. Esto se solucionÛ validando el tamaÒo de bloque al iniciar un archivo.
-\item En una elecciÛn determianda se podrÌa agregar cualquier distrito sin que se verifique si realmente existe.
-\item El borrado de alg˙n archivo de control, configuraciÛn y/o datos en tiempo de ejecuciÛn llevar· a una malfunciÛn del programa.
+\item Si el archivo de configuraci√≥n no tiene el delimitador `//' dentro del archivo, el mismo no parsea ning√∫n dato, ya que toma al archivo entero como comentario
+\item El archivo de bloques debido a su estructura interna debe tener un tama√±o de bloque que sea m√∫ltiplo de 4 bytes, si no es de esta forma podr√≠a referenciar erroneamente a un bloque. Esto se solucion√≥ validando el tama√±o de bloque al iniciar un archivo.
+\item En una elecci√≥n determianda se podr√≠a agregar cualquier distrito sin que se verifique si realmente existe.
+\item El borrado de alg√∫n archivo de control, configuraci√≥n y/o datos en tiempo de ejecuci√≥n llevar√° a una malfunci√≥n del programa.
 \end{itemize}
 
 
@@ -152,111 +152,111 @@ A continuaciÛn se enumeran ciertas situaciones donde el programa podrÌa presenta
 
 \subsubsection{Archivos de Control}
 
-Se encuentran todos dentro de un directorio, especificado a travÈs de un archivo de configuraciÛn de la aplicaciÛn, y pueden tener jerarquÌa de subdirectorios interna. Es donde se guarda toda la informaciÛn necesaria para poder funcionar.
+Se encuentran todos dentro de un directorio, especificado a trav√©s de un archivo de configuraci√≥n de la aplicaci√≥n, y pueden tener jerarqu√≠a de subdirectorios interna. Es donde se guarda toda la informaci√≥n necesaria para poder funcionar.
 
 \subsubsection{Archivos con resultados}
 
-Como respuesta a toda interacciÛn, el sistema generar· archivos de registro de operaciones (LOGs) en el directorio donde se llame a la aplicaciÛn.
+Como respuesta a toda interacci√≥n, el sistema generar√° archivos de registro de operaciones (LOGs) en el directorio donde se llame a la aplicaci√≥n.
 
-\section{Parte teÛrica}
+\section{Parte te√≥rica}
 
-En la siguiente secciÛn se enumeran distintos conceptos teÛricos acerca de las estructuras usadas en la resoluciÛn del TP.
+En la siguiente secci√≥n se enumeran distintos conceptos te√≥ricos acerca de las estructuras usadas en la resoluci√≥n del TP.
 
-\subsection{FÌsica - OrganizaciÛn}
+\subsection{F√≠sica - Organizaci√≥n}
 
-\subsubsection{OrganizaciÛn de registros}
+\subsubsection{Organizaci√≥n de registros}
 \begin{itemize}
-\item La longitud de un registro y/o de un campo variable se delimita con el uso de un indicador de longitud, el cual se antepone a los datos pertenecientes al registro o campo. De esta forma se puede conocer donde termina la secciÛn de datos.
-\item En todos los casos se guarda como mÌnimo la informaciÛn correspondiente a la longitud del segmento de datos pudiendo, en ciertos casos, guardarse mas informaciÛn, seg˙n sea la estructura.
+\item La longitud de un registro y/o de un campo variable se delimita con el uso de un indicador de longitud, el cual se antepone a los datos pertenecientes al registro o campo. De esta forma se puede conocer donde termina la secci√≥n de datos.
+\item En todos los casos se guarda como m√≠nimo la informaci√≥n correspondiente a la longitud del segmento de datos pudiendo, en ciertos casos, guardarse mas informaci√≥n, seg√∫n sea la estructura.
 \end{itemize}
 
 
 \subsubsection{Consideraciones acerca del Archivo de Bloques}
 
 \begin{enumerate}
-\item Los bloques tienen tamaÒo fijo, determinado por primera y ˙nica vez al crearse el archivo.
+\item Los bloques tienen tama√±o fijo, determinado por primera y √∫nica vez al crearse el archivo.
 \item Existen 4 tipos de bloques: Data, Metadata, Removed y Head
-\item Head: Existe un solo bloque de este tipo por archivo y siempre se ubica al principo del mismo (en la posiciÛn 0).
+\item Head: Existe un solo bloque de este tipo por archivo y siempre se ubica al principo del mismo (en la posici√≥n 0).
 
 El bloque Head tiene en su estructura: 
 
 $\vert$currmetadata (int)$\vert$maxblocknum(int)$\vert$blocksize(int)$\vert$ Espacio sin uso (int)$\vert$...
 ...$\vert$Espacio sin uso (int)$\vert$  
-\item Data: Este bloque se usa Ìntegramente para guardar datos del usuario
+\item Data: Este bloque se usa √≠ntegramente para guardar datos del usuario
 
 El bloque Data tiene en su estructura: 
 
 $\vert$datos(int)$\vert$...$\vert$datos(int)$\vert$...$\vert$datos(int)$\vert$
 (Todo el espacio reservado para datos, sin metadata).
-\item Metadata: Bloque que se encarga del control de los bloques de datos borrados (Removed). AquÌ se guardan las referencias a bloques removed.
+\item Metadata: Bloque que se encarga del control de los bloques de datos borrados (Removed). Aqu√≠ se guardan las referencias a bloques removed.
 
 El bloque de Metadata tiene en su estructura: 
 
 $\vert$ Metadata Anterior(int)$\vert$ currPos(int)$\vert$ ID bloqLibre (int)$\vert$ ...$\vert$ ID bloqLibre (int)$\vert$ 
-\item Removed: Son bloques de datos que han sido borrados por el usuario, no se utiliza ning˙n atributo para identificarlos, los mismos est·n referenciados en el bloque de metadata como 'libre'.
+\item Removed: Son bloques de datos que han sido borrados por el usuario, no se utiliza ning√∫n atributo para identificarlos, los mismos est√°n referenciados en el bloque de metadata como 'libre'.
 \item Internamente todos los atributos de metadata son manejados como int. En el caso donde desde afuera se piden los bloques de datos el bloque se obtiene como un char*.
-\item El currpos empieza desde el primer byte del bloque, incluyendo los bytes cabezeras. O sea que el 1er dato de metadata est· en el byte 8 (2*sizeof(int))
+\item El currpos empieza desde el primer byte del bloque, incluyendo los bytes cabezeras. O sea que el 1er dato de metadata est√° en el byte 8 (2*sizeof(int))
 \item Cada vez que cambia el 'currmetadata' o 'maxblocknum' se escribe en disco con serializehead (que escribe 2 veces en disco por cada vez que se lo llama)
 \item Cada vez que cambia el 'currpos' se escribe en disco (se escribe en el bloque de metadata). Esto sucede al pedir un bloque nuevo o al borrar un bloque de datos
-\item Est· contemplado el caso donde el metadata actual no tiene bloques libres, y entonces este mismo pasa a ser un bloque disponible (Caso lÌmite).
-\item Est· contemplado el caso donde borro un data, pero el metadata actual est· totalmente lleno, pasando el bloque 'D' a ser un bloque 'M' (Caso lÌmite).
-\item Si pido un metadata nuevo tengo que ver si es el 1ro, si esto es asÌ, su valor "anterior" (posiciÛn [1] dentro del bloque de int's) tiene que ser = Cero
-\item No hace falta un getblock de 'R' porque esos bloques siempre van a ser accedidos a travÈs de newblock (con par·metro 'D' o 'M')
-\item No hace falta un newblock de 'R' porque esos bloques siempre van a ser creados a travÈs de delblock
-\item En una primera instancia, se propuso etiquetar cada bloque para su identificaciÛn. Pero luego, para simplificar el funcionamiento y para no invadir espacio en el bloque de Datos, se optÛ por no usar etiquetas en los bloques.
+\item Est√° contemplado el caso donde el metadata actual no tiene bloques libres, y entonces este mismo pasa a ser un bloque disponible (Caso l√≠mite).
+\item Est√° contemplado el caso donde borro un data, pero el metadata actual est√° totalmente lleno, pasando el bloque 'D' a ser un bloque 'M' (Caso l√≠mite).
+\item Si pido un metadata nuevo tengo que ver si es el 1ro, si esto es as√≠, su valor "anterior" (posici√≥n [1] dentro del bloque de int's) tiene que ser = Cero
+\item No hace falta un getblock de 'R' porque esos bloques siempre van a ser accedidos a trav√©s de newblock (con par√°metro 'D' o 'M')
+\item No hace falta un newblock de 'R' porque esos bloques siempre van a ser creados a trav√©s de delblock
+\item En una primera instancia, se propuso etiquetar cada bloque para su identificaci√≥n. Pero luego, para simplificar el funcionamiento y para no invadir espacio en el bloque de Datos, se opt√≥ por no usar etiquetas en los bloques.
 \end{enumerate}
 
 
-\subsection{Õndices - B˙squeda}
+\subsection{√çndices - B√∫squeda}
 
 \subsubsection{Hashing}
-FunciÛn de hashing utilizada. Criterio de elecciÛn. 
+Funci√≥n de hashing utilizada. Criterio de elecci√≥n. 
 
-Para una r·pida recuperaciÛn de la informaciÛn se decide organizar dicho archivo con el mÈtodo de dispersiÛn extensible. Se utiliza un hashing extensible de valores sufijos. La funciÛn de hashing utilizada es f(x) = (x) mod (tamaÒo de tabla) 
+Para una r√°pida recuperaci√≥n de la informaci√≥n se decide organizar dicho archivo con el m√©todo de dispersi√≥n extensible. Se utiliza un hashing extensible de valores sufijos. La funci√≥n de hashing utilizada es f(x) = (x) mod (tama√±o de tabla) 
 
 
-\subsubsection{¡rbol B+}
-Nuestro arbol B+ es relativamente genÈrico, a excepciÛn de la clave de ordenamiento que es invariablemente un string, los datos son una entidad genÈrica y en general no me interesa que se guarda ahi.
+\subsubsection{√Årbol B+}
+Nuestro arbol B+ es relativamente gen√©rico, a excepci√≥n de la clave de ordenamiento que es invariablemente un string, los datos son una entidad gen√©rica y en general no me interesa que se guarda ahi.
 
-Est· implementado de tal manera que tambiÈn esta separado casi completamente de la parte que lidia con el almacenamiento teniendo 2 precondiciones ineludibles. el lugar donde se encuentra alojada la raÌz debe ser invariante y las estructuras que representan a los punteros a los bloques deben ser representadas como enteros.
+Est√° implementado de tal manera que tambi√©n esta separado casi completamente de la parte que lidia con el almacenamiento teniendo 2 precondiciones ineludibles. el lugar donde se encuentra alojada la ra√≠z debe ser invariante y las estructuras que representan a los punteros a los bloques deben ser representadas como enteros.
 
-La separaciÛn se logrÛ mediante la clase ffile y tuvo tanto Èxito que con mÌnimas modificaciones fue posible pasar de un ·rbol cuyo almacenamiento era la memoria a otro cuyo almacenamiento era un archivo de bloques.
+La separaci√≥n se logr√≥ mediante la clase ffile y tuvo tanto √©xito que con m√≠nimas modificaciones fue posible pasar de un √°rbol cuyo almacenamiento era la memoria a otro cuyo almacenamiento era un archivo de bloques.
 
-El ·rbol esta implementado en 4 clases diferentes, la ya mencionada ffile, bplustree, inner  $\_$node y leaf$\_$node estando estas ultimas intimamente relacionadas de manera tal que una esta declarada como friend de la otra. Esta decision se tomo para no exponer cosas criticas de las clases que necesariamente tenian que usarse entre inner$\_$node y leaf$\_$node.
+El √°rbol esta implementado en 4 clases diferentes, la ya mencionada ffile, bplustree, inner  $\_$node y leaf$\_$node estando estas ultimas intimamente relacionadas de manera tal que una esta declarada como friend de la otra. Esta decision se tomo para no exponer cosas criticas de las clases que necesariamente tenian que usarse entre inner$\_$node y leaf$\_$node.
 
 En memoria, estas clases utilizan un vector de pares de enteros y cadenas de caracteres para los nodos internos (la clase inner$\_$node) y pares de cadenas y vectores en las hojas (la clase leaf$\_$node). Estas 2 clases, al serializarse se transforman en una cadena larga de caracteres (que se guarda en un vector) representada por pares longitud, datos. Ademas a esto se agrega un entero mas que representa la cantidad de pares, longitud, datos que existen en la cadena en adicion a un encabezado que es una I o una L segun sea el nodo un nodo interno o una hoja y un par de enteros mas que representan el nodo que contiene los datos cuya clave es mayor al nodo actual o el nodo que tiene datos menor al primer par del nodo.
 
-En este momento, el ·rbol se comporta como un ·rbol B+ cl·sico para los agregados pero no hace rebalanceos en caso de los borrados.
+En este momento, el √°rbol se comporta como un √°rbol B+ cl√°sico para los agregados pero no hace rebalanceos en caso de los borrados.
 
-Mas alla de los enteros que tienen tamaÒo fijo, el resto de las estructuras son dinamicas. El objetivo de esta implementacion fue utilizar la mayor cantidad de las funciones de la STL que fueran posible y, como desafortunadamente, la STL, si bien tiene una funcion de busqueda que funciona en contenedores como los vectores utilizados para almacenar los datos en la memoria de este ·rbol, Èsta solo devuelve si un dato se encuentra o no en el contenedor pero no su posiciÛn o sus datos por lo que la b˙squeda dentro de los nodos es lineal.
+Mas alla de los enteros que tienen tama√±o fijo, el resto de las estructuras son dinamicas. El objetivo de esta implementacion fue utilizar la mayor cantidad de las funciones de la STL que fueran posible y, como desafortunadamente, la STL, si bien tiene una funcion de busqueda que funciona en contenedores como los vectores utilizados para almacenar los datos en la memoria de este √°rbol, √©sta solo devuelve si un dato se encuentra o no en el contenedor pero no su posici√≥n o sus datos por lo que la b√∫squeda dentro de los nodos es lineal.
 
-Esto tambiÈn fue una pre condicion para poder implementar la funciÛn que luego de una b˙squeda devuelva el dato inmediatamente mayor al ultimo devuelto.
+Esto tambi√©n fue una pre condicion para poder implementar la funci√≥n que luego de una b√∫squeda devuelva el dato inmediatamente mayor al ultimo devuelto.
 
-Para ordenar los datos en memoria, sin embargo si se utiliza la funciÛn sort() del grupo de funciones incluidas en $<$algorithms$>$
+Para ordenar los datos en memoria, sin embargo si se utiliza la funci√≥n sort() del grupo de funciones incluidas en $<$algorithms$>$
 
-\section{DocumentaciÛn de usuario}
+\section{Documentaci√≥n de usuario}
 
-\subsection{InstalaciÛn del sistema}
+\subsection{Instalaci√≥n del sistema}
 
-La instalaciÛn usar· un archivo makefile, el cual realizar· automaticamente toda la operaciÛn de compilaciÛn de todos los archivos de cÛdigo fuente, recorriendo todas las subcarpetas necesarias para una operaciÛn exitosa.
+La instalaci√≥n usar√° un archivo makefile, el cual realizar√° automaticamente toda la operaci√≥n de compilaci√≥n de todos los archivos de c√≥digo fuente, recorriendo todas las subcarpetas necesarias para una operaci√≥n exitosa.
 
-Para la instalaciÛn del sistema debemos descomprimir el archivo conteniendo el cÛdigo fuente en la carpeta donde se desea realizar la misma. Una vez realizada la descompresiÛn debemos ejecutar por consola, situados en la ruta elegida, el comando \textit{make} el cual compilar· todos los archivos fuente y como consecuencia obtendremos el archivo ejecutable listo para usar.
+Para la instalaci√≥n del sistema debemos descomprimir el archivo conteniendo el c√≥digo fuente en la carpeta donde se desea realizar la misma. Una vez realizada la descompresi√≥n debemos ejecutar por consola, situados en la ruta elegida, el comando \textit{make} el cual compilar√° todos los archivos fuente y como consecuencia obtendremos el archivo ejecutable listo para usar.
 
-\subsection{EjecuciÛn del sistema}
+\subsection{Ejecuci√≥n del sistema}
 
-    Una vez creado el archivo ejecutable debemos iniciar el programa\footnote{Para iniciar el programa, al administrador se debe autentificar. User: undomiel, Pass: aragorn} pasando por par·metro la ruta del archivo de configuraciÛn, esto es un requisito obligatorio para comenzar con el programa, mediante los argumentos -c  $<$rutaArchivoConfiguraciÛn$>$. De esta forma, desde el directorio donde se creÛ el ejecutable, se inicia el sistema:
+    Una vez creado el archivo ejecutable debemos iniciar el programa\footnote{Para iniciar el programa, al administrador se debe autentificar. User: undomiel, Pass: aragorn} pasando por par√°metro la ruta del archivo de configuraci√≥n, esto es un requisito obligatorio para comenzar con el programa, mediante los argumentos -c  $<$rutaArchivoConfiguraci√≥n$>$. De esta forma, desde el directorio donde se cre√≥ el ejecutable, se inicia el sistema:
 
 \begin{quote}
  ./voto -c ../ArchivosAuxiliares/config.txt
 \end{quote}
-\textbf{Nota:} -c es el flag para ubicar el archivo de configuraciÛn. Para ver las dem·s opciones podemos ingreasar al programa con -h
+\textbf{Nota:} -c es el flag para ubicar el archivo de configuraci√≥n. Para ver las dem√°s opciones podemos ingreasar al programa con -h
 
-A su vez el archivo de configuraciÛn proveer· todos los requisitos necesarios para ubicar los dem·s archivos relativos al programa, ya sean archivos de datos, control, configuraciÛn o el archivo de password.
+A su vez el archivo de configuraci√≥n proveer√° todos los requisitos necesarios para ubicar los dem√°s archivos relativos al programa, ya sean archivos de datos, control, configuraci√≥n o el archivo de password.
 
 
 \subsubsection{Interfaz de administrador}
 
-Al iniciar el programa el administrador de la votaciÛn deber· autenticarse para poder entrar al sistema, una vez ingresado tendr· un men˙ con opciones donde podr·:
+Al iniciar el programa el administrador de la votaci√≥n deber√° autenticarse para poder entrar al sistema, una vez ingresado tendr√° un men√∫ con opciones donde podr√°:
 
 \begin{itemize}
 \item Mantener Distritos.
@@ -271,7 +271,7 @@ Al iniciar el programa el administrador de la votaciÛn deber· autenticarse para 
 
 \subsubsection{Interfaz de usuario}
 
-Una vez iniciada una votaciÛn, se dispondr· de una interfaz para el usuario 'votante'. En esta instancia el votante podr·:
+Una vez iniciada una votaci√≥n, se dispondr√° de una interfaz para el usuario 'votante'. En esta instancia el votante podr√°:
 
 \begin{itemize}
 \item Autenticarse
@@ -285,55 +285,55 @@ Una vez iniciada una votaciÛn, se dispondr· de una interfaz para el usuario 'vot
 
 \section{Segunda etapa - Seguridad}
 
-\subsection{MÈtodo de VigËnere}
+\subsection{M√©todo de Vig√®nere}
 
-\subsubsection{ResoluciÛn del mÈtodo}
+\subsubsection{Resoluci√≥n del m√©todo}
 
-Se emplear· el mÈtodo para cifrar los reportes generados: Listas, ElecciÛn, Distrito.
+Se emplear√° el m√©todo para cifrar los reportes generados: Listas, Elecci√≥n, Distrito.
 
-Para la resoluciÛn se necesitar· generar una clave k de dimensiÛn n. Cada elemento de la clave pertenece al alfabeto sobre el cual se resuelve el mÈtodo.
+Para la resoluci√≥n se necesitar√° generar una clave k de dimensi√≥n n. Cada elemento de la clave pertenece al alfabeto sobre el cual se resuelve el m√©todo.
 
-Una opciÛn resulta en considerar al alfabeto como todo el conjunto de los elementos representables con 1 byte, es decir 256 elementos. De esta forma se trabaja con aritmÈtica modular de modulo 256.
+Una opci√≥n resulta en considerar al alfabeto como todo el conjunto de los elementos representables con 1 byte, es decir 256 elementos. De esta forma se trabaja con aritm√©tica modular de modulo 256.
 
-Desde el punto de vista de la programaciÛn se crearÌa la clase VigËnere que serÌa la encargada de realizar la encriptaciÛn ( y desencriptaciÛn ) de un documento.
+Desde el punto de vista de la programaci√≥n se crear√≠a la clase Vig√®nere que ser√≠a la encargada de realizar la encriptaci√≥n ( y desencriptaci√≥n ) de un documento.
 
-El criptosistema es simÈtrico por lo que al instanciar la clase se le asignarÌa la clave que podrÌa ser del tipo vector. Se define implÌcitamente el tamaÒo del alfabeto que resulta ser de 256, correspondiente al cÛdigo ASCII.
+El criptosistema es sim√©trico por lo que al instanciar la clase se le asignar√≠a la clave que podr√≠a ser del tipo vector. Se define impl√≠citamente el tama√±o del alfabeto que resulta ser de 256, correspondiente al c√≥digo ASCII.
 
 La clave se pasa por valor de forma tal que el objeto instanciado tenga un copia interna de la clave y pueda manejarse sin riesgo de que en el caso de ser pasado por referencia se elimine accidentalmente.
 
-La encriptaciÛn manejarÌa strings, recibirÌa en mensaje y lo cifrarÌa devolviendo el correspondiente criptograma. De esta forma harÌamos que se desentienda del origen del objeto que est· manejando, que podrÌa ser desde memoria o desde disco.
+La encriptaci√≥n manejar√≠a strings, recibir√≠a en mensaje y lo cifrar√≠a devolviendo el correspondiente criptograma. De esta forma har√≠amos que se desentienda del origen del objeto que est√° manejando, que podr√≠a ser desde memoria o desde disco.
 
 El descrifrador recibe el criptograma, lo descifra con la clave y devuelve el mensaje como un string.
 
-Hay dos situaciones diferentes en las cuales se debe usar VigenerÈ. Una es para cifrar un texto plano. La otra es para cifrar un texto plano y a continuaciÛn otro texto plano utilizando la misma instancia de VigenerÈ y la misma clave.
+Hay dos situaciones diferentes en las cuales se debe usar Vigener√©. Una es para cifrar un texto plano. La otra es para cifrar un texto plano y a continuaci√≥n otro texto plano utilizando la misma instancia de Vigener√© y la misma clave.
 
-En el caso que se quiere cifrar un texto plano solamente con la misma clave y la misma instancia de VigenerÈ: para el manejo en bloques Vigenere cuenta con dos variables que contienen la ˙ltima posiciÛn de la clave durante el uso del cifrador y del descifrador, de forma tal que no haya que restringir el mensaje que se desea encriptrar/descencriptar a un tamaÒo m˙ltiplo del tamaÒo de la clave porque cada vez que se llega a la ˙ltima posiciÛn del cifrador/descifrador se reinicia esta variable.
+En el caso que se quiere cifrar un texto plano solamente con la misma clave y la misma instancia de Vigener√©: para el manejo en bloques Vigenere cuenta con dos variables que contienen la √∫ltima posici√≥n de la clave durante el uso del cifrador y del descifrador, de forma tal que no haya que restringir el mensaje que se desea encriptrar/descencriptar a un tama√±o m√∫ltiplo del tama√±o de la clave porque cada vez que se llega a la √∫ltima posici√≥n del cifrador/descifrador se reinicia esta variable.
 
-\subsubsection{Criptoan·lisis}
+\subsubsection{Criptoan√°lisis}
 
 
-Para realizar el criptoan·lisis una opciÛn es resolverlo empleando el mÈtodo de Kasiski.
+Para realizar el criptoan√°lisis una opci√≥n es resolverlo empleando el m√©todo de Kasiski.
 
-1. Desarrollo del mÈtodo:
+1. Desarrollo del m√©todo:
 
-El mÈtodo consiste en realizar una b˙squeda de fragmentos de bits repetidos para luego calcular la distancia que los separa. A partir de ello se obtiene el m·ximo com˙n divisor MCD para obtener la dimensiÛn de la clave.
+El m√©todo consiste en realizar una b√∫squeda de fragmentos de bits repetidos para luego calcular la distancia que los separa. A partir de ello se obtiene el m√°ximo com√∫n divisor MCD para obtener la dimensi√≥n de la clave.
 
-Una vez obtenida se procede a realizar un an·lisis de frecuencia de caracteres en una forma especial. Se tienen tantos vectores (o listas) como lo indique la dimensiÛn de la clave. Se aplica la operaciÛn de mÛdulo sobre la posiciÛn del elemento en el flujo de caracteres, y se asigna la frecuencia correspondiente al elemento encontrado en el vector correspondiente, que se identifica por el resultado de la operaciÛn mÛdulo.
+Una vez obtenida se procede a realizar un an√°lisis de frecuencia de caracteres en una forma especial. Se tienen tantos vectores (o listas) como lo indique la dimensi√≥n de la clave. Se aplica la operaci√≥n de m√≥dulo sobre la posici√≥n del elemento en el flujo de caracteres, y se asigna la frecuencia correspondiente al elemento encontrado en el vector correspondiente, que se identifica por el resultado de la operaci√≥n m√≥dulo.
 
 Luego conociendo previamente el idioma en que se encuentra el criptograma, se procede a buscar los caracteres con mayores frecuencias.
 
-Como tenemos 256 posibilidades, hacemos un prueba sobre un archivo para obtener un histograma de las frecuencias de las apariciones de los cÛdigos ASCII en un texto.
+Como tenemos 256 posibilidades, hacemos un prueba sobre un archivo para obtener un histograma de las frecuencias de las apariciones de los c√≥digos ASCII en un texto.
 
-En base a pruebas realizadas por el grupo se obtuvo el siguiente gr·fico:
+En base a pruebas realizadas por el grupo se obtuvo el siguiente gr√°fico:
 \begin{center}
 \begin{figure}[h] %[h] para here [b] para bottom [t] para top
 \includegraphics[scale=0.5]{./histo.jpg}
 \end{figure}
 \end{center}
 
-El gr·fico que se observa muestra las frecuencias obtenidas en una prueba para los 255 caracteres ASCII. En el gr·fico no se puede observar claramente pero se observa que se encuentran entre el 42 y el 126 que corresponde a los caracteres imprimibles. Por otro lado, hay un pico muy elevado que corresponde al caracter 32 que resulta ser el espacio.
+El gr√°fico que se observa muestra las frecuencias obtenidas en una prueba para los 255 caracteres ASCII. En el gr√°fico no se puede observar claramente pero se observa que se encuentran entre el 42 y el 126 que corresponde a los caracteres imprimibles. Por otro lado, hay un pico muy elevado que corresponde al caracter 32 que resulta ser el espacio.
 
-Luego se analiza el mismo gr·fico pero acotado a los valores imprimibles. En este caso, el caracter con mayor frecuencia es el 32, que resulta ser el espacio, seguido del caracter e (101), el caracter a(97) y por ˙ltimo el caracter o(111). Estos son los m·s frecuentes y dependiendo del archivo la frecuencia puede variar levemente.
+Luego se analiza el mismo gr√°fico pero acotado a los valores imprimibles. En este caso, el caracter con mayor frecuencia es el 32, que resulta ser el espacio, seguido del caracter e (101), el caracter a(97) y por √∫ltimo el caracter o(111). Estos son los m√°s frecuentes y dependiendo del archivo la frecuencia puede variar levemente.
 
 En el texto de prueba se obtuvieron en porcentaje:
 \begin{itemize}
@@ -343,81 +343,81 @@ En el texto de prueba se obtuvieron en porcentaje:
 \item o: 6,7\%
 \end{itemize}
 
-Es decir que como es esperable las min˙sculas son m·s probables que las may˙sculas, y el caracter espacio es el m·s probable. Esta informaciÛn es de suma utilidad al realizar el an·lisis de frecuencias que requiere el mÈtodo.
+Es decir que como es esperable las min√∫sculas son m√°s probables que las may√∫sculas, y el caracter espacio es el m√°s probable. Esta informaci√≥n es de suma utilidad al realizar el an√°lisis de frecuencias que requiere el m√©todo.
 
-Es destacable que con sÛlo los caracteres espacio, a, e y o se emplean en el 36\% de un texto.
+Es destacable que con s√≥lo los caracteres espacio, a, e y o se emplean en el 36\% de un texto.
 
 Finalmente se descifra el mensaje.
 
-\subsection{MÈtodo RSA}
+\subsection{M√©todo RSA}
 
-\subsubsection{ResoluciÛn del mÈtodo}
+\subsubsection{Resoluci√≥n del m√©todo}
 
-Se emplear· el mÈtodo para cifrar los datos de los votantes.
+Se emplear√° el m√©todo para cifrar los datos de los votantes.
 
-El sistema empieza generando por primera y ˙nica vez el par de claves privada y p˙blica que son guardadas en un archivo en disco.
+El sistema empieza generando por primera y √∫nica vez el par de claves privada y p√∫blica que son guardadas en un archivo en disco.
 
 \paragraph{Utilizacion de campos finitos en el algoritmo de RSA}
 
-Se utilizar· el algoritmo de euclides extendido para generar el inverso multiplicativo o sea el n˙mero que se utilizar· para desencriptar y que por lo tanto compondr· la clave privada.
+Se utilizar√° el algoritmo de euclides extendido para generar el inverso multiplicativo o sea el n√∫mero que se utilizar√° para desencriptar y que por lo tanto compondr√° la clave privada.
 
-TambiÈn se usar· exponenciaciÛn por cuadrados para la operaciÛn $a^b$ mod q .
+Tambi√©n se usar√° exponenciaci√≥n por cuadrados para la operaci√≥n $a^b$ mod q .
 
-Por esta razÛn se debe tener especial cuidado en la cantidad de bits que se utilizar· para representar los n˙meros ya que si se trabaja con n˙meros demasiado grandes las operaciones de campos finitos pueden fallar. Por esto el enunciado al pedir que se ingrese el tamaÒo del n˙mero da la posibilidad de limitar este tamaÒo.
+Por esta raz√≥n se debe tener especial cuidado en la cantidad de bits que se utilizar√° para representar los n√∫meros ya que si se trabaja con n√∫meros demasiado grandes las operaciones de campos finitos pueden fallar. Por esto el enunciado al pedir que se ingrese el tama√±o del n√∫mero da la posibilidad de limitar este tama√±o.
 
-Limitaremos el tamaÒo de los n˙meros primos a entre 3 y 97. Siendo los dem·s n˙meros resultados de operaciones de campos finitos de tamaÒo manejable por el algoritmo de RSA.
+Limitaremos el tama√±o de los n√∫meros primos a entre 3 y 97. Siendo los dem√°s n√∫meros resultados de operaciones de campos finitos de tama√±o manejable por el algoritmo de RSA.
 
 \paragraph{Objeto RSA}
 
-Desde el punto de vista de la programaciÛn se crearÌa la clase RSA que ser· la encargada de realizar la encriptaciÛn/desencriptaciÛn de los datos del votante.
+Desde el punto de vista de la programaci√≥n se crear√≠a la clase RSA que ser√° la encargada de realizar la encriptaci√≥n/desencriptaci√≥n de los datos del votante.
 
-\paragraph{EncriptaciÛn}
+\paragraph{Encriptaci√≥n}
 El votante instancia un objeto RSA con sus atributos cargados apartir de un archivo.
 
-La encriptaciÛn se realiza sobre el string serializado del votante.
+La encriptaci√≥n se realiza sobre el string serializado del votante.
 
-Desde serializar se llama al mÈtodo de encriptaciÛn de RSA pas·ndole el string serializado.
+Desde serializar se llama al m√©todo de encriptaci√≥n de RSA pas√°ndole el string serializado.
 
-Se toma cada caracter del string y se lo convierte en n˙mero entero.
+Se toma cada caracter del string y se lo convierte en n√∫mero entero.
 
 Se realizan las operaciones de campos finitos y se devuelve un numero grande.
 
-Se almacena el n˙mero grande en un buffer auxiliar.
+Se almacena el n√∫mero grande en un buffer auxiliar.
 
 Luego de almacenar todos los caracteres transformados en numeros en el buffer auxiliar, se devuelve el string asociado a este buffer de numeros grandes.
 
-Todos los votantes se cifran con la misma clave, Èsta se genera una ˙nica vez y se almacena en un archivo aparte. Cada vez que se desee encriptar se buscar· la clave p˙blica en el archivo. De esta forma al desencriptar se evita tener que realizar una b˙squeda de la clave que cifrÛ cada votante ya que es la misma para todos.
+Todos los votantes se cifran con la misma clave, √©sta se genera una √∫nica vez y se almacena en un archivo aparte. Cada vez que se desee encriptar se buscar√° la clave p√∫blica en el archivo. De esta forma al desencriptar se evita tener que realizar una b√∫squeda de la clave que cifr√≥ cada votante ya que es la misma para todos.
 
-\paragraph{DesencriptaciÛn}
+\paragraph{Desencriptaci√≥n}
 El deserializar de votante recibe el string serializado y encriptado.
 
 El deserializar de votante instancia un objeto RSA.
 
-Se inicializan los atributos del RSA apartir de la clave privada y p˙blica guardadas en un archivo.
+Se inicializan los atributos del RSA apartir de la clave privada y p√∫blica guardadas en un archivo.
 
-Se desencripta el string que recibiÛ el deserializar de votante a partir del mÈtodo desencriptar de RSA.
+Se desencripta el string que recibi√≥ el deserializar de votante a partir del m√©todo desencriptar de RSA.
 
 Desencriptar recibe el string serializado y encriptado y procede a desencriptar cada caracter del string casteado a un numero grande.
 
 Se realizan las operaciones de campos finitos y se devuelve un numero entero.
 
-Cada n˙mero entero (caracter desencriptado) se carga en un string. Al final se devuelve este string desencriptado que es el que el deserializar procede a hidratar.
+Cada n√∫mero entero (caracter desencriptado) se carga en un string. Al final se devuelve este string desencriptado que es el que el deserializar procede a hidratar.
 
 
 
-\subsubsection{Criptoan·lisis}
-Se genera una lista de n˙meros primos entre 3 y 97 dado que hemos decidido acotar los n˙meros primos a este rango.
+\subsubsection{Criptoan√°lisis}
+Se genera una lista de n√∫meros primos entre 3 y 97 dado que hemos decidido acotar los n√∫meros primos a este rango.
 
 Se realizan multiplicaciones entre todos los numeros hasta lograr encontrar el par que de como resultado el n de las claves.
 
-El ataque por fuerza bruta es el m·s sencillo y eficaz dado el pequeÒo rango de n˙meros posibles. Por eso se recomienda que los n˙meros primos sean de 1024 bits al menos asÌ dificulta la capacidad de la computadora de realizar operaciones matem·ticas en un tiempo razonable o ˙til.
+El ataque por fuerza bruta es el m√°s sencillo y eficaz dado el peque√±o rango de n√∫meros posibles. Por eso se recomienda que los n√∫meros primos sean de 1024 bits al menos as√≠ dificulta la capacidad de la computadora de realizar operaciones matem√°ticas en un tiempo razonable o √∫til.
 
 \newpage
 
 
 \section{Corridas de prueba - 1er Etapa}
 
-A continuaciÛn se detallan las pruebas realizadas sobre el funcionamiento del programa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con Èxito.
+A continuaci√≥n se detallan las pruebas realizadas sobre el funcionamiento del programa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con √©xito.
 
 \paragraph{Corridas de prueba}
 
@@ -426,10 +426,10 @@ A continuaciÛn se detallan las pruebas realizadas sobre el funcionamiento del pr
 Ingreso:
 INGRESO APROBADO
 Bienvenido al sistama de gestion de elecciones
-ø Desea eliminar la base de datos y comenzar de 0? S/N
+¬ø Desea eliminar la base de datos y comenzar de 0? S/N
 S
 
-Men˙ principal:
+Men√∫ principal:
 Opciones: 
 
 1) Mantener Distritos
@@ -440,17 +440,17 @@ Opciones:
 6) Mantener Candidatos
 7) Informar Resultados
 8) Habilitar Elecciones
-9) Habilitar Votantes para elecciÛn
+9) Habilitar Votantes para elecci√≥n
 10) salir
 Opcion: 1
 
-Men˙ de Distrito:
+Men√∫ de Distrito:
 Opciones: 
 
 1) Alta Distrito
 2) Baja Distrito
 3) Modificar Distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver Distritos
 Opcion: 1
 
@@ -459,14 +459,14 @@ Misiones
 
 Operacion OK
 
-Men˙ de Votante:
+Men√∫ de Votante:
 Opciones: 
 
 1) Alta Votante
 2) Baja Votante
 3) Modificar Votante
-4) Volver atr·s
-5) Alta Autom·tica
+4) Volver atr√°s
+5) Alta Autom√°tica
 6) Ver votantes
 Opcion: 1
 
@@ -493,8 +493,8 @@ Opciones:
 1) Alta Votante
 2) Baja Votante
 3) Modificar Votante
-4) Volver atr·s
-5) Alta Autom·tica
+4) Volver atr√°s
+5) Alta Autom√°tica
 6) Ver votantes
 Opcion: 5
 
@@ -532,7 +532,7 @@ Opciones:
 1) Alta Cargo
 2) Baja Cargo
 3) Modificar Cargo
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver cargos
 Opcion: 1
 
@@ -544,25 +544,25 @@ Desea agregar subcargos? (S/N)S
 Ingrese el nombre del subcargo: 
 Vice Presidente
 
-Desea agregar m·s subcargos? (ingrese 'S' para seguir)N
+Desea agregar m√°s subcargos? (ingrese 'S' para seguir)N
 
 Operacion OK
 
-Men˙ de ElecciÛn:
+Men√∫ de Elecci√≥n:
 Opciones: 
 
 1) Alta Eleccion
 2) Baja Eleccion
 3) Modificar Eleccion
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver elecciones
 Opcion: 1
 
-Ingrese la fecha de la elecciÛn: 19991010
+Ingrese la fecha de la elecci√≥n: 19991010
 
 Ingrese el cargo: Panadero
 No existe cargo/cargo no valido
-ø Desea repetir? (S/N): S
+¬ø Desea repetir? (S/N): S
 
 Ingrese el cargo: Presidente
 Ingrese el nombre del distrito: 
@@ -570,14 +570,14 @@ Panaderia
 
 El distrito no existe
 
-Desea agregar m·s distritos? (ingrese 'S' para seguir)S
+Desea agregar m√°s distritos? (ingrese 'S' para seguir)S
 
 Ingrese el nombre del distrito: 
 Misiones
 
 Distrito agregado
 
-Desea agregar m·s distritos? (ingrese 'S' para seguir)N
+Desea agregar m√°s distritos? (ingrese 'S' para seguir)N
 
 Operacion OK
 
@@ -586,12 +586,12 @@ Opciones:
 1) Alta Eleccion
 2) Baja Eleccion
 3) Modificar Eleccion
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver elecciones
 Opcion: 5
 
 
-tamaÒo de la tabla de dispersion: 1
+tama√±o de la tabla de dispersion: 1
 2048 B0 :(free=958) : (cant: 1): 
 Fecha: 19991010
 Cargo Principal: Presidente
@@ -601,50 +601,50 @@ Distrito: Misiones
 Tabla de hash (size: 1):  0
 Tabla de dispersion (size: 1):  1
 
-Men˙ de Lista:
+Men√∫ de Lista:
 Opciones: 
 
 1) Alta Lista
 2) Baja Lista
 3) Modificar Lista
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver Listas
 Opcion: 1
 
-Ingrese la fecha de la elecciÛn: 19991110
+Ingrese la fecha de la elecci√≥n: 19991110
 
 Ingrese el cargo: Zapatero
 No existe cargo/cargo no valido
-ø Desea repetir? (S/N): S
+¬ø Desea repetir? (S/N): S
 
 Ingrese el cargo: Presidente
 Ingrese la lista: Datos 
-OperaciÛn exitosa
+Operaci√≥n exitosa
 Opciones: 
 
 1) Alta Lista
 2) Baja Lista
 3) Modificar Lista
-4) Volver atr·s
+4) Volver atr√°s
 5) Ver Listas
 Opcion: 5
 
 19991010  	Presidente	blanco
 19991110  	Presidente	Datos
 
-Men˙ Candidato:
+Men√∫ Candidato:
 Opciones: 
 
 1) Alta Candidato
 2) Baja Candidato
 3) Modificar Candidato
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar Candidatos
 Opcion: 1
 
 Ingrese el numero de DNI: 1
 
-Ingrese la fecha de la elecciÛn: 19991010
+Ingrese la fecha de la elecci√≥n: 19991010
 
 Ingrese el cargo: Gobernador
 
@@ -652,7 +652,7 @@ Ingrese el nombre de la lista: FIUBA
 
 Operacion OK
 
-Men˙ Habilitar Elecciones
+Men√∫ Habilitar Elecciones
 Opciones: 
 
 1) Habilitar Eleccion
@@ -660,10 +660,10 @@ Opciones:
 3) Salir
 Opcion: 1
 
-Ingrese la fecha de la elecciÛn: 19991010
+Ingrese la fecha de la elecci√≥n: 19991010
 
 Ingrese el cargo: Presidente
-ElecciÛn habilitada
+Elecci√≥n habilitada
 Opciones: 
 
 1) Habilitar Eleccion
@@ -680,11 +680,11 @@ Fecha: 19991010
 Cargo Principal: Presidente
 ------------------------------------------
 
-Men˙ habilitar votante:
-Caso Autom·tico:
+Men√∫ habilitar votante:
+Caso Autom√°tico:
 Ingrese la cantidad de votos a realizar: 4800
 
-Ingrese modo de votaciÛn: Autom·tico (a) o Manual (m)a.
+Ingrese modo de votaci√≥n: Autom√°tico (a) o Manual (m)a.
 Bienvenido Jessica Michel
 Ingrese su Password
 INGRESO AUTORIZADO
@@ -722,7 +722,7 @@ Si esta seguro presione s si desea corregir su voto presione n
 Caso Manual:
 Ingrese la cantidad de votos a realizar: 1
 
-Ingrese modo de votaciÛn: Autom·tico (a) o Manual (m)m
+Ingrese modo de votaci√≥n: Autom√°tico (a) o Manual (m)m
 
 Bienvenido al sistema de voto electronico de los Gutierrez
 
@@ -761,18 +761,18 @@ LISTA: Datos
 Si esta seguro presione s si desea corregir su voto presione n
 s
 
-Men˙ de informes:
+Men√∫ de informes:
 Opciones: 
 
-1) Informe por elecciÛn
+1) Informe por elecci√≥n
 2) Informe por lista
 3) Informe por distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar archivo de conteo
 6) Mostrar archivo de conteo ordenado por distrito
 Opcion: 1
 
-Ingrese la fecha de la elecciÛn: 19991010
+Ingrese la fecha de la elecci√≥n: 19991010
 
 Ingrese el cargo: Presidente
 ********* GENERO EL INFORME POR ELECCION **********
@@ -790,15 +790,15 @@ Ingrese una tecla para continuar
 
 Opciones: 
 
-1) Informe por elecciÛn
+1) Informe por elecci√≥n
 2) Informe por lista
 3) Informe por distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar archivo de conteo
 6) Mostrar archivo de conteo ordenado por distrito
 Opcion: 2
 
-Ingrese la fecha de la elecciÛn: 19991010
+Ingrese la fecha de la elecci√≥n: 19991010
 
 Ingrese el cargo: Presidente
 Ingrese la lista: Socialista
@@ -815,10 +815,10 @@ Ingrese una tecla para continuar
 
 Opciones: 
 
-1) Informe por elecciÛn
+1) Informe por elecci√≥n
 2) Informe por lista
 3) Informe por distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar archivo de conteo
 6) Mostrar archivo de conteo ordenado por distrito
 Opcion: 3
@@ -835,10 +835,10 @@ Ingrese una tecla para continuar
 
 Opciones: 
 
-1) Informe por elecciÛn
+1) Informe por elecci√≥n
 2) Informe por lista
 3) Informe por distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar archivo de conteo
 6) Mostrar archivo de conteo ordenado por distrito
 Opcion: 5
@@ -1017,10 +1017,10 @@ Ingrese una tecla para continuar
 
 Opciones: 
 
-1) Informe por elecciÛn
+1) Informe por elecci√≥n
 2) Informe por lista
 3) Informe por distrito
-4) Volver atr·s
+4) Volver atr√°s
 5) Mostrar archivo de conteo
 6) Mostrar archivo de conteo ordenado por distrito
 Opcion: 6
@@ -1204,12 +1204,12 @@ Cantidad de votos en total: 9000
 
 \section{Corridas de prueba - 2da Etapa}
 
-A continuaciÛn se detallan las pruebas realizadas sobre el funcionamiento del programa para la segunda etapa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con Èxito.
+A continuaci√≥n se detallan las pruebas realizadas sobre el funcionamiento del programa para la segunda etapa. Se emplearon las pruebas detalladas en el enunciado del informe, las cuales pasaron con √©xito.
 
 \paragraph{Corridas de prueba}
 
 \begin{verbatim}
-Ejemplo de vulneraciÛn de RSA
+Ejemplo de vulneraci√≥n de RSA
 
 (Salida para verificar que realmente fue vulnerada la seguridad)
 N en archivo: 3953
@@ -1218,13 +1218,13 @@ E en archivo: 403
 
 Ingrese su nombre de usuario: undomiel
 
-Ahora ingrese su contraseÒa: aragorn
+Ahora ingrese su contrase√±a: aragorn
 
 usuario: <undomiel>
 password: <aragorn>
 INGRESO APROBADO
 Bienvenido al sistama de gestion de elecciones
-ø Desea eliminar la base de datos y comenzar de 0? S/N
+¬ø Desea eliminar la base de datos y comenzar de 0? S/N
 S
 
 Opciones: 
@@ -1237,7 +1237,7 @@ Opciones:
 6) Mantener Candidatos
 7) Informar Resultados
 8) Habilitar Elecciones
-9) Habilitar Votantes para elecciÛn
+9) Habilitar Votantes para elecci√≥n
 10) salir
 11) Votacion automatica
 12) Criptoanalizar informes
@@ -1254,7 +1254,7 @@ Con estos datos puede crearse el archivo clavePrivada.txt y vulnerarse la seguri
 (porque las claves se levantan desde el archivo clavePrivada.txt)
 
 ================================================================================================
-Ejemplo de vulneracion de VigenerÈ con Kasiski.
+Ejemplo de vulneracion de Vigener√© con Kasiski.
 
 1) Mantener Distritos
 2) Mantener Votantes
@@ -1264,7 +1264,7 @@ Ejemplo de vulneracion de VigenerÈ con Kasiski.
 6) Mantener Candidatos
 7) Informar Resultados
 8) Habilitar Elecciones
-9) Habilitar Votantes para elecciÛn
+9) Habilitar Votantes para elecci√≥n
 10) salir
 11) Votacion automatica
 12) Criptoanalizar informes
@@ -1276,7 +1276,7 @@ Opciones:
 1) Criptoanalizar informe de Elecciones
 2) Criptoanalizar informe de Listas
 3) Criptoanalizar informe de Distritos
-4) Volver atr·s
+4) Volver atr√°s
 Opcion: 1
 
 Clave descifrada: EXITO
@@ -1300,7 +1300,7 @@ Opciones:
 1) Criptoanalizar informe de Elecciones
 2) Criptoanalizar informe de Listas
 3) Criptoanalizar informe de Distritos
-4) Volver atr·s
+4) Volver atr√°s
 Opcion: 2
 
 Clave descifrada: EXITO
@@ -1319,7 +1319,7 @@ Opciones:
 1) Criptoanalizar informe de Elecciones
 2) Criptoanalizar informe de Listas
 3) Criptoanalizar informe de Distritos
-4) Volver atr·s
+4) Volver atr√°s
 Opcion: 3
 
 Clave descifrada: EXITO
@@ -1361,7 +1361,7 @@ Opciones:
 1) Criptoanalizar informe de Elecciones
 2) Criptoanalizar informe de Listas
 3) Criptoanalizar informe de Distritos
-4) Volver atr·s
+4) Volver atr√°s
 Opcion: 
 \end{verbatim}
 
@@ -1373,7 +1373,7 @@ Opcion:
 
 \bibitem{LIB02} Smith, Peter. Barnes, G. \textit{Files and Databases: An Introduction}. Addison-Wesley.
 
-\bibitem{NET01} DocumentaciÛn: Texmaker 3.0.2 (para la redacciÛn de este informe) \begin{verbatim}
+\bibitem{NET01} Documentaci√≥n: Texmaker 3.0.2 (para la redacci√≥n de este informe) \begin{verbatim}
 http://www.xm1math.net/texmaker/
 \end{verbatim}
 
@@ -1383,11 +1383,11 @@ http://www.xm1math.net/texmaker/
 
 
 \section{Apendice - Enunciado TP Etapa 1}
-A continuaciÛn se agrega el enunciado de la Etapa 1, correspondiente a este Trabajo Pr·ctico.
+A continuaci√≥n se agrega el enunciado de la Etapa 1, correspondiente a este Trabajo Pr√°ctico.
 \includepdf[pages={1-10}]{./enunc.pdf}
 
 \section{Apendice - Enunciado TP Etapa 2}
-A continuaciÛn se agrega el enunciado de la Etapa 2, correspondiente a este Trabajo Pr·ctico.
+A continuaci√≥n se agrega el enunciado de la Etapa 2, correspondiente a este Trabajo Pr√°ctico.
 \includepdf[pages={1-6}]{./enunc2.pdf}
 
 
